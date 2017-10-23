@@ -92,6 +92,10 @@ The following language translations are already available:
 
 You can translate the plugin using [this documentation](https://www.tipsandtricks-hq.com/ecommerce/translating-the-wp-simple-shopping-cart-plugin-2627).
 
+= Developers =
+* If you are a developer and you need some extra hooks or filters for this plugin please let us know.
+* Github repository - https://github.com/Arsenal21/simple-wp-shopping-cart
+
 = Note =
 
 There are a few exact duplicate copies of this plugin that other people made. We have a few users who are getting confused as to which one is the original simple shopping cart plugin. This is the original simple PayPal shopping cart and you can verify it with the following information:
@@ -191,7 +195,7 @@ None
 
 = TODO 4.3.8 =
 - Added a new email merge tag for the sale notification emails. The new tag is {order_id}
-
+- Added github repository link in the readme file.
 
 = 4.3.7 =
 - Added Russian Ruble currency to the currency dropdown option.
