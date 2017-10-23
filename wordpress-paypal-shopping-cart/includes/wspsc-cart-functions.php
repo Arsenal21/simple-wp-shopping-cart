@@ -43,12 +43,12 @@ function print_wp_shopping_cart($args = array()) {
     if (empty($return)) {
         $return = WP_CART_SITE_URL . '/';
     }
-    $return_url = add_query_arg('reset_wp_cart', '1', $return);  
+    $return_url = add_query_arg('reset_wp_cart', '1', $return);
 
     $urls .= '<input type="hidden" name="return" value="' . $return_url . '" />';
-    
+
     $cancel = get_option('cart_cancel_from_paypal_url');
-    if(isset($cancel) && !empty($cancel)){
+    if (isset($cancel) && !empty($cancel)) {
         $urls .= '<input type="hidden" name="cancel_return" value="' . $cancel . '" />';
     }
 
@@ -102,23 +102,23 @@ function print_wp_shopping_cart($args = array()) {
         }
 
         foreach ($_SESSION['simpleCart'] as $item) {
-            
+
             $output .= '<tr class="wspsc_cart_item_thumb"><td class="wspsc_cart_item_name_td" style="overflow: hidden;">';
             $output .= '<div class="wp_cart_item_info">';
-            if(isset($args['show_thumbnail'])){
-                $output .= '<span class="wp_cart_item_thumbnail"><img src="'.esc_url($item['thumbnail']).'" class="wp_cart_thumb_image" alt="'.esc_attr($item['name']).'" ></span>';
+            if (isset($args['show_thumbnail'])) {
+                $output .= '<span class="wp_cart_item_thumbnail"><img src="' . esc_url($item['thumbnail']) . '" class="wp_cart_thumb_image" alt="' . esc_attr($item['name']) . '" ></span>';
             }
-            $item_info = apply_filters('wspsc_cart_item_name', '<a href="'.esc_url($item['cartLink']).'">'.esc_attr($item['name']).'</a>', $item);
-            $output .= '<span class="wp_cart_item_name">'.$item_info.'</span>';
+            $item_info = apply_filters('wspsc_cart_item_name', '<a href="' . esc_url($item['cartLink']) . '">' . esc_attr($item['name']) . '</a>', $item);
+            $output .= '<span class="wp_cart_item_name">' . $item_info . '</span>';
             $output .= '<span class="wp_cart_clear_float"></span>';
             $output .= '</div>';
             $output .= '</td>';
-            
-            $output .= "<td class='wspsc_cart_qty_td' style='text-align: center'><form method=\"post\"  action=\"\" name='pcquantity' style='display: inline'>".wp_nonce_field('wspsc_cquantity', '_wpnonce', true, false)."
+
+            $output .= "<td class='wspsc_cart_qty_td' style='text-align: center'><form method=\"post\"  action=\"\" name='pcquantity' style='display: inline'>" . wp_nonce_field('wspsc_cquantity', '_wpnonce', true, false) . "
                 <input type=\"hidden\" name=\"wspsc_product\" value=\"" . htmlspecialchars($item['name']) . "\" />
 	        <input type='hidden' name='cquantity' value='1' /><input type='text' class='wspsc_cart_item_qty' name='quantity' value='" . esc_attr($item['quantity']) . "' size='1' onchange='document.pcquantity.submit();' onkeypress='document.getElementById(\"pinfo\").style.display = \"\";' /></form></td>
 	        <td style='text-align: center'>" . print_payment_currency(($item['price'] * $item['quantity']), $paypal_symbol, $decimal) . "</td>
-	        <td><form method=\"post\" action=\"\" class=\"wp_cart_remove_item_form\">".wp_nonce_field('wspsc_delcart', '_wpnonce', true, false)."
+	        <td><form method=\"post\" action=\"\" class=\"wp_cart_remove_item_form\">" . wp_nonce_field('wspsc_delcart', '_wpnonce', true, false) . "
 	        <input type=\"hidden\" name=\"wspsc_product\" value=\"" . esc_attr($item['name']) . "\" />
 	        <input type='hidden' name='delcart' value='1' />
 	        <input type='image' src='" . WP_CART_URL . "/images/Shoppingcart_delete.png' value='" . (__("Remove", "wordpress-simple-paypal-shopping-cart")) . "' title='" . (__("Remove", "wordpress-simple-paypal-shopping-cart")) . "' /></form></td></tr>
@@ -137,13 +137,13 @@ function print_wp_shopping_cart($args = array()) {
             $postage_cost = wpspsc_number_format_price($postage_cost);
             $form .= "<input type=\"hidden\" name=\"shipping_1\" value='" . esc_attr($postage_cost) . "' />"; //You can also use "handling_cart" variable to use shipping and handling here 
         }
-        
+
         //Tackle the "no_shipping" parameter
         if (get_option('wp_shopping_cart_collect_address')) {//force address collection
             $form .= '<input type="hidden" name="no_shipping" value="2" />';
         } else {
             //Not using the force address collection feature
-            if($postage_cost == 0){
+            if ($postage_cost == 0) {
                 //No shipping amount present in the cart. Set flag for "no shipping address collection".
                 $form .= '<input type="hidden" name="no_shipping" value="1" />';
             }
@@ -169,7 +169,7 @@ function print_wp_shopping_cart($args = array()) {
             $output .= '<tr class="wspsc_cart_coupon_row"><td colspan="4">
                 <div class="wpspsc_coupon_section">
                 <span class="wpspsc_coupon_label">' . (__("Enter Coupon Code", "wordpress-simple-paypal-shopping-cart")) . '</span>
-                <form  method="post" action="" >'.wp_nonce_field('wspsc_coupon', '_wpnonce', true, false).'
+                <form  method="post" action="" >' . wp_nonce_field('wspsc_coupon', '_wpnonce', true, false) . '
                 <input type="text" name="wpspsc_coupon_code" value="" size="10" />
                 <span class="wpspsc_coupon_apply_button"><input type="submit" name="wpspsc_apply_coupon" class="wpspsc_apply_coupon" value="' . (__("Apply", "wordpress-simple-paypal-shopping-cart")) . '" /></span>
                 </form>
@@ -190,11 +190,11 @@ function print_wp_shopping_cart($args = array()) {
         $output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
         $output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . '>';
         $output .= $form;
-        if ($count){
+        if ($count) {
             $checkout_button_img_src = WP_CART_URL . '/images/' . (__("paypal_checkout_EN.png", "wordpress-simple-paypal-shopping-cart"));
             $output .= '<input type="image" src="' . apply_filters('wspsc_cart_checkout_button_image_src', $checkout_button_img_src) . '" name="submit" class="wp_cart_checkout_button" alt="' . (__("Make payments with PayPal - it\'s fast, free and secure!", "wordpress-simple-paypal-shopping-cart")) . '" />';
         }
-        
+
         $output .= $urls . '
             <input type="hidden" name="business" value="' . $email . '" />
             <input type="hidden" name="currency_code" value="' . $paypal_currency . '" />
@@ -212,10 +212,10 @@ function print_wp_shopping_cart($args = array()) {
             $output .= '<input type="hidden" name="image_url" value="' . $page_style_name . '" />';
         }
         $output .= wp_cart_add_custom_field();
-        
-        $extra_pp_fields = apply_filters('wspsc_cart_extra_paypal_fields', '');//Can be used to add extra PayPal hidden input fields for the cart checkout
+
+        $extra_pp_fields = apply_filters('wspsc_cart_extra_paypal_fields', ''); //Can be used to add extra PayPal hidden input fields for the cart checkout
         $output .= $extra_pp_fields;
-                
+
         $output .= '</form>';
         $output .= '</td></tr>';
     }
