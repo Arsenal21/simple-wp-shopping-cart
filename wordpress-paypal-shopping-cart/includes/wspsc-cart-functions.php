@@ -222,6 +222,6 @@ function print_wp_shopping_cart($args = array()) {
         $output .= '</td></tr>';
     }
     $output .= "</table></div>";
-    $output = apply_filters('wpspsc_after_output', $output);
+    $output = apply_filters('wpspsc_after_cart_output', $output);
     return $output;
 }

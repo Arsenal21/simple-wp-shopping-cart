@@ -196,6 +196,7 @@ None
 = TODO 4.3.8 =
 - Added a new email merge tag for the sale notification emails. The new tag is {order_id}
 - Added github repository link in the readme file.
+- Added couple of filter hooks in the shopping cart display function.
 
 = 4.3.7 =
 - Added Russian Ruble currency to the currency dropdown option.
