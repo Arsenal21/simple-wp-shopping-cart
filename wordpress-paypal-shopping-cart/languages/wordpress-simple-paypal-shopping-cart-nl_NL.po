@@ -1,0 +1,885 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Shopping Cart\n"
+"POT-Creation-Date: 2015-11-21 13:26+0100\n"
+"PO-Revision-Date: 2015-11-21 16:38+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: class-coupon.php:19
+msgid "Admin needs to configure some discount coupons before it can be used"
+msgstr ""
+"Administrator moet een korting coupons instellen voordat het gebruikt kan "
+"worden"
+
+#: class-coupon.php:86
+msgid "Coupon ID: "
+msgstr "Coupon ID:"
+
+#: class-coupon.php:87
+msgid "Coupon Code: "
+msgstr "Coupon Code:"
+
+#: class-coupon.php:88
+msgid "Discount Amt: "
+msgstr "Korting:"
+
+#: class-coupon.php:89
+msgid "Expiry date: "
+msgstr "Expiratie Datum:"
+
+#: class-coupon.php:98
+msgid "Coupon code used does not exist!"
+msgstr "Coupon code bestaat niet!"
+
+#: class-coupon.php:105
+msgid "Coupon code expired!"
+msgstr "Coupon code is verlopen!"
+
+#: class-coupon.php:110
+msgid "Discount can only be applied once per checkout!"
+msgstr "Korting kan slechts eenmalig worden toegepast per checkout!"
+
+#: class-coupon.php:132
+msgid "Discount applied successfully! Total Discount: "
+msgstr "Korting succesvol toegepast! Totale Korting:"
+
+#: wp_shopping_cart.php:182
+msgid "Error! Your session is out of sync. Please reset your session."
+msgstr "Fout! Jouw sessie is verlopen. Graag je sessie vernieuwen."
+
+#: wp_shopping_cart.php:190
+msgid ""
+"Shopping Cart Configuration Error! You must specify a value in the 'Checkout "
+"Page URL' field for the automatic redirection feature to work!"
+msgstr ""
+"Winkelwagen Configuratie Fout! Je moet een bedrag in ‘Checkout Pagina URL’ "
+"veld invullen voor om de automatische verwijs functie te laten werken!"
+
+#: wp_shopping_cart.php:279 wp_shopping_cart.php:354 wp_shopping_cart.php:411
+#: wp_shopping_cart.php:453 wp_shopping_cart.php:457
+#: wp_shopping_cart_settings.php:120
+msgid "Add to Cart"
+msgstr "Voeg toe aan Winkelwagen"
+
+#: wp_shopping_cart.php:539
+msgid "WP Paypal Shopping Cart"
+msgstr "WP Paypal Winkelwagen"
+
+#: wp_shopping_cart.php:539
+msgid "WP Shopping Cart"
+msgstr "WP Winkelwagen"
+
+#: wp_shopping_cart.php:573
+msgid "Shopping Cart"
+msgstr "Winkelwagen"
+
+#: wp_shopping_cart.php:606
+msgid "Settings"
+msgstr "Instellingen"
+
+#: wp_shopping_cart_discounts_menu.php:52 wp_shopping_cart_settings.php:186
+#: wp_shopping_cart_settings.php:422
+msgid ""
+"For more information, updates, detailed documentation and video tutorial, "
+"please visit:"
+msgstr ""
+"Voor meer informatie, updates, gedetailleerde documentatie en video "
+"tutorials, kijkt u op:"
+
+#: wp_shopping_cart_discounts_menu.php:53 wp_shopping_cart_settings.php:187
+#: wp_shopping_cart_settings.php:423
+msgid "WP Simple Cart Homepage"
+msgstr "WP Simpel Winkelwagen Homepagina"
+
+#: wp_shopping_cart_discounts_menu.php:61
+msgid "Coupon/Discount Settings"
+msgstr "Coupon/Korting Instellingen"
+
+#: wp_shopping_cart_discounts_menu.php:68
+msgid "Enable Discount Coupon Feature"
+msgstr "Pas Korting Coupon Mogelijkheid Toe"
+
+#: wp_shopping_cart_discounts_menu.php:71
+msgid ""
+"When checked your customers will be able to enter a coupon code in the "
+"shopping cart before checkout."
+msgstr ""
+"Indien aangevinkt kunnen jouw klanten een coupon code in de winkelwagen in "
+"te voeren bij de checkout."
+
+#: wp_shopping_cart_discounts_menu.php:78
+msgid "Update &raquo;"
+msgstr "Update &raquo"
+
+#: wp_shopping_cart_discounts_menu.php:94
+msgid "Add Coupon/Discount"
+msgstr "Voeg Coupon/Korting toe"
+
+#: wp_shopping_cart_discounts_menu.php:119
+msgid "Save Coupon &raquo;"
+msgstr "Sla Coupon &raquo op"
+
+#: wp_shopping_cart_discounts_menu.php:137
+msgid "Coupon Code"
+msgstr "Coupon Code"
+
+#: wp_shopping_cart_discounts_menu.php:138
+msgid "Discount Rate (%)"
+msgstr "Kortingspercentage (%)"
+
+#: wp_shopping_cart_discounts_menu.php:139
+msgid "Expiry Date"
+msgstr "Verloop Datum"
+
+#: wp_shopping_cart_discounts_menu.php:158
+msgid "No Expiry"
+msgstr "Oneindig geldin"
+
+#: wp_shopping_cart_discounts_menu.php:174
+msgid "No Coupons Configured."
+msgstr "Geen Coupons Ingesteld."
+
+#: wp_shopping_cart_discounts_menu.php:179
+msgid "No Record found"
+msgstr "Geen Bestand Gevonden"
+
+#: wp_shopping_cart_misc_functions.php:169
+msgid "Your Shopping Cart"
+msgstr "Jouw Winkelwagen"
+
+#: wp_shopping_cart_misc_functions.php:170
+msgid "Your cart is empty"
+msgstr "Jouw winkelwagen is leeg"
+
+#: wp_shopping_cart_misc_functions.php:200
+msgid ""
+"Need a shopping cart plugin with a lot of features and good support? Check "
+"out our "
+msgstr ""
+"Heb je een winkelwagen plugin nodig met een heleboel opties en goede "
+"ondersteuning? Check onze"
+
+#: wp_shopping_cart_misc_functions.php:201
+msgid "WP eStore Plugin"
+msgstr "WP eWinkel Plugin"
+
+#: wp_shopping_cart_orders.php:10
+msgid "Cart Orders"
+msgstr "Winkelwagen Orders"
+
+#: wp_shopping_cart_orders.php:11
+msgid "Cart Order"
+msgstr "Winkelwagen Order"
+
+#: wp_shopping_cart_orders.php:12
+msgid "Add New"
+msgstr "Voeg Nieuwe Toe"
+
+#: wp_shopping_cart_orders.php:13
+msgid "Add New Order"
+msgstr "Voeg Nieuwe Order Toe"
+
+#: wp_shopping_cart_orders.php:14
+msgid "Edit"
+msgstr "Aanpassen"
+
+#: wp_shopping_cart_orders.php:15
+msgid "Edit Order"
+msgstr "Pas Order Aan"
+
+#: wp_shopping_cart_orders.php:16
+msgid "New Order"
+msgstr "Nieuwe Order"
+
+#: wp_shopping_cart_orders.php:17
+msgid "View"
+msgstr "Controleer"
+
+#: wp_shopping_cart_orders.php:18
+msgid "View Order"
+msgstr "Controleer Order"
+
+#: wp_shopping_cart_orders.php:19
+msgid "Search Order"
+msgstr "Zoek Order"
+
+#: wp_shopping_cart_orders.php:20
+msgid "No order found"
+msgstr "Geen order gevonden"
+
+#: wp_shopping_cart_orders.php:21
+msgid "No order found in Trash"
+msgstr "Geen order gevonden in de Prullenbak"
+
+#: wp_shopping_cart_orders.php:22
+msgid "Parent Order"
+msgstr "Overkoepelende Order"
+
+#: wp_shopping_cart_orders.php:38
+msgid "Order Review"
+msgstr "Order Overzicht"
+
+#: wp_shopping_cart_orders.php:70
+msgid "Order ID: #"
+msgstr "Order ID: #"
+
+#: wp_shopping_cart_orders.php:72
+msgid "Transaction ID: #"
+msgstr "Transactie ID: #"
+
+#: wp_shopping_cart_orders.php:75 wp_shopping_cart_orders.php:165
+msgid "First Name"
+msgstr "Voornaam"
+
+#: wp_shopping_cart_orders.php:79 wp_shopping_cart_orders.php:166
+msgid "Last Name"
+msgstr "Achternaam"
+
+#: wp_shopping_cart_orders.php:83
+msgid "Email Address"
+msgstr "Emailadres"
+
+#: wp_shopping_cart_orders.php:87
+msgid "IP Address"
+msgstr "IP Adres"
+
+#: wp_shopping_cart_orders.php:91 wp_shopping_cart_orders.php:168
+#: includes/wspsc-cart-functions.php:145
+msgid "Total"
+msgstr "Totaal"
+
+#: wp_shopping_cart_orders.php:95 includes/wspsc-cart-functions.php:142
+msgid "Shipping"
+msgstr "Verzendkosten"
+
+#: wp_shopping_cart_orders.php:99
+msgid "Address"
+msgstr "Adres"
+
+#: wp_shopping_cart_orders.php:103
+msgid "Phone"
+msgstr "Telefoonnummer"
+
+#: wp_shopping_cart_orders.php:107
+msgid "Buyer Email Sent?"
+msgstr "Klant Email Verzonden?"
+
+#: wp_shopping_cart_orders.php:111
+msgid "Item(s) Ordered:"
+msgstr "Item(s) Aangeschadft:"
+
+#: wp_shopping_cart_orders.php:115
+msgid "Applied Coupon Code:"
+msgstr "Toegepaste Coupon Code:"
+
+#: wp_shopping_cart_orders.php:164
+msgid "Order ID"
+msgstr "Order ID"
+
+#: wp_shopping_cart_orders.php:167
+msgid "Email"
+msgstr "Email"
+
+#: wp_shopping_cart_orders.php:169
+msgid "Status"
+msgstr "Status"
+
+#: wp_shopping_cart_orders.php:170
+msgid "Date"
+msgstr "Datum"
+
+#: wp_shopping_cart_settings.php:10
+msgid "WP Paypal Shopping Cart Options"
+msgstr "WP Paypal Winkelwagen Opties"
+
+#: wp_shopping_cart_settings.php:100
+msgid "Options Updated!"
+msgstr "Opties Aangepast!"
+
+#: wp_shopping_cart_settings.php:104 includes/wspsc-cart-functions.php:30
+msgid "USD"
+msgstr "EUR"
+
+#: wp_shopping_cart_settings.php:107 includes/wspsc-cart-functions.php:34
+msgid "$"
+msgstr "€"
+
+#: wp_shopping_cart_settings.php:183
+msgid "Simple PayPal Shopping Cart Settings"
+msgstr "Simpele PayPal Winkelwagen Instellingen"
+
+#: wp_shopping_cart_settings.php:191
+msgid "Quick Usage Guide"
+msgstr "Snelle Start Gebruiksaanwijzingen"
+
+#: wp_shopping_cart_settings.php:194
+msgid "Step 1) "
+msgstr "Stap 1)"
+
+#: wp_shopping_cart_settings.php:194
+msgid "To add an 'Add to Cart' button for a product simply add the shortcode"
+msgstr ""
+"Om een ‘Voeg toe aan Winkelwagen’ knop toe te voegen voor een product, voeg "
+"simpelweg de shortcode toe "
+
+#: wp_shopping_cart_settings.php:194
+msgid "PRODUCT-NAME"
+msgstr "PRODUCT-NAAM"
+
+#: wp_shopping_cart_settings.php:194
+msgid "PRODUCT-PRICE"
+msgstr "PRODUCT-PRIJS"
+
+#: wp_shopping_cart_settings.php:194
+msgid ""
+"to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-"
+"PRICE with the actual name and price of your product."
+msgstr ""
+"voor een post of pagina naast het product. Vervang PRODUCT-NAAM en PRODUCT-"
+"PRIJS met de correcte naam en prijs van jouw product."
+
+#: wp_shopping_cart_settings.php:195
+msgid "Example add to cart button shortcode usage:"
+msgstr "Bijvoorbeeld voeg de winkelwagen knop shortcode gebruik:"
+
+#: wp_shopping_cart_settings.php:196
+msgid "Step 2) "
+msgstr "Stap 2)"
+
+#: wp_shopping_cart_settings.php:196
+msgid ""
+"To add the shopping cart to a post or page (example: a checkout page) simply "
+"add the shortcode"
+msgstr ""
+"Om de winkelwagen om aan een post of pagina (bijvoorbeeld: een kassa pagina) "
+"toe te voegen, hoef je simpelweg de shortcode toe te voegen aan deze pagina"
+
+#: wp_shopping_cart_settings.php:196
+msgid ""
+"to a post or page or use the sidebar widget to add the shopping cart to the "
+"sidebar."
+msgstr ""
+"aan een post of pagina of gebruik de zijbalk widget om de winkelwagen toe te "
+"voegen aan de zijbalk."
+
+#: wp_shopping_cart_settings.php:197
+msgid "Example shopping cart shortcode usage:"
+msgstr "Voorbeeld winkelwagen shortcode gebruik"
+
+#: wp_shopping_cart_settings.php:206
+msgid "PayPal and Shopping Cart Settings"
+msgstr "PayPal en Winkelwagen Instellingen"
+
+#: wp_shopping_cart_settings.php:212
+msgid "Paypal Email Address"
+msgstr "Paypal Emailadres"
+
+#: wp_shopping_cart_settings.php:216
+msgid "Shopping Cart title"
+msgstr "Winkelwagen Titel"
+
+#: wp_shopping_cart_settings.php:220
+msgid "Text/Image to Show When Cart Empty"
+msgstr "Tekst/Afbeelding om te laten zien dat de Winkelwagen leeg is"
+
+#: wp_shopping_cart_settings.php:221
+msgid ""
+"You can either enter plain text or the URL of an image that you want to show "
+"when the shopping cart is empty"
+msgstr ""
+"Je kunt ofwel platte tekst invoeren of de URL van een afbeelding die u wilt "
+"weergeven wanneer de winkelwagen leeg is"
+
+#: wp_shopping_cart_settings.php:224
+msgid "Currency"
+msgstr "Valuta"
+
+#: wp_shopping_cart_settings.php:225 wp_shopping_cart_settings.php:229
+#: wp_shopping_cart_settings.php:256
+msgid "e.g."
+msgstr "Bijv."
+
+#: wp_shopping_cart_settings.php:228
+msgid "Currency Symbol"
+msgstr "Valuta Symbool"
+
+#: wp_shopping_cart_settings.php:234
+msgid "Base Shipping Cost"
+msgstr "Basis Verzendkosten"
+
+#: wp_shopping_cart_settings.php:235
+msgid ""
+"This is the base shipping cost that will be added to the total of individual "
+"products shipping cost. Put 0 if you do not want to charge shipping cost or "
+"use base shipping cost."
+msgstr ""
+"Dit zijn de basis verzendkosten die worden toegevoegd aan de som van de "
+"individuele producten verzendkosten. Zet 0 neer als u geen verzendkosten "
+"wilt rekenen of basis verzendkosten."
+
+#: wp_shopping_cart_settings.php:235
+msgid "Learn More on Shipping Calculation"
+msgstr "Leer Meer over Verzendkosten Berekenen"
+
+#: wp_shopping_cart_settings.php:239
+msgid "Free Shipping for Orders Over"
+msgstr "Geen Verzendkosten voor Orders Boven"
+
+#: wp_shopping_cart_settings.php:240
+msgid ""
+"When a customer orders more than this amount he/she will get free shipping. "
+"Leave empty if you do not want to use it."
+msgstr ""
+"Wanneer een klant bestellingen plaatst boven dit bedrag dan zal hij / zij "
+"gratis verzending krijgen. Laat leeg als u dit niet wilt gebruiken."
+
+#: wp_shopping_cart_settings.php:244
+msgid "Must Collect Shipping Address on PayPal"
+msgstr "Moet het Afleveradres verkrijgen bij PayPal"
+
+#: wp_shopping_cart_settings.php:245
+msgid ""
+"If checked the customer will be forced to enter a shipping address on PayPal "
+"when checking out."
+msgstr ""
+"Indien aangevinkt zal de klant worden gedwongen om een afleveradres in te "
+"voeren op PayPal bij het uitchecken."
+
+#: wp_shopping_cart_settings.php:249
+msgid "Use PayPal Profile Based Shipping"
+msgstr "Gebruik PayPal op Profiel Gebaseerde Verzendkosten"
+
+#: wp_shopping_cart_settings.php:250
+msgid "Check this if you want to use"
+msgstr "Vink aan dit als u dit wilt gebruiken"
+
+#: wp_shopping_cart_settings.php:250
+msgid "PayPal profile based shipping"
+msgstr "PayPal profiel gebaseerde verzending"
+
+#: wp_shopping_cart_settings.php:250
+msgid ""
+"Using this will ignore any other shipping options that you have specified in "
+"this plugin."
+msgstr ""
+"Met behulp hiervan zal andere verzendingsopties die u hebt opgegeven in deze "
+"plugin worden genegeerd."
+
+#: wp_shopping_cart_settings.php:254
+msgid "Add to Cart button text or Image"
+msgstr "Voeg toe aan Winkelwagen knop tekst of afbeelding"
+
+#: wp_shopping_cart_settings.php:256
+msgid ""
+"To use a customized image as the button simply enter the URL of the image "
+"file."
+msgstr ""
+"Om een aangepaste afbeelding gebruiken als de knop voert u de URL van de "
+"afbeelding."
+
+#: wp_shopping_cart_settings.php:262
+msgid "Return URL"
+msgstr "Terugkeer URL"
+
+#: wp_shopping_cart_settings.php:263
+msgid ""
+"This is the URL the customer will be redirected to after a successful payment"
+msgstr ""
+"Dit is de URL waar de klant naar wordt doorgestuurd na een succesvolle "
+"betaling"
+
+#: wp_shopping_cart_settings.php:267
+msgid "Products Page URL"
+msgstr "Product Pagina URL"
+
+#: wp_shopping_cart_settings.php:268
+msgid ""
+"This is the URL of your products page if you have any. If used, the shopping "
+"cart widget will display a link to this page when cart is empty"
+msgstr ""
+"Dit is de URL van uw producten pagina indien u die gebruik. Indien u die "
+"heeft, zal de winkelwagen widget een link naar deze pagina weergeven wanneer "
+"winkelwagen leeg is"
+
+#: wp_shopping_cart_settings.php:272
+msgid "Automatic redirection to checkout page"
+msgstr "Automatische doorverwijzing naar de kassa pagina"
+
+#: wp_shopping_cart_settings.php:274
+msgid "Checkout Page URL"
+msgstr "Kassa Pagina URL"
+
+#: wp_shopping_cart_settings.php:275
+msgid ""
+"If checked the visitor will be redirected to the Checkout page after a "
+"product is added to the cart. You must enter a URL in the Checkout Page URL "
+"field for this to work."
+msgstr ""
+"Als controleerde de bezoeker wordt doorgestuurd naar de kassa pagina nadat "
+"een product wordt toegevoegd aan de winkelwagen. U moet een URL in de "
+"Betaalpagina URL veld in te voeren om dit te laten werken."
+
+#: wp_shopping_cart_settings.php:279
+msgid "Open PayPal Checkout Page in a New Tab"
+msgstr "Open PayPal Kassa Pagina in een Nieuw Tabblad"
+
+#: wp_shopping_cart_settings.php:281
+msgid ""
+"If checked the PayPal checkout page will be opened in a new tab/window when "
+"the user clicks the checkout button."
+msgstr ""
+"Indien aangevinkt wordt de PayPal kassa pagina in een nieuw tabblad / "
+"venster geopend wanneer de gebruiker op de kassa knop klikt."
+
+#: wp_shopping_cart_settings.php:285
+msgid "Reset Cart After Redirection to Return Page"
+msgstr "Leeg Winkelwagen Na Doorverwijzing naar Terugkeer Pagina"
+
+#: wp_shopping_cart_settings.php:287
+msgid ""
+"If checked the shopping cart will be reset when the customer lands on the "
+"return URL (Thank You) page."
+msgstr ""
+"Indien aangevinkt wordt de winkelwagen geleegd wanneer de klant landt op de "
+"terugkeer URL (dank u) pagina."
+
+#: wp_shopping_cart_settings.php:294
+msgid "Hide Shopping Cart Image"
+msgstr "Verberg Winkelwagen Afbeelding"
+
+#: wp_shopping_cart_settings.php:295
+msgid "If ticked the shopping cart image will not be shown."
+msgstr "Indien aangevinkt wordt de winkelwagen afbeelding niet getoond."
+
+#: wp_shopping_cart_settings.php:301
+msgid "Customize the Note to Seller Text"
+msgstr "Pas de Persoonlijke Tekst voor de Verkoper aan"
+
+#: wp_shopping_cart_settings.php:303
+msgid ""
+"Specify the text that you want to use for the note field on PayPal checkout "
+"page to collect special instruction (leave this field empty if you don't "
+"need to customize it). The default label for the note field is \"Add special "
+"instructions to merchant\"."
+msgstr ""
+"Geef de tekst op die u wilt gebruiken voor het veld opmerking op de PayPal "
+"kassa pagina, voor speciale instructies (dit veld leeg als u het niet nodig "
+"vind om aan te passen). Het standaard label voor de notitie is \"Voeg "
+"speciale instructies toe voor de verkoper\"."
+
+#: wp_shopping_cart_settings.php:309
+msgid "Custom Checkout Page Style Name"
+msgstr "Aangepaste Kassa Pagina Stijl Naam"
+
+#: wp_shopping_cart_settings.php:311
+msgid ""
+"Specify the page style name here if you want to customize the paypal "
+"checkout page with custom page style otherwise leave this field empty."
+msgstr ""
+"Geef hier de naam van de pagina stijl als je de paypal kassa pagina wil "
+"aanpassen met aangepaste pagina stijl aanpassen anders laat je dit veld leeg."
+
+#: wp_shopping_cart_settings.php:317
+msgid "Use Strict PayPal Email Address Checking"
+msgstr "Gebruik strenge PayPal Emailadres controle"
+
+#: wp_shopping_cart_settings.php:318
+msgid ""
+"If checked the script will check to make sure that the PayPal email address "
+"specified is the same as the account where the payment was deposited (Usage "
+"of PayPal Email Alias will fail too)."
+msgstr ""
+"Indien aangevinkt zal het script controleren om ervoor te zorgen dat de "
+"PayPal-e-mailadres wat is opgegeven hetzelfde is als de rekening waar de "
+"betaling van wordt gedaan (gebruik van PayPal E-mail alias zal hierdoor ook "
+"niet lukken)."
+
+#: wp_shopping_cart_settings.php:324
+msgid "Use WP Affiliate Platform"
+msgstr "Gebruik WP Affiliate Platform"
+
+#: wp_shopping_cart_settings.php:326
+msgid "Check this if using with the"
+msgstr "Vink dit aan als u dit gebruikt met de"
+
+#: wp_shopping_cart_settings.php:326
+msgid ""
+"This plugin lets you run your own affiliate campaign/program and allows you "
+"to reward (pay commission) your affiliates for referred sales"
+msgstr ""
+"Met deze plugin kunt u uw eigen affiliate campagne / programma uit voeren en "
+"het kan u dat belonen (commissie betalen) aan secundaire verkopers"
+
+#: wp_shopping_cart_settings.php:332
+msgid "Testing and Debugging Settings"
+msgstr "Testen en Debuggen van Instellingen"
+
+#: wp_shopping_cart_settings.php:338
+msgid "Enable Debug"
+msgstr "Maak Debugging Mogelijk"
+
+#: wp_shopping_cart_settings.php:340
+msgid ""
+"If checked, debug output will be written to the log file. This is useful for "
+"troubleshooting post payment failures"
+msgstr ""
+"Indien aangevinkt, zal debug worden geschreven naar het logbestand. Dit is "
+"handig voor het oplossen van problemen na mislukte betalingen"
+
+#: wp_shopping_cart_settings.php:351
+msgid "Enable Sandbox Testing"
+msgstr "Schakel Sandbox Testen In"
+
+#: wp_shopping_cart_settings.php:353
+msgid ""
+"Check this option if you want to do PayPal sandbox testing. You will need to "
+"create a PayPal sandbox account from PayPal Developer site"
+msgstr ""
+"Vink deze optie aan als u PayPal sandbox testen wilt doen. U moet een PayPal-"
+"rekening van de PayPal Sandbox Developer website hebben"
+
+#: wp_shopping_cart_settings.php:362 wp_shopping_cart_settings.php:508
+msgid "Update Options &raquo;"
+msgstr "Update Opties &raquo;"
+
+#: wp_shopping_cart_settings.php:366
+msgid "Like the Simple WordPress Shopping Cart Plugin?"
+msgstr "Vind je de Simpele WordPress Winkelwagen Plugin goed?"
+
+#: wp_shopping_cart_settings.php:366
+msgid "Give it a good rating"
+msgstr "Geef hem een goede beoordeling"
+
+#: wp_shopping_cart_settings.php:431
+msgid "Purchase Confirmation Email Settings"
+msgstr "Bevestiging aankoop Emailinstellingen"
+
+#: wp_shopping_cart_settings.php:434
+msgid ""
+"The following options affect the emails that gets sent to your buyers after "
+"a purchase."
+msgstr ""
+"De volgende opties zijn van invloed op de emails die naar uw kopers worden "
+"gestuurd na een aankoop."
+
+#: wp_shopping_cart_settings.php:439
+msgid "Send Emails to Buyer After Purchase"
+msgstr "Stuur Kopers Emails Na Aanschaf"
+
+#: wp_shopping_cart_settings.php:440
+msgid ""
+"If checked the plugin will send an email to the buyer with the sale details. "
+"If digital goods are purchased then the email will contain the download "
+"links for the purchased products."
+msgstr ""
+"Indien aangevinkt zal de plugin een email sturen naar de koper met de "
+"verkoop details. Als er digitale goederen zijn gekocht dan zal de e-mail de "
+"download links voor de gekochte producten tonen."
+
+#: wp_shopping_cart_settings.php:444
+msgid "From Email Address"
+msgstr "Van Emailadres"
+
+#: wp_shopping_cart_settings.php:446
+msgid ""
+"Example: Your Name &lt;sales@your-domain.com&gt; This is the email address "
+"that will be used to send the email to the buyer. This name and email "
+"address will appear in the from field of the email."
+msgstr ""
+"Voorbeeld: Uw Naam & lt; sales@jouw-domein.com&gt; Dit is het emailadres dat "
+"zal worden gebruikt om de e-mail te sturen naar de koper. Deze naam en e-"
+"mailadres verschijnen in het veld van de email."
+
+#: wp_shopping_cart_settings.php:450
+msgid "Buyer Email Subject"
+msgstr "Koper Email Onderwerp"
+
+#: wp_shopping_cart_settings.php:452
+msgid "This is the subject of the email that will be sent to the buyer."
+msgstr ""
+"Dit is het onderwerp van de email die aan de koper zal worden verzonden."
+
+#: wp_shopping_cart_settings.php:456
+msgid "Buyer Email Body"
+msgstr "Koper Email Inhoud"
+
+#: wp_shopping_cart_settings.php:459
+msgid ""
+"This is the body of the email that will be sent to the buyer. Do not change "
+"the text within the braces {}. You can use the following email tags in this "
+"email body field:"
+msgstr ""
+"Dit is de inhoud van de e-mail die naar de koper zal worden verzonden. "
+"Verander niet de tekst binnen de accolades {}. U kunt gebruik maken van de "
+"volgende e-tags in het email inhoudsveld: "
+
+#: wp_shopping_cart_settings.php:460 wp_shopping_cart_settings.php:492
+msgid "First name of the buyer"
+msgstr "Voornaam van de koper"
+
+#: wp_shopping_cart_settings.php:461 wp_shopping_cart_settings.php:493
+msgid "Last name of the buyer"
+msgstr "Achternaam van de koper"
+
+#: wp_shopping_cart_settings.php:462 wp_shopping_cart_settings.php:495
+msgid ""
+"The item details of the purchased product (this will include the download "
+"link for digital items)."
+msgstr ""
+"De item details van het gekochte product (dit bevat ook de eventuele "
+"download link voor digitale items)."
+
+#: wp_shopping_cart_settings.php:463 wp_shopping_cart_settings.php:496
+msgid "The unique transaction ID of the purchase"
+msgstr "De unieke transactie ID van de aankoop"
+
+#: wp_shopping_cart_settings.php:464 wp_shopping_cart_settings.php:497
+msgid "The amount paid for the current transaction"
+msgstr "De prijs betaald voor de huidige transactie"
+
+#: wp_shopping_cart_settings.php:465 wp_shopping_cart_settings.php:498
+msgid "The date of the purchase"
+msgstr "De datum van de aankoop"
+
+#: wp_shopping_cart_settings.php:466 wp_shopping_cart_settings.php:499
+msgid "Coupon code applied to the purchase"
+msgstr "Coupon code die is toegepast voor de aankoop"
+
+#: wp_shopping_cart_settings.php:471
+msgid "Send Emails to Seller After Purchase"
+msgstr "Stuur Emails naar de verkoper na aankoop"
+
+#: wp_shopping_cart_settings.php:472
+msgid ""
+"If checked the plugin will send an email to the seller with the sale details"
+msgstr ""
+"Indien aangevinkt zal de plugin een email  sturen naar de verkoper met de "
+"verkoop gegevens"
+
+#: wp_shopping_cart_settings.php:476
+msgid "Notification Email Address*"
+msgstr "Meldingen emailadres *"
+
+#: wp_shopping_cart_settings.php:478
+msgid ""
+"This is the email address where the seller will be notified of product "
+"sales. You can put multiple email addresses separated by comma (,) in the "
+"above field to send the notification to multiple email addresses."
+msgstr ""
+"Dit is het e-mailadres waarop de verkoper op de hoogte zal worden gesteld "
+"van de verkoop van producten. U kunt meerdere e-mailadressen, gescheiden "
+"door een komma (,) in het bovenstaande veld invoeren om de melding naar "
+"meerdere e-mailadressen te sturen."
+
+#: wp_shopping_cart_settings.php:482
+msgid "Seller Email Subject*"
+msgstr "Verkoper Email Onderwerp *"
+
+#: wp_shopping_cart_settings.php:484
+msgid ""
+"This is the subject of the email that will be sent to the seller for record."
+msgstr ""
+"Dit is het onderwerp van de email die naar de verkoper wordt verzonden ter "
+"bevestiging."
+
+#: wp_shopping_cart_settings.php:488
+msgid "Seller Email Body*"
+msgstr "Verkoper Email Inhoud*"
+
+#: wp_shopping_cart_settings.php:491
+msgid ""
+"This is the body of the email that will be sent to the seller for record. Do "
+"not change the text within the braces {}. You can use the following email "
+"tags in this email body field:"
+msgstr ""
+"Dit is de inhoud van de email die naar de verkoper wordt verzonden ter "
+"bevestiging. Verander de tekst binnen de accolades niet {}. U kunt gebruik "
+"maken van de volgende e-tags in dit email inhoudsgebied: "
+
+#: wp_shopping_cart_settings.php:494
+msgid "Email Address of the buyer"
+msgstr "Emailadres van de koper"
+
+#: wp_shopping_cart_shortcodes.php:19 wp_shopping_cart_shortcodes.php:49
+msgid "Error! You must specify a product name in the shortcode."
+msgstr "Fout! U moet een naam van het product in de shortcode specificeren."
+
+#: wp_shopping_cart_shortcodes.php:22 wp_shopping_cart_shortcodes.php:52
+msgid "Error! You must specify a price for your product in the shortcode."
+msgstr "Fout! U moet een prijs opgeven voor uw product in de shortcode."
+
+#: wp_shopping_cart_shortcodes.php:55
+msgid ""
+"Error! You must specify a thumbnail image for your product in the shortcode."
+msgstr ""
+"Fout! U moet een miniatuurafbeelding opgeven voor uw product in de shortcode."
+
+#: wp_shopping_cart_shortcodes.php:107
+msgid "View Cart"
+msgstr "Check Winkelwagen"
+
+#: wp_shopping_cart_shortcodes.php:112
+msgid "Cart is empty"
+msgstr "Winkelwagen is leeg"
+
+#: includes/wspsc-cart-functions.php:18
+msgid "Visit The Shop"
+msgstr "Bezoek De Winkel"
+
+#: includes/wspsc-cart-functions.php:59
+msgid "Cart"
+msgstr "Winkelwagen"
+
+#: includes/wspsc-cart-functions.php:67
+msgid "Hit enter to submit new Quantity."
+msgstr "Druk op enter om een nieuwe Hoeveelheid toe te voegen."
+
+#: includes/wspsc-cart-functions.php:77
+msgid "Item Name"
+msgstr "Item Naam"
+
+#: includes/wspsc-cart-functions.php:77
+msgid "Quantity"
+msgstr "Hoeveelheid"
+
+#: includes/wspsc-cart-functions.php:77
+msgid "Price"
+msgstr "Prijs"
+
+#: includes/wspsc-cart-functions.php:116
+msgid "Remove"
+msgstr "Verwijder"
+
+#: includes/wspsc-cart-functions.php:141
+msgid "Subtotal"
+msgstr "Subtotaal"
+
+#: includes/wspsc-cart-functions.php:154
+msgid "Enter Coupon Code"
+msgstr "Voer Coupon Code In"
+
+#: includes/wspsc-cart-functions.php:157
+msgid "Apply"
+msgstr "Pas Toe"
+
+#: includes/wspsc-cart-functions.php:177
+msgid "paypal_checkout_EN.png"
+msgstr "paypal_checkout_EN.png"
+
+#: includes/wspsc-cart-functions.php:177
+msgid "Make payments with PayPal - it\\'s fast, free and secure!"
+msgstr "Betaal me PayPal - het is snel, gratis en veilig!"
+
+#: lib/gallery-wp-cart.php:32
+msgid "[View with PicLens]"
+msgstr "[View with PicLens]"

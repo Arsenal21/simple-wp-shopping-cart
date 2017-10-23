@@ -1,0 +1,318 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPSC v2.8.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-16 21:48+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Tsukasa Takao <tsukasa.takao@gmail.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../wp_shopping_cart.php:33
+msgid "Your Shopping Cart"
+msgstr "あなたのカート"
+
+#: ../wp_shopping_cart.php:34
+msgid "Your cart is empty"
+msgstr "カートは空です"
+
+#: ../wp_shopping_cart.php:140
+msgid "Shopping Cart Configuration Error! You must specify a value in the 'Checkout Page URL' field for the automatic redirection feature to work!"
+msgstr "ショッピングカートの構成エラーです！　'Checkout Page URL'フィールドの値を設定し自動的に戻る機能が動くようにする必要があります。"
+
+#: ../wp_shopping_cart.php:197
+msgid "Visit The Shop"
+msgstr "お店を訪問"
+
+#: ../wp_shopping_cart.php:209
+#: ../wp_shopping_cart.php:606
+msgid "USD"
+msgstr "円"
+
+#: ../wp_shopping_cart.php:213
+#: ../wp_shopping_cart.php:609
+msgid "$"
+msgstr "￥"
+
+#: ../wp_shopping_cart.php:242
+msgid "Cart"
+msgstr "カート"
+
+#: ../wp_shopping_cart.php:251
+msgid "Hit enter to submit new Quantity."
+msgstr "新しい数量を入れたらエンターキーを押す"
+
+#: ../wp_shopping_cart.php:262
+msgid "Item Name"
+msgstr "品名"
+
+#: ../wp_shopping_cart.php:262
+msgid "Quantity"
+msgstr "数量"
+
+#: ../wp_shopping_cart.php:262
+msgid "Price"
+msgstr "価格"
+
+#: ../wp_shopping_cart.php:299
+msgid "Remove"
+msgstr "削除"
+
+#: ../wp_shopping_cart.php:329
+msgid "Subtotal"
+msgstr "小計"
+
+#: ../wp_shopping_cart.php:330
+msgid "Shipping"
+msgstr "送料"
+
+#: ../wp_shopping_cart.php:334
+msgid "Total"
+msgstr "合計"
+
+#: ../wp_shopping_cart.php:339
+msgid "paypal_checkout_EN.png"
+msgstr ""
+
+#: ../wp_shopping_cart.php:339
+msgid "Make payments with PayPal - it\\'s fast, free and secure!"
+msgstr "PayPalで払おうー 早い、安い、安全"
+
+#: ../wp_shopping_cart.php:387
+#: ../wp_shopping_cart.php:469
+#: ../wp_shopping_cart.php:528
+#: ../wp_shopping_cart.php:534
+#: ../wp_shopping_cart.php:622
+msgid "Add to Cart"
+msgstr "カートに追加"
+
+#: ../wp_shopping_cart.php:602
+msgid "Options Updated!"
+msgstr "オプションを更新しました"
+
+#: ../wp_shopping_cart.php:662
+msgid "Simple Paypal Shopping Cart Settings"
+msgstr "Simple Paypal Shopping Cart 設定"
+
+#: ../wp_shopping_cart.php:664
+msgid "For information, updates and detailed documentation, please visit:"
+msgstr "情報やドキュメントの詳細は、こちらを訪れてください："
+
+#: ../wp_shopping_cart.php:668
+msgid "Usage:"
+msgstr "使い方"
+
+#: ../wp_shopping_cart.php:670
+msgid "1. To add the 'Add to Cart' button simply add the trigger text"
+msgstr "1. ' カートに追加' ボタンを追加するには、トリガーとなるテキストを追加するだけです"
+
+#: ../wp_shopping_cart.php:670
+msgid "PRODUCT-NAME"
+msgstr ""
+
+#: ../wp_shopping_cart.php:670
+msgid "PRODUCT-PRICE"
+msgstr ""
+
+#: ../wp_shopping_cart.php:670
+msgid "to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price. For example: [wp_cart:Test Product:price:15.00:end]"
+msgstr "投稿や固定ページの製品の横にPRODUCT-NAMEとPRODUCT-PRICEを実際の名前と価格に入れ替えて置くだけです。例えば[wp_cart:試行品:price:１００:end]"
+
+#: ../wp_shopping_cart.php:671
+msgid "2. To add the shopping cart to a post or page (eg. checkout page) simply add the shortcode"
+msgstr "2. ショッピングカートを投稿や固定ページに加えるには（例えば：チェックアウトページ）単純に短いコードを加えます"
+
+#: ../wp_shopping_cart.php:671
+msgid "to a post or page or use the sidebar widget to add the shopping cart to the sidebar."
+msgstr "投稿や固定ページや、ショッピングカートをサイドバーウィジェットに入れ、サイドバーに表示します"
+
+#: ../wp_shopping_cart.php:679
+msgid "PayPal and Shopping Cart Settings"
+msgstr "PayPalとショッピングカートの設定"
+
+#: ../wp_shopping_cart.php:685
+msgid "Paypal Email Address"
+msgstr "Paypalメールアドレス"
+
+#: ../wp_shopping_cart.php:689
+msgid "Shopping Cart title"
+msgstr "ショッピングカートのタイトル"
+
+#: ../wp_shopping_cart.php:693
+msgid "Text/Image to Show When Cart Empty"
+msgstr "カートが空であることを示す文字か、イメージ"
+
+#: ../wp_shopping_cart.php:694
+msgid "You can either enter plain text or the URL of an image that you want to show when the shopping cart is empty"
+msgstr "ショッピングカートが空であることを示すために、単純なテキストか、イメージを示すURLを入力できます"
+
+#: ../wp_shopping_cart.php:697
+msgid "Currency"
+msgstr "通貨"
+
+#: ../wp_shopping_cart.php:698
+#: ../wp_shopping_cart.php:702
+#: ../wp_shopping_cart.php:728
+msgid "e.g."
+msgstr "例えば"
+
+#: ../wp_shopping_cart.php:701
+msgid "Currency Symbol"
+msgstr "通貨のシンボル"
+
+#: ../wp_shopping_cart.php:707
+msgid "Base Shipping Cost"
+msgstr "基本送料"
+
+#: ../wp_shopping_cart.php:708
+msgid "This is the base shipping cost that will be added to the total of individual products shipping cost. Put 0 if you do not want to charge shipping cost or use base shipping cost."
+msgstr "これは個々の製品の合計に加えられる送料です。０とすると、基本送料は課金されません"
+
+#: ../wp_shopping_cart.php:708
+msgid "Learn More on Shipping Calculation"
+msgstr "送料のさらなるオプション"
+
+#: ../wp_shopping_cart.php:712
+msgid "Free Shipping for Orders Over"
+msgstr "注文の送料無料"
+
+#: ../wp_shopping_cart.php:713
+msgid "When a customer orders more than this amount he/she will get free shipping. Leave empty if you do not want to use it."
+msgstr "お客さんの注文がこの金額を越えると、送料は無料になります。この機能を使いたくない場合は、なにも指定しないでください。"
+
+#: ../wp_shopping_cart.php:717
+msgid "Must Collect Shipping Address on PayPal"
+msgstr "Paypalからの送り先アドレスを正しいものとする"
+
+#: ../wp_shopping_cart.php:718
+msgid "If checked the customer will be forced to enter a shipping address on PayPal when checking out."
+msgstr "もし、これをチェックするとチェックアウト時に、Paypalに登録された送り先住所を強制されます。"
+
+#: ../wp_shopping_cart.php:722
+msgid "Use PayPal Profile Based Shipping"
+msgstr "Paypalプロファイルを基本とした送り先にする"
+
+#: ../wp_shopping_cart.php:723
+msgid "Check this if you want to use"
+msgstr "これをチェックすると、"
+
+#: ../wp_shopping_cart.php:723
+msgid "PayPal profile based shipping"
+msgstr "Paypalのプロファイルにある送り先を基本とします"
+
+#: ../wp_shopping_cart.php:723
+msgid "Using this will ignore any other shipping options that you have specified in this plugin."
+msgstr "このプラグインで設定している他の送り先オプションはすべて無視されます。"
+
+#: ../wp_shopping_cart.php:727
+msgid "Add to Cart button text or Image"
+msgstr "カートに加える　ボタンの文字かイメージ"
+
+#: ../wp_shopping_cart.php:728
+msgid "To use a customized image as the button simply enter the URL of the image file."
+msgstr "自分で作ったボタンのイメージを使いたい場合、ここでイメージファイルのURLを入力"
+
+#: ../wp_shopping_cart.php:732
+msgid "Return URL"
+msgstr "戻り先URL"
+
+#: ../wp_shopping_cart.php:733
+msgid "This is the URL the customer will be redirected to after a successful payment"
+msgstr "ここには支払いがうまくいったお客さんが転送される先のURLをいれる"
+
+#: ../wp_shopping_cart.php:737
+msgid "Products Page URL"
+msgstr "製品ページのURL"
+
+#: ../wp_shopping_cart.php:738
+msgid "This is the URL of your products page if you have any. If used, the shopping cart widget will display a link to this page when cart is empty"
+msgstr "製品紹介ページのURLをいれる。もし、設定するとショッピングカートが空の場合、このページへのリンクが表示される。"
+
+#: ../wp_shopping_cart.php:742
+msgid "Automatic redirection to checkout page"
+msgstr "チェックアウト後に自動的に転送される先のURL"
+
+#: ../wp_shopping_cart.php:744
+msgid "Checkout Page URL"
+msgstr "チェックアウトページのURL"
+
+#: ../wp_shopping_cart.php:745
+msgid "If checked the visitor will be redirected to the Checkout page after a product is added to the cart. You must enter a URL in the Checkout Page URL field for this to work."
+msgstr "ここをチェックした場合、訪問者はカートに製品を追加したのちチェックアウトページへ転送される。チェックアウトページのURLを入れる必要がある"
+
+#: ../wp_shopping_cart.php:749
+msgid "Reset Cart After Redirection to Return Page"
+msgstr "戻り先のページから転送されてきた場合、カートをリセットする"
+
+#: ../wp_shopping_cart.php:751
+msgid "If checked the shopping cart will be reset when the customer lands on the return URL (Thank You) page."
+msgstr "もしチェックした場合、ショッピングカートは、お客さんが戻り先URL（ありがとうございます）ページにつくとリセットされる。"
+
+#: ../wp_shopping_cart.php:758
+msgid "Hide Shopping Cart Image"
+msgstr "ショッピングカートのイメージを隠す"
+
+#: ../wp_shopping_cart.php:759
+msgid "If ticked the shopping cart image will not be shown."
+msgstr "もしチェックしたら、ショッピングカートのイメージは表示されない"
+
+#: ../wp_shopping_cart.php:765
+msgid "Use WP Affiliate Platform"
+msgstr "WP Affiliate Platformを使う"
+
+#: ../wp_shopping_cart.php:767
+msgid "Check this if using with the"
+msgstr "使うならチェックする"
+
+#: ../wp_shopping_cart.php:767
+msgid "This plugin lets you run your own affiliate campaign/program and allows you to reward (pay commission) your affiliates for referred sales"
+msgstr "このプラグインはあなた自身がアフィリエイト・キャンペーンプログラムを行ったりコミッションをアフィリエイトに支払ったりできます"
+
+#: ../wp_shopping_cart.php:772
+msgid "Update Options &raquo;"
+msgstr "&raquo 更新オプション"
+
+#: ../wp_shopping_cart.php:776
+msgid "Like the Simple WordPress Shopping Cart Plugin?"
+msgstr "Simple WordPress Shopping Cart プラグインは気に入りましたか？"
+
+#: ../wp_shopping_cart.php:776
+msgid "Give it a good rating"
+msgstr "よいレートをあたえる"
+
+#: ../wp_shopping_cart.php:781
+msgid "WP Paypal Shopping Cart Options"
+msgstr "WP Paypal shopping Cart オプション"
+
+#: ../wp_shopping_cart.php:791
+#: ../wp_shopping_cart.php:819
+#: ../wp_shopping_cart.php:820
+msgid "WP Paypal Shopping Cart"
+msgstr ""
+
+#: ../wp_shopping_cart.php:791
+msgid "WP Shopping Cart"
+msgstr ""
+
+#: ../wp_shopping_cart.php:799
+msgid "Shopping Cart"
+msgstr "買い物かご"
+
+#: ../wp_shopping_cart.php:811
+msgid "Set the Plugin Settings from the Settings menu"
+msgstr "設定メニューからプラグインの設定をする"
+
+#: ../wp_shopping_cart.php:818
+msgid "Display WP Paypal Shopping Cart."
+msgstr "WP Paypal shopping Cartの表示"
+
+#: ../wp_shopping_cart.php:832
+msgid "Settings"
+msgstr "設定"
+

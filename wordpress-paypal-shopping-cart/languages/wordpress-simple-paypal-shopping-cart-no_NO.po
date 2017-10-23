@@ -1,0 +1,727 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Simple PayPal Shopping Cart\n"
+"POT-Creation-Date: 2014-01-24 16:14+1000\n"
+"PO-Revision-Date: 2014-09-25 23:14+0100\n"
+"Last-Translator: R. F. Sivertsen <sivertsenIKT@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nb_NO\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: class-coupon.php:19
+msgid "Admin needs to configure some discount coupons before it can be used"
+msgstr "Sideadministrtor må sette opp rabattkuponger før de kan benyttes!"
+
+#: class-coupon.php:85
+msgid "Coupon ID: "
+msgstr "Kupong ID:"
+
+#: class-coupon.php:86
+msgid "Coupon Code: "
+msgstr "Kupongkode:"
+
+#: class-coupon.php:87
+msgid "Discount Amt: "
+msgstr "Rabatt:"
+
+#: class-coupon.php:96
+msgid "Coupon code used does not exist!"
+msgstr "Kupongkoden finns ikke!"
+
+#: class-coupon.php:101
+msgid "Discount can only be applied once per checkout!"
+msgstr "Rabatt kan bare gjelde en gang pr bestilling!"
+
+#: class-coupon.php:123
+msgid "Discount applied successfully! Total Discount: "
+msgstr "Rabatten er trukket fra.  Total rabatt:"
+
+#: wp_shopping_cart.php:167
+msgid "Error! Your session is out of sync. Please reset your session."
+msgstr "Ups!  Sesjonene er blitt avbrutt.  Vennligst begynn på nytt.."
+
+#: wp_shopping_cart.php:177
+msgid ""
+"Shopping Cart Configuration Error! You must specify a value in the 'Checkout "
+"Page URL' field for the automatic redirection feature to work!"
+msgstr ""
+"Feil i konfigureringen av plugin.  Det må spesifiseres verdi i feltet "
+"'Bestillingssidens URL' slik at automatisk sideåpning kan fungere!"
+
+#: wp_shopping_cart.php:259
+msgid "Visit The Shop"
+msgstr "Besøk butikken"
+
+#: wp_shopping_cart.php:271 wp_shopping_cart_settings.php:101
+msgid "USD"
+msgstr "usd"
+
+#: wp_shopping_cart.php:275 wp_shopping_cart_settings.php:104
+msgid "$"
+msgstr "$"
+
+#: wp_shopping_cart.php:301
+msgid "Cart"
+msgstr "Handlevogn"
+
+#: wp_shopping_cart.php:310
+msgid "Hit enter to submit new Quantity."
+msgstr "Taste Enter for å oppdatere antall"
+
+#: wp_shopping_cart.php:321
+msgid "Item Name"
+msgstr "Produkt"
+
+#: wp_shopping_cart.php:321
+msgid "Quantity"
+msgstr "Antall"
+
+#: wp_shopping_cart.php:321
+msgid "Price"
+msgstr "Pris"
+
+#: wp_shopping_cart.php:355
+msgid "Remove"
+msgstr "Ta bort"
+
+#: wp_shopping_cart.php:384
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#: wp_shopping_cart.php:385
+msgid "Shipping"
+msgstr "Frakt"
+
+#: wp_shopping_cart.php:388 wp_shopping_cart_orders.php:89
+#: wp_shopping_cart_orders.php:152
+msgid "Total"
+msgstr "Total"
+
+#: wp_shopping_cart.php:397
+msgid "Enter Coupon Code"
+msgstr "Oppgi kupong-kode"
+
+#: wp_shopping_cart.php:400
+msgid "Apply"
+msgstr "Velg"
+
+#: wp_shopping_cart.php:414
+msgid "paypal_checkout_EN.png"
+msgstr "paypal_checkout_EN.png"
+
+#: wp_shopping_cart.php:414
+msgid "Make payments with PayPal - it\\'s fast, free and secure!"
+msgstr "Betal gjennom Pay-Pal! Det er raskt, gratis og sikkert!"
+
+#: wp_shopping_cart.php:476 wp_shopping_cart.php:559 wp_shopping_cart.php:618
+#: wp_shopping_cart.php:666 wp_shopping_cart.php:672
+#: wp_shopping_cart_settings.php:117
+msgid "Add to Cart"
+msgstr "Legg i handlevogn"
+
+#: wp_shopping_cart.php:744
+msgid "WP Paypal Shopping Cart"
+msgstr "WP Paypal handlevogn"
+
+#: wp_shopping_cart.php:744
+msgid "WP Shopping Cart"
+msgstr "WP handlevogn"
+
+#: wp_shopping_cart.php:767
+msgid "Shopping Cart"
+msgstr "Handlevogn"
+
+#: wp_shopping_cart.php:793
+msgid "Settings"
+msgstr "Instillinger"
+
+#: wp_shopping_cart_discounts_menu.php:51 wp_shopping_cart_settings.php:172
+#: wp_shopping_cart_settings.php:366
+msgid ""
+"For more information, updates, detailed documentation and video tutorial, "
+"please visit:"
+msgstr "For mer informasjon, oppdateringer og detaljert dokumentasjon gå til"
+
+#: wp_shopping_cart_discounts_menu.php:52 wp_shopping_cart_settings.php:173
+#: wp_shopping_cart_settings.php:367
+msgid "WP Simple Cart Homepage"
+msgstr "WP Simple Cart Homepage"
+
+#: wp_shopping_cart_discounts_menu.php:60
+msgid "Coupon/Discount Settings"
+msgstr "Kupong- og rabattinstillinger"
+
+#: wp_shopping_cart_discounts_menu.php:67
+msgid "Enable Discount Coupon Feature"
+msgstr "Slå på rabatt/kupongfunksjon"
+
+#: wp_shopping_cart_discounts_menu.php:70
+msgid ""
+"When checked your customers will be able to enter a coupon code in the "
+"shopping cart before checkout."
+msgstr ""
+"Når kunden sjekker ut vil de kunne oppgi kupongkode i handlevogn før "
+"betaling."
+
+#: wp_shopping_cart_discounts_menu.php:77
+msgid "Update &raquo;"
+msgstr "Oppdatere &raquo;"
+
+#: wp_shopping_cart_discounts_menu.php:93
+msgid "Add Coupon/Discount"
+msgstr "Legg til kupong/rabatt"
+
+#: wp_shopping_cart_discounts_menu.php:113
+msgid "Save Coupon &raquo;"
+msgstr "Lagre kupong &raquo;"
+
+#: wp_shopping_cart_discounts_menu.php:131
+msgid "Coupon Code"
+msgstr "Kupongkode"
+
+#: wp_shopping_cart_discounts_menu.php:132
+msgid "Discount Rate (%)"
+msgstr "Rabatt i %"
+
+#: wp_shopping_cart_discounts_menu.php:161
+msgid "No Coupons Configured."
+msgstr "Ingen kuponger er definert"
+
+#: wp_shopping_cart_discounts_menu.php:166
+msgid "No Record found"
+msgstr "Ingen data funnet"
+
+#: wp_shopping_cart_misc_functions.php:155
+msgid "Your Shopping Cart"
+msgstr "Din handlevogn"
+
+#: wp_shopping_cart_misc_functions.php:156
+msgid "Your cart is empty"
+msgstr "Handlevognen er tom"
+
+#: wp_shopping_cart_orders.php:10
+msgid "Cart Orders"
+msgstr "Bestillinger"
+
+#: wp_shopping_cart_orders.php:11
+msgid "Cart Order"
+msgstr "Bestilling"
+
+#: wp_shopping_cart_orders.php:12
+msgid "Add New"
+msgstr "Legg til ny"
+
+#: wp_shopping_cart_orders.php:13
+msgid "Add New Order"
+msgstr "Legg til ny bestilling"
+
+#: wp_shopping_cart_orders.php:14
+msgid "Edit"
+msgstr "Rediger"
+
+#: wp_shopping_cart_orders.php:15
+msgid "Edit Order"
+msgstr "Rediger bestilling"
+
+#: wp_shopping_cart_orders.php:16
+msgid "New Order"
+msgstr "Ny bestilling"
+
+#: wp_shopping_cart_orders.php:17
+msgid "View"
+msgstr "Vis"
+
+#: wp_shopping_cart_orders.php:18
+msgid "View Order"
+msgstr "Se bestilling"
+
+#: wp_shopping_cart_orders.php:19
+msgid "Search Order"
+msgstr "Søk etter bestilling"
+
+#: wp_shopping_cart_orders.php:20
+msgid "No order found"
+msgstr "Ingen bestilling funnet"
+
+#: wp_shopping_cart_orders.php:21
+msgid "No order found in Trash"
+msgstr "Ingen bestilling i søppelkurv"
+
+#: wp_shopping_cart_orders.php:22
+msgid "Parent Order"
+msgstr "Overordnet bestilling"
+
+#: wp_shopping_cart_orders.php:38
+msgid "Order Review"
+msgstr "Bestillingsoversikt"
+
+#: wp_shopping_cart_orders.php:68
+msgid "Order ID: #"
+msgstr "Bestillingsnr: #"
+
+#: wp_shopping_cart_orders.php:70
+msgid "Transaction ID: #"
+msgstr "TransaksjonsID: #"
+
+#: wp_shopping_cart_orders.php:73 wp_shopping_cart_orders.php:149
+msgid "First Name"
+msgstr "Fornavn"
+
+#: wp_shopping_cart_orders.php:77 wp_shopping_cart_orders.php:150
+msgid "Last Name"
+msgstr "Etternavn"
+
+#: wp_shopping_cart_orders.php:81
+msgid "Email Address"
+msgstr "Mailadresse"
+
+#: wp_shopping_cart_orders.php:85
+msgid "IP Address"
+msgstr "IP - adresse"
+
+#: wp_shopping_cart_orders.php:93
+msgid "Address"
+msgstr "Postadresse"
+
+#: wp_shopping_cart_orders.php:97
+msgid "Buyer Email Sent?"
+msgstr "Kundemail sendt?"
+
+#: wp_shopping_cart_orders.php:101
+msgid "Item(s) Ordered:"
+msgstr "Bestilte produkter:"
+
+#: wp_shopping_cart_orders.php:105
+msgid "Applied Coupon Code:"
+msgstr "Kupongkode benyttet:"
+
+#: wp_shopping_cart_orders.php:148
+msgid "Order ID"
+msgstr "Ordrenummer"
+
+#: wp_shopping_cart_orders.php:151
+msgid "Email"
+msgstr "Email"
+
+#: wp_shopping_cart_orders.php:153
+msgid "Status"
+msgstr "Status"
+
+#: wp_shopping_cart_orders.php:154
+msgid "Date"
+msgstr "Dato"
+
+#: wp_shopping_cart_settings.php:10
+msgid "WP Paypal Shopping Cart Options"
+msgstr "Instillinger for WP Paypal Shopping Cart"
+
+#: wp_shopping_cart_settings.php:97
+msgid "Options Updated!"
+msgstr "Instillinger Oppdatert!"
+
+#: wp_shopping_cart_settings.php:169
+msgid "Simple PayPal Shopping Cart Settings"
+msgstr "Instillinger for Simple PayPal Shopping Cart"
+
+#: wp_shopping_cart_settings.php:177
+msgid "Quick Usage Guide"
+msgstr "Hurtig-guide"
+
+#: wp_shopping_cart_settings.php:180
+msgid "Step 1) "
+msgstr "Trinn 1)"
+
+#: wp_shopping_cart_settings.php:180
+msgid "To add an 'Add to Cart' button for a product simply add the shortcode"
+msgstr "Legg til 'short-code' for å legge til en 'Add to Cart' - knapp "
+
+#: wp_shopping_cart_settings.php:180
+msgid "PRODUCT-NAME"
+msgstr "PRODUCT-NAME"
+
+#: wp_shopping_cart_settings.php:180
+msgid "PRODUCT-PRICE"
+msgstr "PRODUCT-PRICE"
+
+#: wp_shopping_cart_settings.php:180
+msgid ""
+"to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-"
+"PRICE with the actual name and price of your product."
+msgstr ""
+"ved produktet i et innlegg eller på en side.  Bytt ut  PRODUCT-NAME og "
+"PRODUCT-PRICE med faktisk navn og pris på produktet."
+
+#: wp_shopping_cart_settings.php:181
+msgid "Example add to cart button shortcode usage:"
+msgstr "Eksempel på legge til shortcode for 'Add to Cart' - knapp"
+
+#: wp_shopping_cart_settings.php:182
+msgid "Step 2) "
+msgstr "Trinn 2)"
+
+#: wp_shopping_cart_settings.php:182
+msgid ""
+"To add the shopping cart to a post or page (example: a checkout page) simply "
+"add the shortcode"
+msgstr ""
+"For å legge til handlevogn til en side eller et innlegg (f.eks. Din Ordre) "
+"legger du ganske enkelt til shortcode"
+
+#: wp_shopping_cart_settings.php:182
+msgid ""
+"to a post or page or use the sidebar widget to add the shopping cart to the "
+"sidebar."
+msgstr ""
+"til et innlegg eller en side bruker du 'sidebar widget' for å legge "
+"handlevogn til sidebaren."
+
+#: wp_shopping_cart_settings.php:183
+msgid "Example shopping cart shortcode usage:"
+msgstr "Eksempel på bruk av shortcode:"
+
+#: wp_shopping_cart_settings.php:192
+msgid "PayPal and Shopping Cart Settings"
+msgstr "Instillinger for PayPal handlevogn"
+
+#: wp_shopping_cart_settings.php:198
+msgid "Paypal Email Address"
+msgstr "PayPal e-mail adresse"
+
+#: wp_shopping_cart_settings.php:202
+msgid "Shopping Cart title"
+msgstr "Handlevognstittel"
+
+#: wp_shopping_cart_settings.php:206
+msgid "Text/Image to Show When Cart Empty"
+msgstr "Tekst eller bilde som vises om handlevogn er tom"
+
+#: wp_shopping_cart_settings.php:207
+msgid ""
+"You can either enter plain text or the URL of an image that you want to show "
+"when the shopping cart is empty"
+msgstr ""
+"Bruk enten enkel tekst eller URL til et bilde for å vise at handlevognen er "
+"tom"
+
+#: wp_shopping_cart_settings.php:210
+msgid "Currency"
+msgstr "Valuta"
+
+#: wp_shopping_cart_settings.php:211 wp_shopping_cart_settings.php:215
+#: wp_shopping_cart_settings.php:242
+msgid "e.g."
+msgstr "f.eks."
+
+#: wp_shopping_cart_settings.php:214
+msgid "Currency Symbol"
+msgstr "Valutasymbol"
+
+#: wp_shopping_cart_settings.php:220
+msgid "Base Shipping Cost"
+msgstr "Standard fraktomkostninger"
+
+#: wp_shopping_cart_settings.php:221
+msgid ""
+"This is the base shipping cost that will be added to the total of individual "
+"products shipping cost. Put 0 if you do not want to charge shipping cost or "
+"use base shipping cost."
+msgstr ""
+"Dette er standard fraktomkostninger som vil bli lagt til de enkelte "
+"produktenes fraktkostnad. Sett inn 0 om du ikke vil benytte fraktkostnad "
+"eller standard fraktkostnad"
+
+#: wp_shopping_cart_settings.php:221
+msgid "Learn More on Shipping Calculation"
+msgstr "Lær mer om beregning av fraktkostnad"
+
+#: wp_shopping_cart_settings.php:225
+msgid "Free Shipping for Orders Over"
+msgstr "Gratis frakt for ordreverdi over "
+
+#: wp_shopping_cart_settings.php:226
+msgid ""
+"When a customer orders more than this amount he/she will get free shipping. "
+"Leave empty if you do not want to use it."
+msgstr ""
+"Om en kunde handler for mer enn dette beløpet leveres varene fraktfritt.  "
+"Sett dette feltet tomt om du ikke vil bruke dette alternativet."
+
+#: wp_shopping_cart_settings.php:230
+msgid "Must Collect Shipping Address on PayPal"
+msgstr "Må hente leveringsadresse fra PayPal"
+
+#: wp_shopping_cart_settings.php:231
+msgid ""
+"If checked the customer will be forced to enter a shipping address on PayPal "
+"when checking out."
+msgstr ""
+"Hvis huket av blir kunden tvunget til å oppgi leveringsadresse på PayPal."
+
+#: wp_shopping_cart_settings.php:235
+msgid "Use PayPal Profile Based Shipping"
+msgstr "Bruk frakt basert på profil i PayPal"
+
+#: wp_shopping_cart_settings.php:236
+msgid "Check this if you want to use"
+msgstr "Huk av for denne dersom du vil"
+
+#: wp_shopping_cart_settings.php:236
+msgid "PayPal profile based shipping"
+msgstr "frakt basert på profil i PayPal"
+
+#: wp_shopping_cart_settings.php:236
+msgid ""
+"Using this will ignore any other shipping options that you have specified in "
+"this plugin."
+msgstr ""
+"Denne opsjonen vil ignorere alle andre fraktinstillinger du har spesifisert"
+
+#: wp_shopping_cart_settings.php:240
+msgid "Add to Cart button text or Image"
+msgstr "Tekst eller bilde for å legge til handlevogn"
+
+#: wp_shopping_cart_settings.php:242
+msgid ""
+"To use a customized image as the button simply enter the URL of the image "
+"file."
+msgstr "Oppgi URL for å bruke et selvvalgt bilde til knappen"
+
+#: wp_shopping_cart_settings.php:248
+msgid "Return URL"
+msgstr "URL å sendes tilbake til"
+
+#: wp_shopping_cart_settings.php:249
+msgid ""
+"This is the URL the customer will be redirected to after a successful payment"
+msgstr ""
+"Kunden sendes tilbake til denne URL når betalingen er gjennomført og godkjent"
+
+#: wp_shopping_cart_settings.php:253
+msgid "Products Page URL"
+msgstr "Produktsidens URL"
+
+#: wp_shopping_cart_settings.php:254
+msgid ""
+"This is the URL of your products page if you have any. If used, the shopping "
+"cart widget will display a link to this page when cart is empty"
+msgstr ""
+"Dette er URL til produktsiden - om du benytter dette. Hvis brukt vil widget "
+"for handlevogn vise en link til denne siden om handlevognen er tom"
+
+#: wp_shopping_cart_settings.php:258
+msgid "Automatic redirection to checkout page"
+msgstr "Automatisk retur til siden for dine ordre"
+
+#: wp_shopping_cart_settings.php:260
+msgid "Checkout Page URL"
+msgstr "URL for dine ordre"
+
+#: wp_shopping_cart_settings.php:261
+msgid ""
+"If checked the visitor will be redirected to the Checkout page after a "
+"product is added to the cart. You must enter a URL in the Checkout Page URL "
+"field for this to work."
+msgstr ""
+"Om huket av, vil kunden sendes til siden for sine ordre etter at et produkt "
+"er lagt til handlevognen.  Du må legge til en URL i 'URL for dine ordre' for "
+"å dette skal fungere."
+
+#: wp_shopping_cart_settings.php:265
+msgid "Reset Cart After Redirection to Return Page"
+msgstr "Nullstill handlevogn etter retur til websiden"
+
+#: wp_shopping_cart_settings.php:267
+msgid ""
+"If checked the shopping cart will be reset when the customer lands on the "
+"return URL (Thank You) page."
+msgstr ""
+"Om huket av vil handlevognen tømmes når kunden returnerer til Takk for ordre "
+"- side"
+
+#: wp_shopping_cart_settings.php:274
+msgid "Hide Shopping Cart Image"
+msgstr "Skjul bilde av handlevogn"
+
+#: wp_shopping_cart_settings.php:275
+msgid "If ticked the shopping cart image will not be shown."
+msgstr "Om huket av vil ikke bilde av handlevogn vises"
+
+#: wp_shopping_cart_settings.php:281
+msgid "Customize the Note to Seller Text"
+msgstr "Tilpass melding til selger"
+
+#: wp_shopping_cart_settings.php:283
+msgid ""
+"Specify the text that you want to use for the note field on PayPal checkout "
+"page to collect special instruction (leave this field empty if you don't "
+"need to customize it). The default label for the note field is \"Add special "
+"instructions to merchant\"."
+msgstr ""
+"Spesifiser teksten du vil bruke for notatfeltet på PayPals utsjekkingsside "
+"for å samle spesielle instruksjoner (la feltet være tomt om du ikke trenger "
+"å tilpasse det). Standardteksten for notatfeltet er \"Add special "
+"instructions to merchant\"."
+
+#: wp_shopping_cart_settings.php:289
+msgid "Use WP Affiliate Platform"
+msgstr "Bruk WP Affiliate Platform"
+
+#: wp_shopping_cart_settings.php:291
+msgid "Check this if using with the"
+msgstr "Huk av for denne dersom du bruker med"
+
+#: wp_shopping_cart_settings.php:291
+msgid ""
+"This plugin lets you run your own affiliate campaign/program and allows you "
+"to reward (pay commission) your affiliates for referred sales"
+msgstr ""
+"This plugin lets you run your own affiliate campaign/program and allows you "
+"to reward (pay commission) your affiliates for referred sales"
+
+#: wp_shopping_cart_settings.php:297
+msgid "Testing and Debugging Settings"
+msgstr "Instillinger for test og debugging"
+
+#: wp_shopping_cart_settings.php:303
+msgid "Enable Debug"
+msgstr "Slå på debugging"
+
+#: wp_shopping_cart_settings.php:305
+msgid ""
+"If checked, debug output will be written to the log file. This is useful for "
+"troubleshooting post payment failures"
+msgstr ""
+"Huk av for at debugging vil skrives til logfilen. Dette er nyttig for å "
+"feilsøke de fleste betalingsfeil."
+
+#: wp_shopping_cart_settings.php:315
+msgid "Enable Sandbox Testing"
+msgstr "Slå på testing i Sandbox"
+
+#: wp_shopping_cart_settings.php:317
+msgid ""
+"Check this option if you want to do PayPal sandbox testing. You will need to "
+"create a PayPal sandbox account from PayPal Developer site"
+msgstr ""
+"Huk av for dette dersom du vil foreta testing i PayPal Sandbox.  Du må da "
+"opprette en PayPal Sandbox - konto på PayPal utviklersiden"
+
+#: wp_shopping_cart_settings.php:326 wp_shopping_cart_settings.php:415
+msgid "Update Options &raquo;"
+msgstr "Oppdateringsalternativer&raquo;"
+
+#: wp_shopping_cart_settings.php:330
+msgid "Like the Simple WordPress Shopping Cart Plugin?"
+msgstr "Liker du tillegget Simple WordPress Shopping Cart Plugin?"
+
+#: wp_shopping_cart_settings.php:330
+msgid "Give it a good rating"
+msgstr "Gi tillegget god vurdering"
+
+#: wp_shopping_cart_settings.php:333
+msgid "Need a shopping cart plugin with more features? Checkout my "
+msgstr "Trenger du en handlevogn med flere muligheter? Se min"
+
+#: wp_shopping_cart_settings.php:334
+msgid "WP eStore Plugin"
+msgstr "WP eStore Plugin"
+
+#: wp_shopping_cart_settings.php:375
+msgid "Purchase Confirmation Email Settings"
+msgstr "Instillinger for email med bekreftelse av kjøp"
+
+#: wp_shopping_cart_settings.php:378
+msgid ""
+"The following options affect the emails that gets sent to your buyers after "
+"a purchase."
+msgstr "De følgende valgene gjelder mail som blir sendt til kunden etter kjøp"
+
+#: wp_shopping_cart_settings.php:383
+msgid "Send Emails to Buyer After Purchase"
+msgstr "Send mail til kunden etter kjøp"
+
+#: wp_shopping_cart_settings.php:384
+msgid ""
+"If checked the plugin will send an email to the buyer with the sale details. "
+"If digital goods are purchased then the email will contain the download "
+"links for the purchased products."
+msgstr ""
+"Om huket av vil det bli sendt en mail til kunden med detaljer om kjøpet.  Om "
+"digitale produkter er kjøpt, vil mailen inneholde link til det eller de "
+"kjøpte produktene."
+
+#: wp_shopping_cart_settings.php:388
+msgid "From Email Address"
+msgstr "Fra adresse i mailen"
+
+#: wp_shopping_cart_settings.php:390
+msgid ""
+"Example: Your Name &lt;sales@your-domain.com&gt; This is the email address "
+"that will be used to send the email to the buyer. This name and email "
+"address will appear in the from field of the email."
+msgstr ""
+"Eksepel:  Your Name &lt;sales@your-domain.com&gt; Dette er mailadressen som "
+"vil bli brukt for å sende mail til kunden.  Navnet og mailadressen vil vises "
+"i fra - feltet i mailen"
+
+#: wp_shopping_cart_settings.php:394
+msgid "Buyer Email Subject"
+msgstr "Kundens mail-tittel"
+
+#: wp_shopping_cart_settings.php:396
+msgid "This is the subject of the email that will be sent to the buyer."
+msgstr "Dette er tittelen i mailen som blir sendt til kunden"
+
+#: wp_shopping_cart_settings.php:400
+msgid "Buyer Email Body"
+msgstr "Kundens mail-melding"
+
+#: wp_shopping_cart_settings.php:403
+msgid ""
+"This is the body of the email that will be sent to the buyer. Do not change "
+"the text within the braces {}. You can use the following email tags in this "
+"email body field:"
+msgstr ""
+"Meldingsteksten som vil bli sendt til kunden.  Endre ikke tekst i klammer "
+"{}.  Du kan bruke følgede tags i meldingsteksten:"
+
+#: wp_shopping_cart_settings.php:404
+msgid "First name of the buyer"
+msgstr "Kjøperens fornavn"
+
+#: wp_shopping_cart_settings.php:405
+msgid "Last name of the buyer"
+msgstr "Kjøperens etternavn"
+
+#: wp_shopping_cart_settings.php:406
+msgid ""
+"The item details of the purchased product (this will include the download "
+"link for digital items)."
+msgstr ""
+"Detaljer om produktet som er kjøpt (inkludert ev. link til digitale produkt)."
+
+#: wp_shopping_cart_shortcodes.php:16 wp_shopping_cart_shortcodes.php:40
+msgid "Error! You must specify a product name in the shortcode."
+msgstr "Feil!  Du må spesifisere et produktnavn i Shortcode"
+
+#: wp_shopping_cart_shortcodes.php:19 wp_shopping_cart_shortcodes.php:43
+msgid "Error! You must specify a price for your product in the shortcode."
+msgstr "Feil! Du må spesifisere en pris for produktet i Shortcode"
+
+#: wp_shopping_cart_shortcodes.php:46
+msgid ""
+"Error! You must specify a thumbnail image for your product in the shortcode."
+msgstr ""
+"Feil!  Du må spsifisere et miniatyrbilde (Thumbnail) for produktet i "
+"Shortcode."
+
+#: lib/gallery-wp-cart.php:32
+msgid "[View with PicLens]"
+msgstr "[Vis med PicLens]"

@@ -1,0 +1,319 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wordpress-simple-paypal-shopping-cart v2.8.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-16 21:50+0100\n"
+"PO-Revision-Date: 2011-03-16 22:24+0100\n"
+"Last-Translator: Patrick Skiebe <patrick@skiebe.eu>\n"
+"Language-Team: Patrick Skiebe <patrick@skiebe.eu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../wp_shopping_cart.php:33
+msgid "Your Shopping Cart"
+msgstr "Ihr Warenkorb"
+
+#: ../wp_shopping_cart.php:34
+msgid "Your cart is empty"
+msgstr "Ihr Warenkorb ist leer"
+
+#: ../wp_shopping_cart.php:140
+msgid "Shopping Cart Configuration Error! You must specify a value in the 'Checkout Page URL' field for the automatic redirection feature to work!"
+msgstr "Fehlerhafte Konfiguration des Warenkorbs! Damit die automatische Weiterleitung funktioniert, müssen Sie in dem Feld 'Zur Kasse - Seite' eine URL eintragen."
+
+#: ../wp_shopping_cart.php:197
+msgid "Visit The Shop"
+msgstr "Besuchen Sie den Shop"
+
+#: ../wp_shopping_cart.php:209
+#: ../wp_shopping_cart.php:606
+msgid "USD"
+msgstr "EUR"
+
+#: ../wp_shopping_cart.php:213
+#: ../wp_shopping_cart.php:609
+msgid "$"
+msgstr "€"
+
+#: ../wp_shopping_cart.php:242
+msgid "Cart"
+msgstr "Warenkorb"
+
+#: ../wp_shopping_cart.php:251
+msgid "Hit enter to submit new Quantity."
+msgstr "Drücken Sie Enter um eine neue Menge festzulegen"
+
+#: ../wp_shopping_cart.php:262
+msgid "Item Name"
+msgstr "Artikel"
+
+#: ../wp_shopping_cart.php:262
+msgid "Quantity"
+msgstr "Menge"
+
+#: ../wp_shopping_cart.php:262
+msgid "Price"
+msgstr "Preis"
+
+#: ../wp_shopping_cart.php:299
+msgid "Remove"
+msgstr "Entfernen"
+
+#: ../wp_shopping_cart.php:329
+msgid "Subtotal"
+msgstr "Zwischensumme"
+
+#: ../wp_shopping_cart.php:330
+msgid "Shipping"
+msgstr "Versand"
+
+#: ../wp_shopping_cart.php:334
+msgid "Total"
+msgstr "Gesamtsumme"
+
+#: ../wp_shopping_cart.php:339
+msgid "paypal_checkout_EN.png"
+msgstr "paypal_checkout_DE.png"
+
+#: ../wp_shopping_cart.php:339
+msgid "Make payments with PayPal - it\\'s fast, free and secure!"
+msgstr "Zahlen Sie mit PayPal - Es ist schnell, kostenlos und sicher!"
+
+#: ../wp_shopping_cart.php:387
+#: ../wp_shopping_cart.php:469
+#: ../wp_shopping_cart.php:528
+#: ../wp_shopping_cart.php:534
+#: ../wp_shopping_cart.php:622
+msgid "Add to Cart"
+msgstr "Zum Warenkorb hinzufügen"
+
+#: ../wp_shopping_cart.php:602
+msgid "Options Updated!"
+msgstr "Die Einstellungen wurden aktualisiert!"
+
+#: ../wp_shopping_cart.php:662
+msgid "Simple Paypal Shopping Cart Settings"
+msgstr "Simple Paypal Shopping Cart Einstellungen"
+
+#: ../wp_shopping_cart.php:664
+msgid "For information, updates and detailed documentation, please visit:"
+msgstr "Für Informationen, Updates und eine detailierte Dokumentation besuchen Sie bitte:"
+
+#: ../wp_shopping_cart.php:668
+msgid "Usage:"
+msgstr "Verwendung:"
+
+#: ../wp_shopping_cart.php:670
+msgid "1. To add the 'Add to Cart' button simply add the trigger text"
+msgstr "1. Um den 'Zum Warenkorb hinzufügen'-Button auf einer Seite oder in einem Artikel zu platzieren, verwenden Sie den Text"
+
+#: ../wp_shopping_cart.php:670
+msgid "PRODUCT-NAME"
+msgstr "PRODUKTNAME"
+
+#: ../wp_shopping_cart.php:670
+msgid "PRODUCT-PRICE"
+msgstr "PRODUKTPREIS"
+
+#: ../wp_shopping_cart.php:670
+msgid "to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price. For example: [wp_cart:Test Product:price:15.00:end]"
+msgstr "in einem Artikel oder auf einer Seite neben dem Produkt. Ersetzen Sie bitte PRODUKTNAME und PRODUKTPREIS mit dem tatsächlichen Namen und Preis des Produkts. Zum Beispiel: [wp_cart:Testprodukt:price:15.00:end]"
+
+#: ../wp_shopping_cart.php:671
+msgid "2. To add the shopping cart to a post or page (eg. checkout page) simply add the shortcode"
+msgstr "2. Um den Warenkorb auf einer Seite oder in einem Artikel anzuzeigen (z.B. auf der 'Bestellung abschließen' Seite) verwenden sie einfach den Text"
+
+#: ../wp_shopping_cart.php:671
+msgid "to a post or page or use the sidebar widget to add the shopping cart to the sidebar."
+msgstr "in einem Artikel oder auf einer Seite. Oder Sie aktivieren das Sidebar Widget um den Warenkorb in der Sidebar anzuzeigen."
+
+#: ../wp_shopping_cart.php:679
+msgid "PayPal and Shopping Cart Settings"
+msgstr "PayPal und Warenkorb Einstellungen"
+
+#: ../wp_shopping_cart.php:685
+msgid "Paypal Email Address"
+msgstr "Paypal E-Mail Adresse"
+
+#: ../wp_shopping_cart.php:689
+msgid "Shopping Cart title"
+msgstr "Name des Warenkorbs"
+
+#: ../wp_shopping_cart.php:693
+msgid "Text/Image to Show When Cart Empty"
+msgstr "Text/Bild für einen leeren Warenkorb"
+
+#: ../wp_shopping_cart.php:694
+msgid "You can either enter plain text or the URL of an image that you want to show when the shopping cart is empty"
+msgstr "Sie können einfachen Text eintragen oder die URL eines Bildes angeben (wird bei einem leeren Warenkorb angezeigt)"
+
+#: ../wp_shopping_cart.php:697
+msgid "Currency"
+msgstr "Währung"
+
+#: ../wp_shopping_cart.php:698
+#: ../wp_shopping_cart.php:702
+#: ../wp_shopping_cart.php:728
+msgid "e.g."
+msgstr "z.B."
+
+#: ../wp_shopping_cart.php:701
+msgid "Currency Symbol"
+msgstr "Währungssymbol"
+
+#: ../wp_shopping_cart.php:707
+msgid "Base Shipping Cost"
+msgstr "Basisversandkosten"
+
+#: ../wp_shopping_cart.php:708
+msgid "This is the base shipping cost that will be added to the total of individual products shipping cost. Put 0 if you do not want to charge shipping cost or use base shipping cost."
+msgstr "Die Basisversandkosten werden zu der Summer der individuellen Versandkosten der Produkte addiert. Tragen Sie 0 ein wenn Sie keine Basisversandkosten oder gar keine Versandkosten berechnen wollen."
+
+#: ../wp_shopping_cart.php:708
+msgid "Learn More on Shipping Calculation"
+msgstr "Weitere Informationen über die Versandkostenberechnung"
+
+#: ../wp_shopping_cart.php:712
+msgid "Free Shipping for Orders Over"
+msgstr "Versandkostenfrei für Bestellungen über"
+
+#: ../wp_shopping_cart.php:713
+msgid "When a customer orders more than this amount he/she will get free shipping. Leave empty if you do not want to use it."
+msgstr "Wenn die Bestellung eines Kunden über diesen Betrag hinausgeht, entfallen die Versandkosten. Tragen Sie nichts ein, falls Sie diese Funktion nicht nutzen wollen."
+
+#: ../wp_shopping_cart.php:717
+msgid "Must Collect Shipping Address on PayPal"
+msgstr "Der Kunde muss bei PayPal eine Versandadresse angeben"
+
+#: ../wp_shopping_cart.php:718
+msgid "If checked the customer will be forced to enter a shipping address on PayPal when checking out."
+msgstr "Wenn diese Option aktiviert ist, müssen Kunden bei dem PayPal-Bestellvorgang eine Versandadresse angeben."
+
+#: ../wp_shopping_cart.php:722
+msgid "Use PayPal Profile Based Shipping"
+msgstr "Die Versandkostenkalkulation von PayPal nutzen"
+
+#: ../wp_shopping_cart.php:723
+msgid "Check this if you want to use"
+msgstr "Aktivieren Sie diese Option für"
+
+#: ../wp_shopping_cart.php:723
+msgid "PayPal profile based shipping"
+msgstr "von PayPal berechnete Versandkosten"
+
+#: ../wp_shopping_cart.php:723
+msgid "Using this will ignore any other shipping options that you have specified in this plugin."
+msgstr "Die Verwendung deaktiviert alle anderen Versandoptionen dieses Plugins."
+
+#: ../wp_shopping_cart.php:727
+msgid "Add to Cart button text or Image"
+msgstr "Text oder Bild für den 'Zum Warenkorb hinzufügen'-Button"
+
+#: ../wp_shopping_cart.php:728
+msgid "To use a customized image as the button simply enter the URL of the image file."
+msgstr "Um ein eigenes Bild für den Button zu verwenden, geben Sie einfach dessen URL an."
+
+#: ../wp_shopping_cart.php:732
+msgid "Return URL"
+msgstr "Rückkehr URL"
+
+#: ../wp_shopping_cart.php:733
+msgid "This is the URL the customer will be redirected to after a successful payment"
+msgstr "Zu dieser URL wird ein Kunde weitergeleitet wenn der Bestellvorgang erfogreich war"
+
+#: ../wp_shopping_cart.php:737
+msgid "Products Page URL"
+msgstr "URL der Produktseite"
+
+#: ../wp_shopping_cart.php:738
+msgid "This is the URL of your products page if you have any. If used, the shopping cart widget will display a link to this page when cart is empty"
+msgstr "Falls Sie eine Produktseite haben, können Sie hier die URL eingeben. Wenn eine URL eingegeben und der Warenkorb leer ist wird ein Link zu dieser Seite im Warenkorb angezeigt."
+
+#: ../wp_shopping_cart.php:742
+msgid "Automatic redirection to checkout page"
+msgstr "Automatische Weiterleitung zur 'Bestellung abschließen'-Seite"
+
+#: ../wp_shopping_cart.php:744
+msgid "Checkout Page URL"
+msgstr "URL der 'Bestellung abschließen'-Seite"
+
+#: ../wp_shopping_cart.php:745
+msgid "If checked the visitor will be redirected to the Checkout page after a product is added to the cart. You must enter a URL in the Checkout Page URL field for this to work."
+msgstr "Wenn diese Option aktiviert ist, werden Besucher zur 'Bestellung abschließen'-Seite weitergeleitet nachdem sie ein Produkt zum Warenkorb hinzugefügt haben. Sie müssen eine URL in dem Feld der 'Bestellung abschließen'-Seite eingeben um diese Funktion zu nutzen."
+
+#: ../wp_shopping_cart.php:749
+msgid "Reset Cart After Redirection to Return Page"
+msgstr "Warenkorb zurücksetzen nach der Weiterleitung auf die Rückkehr URL"
+
+#: ../wp_shopping_cart.php:751
+msgid "If checked the shopping cart will be reset when the customer lands on the return URL (Thank You) page."
+msgstr "Wenn diese Option aktiviert ist, wird der Warenkorb zurückgesetzt wenn ein Kunde auf die Rückkehr URL (die 'Vielen Dank für Ihren Einkauf'-Seite) geleitet wird."
+
+#: ../wp_shopping_cart.php:758
+msgid "Hide Shopping Cart Image"
+msgstr "Bild des Warenkorb nicht anzeigen"
+
+#: ../wp_shopping_cart.php:759
+msgid "If ticked the shopping cart image will not be shown."
+msgstr "Falls aktiviert, wird das Bild des Warenkorbs nicht angezeigt."
+
+#: ../wp_shopping_cart.php:765
+msgid "Use WP Affiliate Platform"
+msgstr "Die WP Affiliate Platform benutzen"
+
+#: ../wp_shopping_cart.php:767
+msgid "Check this if using with the"
+msgstr "Markieren für die Verwendung dieses Plugins mit dem"
+
+#: ../wp_shopping_cart.php:767
+msgid "This plugin lets you run your own affiliate campaign/program and allows you to reward (pay commission) your affiliates for referred sales"
+msgstr "Dieses Plugin ermöglicht Ihnen ein eigenes Affiliate-System zu betreiben und Ihre Vertriebspartner für an Sie verwiesene Kunden mit Provisionen zu vergüten"
+
+#: ../wp_shopping_cart.php:772
+msgid "Update Options &raquo;"
+msgstr "Einstellungen speichern &raquo;"
+
+#: ../wp_shopping_cart.php:776
+msgid "Like the Simple WordPress Shopping Cart Plugin?"
+msgstr "Gefällt Ihnen das Simple WordPress Shopping Cart Plugin?"
+
+#: ../wp_shopping_cart.php:776
+msgid "Give it a good rating"
+msgstr "Bewerten Sie es positiv"
+
+#: ../wp_shopping_cart.php:781
+msgid "WP Paypal Shopping Cart Options"
+msgstr "WP Paypal Warenkorb Einstellungen"
+
+#: ../wp_shopping_cart.php:791
+#: ../wp_shopping_cart.php:819
+#: ../wp_shopping_cart.php:820
+msgid "WP Paypal Shopping Cart"
+msgstr "WP Paypal Warenkorb"
+
+#: ../wp_shopping_cart.php:791
+msgid "WP Shopping Cart"
+msgstr "WP Warenkorb"
+
+#: ../wp_shopping_cart.php:799
+msgid "Shopping Cart"
+msgstr "Warenkorb"
+
+#: ../wp_shopping_cart.php:811
+msgid "Set the Plugin Settings from the Settings menu"
+msgstr "Ändern Sie die Konfiguration des Plugins im Einstellungsmenü"
+
+#: ../wp_shopping_cart.php:818
+msgid "Display WP Paypal Shopping Cart."
+msgstr "WP Paypal Warenkorb anzeigen."
+
+#: ../wp_shopping_cart.php:832
+msgid "Settings"
+msgstr "Einstellungen"
+
