@@ -124,7 +124,9 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td><?php _e("Applied Coupon Code:", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_applied_coupon" value="<?php echo esc_attr($applied_coupon); ?>" readonly /></td>
         </tr>
-
+        <?php
+        do_action('wpspsc_edit_order_pre_table_end', $order_id);
+        ?>
     </table>
     <?php
 }

@@ -187,6 +187,8 @@ function print_wp_shopping_cart($args = array()) {
             $form_target_code = 'target="_blank"';
         }
 
+        $output = apply_filters('wpspsc_before_checkout_form', $output);
+
         $output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
         $output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . '>';
         $output .= $form;
@@ -220,5 +222,6 @@ function print_wp_shopping_cart($args = array()) {
         $output .= '</td></tr>';
     }
     $output .= "</table></div>";
+    $output = apply_filters('wpspsc_after_output', $output);
     return $output;
 }
