@@ -325,7 +325,7 @@ class paypal_ipn_handler {
             $this->debug_log('Not Using the WP Affiliate Platform Plugin.',true);
         }
         
-        do_action('wpspc_paypal_ipn_processed',$this->ipn_data);
+        do_action('wpspc_paypal_ipn_processed',$this->ipn_data,$this);
         
         //Empty any incomplete old cart orders.
         wspsc_clean_incomplete_old_cart_orders();
