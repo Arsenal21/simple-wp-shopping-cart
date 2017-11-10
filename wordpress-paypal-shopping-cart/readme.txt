@@ -1,4 +1,4 @@
-=== WordPress Simple Paypal Shopping Cart ===
+=== WordPress Simple PayPal Shopping Cart ===
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
@@ -7,11 +7,11 @@ Tested up to: 4.8
 Stable tag: 4.3.7
 License: GPLv2 or later
 
-Very easy to use Simple WordPress Paypal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
+Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
 
 == Description ==
 
-WordPress Simple Paypal Shopping Cart allows you to add an 'Add to Cart' button for your product on any posts or pages. This simple shopping cart plugin lets you sell products and services directly from your own wordpress site and turns your WP blog into an ecommerce site.
+WordPress Simple PayPal Shopping Cart allows you to add an 'Add to Cart' button for your product on any posts or pages. This simple shopping cart plugin lets you sell products and services directly from your own wordpress site and turns your WP blog into an ecommerce site.
 
 It also allows you to add/display the shopping cart on any post or page or sidebar easily. The shopping cart shows the user what they currently have in the cart and allows them to change quantity or remove the items. 
 
@@ -25,7 +25,7 @@ It can be easily integrated with the NextGen Photo Gallery plugin to accommodate
 
 This plugin is a lightweight solution (with minimal number of lines of code and minimal options) so it doesn't slow down your site.
 
-WP simple Paypal Cart Plugin, interfaces with the Paypal sandbox to allow for testing.
+WP simple PayPal Cart Plugin, interfaces with the PayPal sandbox to allow for testing.
 
 For video tutorial, screenshots, detailed documentation, support and updates, please visit:
 [WP Simple Cart Details Page](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768)
@@ -42,7 +42,7 @@ or
 * Sell any type of media file that you upload to your WordPress site. For example: you can sell ebooks (PDF), music files (MP3), audio files, videos, photos, images etc.
 * Your customers will automatically get an email with the media file that they paid for.
 * Show a nicely formatted product display box on the fly using a simple shortcode.
-* You can use Paypal sandbox to do testing if needed (before you go live).
+* You can use PayPal sandbox to do testing if needed (before you go live).
 * Collect special instructions from your customers on the PayPal checkout page.
 * The orders menu will show you all the orders that you have received from your site.
 * Ability to configure an email that will get sent to your buyers after they purchase your product.
@@ -167,7 +167,7 @@ Yes
 Yes
 = Is the 'Add to Cart' button customizable? =
 Yes
-= Does this plugin use a return URL to redirect customers to a specified page after Paypal has processed the payment? =
+= Does this plugin use a return URL to redirect customers to a specified page after PayPal has processed the payment? =
 Yes
 = How can I add a buy button on the sidebar widget of my site? =
 Check the documentation on [how to add buy buttons to the sidebar](https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-additional-resources-322#add_button_in_sidebar)
