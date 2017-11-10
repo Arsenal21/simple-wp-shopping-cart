@@ -38,7 +38,7 @@ define('WP_CART_CURRENCY_SYMBOL', get_option('cart_currency_symbol'));
 if (!defined('WP_CART_MANAGEMENT_PERMISSION')) {//This will allow the user to define custom capability for this constant in wp-config file
     define('WP_CART_MANAGEMENT_PERMISSION', 'manage_options');
 }
-define('WP_CART_MAIN_MENU_SLUG', 'wspsc-main');
+define('WP_CART_MAIN_MENU_SLUG', 'wspsc-menu-main');
 
 
 // loading language files

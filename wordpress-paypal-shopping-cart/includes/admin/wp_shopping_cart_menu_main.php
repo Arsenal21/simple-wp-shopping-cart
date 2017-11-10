@@ -9,8 +9,8 @@ function wspsc_handle_admin_menu() {
     add_options_page(__("WP Paypal Shopping Cart", "wordpress-simple-paypal-shopping-cart"), __("WP Shopping Cart", "wordpress-simple-paypal-shopping-cart"), WP_CART_MANAGEMENT_PERMISSION, 'wordpress-paypal-shopping-cart', 'wspsc_settings_interface');
 
     //Main menu - Complete this when the dashboard menu is ready
-    $menu_icon_url = 'dashicons-cart';
-    add_menu_page(__('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), __('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG , 'wspsc_settings_interface', $menu_icon_url);
+    //$menu_icon_url = 'dashicons-cart';
+    //add_menu_page(__('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), __('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG , 'wspsc_settings_interface', $menu_icon_url);
     //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Settings', 'wordpress-simple-paypal-shopping-cart'),  __('Settings', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG, 'wspsc_settings_interface');
     //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Bla', 'wordpress-simple-paypal-shopping-cart'),  __('Bla', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'wspsc-bla', 'wspsc_settings_interface');
 }
