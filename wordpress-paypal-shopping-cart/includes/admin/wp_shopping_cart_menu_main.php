@@ -1,18 +1,18 @@
 <?php
 
 //Handle the admin dashboard main menu
-add_action('admin_menu', 'wp_cart_options_page');
+add_action('admin_menu', 'wspsc_handle_admin_menu');
 
 // Handle the options page display
-function wp_cart_options_page() {
+function wspsc_handle_admin_menu() {
 
-    add_options_page(__("WP Paypal Shopping Cart", "wordpress-simple-paypal-shopping-cart"), __("WP Shopping Cart", "wordpress-simple-paypal-shopping-cart"), WP_CART_MANAGEMENT_PERMISSION, 'wordpress-paypal-shopping-cart', 'wp_cart_options');
+    add_options_page(__("WP Paypal Shopping Cart", "wordpress-simple-paypal-shopping-cart"), __("WP Shopping Cart", "wordpress-simple-paypal-shopping-cart"), WP_CART_MANAGEMENT_PERMISSION, 'wordpress-paypal-shopping-cart', 'wspsc_settings_interface');
 
     //Main menu - Complete this when the dashboard menu is ready
-    //$menu_icon_url = '';//TODO - use 
-    //add_menu_page(__('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), __('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG , 'wp_cart_options', $menu_icon_url);
-    //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Settings', 'wordpress-simple-paypal-shopping-cart'),  __('Settings', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG, 'wp_cart_options');
-    //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Bla', 'wordpress-simple-paypal-shopping-cart'),  __('Bla', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'wspsc-bla', 'wp_cart_options');
+    $menu_icon_url = 'dashicons-cart';
+    add_menu_page(__('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), __('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG , 'wspsc_settings_interface', $menu_icon_url);
+    //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Settings', 'wordpress-simple-paypal-shopping-cart'),  __('Settings', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG, 'wspsc_settings_interface');
+    //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Bla', 'wordpress-simple-paypal-shopping-cart'),  __('Bla', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'wspsc-bla', 'wspsc_settings_interface');
 }
 
 /*
@@ -20,7 +20,7 @@ function wp_cart_options_page() {
  * Only admin user with "manage_options" permission can access this menu page.
  */
 
-function wp_cart_options() {
+function wspsc_settings_interface() {
     if (!current_user_can('manage_options')) {
         wp_die('You do not have permission to access this settings page.');
     }
@@ -71,7 +71,7 @@ function wp_cart_options() {
         }
     } else {
         include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_general_settings.php');
-        show_wp_cart_options_page();
+        wspsc_show_general_settings_page();
     }
     echo '</div></div>';
     echo '</div>';

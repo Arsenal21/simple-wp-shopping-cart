@@ -3,7 +3,7 @@
 /*
  * General settings menu page
  */
-function show_wp_cart_options_page () 
+function wspsc_show_general_settings_page () 
 {
     if(!current_user_can('manage_options')){
         wp_die('You do not have permission to access this settings page.');
