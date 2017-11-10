@@ -166,7 +166,7 @@ function show_wp_cart_coupon_discount_settings_page()
                 $output .= '<td>';
                 $output .= "<form method=\"post\" action=\"\" onSubmit=\"return confirm('Are you sure you want to delete this entry?');\">";				
                 $output .= "<input type=\"hidden\" name=\"wpspsc_delete_coupon_id\" value=".$coupon->id." />";
-                $output .= '<input style="border: none; background-color: transparent; padding: 0; cursor:pointer;" type="submit" name="Delete" value="Delete">';
+                $output .= '<input style="border: none; color: red; background-color: transparent; padding: 0; cursor:pointer;" type="submit" name="Delete" value="Delete">';
                 $output .= "</form>";
                 $output .= '</td>';
                 $output .= '</tr>';
