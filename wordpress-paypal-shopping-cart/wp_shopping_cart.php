@@ -53,6 +53,7 @@ include_once('wp_shopping_cart_misc_functions.php');
 include_once('wp_shopping_cart_orders.php');
 include_once('class-coupon.php');
 include_once('includes/wspsc-cart-functions.php');
+include_once('includes/admin/wp_shopping_cart_menu_main.php');
 include_once('includes/admin/wp_shopping_cart_tinymce.php');
 
 function always_show_cart_handler($atts) {
@@ -642,18 +643,6 @@ function simple_cart_total() {
     return wpspsc_number_format_price($grand_total);
 }
 
-// Handle the options page display
-function wp_cart_options_page() {
-    include_once('wp_shopping_cart_settings.php');
-    add_options_page(__("WP Paypal Shopping Cart", "wordpress-simple-paypal-shopping-cart"), __("WP Shopping Cart", "wordpress-simple-paypal-shopping-cart"), WP_CART_MANAGEMENT_PERMISSION, 'wordpress-paypal-shopping-cart', 'wp_cart_options');
-
-    //Main menu - Complete this when the dashboard menu is ready
-    //$menu_icon_url = '';//TODO - use 
-    //add_menu_page(__('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), __('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG , 'wp_cart_options', $menu_icon_url);
-    //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Settings', 'wordpress-simple-paypal-shopping-cart'),  __('Settings', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG, 'wp_cart_options');
-    //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Bla', 'wordpress-simple-paypal-shopping-cart'),  __('Bla', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'wspsc-bla', 'wp_cart_options');
-}
-
 function wp_paypal_shopping_cart_load_widgets() {
     register_widget('WP_PayPal_Cart_Widget');
 }
@@ -721,8 +710,6 @@ function wp_simple_cart_add_settings_link($links, $file) {
 
 add_filter('plugin_action_links', 'wp_simple_cart_add_settings_link', 10, 2);
 
-// Insert the options page to the admin menu
-add_action('admin_menu', 'wp_cart_options_page');
 add_action('widgets_init', 'wp_paypal_shopping_cart_load_widgets');
 
 add_action('init', 'wp_cart_init_handler');
