@@ -678,7 +678,7 @@ class WP_PayPal_Cart_Widget extends WP_Widget {
 }
 
 function wspsc_admin_side_enqueue_scripts() {
-    if (isset($_GET['page']) && $_GET['page'] == 'wordpress-paypal-shopping-cart') { //simple paypal shopping cart discount page
+    if (isset($_GET['page']) && $_GET['page'] == 'wspsc-discounts') { //simple paypal shopping cart discount page
         wp_enqueue_style('jquery-ui-style', '//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css');
         wp_register_script('wpspsc-admin', WP_CART_URL . '/lib/wpspsc_admin_side.js', array('jquery', 'jquery-ui-datepicker'));
         wp_enqueue_script('wpspsc-admin');
@@ -702,7 +702,7 @@ register_activation_hook(__FILE__, 'wpspc_plugin_install');
 // Add the settings link
 function wp_simple_cart_add_settings_link($links, $file) {
     if ($file == plugin_basename(__FILE__)) {
-        $settings_link = '<a href="options-general.php?page=wordpress-paypal-shopping-cart">' . (__("Settings", "wordpress-simple-paypal-shopping-cart")) . '</a>';
+        $settings_link = '<a href="admin.php?page=wspsc-menu-main">' . (__("Settings", "wordpress-simple-paypal-shopping-cart")) . '</a>';
         array_unshift($links, $settings_link);
     }
     return $links;

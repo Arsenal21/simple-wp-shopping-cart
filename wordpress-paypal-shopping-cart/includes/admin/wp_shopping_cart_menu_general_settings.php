@@ -105,18 +105,22 @@ function wspsc_show_general_settings_page ()
     else
         $wp_shopping_cart_collect_address = '';
         
-    if (get_option('wp_shopping_cart_use_profile_shipping'))
+    if (get_option('wp_shopping_cart_use_profile_shipping')){
         $wp_shopping_cart_use_profile_shipping = 'checked="checked"';
-    else
+    }
+    else {
         $wp_shopping_cart_use_profile_shipping = '';
+    }
                 	
-    if (get_option('wp_shopping_cart_image_hide'))
+    if (get_option('wp_shopping_cart_image_hide')){
         $wp_cart_image_hide = 'checked="checked"';
-    else
+    }
+    else{
         $wp_cart_image_hide = '';
+    }
 
-	$wp_cart_note_to_seller_text = get_option('wp_cart_note_to_seller_text');
-        $wp_cart_paypal_co_page_style = get_option('wp_cart_paypal_co_page_style');
+    $wp_cart_note_to_seller_text = get_option('wp_cart_note_to_seller_text');
+    $wp_cart_paypal_co_page_style = get_option('wp_cart_paypal_co_page_style');
 
     $wp_shopping_cart_strict_email_check = '';
     if (get_option('wp_shopping_cart_strict_email_check')){
@@ -145,11 +149,10 @@ function wspsc_show_general_settings_page ()
     if (get_option('wp_shopping_cart_enable_debug')){
         $wp_shopping_cart_enable_debug = 'checked="checked"';
     }    
-	?>
- 	<h2><?php _e("Simple PayPal Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart"); ?> v<?php echo WP_CART_VERSION; ?></h2>
+    ?> 	
  	
- 	<div class="wspsc_yellow_box">
- 	<p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
+    <div class="wspsc_yellow_box">
+    <p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
     <a href="https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768" target="_blank"><?php _e("WP Simple Cart Homepage", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
     </div>
     

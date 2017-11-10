@@ -1,10 +1,15 @@
 <?php
 
-function show_wp_cart_coupon_discount_settings_page()
+function wspsc_show_coupon_discount_settings_page()
 {
     if(!current_user_can('manage_options')){
         wp_die('You do not have permission to access this settings page.');
     }
+ 
+    echo '<div class="wrap">';
+    echo '<h1>' . (__("Simple Cart Coupons/Discounts", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
+    
+    echo '<div id="poststuff"><div id="post-body">';
     
     if (isset($_POST['wpspsc_coupon_settings']))
     {
@@ -188,5 +193,9 @@ function show_wp_cart_coupon_discount_settings_page()
 
     echo $output;
     wpspsc_settings_menu_footer();
+    
+    echo '</div></div>';//End of poststuff and post-body
+    echo '</div>';//End of wrap
+    
 }
 

@@ -1,10 +1,15 @@
 <?php
 
-function show_wp_cart_tools_menu_page() {
+function wspsc_show_tools_menu_page() {
     if (!current_user_can('manage_options')) {
         wp_die('You do not have permission to access this settings page.');
     }
 
+    echo '<div class="wrap">';
+    echo '<h1>' . (__("Simple Cart Tools", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
+    
+    echo '<div id="poststuff"><div id="post-body">';
+    
     if (isset($_POST['wspsc_export_orders_data'])) {
         $nonce = $_REQUEST['_wpnonce'];
         if (!wp_verify_nonce($nonce, 'wspsc_tools_export_orders_data')) {
@@ -41,6 +46,10 @@ function show_wp_cart_tools_menu_page() {
     <?php
     
     wpspsc_settings_menu_footer();
+    
+    echo '</div></div>';//End of poststuff and post-body
+    echo '</div>';//End of wrap
+    
 }
 
 function wspsc_export_orders_data_to_csv(){

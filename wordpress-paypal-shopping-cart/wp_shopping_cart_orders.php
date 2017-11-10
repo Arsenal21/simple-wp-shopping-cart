@@ -23,7 +23,7 @@ function wpspc_create_orders_page() {
             'parent' => __("Parent Order", "wordpress-simple-paypal-shopping-cart")
         ),
         'public' => true,
-        'menu_position' => 80,
+        'menu_position' => 90,
         'supports' => false,
         'taxonomies' => array(''),
         'menu_icon' => 'dashicons-cart',

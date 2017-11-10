@@ -21,7 +21,15 @@ function wp_cart_init_handler()
         }
     }
     if (is_admin()) {
-        add_action('admin_init','wp_cart_add_tinymce_button');
+        add_action('admin_init', 'wp_cart_add_tinymce_button');
+	
+	//TODO - can be removed at a later version.
+	if (isset($_GET['page']) && $_GET['page'] == 'wordpress-paypal-shopping-cart') {
+	    //let's redirect old settings page to new
+	    wp_redirect(get_admin_url() . 'admin.php?page=wspsc-menu-main', 301);
+	    exit;
+	}
+
     }
 }
 
@@ -196,7 +204,7 @@ function wpspsc_settings_menu_footer()
     ?>
     <div class="wspsc_yellow_box">
     <p><?php _e("Need a shopping cart plugin with a lot of features and good support? Check out our ", "wordpress-simple-paypal-shopping-cart"); ?>
-    <a href="https://www.tipsandtricks-hq.com/?p=1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
+    <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
     </div>
     <?php
 }
