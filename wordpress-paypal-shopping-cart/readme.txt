@@ -153,8 +153,8 @@ example usage: [wp_cart_button name="Test Product" price="29.95" var1="Size|smal
 
 1. Unzip and Upload the folder 'wordpress-paypal-shopping-cart' to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Settings and configure the options (for example: your email, Shopping Cart name, Return URL etc.)
-4. Use the trigger text to add a product to a post or page where you want it to appear.
+3. Go to Settings of this plugin and configure the options (for example: your email, Shopping Cart name, Return URL etc.)
+4. Use the shortcode to add a product to a post or page where you want it to appear.
 
 == Frequently Asked Questions ==
 = Can this plugin be used to accept paypal payment for a service or a product? =
@@ -193,8 +193,9 @@ None
 
 == Changelog ==
 
-= TODO 4.3.8 =
+= 4.3.8 =
 - The settings menu has been moved to a new menu called "Simple Cart" in the admin dashboard.
+- The coupons tab has been moved to a separate menu item under the "Simple Cart" admin menu.
 - Added a new email merge tag for the sale notification emails. The new tag is {order_id}
 - Added github repository link in the readme file.
 - Added couple of filter hooks in the shopping cart display function.

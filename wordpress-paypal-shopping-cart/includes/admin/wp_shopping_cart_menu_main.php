@@ -19,6 +19,9 @@ function wspsc_handle_admin_menu() {
     //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Orders', 'wordpress-simple-paypal-shopping-cart'),  __('Orders', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'edit.php?post_type=wpsc_cart_orders');
     //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Add Order', 'wordpress-simple-paypal-shopping-cart'),  __('Add Order', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'post-new.php?post_type=wpsc_cart_orders');
     
+    //TODO - Remove this at a later version. The purpose of this is to still keep the old setting link that will get redirected to the new settings menu.
+    add_options_page(__("WP Paypal Shopping Cart", "wordpress-simple-paypal-shopping-cart"), __("WP Shopping Cart", "wordpress-simple-paypal-shopping-cart"), WP_CART_MANAGEMENT_PERMISSION, 'wordpress-paypal-shopping-cart', 'wspsc_settings_interface');
+    
     $menu_parent_slug = WP_CART_MAIN_MENU_SLUG;
     do_action('wspsc_after_main_admin_menu', $menu_parent_slug);
 }
