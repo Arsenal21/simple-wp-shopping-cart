@@ -15,7 +15,7 @@ WordPress Simple PayPal Shopping Cart allows you to add an 'Add to Cart' button 
 
 It also allows you to add/display the shopping cart on any post or page or sidebar easily. The shopping cart shows the user what they currently have in the cart and allows them to change quantity or remove the items. 
 
-https://www.youtube.com/watch?v=tEZWfTmZ2kk
+https://www.youtube.com/watch?v=dJgGdD-tZW4
 
 You will be able to create products by using shortcodes dynamically.
 
