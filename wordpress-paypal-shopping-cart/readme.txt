@@ -21,9 +21,13 @@ You will be able to create products by using shortcodes dynamically.
 
 The shopping cart output will be responsive if you are using it with a responsive theme.
 
-It can be easily integrated with the NextGen Photo Gallery plugin to accommodate the selling of photographs from your gallery.
+You can sell digital products via this plugin easily too. The following video shows how you can sell your digital media files using the simple cart plugin:
+
+https://www.youtube.com/watch?v=gPvXac_j_lI
 
 This plugin is a lightweight solution (with minimal number of lines of code and minimal options) so it doesn't slow down your site.
+
+It can be integrated with the NextGen Photo Gallery plugin to accommodate the selling of photographs from your gallery.
 
 WP simple PayPal Cart Plugin, interfaces with the PayPal sandbox to allow for testing.
 
