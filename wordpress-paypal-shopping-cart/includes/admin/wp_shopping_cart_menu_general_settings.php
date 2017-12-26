@@ -48,7 +48,6 @@ function wspsc_show_general_settings_page ()
         update_option('wp_shopping_cart_reset_after_redirection_to_return_page', (isset($_POST['wp_shopping_cart_reset_after_redirection_to_return_page']) && $_POST['wp_shopping_cart_reset_after_redirection_to_return_page']!='') ? 'checked="checked"':'' );        
 
         update_option('wp_shopping_cart_image_hide', (isset($_POST['wp_shopping_cart_image_hide']) && $_POST['wp_shopping_cart_image_hide']!='') ? 'checked="checked"':'' );
-        update_option('wp_cart_note_to_seller_text', sanitize_text_field($_POST["wp_cart_note_to_seller_text"]));
         update_option('wp_cart_paypal_co_page_style', sanitize_text_field($_POST["wp_cart_paypal_co_page_style"]));
         update_option('wp_shopping_cart_strict_email_check', (isset($_POST['wp_shopping_cart_strict_email_check']) && $_POST['wp_shopping_cart_strict_email_check']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_nonce_add_cart', (isset($_POST['wspsc_disable_nonce_add_cart']) && $_POST['wspsc_disable_nonce_add_cart']!='') ? 'checked="checked"':'' );
@@ -119,7 +118,6 @@ function wspsc_show_general_settings_page ()
         $wp_cart_image_hide = '';
     }
 
-    $wp_cart_note_to_seller_text = get_option('wp_cart_note_to_seller_text');
     $wp_cart_paypal_co_page_style = get_option('wp_cart_paypal_co_page_style');
 
     $wp_shopping_cart_strict_email_check = '';
@@ -310,14 +308,6 @@ echo '<tr valign="top">
 
 <table class="form-table">
 <tr valign="top">
-<th scope="row">'.(__("Customize the Note to Seller Text", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="wp_cart_note_to_seller_text" value="'.esc_attr($wp_cart_note_to_seller_text).'" size="100" />
-<br />'.(__("Specify the text that you want to use for the note field on PayPal checkout page to collect special instruction (leave this field empty if you don't need to customize it). The default label for the note field is \"Add special instructions to merchant\".", "wordpress-simple-paypal-shopping-cart")).'</td>
-</tr>
-</table>
-
-<table class="form-table">
-<tr valign="top">
 <th scope="row">'.(__("Custom Checkout Page Logo Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="wp_cart_paypal_co_page_style" value="'.esc_attr($wp_cart_paypal_co_page_style).'" size="100" />
 <br />'.(__("Specify an image URL if you want to customize the paypal checkout page with a custom logo/image. The image URL must be a 'https' URL otherwise PayPal will ignore it.", "wordpress-simple-paypal-shopping-cart")).'</td>
@@ -336,6 +326,14 @@ echo '<tr valign="top">
 <th scope="row">'.(__("Disable Nonce Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wspsc_disable_nonce_add_cart" value="1" '.$wspsc_disable_nonce_add_cart.' />
 <br />'.(__("Check this option if you are using a caching solution on your site. This will bypass the nonce check on the add to cart buttons.", "wordpress-simple-paypal-shopping-cart")).'</td>
+</tr>
+</table>
+
+<table class="form-table">
+<tr valign="top">
+<th scope="row">'.(__("Customize the Note to Seller Text", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td>'.(__("PayPal has removed this feature. We have created an addon so you can still collect instructions from customers at the time of checking out. ", "wordpress-simple-paypal-shopping-cart"))
+. '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-simple-cart-collect-customer-input-in-the-shopping-cart-4396" target="_blank">'.__("View the addon details", "wordpress-simple-paypal-shopping-cart").'</a>'.'</td>
 </tr>
 </table>
 

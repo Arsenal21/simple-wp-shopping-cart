@@ -205,10 +205,7 @@ function print_wp_shopping_cart($args = array()) {
             <input type="hidden" name="rm" value="2" />
             <input type="hidden" name="charset" value="utf-8" />
             <input type="hidden" name="bn" value="TipsandTricks_SP" />';
-        $wp_cart_note_to_seller_text = get_option('wp_cart_note_to_seller_text');
-        if (!empty($wp_cart_note_to_seller_text)) {
-            $output .= '<input type="hidden" name="no_note" value="0" /><input type="hidden" name="cn" value="' . $wp_cart_note_to_seller_text . '" />';
-        }
+
         $page_style_name = get_option('wp_cart_paypal_co_page_style');
         if (!empty($page_style_name)) {
             $output .= '<input type="hidden" name="image_url" value="' . $page_style_name . '" />';

@@ -197,6 +197,9 @@ None
 
 == Changelog ==
 
+= 4.3.9 =
+- The note to seller field has been removed as it is no longer supported by PayPal.
+
 = 4.3.8 =
 - The settings menu has been moved to a new menu called "Simple Cart" in the admin dashboard.
 - The coupons tab has been moved to a separate menu item under the "Simple Cart" admin menu.
