@@ -197,6 +197,9 @@ None
 
 == Changelog ==
 
+= WIP 4.4.0 =
+- Updated the German language file. Thanks to Oliver Juwig.
+
 = 4.3.9 =
 - The note to seller field has been removed as it is no longer supported by PayPal.
 
