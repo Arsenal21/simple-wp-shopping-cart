@@ -199,6 +199,7 @@ None
 
 = WIP 4.4.0 =
 - Updated the German language file. Thanks to Oliver Juwig.
+- Updated some CSS code to not show border in the cart.
 - Updated the checkout button image.
 
 = 4.3.9 =
