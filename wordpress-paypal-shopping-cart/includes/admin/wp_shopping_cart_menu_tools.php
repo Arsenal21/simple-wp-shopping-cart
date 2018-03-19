@@ -57,7 +57,7 @@ function wspsc_export_orders_data_to_csv(){
     $file_path = WP_CART_PATH . "includes/admin/exported_orders_data.csv";
     $fp = fopen($file_path, 'w');
     
-    $header_names = array("Order ID", "Transaction ID", "First Name", "Last Name", "Email", "IP Address", "Total", "Shipping", "Coupon Code", "Address", "Items Orders");
+    $header_names = array("Order ID", "Transaction ID", "Date", "First Name", "Last Name", "Email", "IP Address", "Total", "Shipping", "Coupon Code", "Address", "Items Orders");
     fputcsv($fp, $header_names);
     
     $query_args = array(
@@ -71,6 +71,7 @@ function wspsc_export_orders_data_to_csv(){
     foreach ($posts_array as $item) {
         $order_id = $item->ID;
         $txn_id = get_post_meta( $order_id, 'wpsc_txn_id', true );
+        $order_date = $item->post_date;
         $first_name = get_post_meta( $order_id, 'wpsc_first_name', true );
         $last_name = get_post_meta( $order_id, 'wpsc_last_name', true );
         $email = get_post_meta( $order_id, 'wpsc_email_address', true );
@@ -84,7 +85,7 @@ function wspsc_export_orders_data_to_csv(){
         $items_ordered = get_post_meta( $order_id, 'wpspsc_items_ordered', true );
         $items_ordered = str_replace(array("\n", "\r", "\r\n", "\n\r"), ' ', $items_ordered);
 
-        $fields = array($order_id, $txn_id, $first_name, $last_name, $email, $ip_address, $total_amount, $shipping_amount, $applied_coupon, $address, $items_ordered);
+        $fields = array($order_id, $txn_id, $order_date, $first_name, $last_name, $email, $ip_address, $total_amount, $shipping_amount, $applied_coupon, $address, $items_ordered);
         fputcsv($fp, $fields);
         
     }
