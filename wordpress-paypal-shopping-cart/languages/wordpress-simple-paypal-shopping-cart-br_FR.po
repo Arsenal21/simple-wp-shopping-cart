@@ -1,0 +1,891 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Shopping Cart\n"
+"POT-Creation-Date: 2016-01-06 13:33+1000\n"
+"PO-Revision-Date: 2018-07-07 15:14+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Last-Translator: Florian LANNUZEL <florian@lannuzel.bzh>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: br_FR\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: class-coupon.php:19
+msgid "Admin needs to configure some discount coupons before it can be used"
+msgstr ""
+"Ar merour a rank kefluniañ lod eus ar c’hodoù distaol a-raok ma vo arveret"
+
+#: class-coupon.php:86
+msgid "Coupon ID: "
+msgstr "ID ar c’hod distaol: "
+
+#: class-coupon.php:87
+msgid "Coupon Code: "
+msgstr "Kod distaol: "
+
+#: class-coupon.php:88
+msgid "Discount Amt: "
+msgstr "Sammad an distaol: "
+
+#: class-coupon.php:89
+msgid "Expiry date: "
+msgstr "Deiziad termen: "
+
+#: class-coupon.php:98
+msgid "Coupon code used does not exist!"
+msgstr "N’eus ket eus ar c’hod distaol enanket."
+
+#: class-coupon.php:105
+msgid "Coupon code expired!"
+msgstr "Diamzeret eo ar c’hod distaol."
+
+#: class-coupon.php:110
+msgid "Discount can only be applied once per checkout!"
+msgstr "Gounit a vez tennet ganeoc’h war ho panerad endeo."
+
+#: class-coupon.php:132
+msgid "Discount applied successfully! Total Discount: "
+msgstr "Distaol arloet gant berzh. Hollad an distaol: "
+
+#: wp_shopping_cart.php:190
+msgid "Error! Your session is out of sync. Please reset your session."
+msgstr ""
+"Fazi: n’haller ket goubredañ hoc’h estez ken. Adderaouekait hoc’h estez mar "
+"plij."
+
+#: wp_shopping_cart.php:198
+msgid ""
+"Shopping Cart Configuration Error! You must specify a value in the 'Checkout "
+"Page URL' field for the automatic redirection feature to work!"
+msgstr ""
+"Fazi war gefluniañ ar baner(ad): enankañ ur werzh er vaezienn “Ere ar "
+"c’hef” (URL) a ranker ober evit an heñchañ emgefreek."
+
+#: wp_shopping_cart.php:290 wp_shopping_cart.php:365 wp_shopping_cart.php:431
+#: wp_shopping_cart.php:473 wp_shopping_cart.php:477
+#: wp_shopping_cart_settings.php:123
+msgid "Add to Cart"
+msgstr "Lakaat er baner(ad)"
+
+#: wp_shopping_cart.php:568
+msgid "WP Paypal Shopping Cart"
+msgstr "WP PayPal Shopping Cart"
+
+#: wp_shopping_cart.php:568
+msgid "WP Shopping Cart"
+msgstr "WP Shopping Cart"
+
+#: wp_shopping_cart.php:602
+msgid "Shopping Cart"
+msgstr "Paner(ad)"
+
+#: wp_shopping_cart.php:635
+msgid "Settings"
+msgstr "Arventennoù"
+
+#: wp_shopping_cart_discounts_menu.php:52 wp_shopping_cart_settings.php:189
+#: wp_shopping_cart_settings.php:430
+msgid ""
+"For more information, updates, detailed documentation and video tutorial, "
+"please visit:"
+msgstr ""
+"Evit gouzout hiroc’h, evit profitañ eus an hizivadurioù, eus an teuliadurioù "
+"hag eus un tutorialoù video, kit war:"
+
+#: wp_shopping_cart_discounts_menu.php:53 wp_shopping_cart_settings.php:190
+#: wp_shopping_cart_settings.php:431
+msgid "WP Simple Cart Homepage"
+msgstr "Pajenn degemer WP Simple Cart"
+
+#: wp_shopping_cart_discounts_menu.php:61
+msgid "Coupon/Discount Settings"
+msgstr "Arventennoù ar c’hodoù distaol"
+
+#: wp_shopping_cart_discounts_menu.php:68
+msgid "Enable Discount Coupon Feature"
+msgstr "Gweredekaat keweriusterioù evit ar c’hodoù distaol"
+
+#: wp_shopping_cart_discounts_menu.php:71
+msgid ""
+"When checked your customers will be able to enter a coupon code in the "
+"shopping cart before checkout."
+msgstr ""
+"Pa vez kevasket hoc’h arvalient a c’hello enankañ ur c’hod distaol er "
+"banerad a-raok paeañ."
+
+#: wp_shopping_cart_discounts_menu.php:78
+msgid "Update &raquo;"
+msgstr "Hizivaat &raquo;"
+
+#: wp_shopping_cart_discounts_menu.php:94
+msgid "Add Coupon/Discount"
+msgstr "Ouzhpennañ ur c’hod distaol"
+
+#: wp_shopping_cart_discounts_menu.php:119
+msgid "Save Coupon &raquo;"
+msgstr "Enrollañ ar c’hod distaol &raquo;"
+
+#: wp_shopping_cart_discounts_menu.php:137
+msgid "Coupon Code"
+msgstr "Kod distaol"
+
+#: wp_shopping_cart_discounts_menu.php:138
+msgid "Discount Rate (%)"
+msgstr "Distaol (%)"
+
+#: wp_shopping_cart_discounts_menu.php:139
+msgid "Expiry Date"
+msgstr "Deiziad termen"
+
+#: wp_shopping_cart_discounts_menu.php:158
+msgid "No Expiry"
+msgstr "Termen ebet"
+
+#: wp_shopping_cart_discounts_menu.php:174
+msgid "No Coupons Configured."
+msgstr "Kod distaol ebet kefluniet."
+
+#: wp_shopping_cart_discounts_menu.php:179
+msgid "No Record found"
+msgstr "Roud ebet bet kavet"
+
+#: wp_shopping_cart_misc_functions.php:160
+msgid "Your Shopping Cart"
+msgstr "Ho paner(ad)"
+
+#: wp_shopping_cart_misc_functions.php:161
+msgid "Your cart is empty"
+msgstr "Ho paner a zo goullo"
+
+#: wp_shopping_cart_misc_functions.php:195
+msgid ""
+"Need a shopping cart plugin with a lot of features and good support? Check "
+"out our "
+msgstr ""
+"Ezhomm ho peus eus un enlugellad evit ur baner binvidikoc’h hag ur skor a "
+"galite? Sellit ouzh hor/hon"
+
+#: wp_shopping_cart_misc_functions.php:196
+msgid "WP eStore Plugin"
+msgstr "Enlugellad WP eStore"
+
+#: wp_shopping_cart_orders.php:10
+msgid "Cart Orders"
+msgstr "Paneradoù an urzhiadoù"
+
+#: wp_shopping_cart_orders.php:11
+msgid "Cart Order"
+msgstr "Panerad an urzhiad"
+
+#: wp_shopping_cart_orders.php:12
+msgid "Add New"
+msgstr "Ouzhpennañ"
+
+#: wp_shopping_cart_orders.php:13
+msgid "Add New Order"
+msgstr "Ouzhpennañ un urzhiad"
+
+#: wp_shopping_cart_orders.php:14
+msgid "Edit"
+msgstr "Kemmañ"
+
+#: wp_shopping_cart_orders.php:15
+msgid "Edit Order"
+msgstr "Kemmañ an urzhiad"
+
+#: wp_shopping_cart_orders.php:16
+msgid "New Order"
+msgstr "Urzhiad nevez"
+
+#: wp_shopping_cart_orders.php:17
+msgid "View"
+msgstr "Gwelout"
+
+#: wp_shopping_cart_orders.php:18
+msgid "View Order"
+msgstr "Gwelout an urzhiad"
+
+#: wp_shopping_cart_orders.php:19
+msgid "Search Order"
+msgstr "Klask un urzhiad"
+
+#: wp_shopping_cart_orders.php:20
+msgid "No order found"
+msgstr "Urzhiad ebet bet kavet"
+
+#: wp_shopping_cart_orders.php:21
+msgid "No order found in Trash"
+msgstr "Urzhiad ebet bet kavet el lastez"
+
+#: wp_shopping_cart_orders.php:22
+msgid "Parent Order"
+msgstr "Urzhiad kar"
+
+#: wp_shopping_cart_orders.php:38
+msgid "Order Review"
+msgstr "Evezhiadenn war an urzhiad"
+
+#: wp_shopping_cart_orders.php:70
+msgid "Order ID: #"
+msgstr "ID an urzhiad: #"
+
+#: wp_shopping_cart_orders.php:72
+msgid "Transaction ID: #"
+msgstr "ID an treuzgread: #"
+
+#: wp_shopping_cart_orders.php:75 wp_shopping_cart_orders.php:165
+msgid "First Name"
+msgstr "Anv-bihan"
+
+#: wp_shopping_cart_orders.php:79 wp_shopping_cart_orders.php:166
+msgid "Last Name"
+msgstr "Anv-familh"
+
+#: wp_shopping_cart_orders.php:83
+msgid "Email Address"
+msgstr "Chomlec’h postel"
+
+#: wp_shopping_cart_orders.php:87
+msgid "IP Address"
+msgstr "Chomlec’h IP"
+
+#: wp_shopping_cart_orders.php:91 wp_shopping_cart_orders.php:168
+#: includes/wspsc-cart-functions.php:150
+msgid "Total"
+msgstr "Hollad"
+
+#: wp_shopping_cart_orders.php:95 includes/wspsc-cart-functions.php:147
+msgid "Shipping"
+msgstr "Degas"
+
+#: wp_shopping_cart_orders.php:99
+msgid "Address"
+msgstr "Chomlec’h post"
+
+#: wp_shopping_cart_orders.php:103
+msgid "Phone"
+msgstr "Pgz."
+
+#: wp_shopping_cart_orders.php:107
+msgid "Buyer Email Sent?"
+msgstr "Postel kaset d’an arval?"
+
+#: wp_shopping_cart_orders.php:111
+msgid "Item(s) Ordered:"
+msgstr "Produ(ioù) urzhiadet:"
+
+#: wp_shopping_cart_orders.php:115
+msgid "Applied Coupon Code:"
+msgstr "Kod distaol arloet:"
+
+#: wp_shopping_cart_orders.php:164
+msgid "Order ID"
+msgstr "ID an uzhiad"
+
+#: wp_shopping_cart_orders.php:167
+msgid "Email"
+msgstr "Chomlec’h postel"
+
+#: wp_shopping_cart_orders.php:169
+msgid "Status"
+msgstr "Stad"
+
+#: wp_shopping_cart_orders.php:170
+msgid "Date"
+msgstr "Deiziad"
+
+#: wp_shopping_cart_settings.php:10
+msgid "WP Paypal Shopping Cart Options"
+msgstr "Dibarzhioù WP Paypal Shopping Cart"
+
+#: wp_shopping_cart_settings.php:101
+msgid "Options Updated!"
+msgstr "Dibarzhioù hizivaet"
+
+#: wp_shopping_cart_settings.php:105 includes/wspsc-cart-functions.php:30
+msgid "USD"
+msgstr "USD"
+
+#: wp_shopping_cart_settings.php:108 includes/wspsc-cart-functions.php:34
+msgid "$"
+msgstr "$"
+
+#: wp_shopping_cart_settings.php:186
+msgid "Simple PayPal Shopping Cart Settings"
+msgstr "Arventennoù Simple PayPal Shopping Cart"
+
+#: wp_shopping_cart_settings.php:194
+msgid "Quick Usage Guide"
+msgstr "Sturlevr prim an arveriad"
+
+#: wp_shopping_cart_settings.php:197
+msgid "Step 1) "
+msgstr "Pazenn 1) "
+
+#: wp_shopping_cart_settings.php:197
+msgid "To add an 'Add to Cart' button for a product simply add the shortcode"
+msgstr ""
+"Evit ouzhpennañ an afell “Lakaat er baner(ad)”, grit gant ar Shortcode-mañ"
+
+#: wp_shopping_cart_settings.php:197
+msgid "PRODUCT-NAME"
+msgstr "ANV-AR-PRODU"
+
+#: wp_shopping_cart_settings.php:197
+msgid "PRODUCT-PRICE"
+msgstr "PRIZ-AR-PRODU"
+
+#: wp_shopping_cart_settings.php:197
+msgid ""
+"to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-"
+"PRICE with the actual name and price of your product."
+msgstr ""
+"en ur post/bajenn a zalc’h ar produ. Amsaviñ ANV-AR-PRODU ha PRIZ-AR-PRODU "
+"gant anv ha priz gwir ho produ."
+
+#: wp_shopping_cart_settings.php:198
+msgid "Example add to cart button shortcode usage:"
+msgstr "Arver dre ar skouer evit “Lakaat er baner(ad)”:"
+
+#: wp_shopping_cart_settings.php:199
+msgid "Step 2) "
+msgstr "Pazenn 2) "
+
+#: wp_shopping_cart_settings.php:199
+msgid ""
+"To add the shopping cart to a post or page (example: a checkout page) simply "
+"add the shortcode"
+msgstr ""
+"Evit ouzhpennañ ar baner war ur post/bajenn (d.s. pajenn Kef), grit gant ar "
+"shortcode"
+
+#: wp_shopping_cart_settings.php:199
+msgid ""
+"to a post or page or use the sidebar widget to add the shopping cart to the "
+"sidebar."
+msgstr ""
+"en ur post/bajenn pe implijout ar widjed evit ouzhpennañ ar baner er varrenn "
+"gostez."
+
+#: wp_shopping_cart_settings.php:200
+msgid "Example shopping cart shortcode usage:"
+msgstr "Arver dre ar skouer evit ar baner(ad):"
+
+#: wp_shopping_cart_settings.php:209
+msgid "PayPal and Shopping Cart Settings"
+msgstr "Arventennoù WP PayPal Shopping Cart"
+
+#: wp_shopping_cart_settings.php:215
+msgid "Paypal Email Address"
+msgstr "Chomlec’h postel PayPal"
+
+#: wp_shopping_cart_settings.php:219
+msgid "Shopping Cart title"
+msgstr "Titl ar baner"
+
+#: wp_shopping_cart_settings.php:223
+msgid "Text/Image to Show When Cart Empty"
+msgstr "Testenn/Skeudenn da ziskouez pa vez goullo ar baner"
+
+#: wp_shopping_cart_settings.php:224
+msgid ""
+"You can either enter plain text or the URL of an image that you want to show "
+"when the shopping cart is empty"
+msgstr ""
+"Gallout a rit enankañ un destenn eeun pe ere ur skeudenn (URL) da ziskouez "
+"pa vez goullo ar baner"
+
+#: wp_shopping_cart_settings.php:227
+msgid "Currency"
+msgstr "Moneiz"
+
+#: wp_shopping_cart_settings.php:228 wp_shopping_cart_settings.php:232
+#: wp_shopping_cart_settings.php:259
+msgid "e.g."
+msgstr "d.s."
+
+#: wp_shopping_cart_settings.php:231
+msgid "Currency Symbol"
+msgstr "Arouez ar moneiz"
+
+#: wp_shopping_cart_settings.php:237
+msgid "Base Shipping Cost"
+msgstr "Mizoù kas diazez"
+
+#: wp_shopping_cart_settings.php:238
+msgid ""
+"This is the base shipping cost that will be added to the total of individual "
+"products shipping cost. Put 0 if you do not want to charge shipping cost or "
+"use base shipping cost."
+msgstr ""
+"An dra-mañ a zo ar miz kas diazez da vezañ ouzhpennet da hollad ar mizoù kas "
+"eus pep produ. Enankañ 0 evit ma ne vo ket ouzhpennet mizoù kas."
+
+#: wp_shopping_cart_settings.php:238
+msgid "Learn More on Shipping Calculation"
+msgstr "Gouzout hiroc’h diwar-benn jediñ ar mizoù kas"
+
+#: wp_shopping_cart_settings.php:242
+msgid "Free Shipping for Orders Over"
+msgstr "Mizoù profet evit urzhiadoù uheloc’h o friz evit"
+
+#: wp_shopping_cart_settings.php:243
+msgid ""
+"When a customer orders more than this amount he/she will get free shipping. "
+"Leave empty if you do not want to use it."
+msgstr ""
+"Pa vez uheloc’h hollad an urzhiad evit ar sammad-mañ e vez profet ar mizoù "
+"kas. Leuskel goullo evit ma vo dioberiant an dibarzh-mañ."
+
+#: wp_shopping_cart_settings.php:247
+msgid "Must Collect Shipping Address on PayPal"
+msgstr "Dastum ar chomlec’h post gant PayPal"
+
+#: wp_shopping_cart_settings.php:248
+msgid ""
+"If checked the customer will be forced to enter a shipping address on PayPal "
+"when checking out."
+msgstr ""
+"Mar kevasket, an arval a ranko enankañ e chomlec’h post war bajenn paeañ "
+"PayPal."
+
+#: wp_shopping_cart_settings.php:252
+msgid "Use PayPal Profile Based Shipping"
+msgstr "Jediñ ar mizoù kas gant PayPal"
+
+#: wp_shopping_cart_settings.php:253
+msgid "Check this if you want to use"
+msgstr "Kevaskañ al log-mañ ma fell deoc’h"
+
+#: wp_shopping_cart_settings.php:253
+msgid "PayPal profile based shipping"
+msgstr "jediñ ar mizoù kas gant PayPal"
+
+#: wp_shopping_cart_settings.php:253
+msgid ""
+"Using this will ignore any other shipping options that you have specified in "
+"this plugin."
+msgstr ""
+"Pa vez arveret an dibarzh-mañ e vez laosket a-gostez an holl zoareoù all da "
+"jediñ ar mizoù kas spisaet ganeoc’h."
+
+#: wp_shopping_cart_settings.php:257
+msgid "Add to Cart button text or Image"
+msgstr "Testenn pe skeudenn “Lakaat er baner(ad)”"
+
+#: wp_shopping_cart_settings.php:259
+msgid ""
+"To use a customized image as the button simply enter the URL of the image "
+"file."
+msgstr "Enankañ ere ar skeudenn (URL) evit he fersonelaat."
+
+#: wp_shopping_cart_settings.php:265
+msgid "Return URL"
+msgstr "Ere ar bajenn distreiñ (URL)"
+
+#: wp_shopping_cart_settings.php:266
+msgid ""
+"This is the URL the customer will be redirected to after a successful payment"
+msgstr ""
+"Ere (URL) e-lec’h ma vo heñvet an arval war e du ur wech paeet an urzhiad "
+"gant berzh"
+
+#: wp_shopping_cart_settings.php:270
+msgid "Cancel URL"
+msgstr "Ere ar bajenn nullañ (URL)"
+
+#: wp_shopping_cart_settings.php:271
+msgid ""
+"The customer will be redirected to the above page if the payment is "
+"cancelled."
+msgstr ""
+"An arval a vo heñchet war-zu ar bajenn a-us ma vez nullet/c’hwitet ar "
+"paeamant."
+
+#: wp_shopping_cart_settings.php:275
+msgid "Products Page URL"
+msgstr "Ere pajenn ar produioù (URL)"
+
+#: wp_shopping_cart_settings.php:276
+msgid ""
+"This is the URL of your products page if you have any. If used, the shopping "
+"cart widget will display a link to this page when cart is empty"
+msgstr ""
+"Ere pajenn ar produioù (URL) m’ho peus unan. Mar implijet, ar widjed Paner a "
+"ziskouezo ul liamm war-zu ar bajenn-mañ keit ha ma chomo ar baner goullo."
+
+#: wp_shopping_cart_settings.php:280
+msgid "Automatic redirection to checkout page"
+msgstr "Heñchañ emgefreek war-zu ar c’hef"
+
+#: wp_shopping_cart_settings.php:282
+msgid "Checkout Page URL"
+msgstr "Ere ar c’hef (URL)"
+
+#: wp_shopping_cart_settings.php:283
+msgid ""
+"If checked the visitor will be redirected to the Checkout page after a "
+"product is added to the cart. You must enter a URL in the Checkout Page URL "
+"field for this to work."
+msgstr ""
+"Mar kevasket, an arval a vo heñchet war-zu ar c’hef ur wech lakaet ur produ "
+"er baner(ad). Enankañ ere ar bajenn Kef (URL) er vaezienn."
+
+#: wp_shopping_cart_settings.php:287
+msgid "Open PayPal Checkout Page in a New Tab"
+msgstr "Digeriñ pajenn PayPal Checkout en un ivinell nevez"
+
+#: wp_shopping_cart_settings.php:289
+msgid ""
+"If checked the PayPal checkout page will be opened in a new tab/window when "
+"the user clicks the checkout button."
+msgstr ""
+"Mar kevasket, ar bajenn PayPal Checkout a vo digoret en un ivinell/prenestr "
+"nevez pa gliko an arval war an afell Checkout."
+
+#: wp_shopping_cart_settings.php:293
+msgid "Reset Cart After Redirection to Return Page"
+msgstr ""
+"Goullonderiñ ar banerad war-lerc’h bezañ heñchet war-zu ar bajenn distreiñ"
+
+#: wp_shopping_cart_settings.php:295
+msgid ""
+"If checked the shopping cart will be reset when the customer lands on the "
+"return URL (Thank You) page."
+msgstr ""
+"Mar kevasket, ar banerad a vo goullo pa zistroio an arval war al lec’hienn "
+"(pajenn trugarekaat)."
+
+#: wp_shopping_cart_settings.php:302
+msgid "Hide Shopping Cart Image"
+msgstr "Kuzhat skeudenn ar baner"
+
+#: wp_shopping_cart_settings.php:303
+msgid "If ticked the shopping cart image will not be shown."
+msgstr "Mar kevasket, ne vo ket diskouezet skeudenn ar baner."
+
+#: wp_shopping_cart_settings.php:309
+msgid "Customize the Note to Seller Text"
+msgstr "Personelaat testenn an notenn evit ar gwerzhour"
+
+#: wp_shopping_cart_settings.php:311
+msgid ""
+"Specify the text that you want to use for the note field on PayPal checkout "
+"page to collect special instruction (leave this field empty if you don't "
+"need to customize it). The default label for the note field is \"Add special "
+"instructions to merchant\"."
+msgstr ""
+"Spisaat an destenn da implijout er vaezienn Notenn war bajenn PayPal "
+"Checkout evit dastum ditouroù resis (leuskel goullo ma ne vefe ket ezhomm). "
+"Ar skritellig dre ziouer eviti: “Ouzhpennañ ditouroù resis evit ar "
+"gwerzhour”."
+
+#: wp_shopping_cart_settings.php:317
+msgid "Custom Checkout Page Style Name"
+msgstr "Anv stil ar bajenn Checkout bersonelaet"
+
+#: wp_shopping_cart_settings.php:319
+msgid ""
+"Specify the page style name here if you want to customize the paypal "
+"checkout page with custom page style otherwise leave this field empty."
+msgstr ""
+"Spisaat anv stil ar bajenn amañ evit personelaat ar bajenn PayPal Checkout "
+"gant ur stil ispisial, mod all leuskel goullo."
+
+#: wp_shopping_cart_settings.php:325
+msgid "Use Strict PayPal Email Address Checking"
+msgstr "Implijout gwiriañ strizh ar chomlec’h postel PayPal"
+
+#: wp_shopping_cart_settings.php:326
+msgid ""
+"If checked the script will check to make sure that the PayPal email address "
+"specified is the same as the account where the payment was deposited (Usage "
+"of PayPal Email Alias will fail too)."
+msgstr ""
+"Mar kevasket, ar skript a wirio ez eo heñvel ar chomlec’h postel PayPal "
+"spisaet ouzh ar gont e-lec’h m’eo bet kaset an arc’hant (n’haller ket ober "
+"gant aliasoù postel PayPal)."
+
+#: wp_shopping_cart_settings.php:332
+msgid "Use WP Affiliate Platform"
+msgstr "Implijout ar savenn emezelañ WP"
+
+#: wp_shopping_cart_settings.php:334
+msgid "Check this if using with the"
+msgstr "Kevaskañ al log-mañ ma vez implijet gant"
+
+#: wp_shopping_cart_settings.php:334
+msgid ""
+"This plugin lets you run your own affiliate campaign/program and allows you "
+"to reward (pay commission) your affiliates for referred sales"
+msgstr ""
+"An enlugellad-mañ a ro tro deoc’h da implijout ho programm emezelañ personel "
+"ha da gefridiañ hoc’h izili evit gwerzhioù a zo bet a-drugarez dezho"
+
+#: wp_shopping_cart_settings.php:340
+msgid "Testing and Debugging Settings"
+msgstr "Arventennoù prouadiñ ha diveugañ"
+
+#: wp_shopping_cart_settings.php:346
+msgid "Enable Debug"
+msgstr "Gweredekaat an diveugañ"
+
+#: wp_shopping_cart_settings.php:348
+msgid ""
+"If checked, debug output will be written to the log file. This is useful for "
+"troubleshooting post payment failures"
+msgstr ""
+"Mar kevasket, ec’hankad an diveugañ a vo skrivet e-barzh restr ar "
+"c’herzhlevr. Talvoudus eo evit titouroù disac'hañ c’hwitadennoù paeañ."
+
+#: wp_shopping_cart_settings.php:359
+msgid "Enable Sandbox Testing"
+msgstr "Gweredekaat prouadiñ Paypal Sandbox"
+
+#: wp_shopping_cart_settings.php:361
+msgid ""
+"Check this option if you want to do PayPal sandbox testing. You will need to "
+"create a PayPal sandbox account from PayPal Developer site"
+msgstr ""
+"Kevaskañ an dibarzh-mañ evit prouadiñ Paypal Sandbox. War lec’hienn "
+"diorroerien PayPal ez eo ret deoc’h kefluniañ ur gont."
+
+#: wp_shopping_cart_settings.php:370 wp_shopping_cart_settings.php:519
+msgid "Update Options &raquo;"
+msgstr "Hizivaat &raquo;"
+
+#: wp_shopping_cart_settings.php:374
+msgid "Like the Simple WordPress Shopping Cart Plugin?"
+msgstr "Plijout a ra deoc’h an enlugellad Simple Wordpress Shopping Cart?"
+
+#: wp_shopping_cart_settings.php:374
+msgid "Give it a good rating"
+msgstr "Priziañ an enlugellad"
+
+#: wp_shopping_cart_settings.php:439
+msgid "Purchase Confirmation Email Settings"
+msgstr "Arventennoù evit kadarnaat an urzhiad dre bostel"
+
+#: wp_shopping_cart_settings.php:442
+msgid ""
+"The following options affect the emails that gets sent to your buyers after "
+"a purchase."
+msgstr ""
+"An dibarzhioù da heul o do efedoù war posteloù da vezañ kaset d’an arvalien "
+"goude ar pren"
+
+#: wp_shopping_cart_settings.php:447
+msgid "Send Emails to Buyer After Purchase"
+msgstr "Kas posteloù d’an arval pa vez kadarnaet an urzhiad"
+
+#: wp_shopping_cart_settings.php:448
+msgid ""
+"If checked the plugin will send an email to the buyer with the sale details. "
+"If digital goods are purchased then the email will contain the download "
+"links for the purchased products."
+msgstr ""
+"Mar kevasket, an enlugellad a gaso ur postel d'an arval gant munudoù an "
+"urzhiad. Ma vez prenet produioù niverel e vo endalc'het liammoù pellgargañ "
+"evit ar produioù prenet er postel neuze."
+
+#: wp_shopping_cart_settings.php:452
+msgid "From Email Address"
+msgstr "Eus ar chomlec’h postel"
+
+#: wp_shopping_cart_settings.php:454
+msgid ""
+"Example: Your Name &lt;sales@your-domain.com&gt; This is the email address "
+"that will be used to send the email to the buyer. This name and email "
+"address will appear in the from field of the email."
+msgstr ""
+"Da skouer: Hoc’h anv &lt;sales@your-domain.com&gt; Hennezh eo ar chomlec’h "
+"postel implijet evit kas ar postel d’an arval. An anv-mañ hag ar chomlec’h "
+"postel-mañ a vo diskouezet el lodenn “a-berzh” eus ar postel."
+
+#: wp_shopping_cart_settings.php:458
+msgid "Buyer Email Subject"
+msgstr "Danvez ar postel d’an arval"
+
+#: wp_shopping_cart_settings.php:460
+msgid "This is the subject of the email that will be sent to the buyer."
+msgstr "Setu danvez ar postel a vo kaset d’an arval."
+
+#: wp_shopping_cart_settings.php:464
+msgid "Buyer Email Body"
+msgstr "Kemennadenn d’an arval"
+
+#: wp_shopping_cart_settings.php:467
+msgid ""
+"This is the body of the email that will be sent to the buyer. Do not change "
+"the text within the braces {}. You can use the following email tags in this "
+"email body field:"
+msgstr ""
+"Setu kemennadenn ar postel a vo kaset d’an arval. Na gemmit ket an destenn e-"
+"kreiz ar briataennoù {}. Gallout a rit implijout ar gerioù alc’hwez (tags) "
+"da heul er gemennadenn:"
+
+#: wp_shopping_cart_settings.php:468 wp_shopping_cart_settings.php:502
+msgid "First name of the buyer"
+msgstr "Anv-bihan an arval"
+
+#: wp_shopping_cart_settings.php:469 wp_shopping_cart_settings.php:503
+msgid "Last name of the buyer"
+msgstr "Anv-familh an arval"
+
+#: wp_shopping_cart_settings.php:470 wp_shopping_cart_settings.php:504
+msgid "Email Address of the buyer"
+msgstr "Chomlec’h postel an arval"
+
+#: wp_shopping_cart_settings.php:471 wp_shopping_cart_settings.php:505
+msgid "Address of the buyer"
+msgstr "Chomlec’h post an arval"
+
+#: wp_shopping_cart_settings.php:472 wp_shopping_cart_settings.php:506
+msgid ""
+"The item details of the purchased product (this will include the download "
+"link for digital items)."
+msgstr ""
+"Munudoù eus ar produ prenet (gant al liamm pellgargañ evit produioù niverel)."
+
+#: wp_shopping_cart_settings.php:473 wp_shopping_cart_settings.php:507
+msgid "The unique transaction ID of the purchase"
+msgstr "ID unel treuzgread an urzhiad"
+
+#: wp_shopping_cart_settings.php:474 wp_shopping_cart_settings.php:508
+msgid "The amount paid for the current transaction"
+msgstr "Sammad paeet evit an treuzgread bremanel"
+
+#: wp_shopping_cart_settings.php:475 wp_shopping_cart_settings.php:509
+msgid "The date of the purchase"
+msgstr "Deiziad an urzhiad"
+
+#: wp_shopping_cart_settings.php:476 wp_shopping_cart_settings.php:510
+msgid "Coupon code applied to the purchase"
+msgstr "Kod distaol arloet d’an urzhiad"
+
+#: wp_shopping_cart_settings.php:481
+msgid "Send Emails to Seller After Purchase"
+msgstr "Kas posteloù d’ar gwerzhour pa vez kadarnaet an urzhiad"
+
+#: wp_shopping_cart_settings.php:482
+msgid ""
+"If checked the plugin will send an email to the seller with the sale details"
+msgstr ""
+"Mar kevasket, an enlugellad a gaso ur postel d'ar gwerzhour gant munudoù an "
+"urzhiad"
+
+#: wp_shopping_cart_settings.php:486
+msgid "Notification Email Address*"
+msgstr "Chomlec’h postel da gelaouiñ*"
+
+#: wp_shopping_cart_settings.php:488
+msgid ""
+"This is the email address where the seller will be notified of product "
+"sales. You can put multiple email addresses separated by comma (,) in the "
+"above field to send the notification to multiple email addresses."
+msgstr ""
+"Setu chomlec’h postel da gelaouiñ ar gwerzhour eus an urzhiadoù nevez. Meur "
+"a chomlec’h postel disrannet gant ur skej (,) ez eus tu enankañ er vaezienn "
+"a-us evit kelaouiñ darempredoù liesseurt."
+
+#: wp_shopping_cart_settings.php:492
+msgid "Seller Email Subject*"
+msgstr "Danvez ar postel d’ar gwerzhour*"
+
+#: wp_shopping_cart_settings.php:494
+msgid ""
+"This is the subject of the email that will be sent to the seller for record."
+msgstr "Setu danvez ar postel a vo kaset d’ar gwerzhour evit an enrolladur."
+
+#: wp_shopping_cart_settings.php:498
+msgid "Seller Email Body*"
+msgstr "Kemennadenn d’ar gwerzhour*"
+
+#: wp_shopping_cart_settings.php:501
+msgid ""
+"This is the body of the email that will be sent to the seller for record. Do "
+"not change the text within the braces {}. You can use the following email "
+"tags in this email body field:"
+msgstr ""
+"Setu kemennadenn ar postel a vo kaset d’ar gwerzhour evit an enrolladur. Na "
+"gemmit ket an destenn e-kreiz ar briataennoù {}. Gallout a rit implijout ar "
+"gerioù alc’hwez (tags) da heul er gemennadenn:"
+
+#: wp_shopping_cart_shortcodes.php:19 wp_shopping_cart_shortcodes.php:49
+msgid "Error! You must specify a product name in the shortcode."
+msgstr "Fazi: ret eo deoc’h erspizañ anv ar produ er shortcode."
+
+#: wp_shopping_cart_shortcodes.php:22 wp_shopping_cart_shortcodes.php:52
+msgid "Error! You must specify a price for your product in the shortcode."
+msgstr "Fazi: ret eo deoc’h erspizañ priz ar produ er shortcode."
+
+#: wp_shopping_cart_shortcodes.php:55
+msgid ""
+"Error! You must specify a thumbnail image for your product in the shortcode."
+msgstr ""
+"Fazi: ret eo deoc’h erspizañ ur velvenn skeudenn evit ho produ er shortcode."
+
+#: wp_shopping_cart_shortcodes.php:107
+msgid "View Cart"
+msgstr "Gwelout ar banerad"
+
+#: wp_shopping_cart_shortcodes.php:112
+msgid "Cart is empty"
+msgstr "Paner goullo"
+
+#: includes/wspsc-cart-functions.php:18
+msgid "Visit The Shop"
+msgstr "Gweladenniñ ar stal"
+
+#: includes/wspsc-cart-functions.php:64
+msgid "Cart"
+msgstr "Paner(ad)"
+
+#: includes/wspsc-cart-functions.php:72
+msgid "Hit enter to submit new Quantity."
+msgstr "Pouez war “Enankañ” evit kas ar c’hementad nevez."
+
+#: includes/wspsc-cart-functions.php:82
+msgid "Item Name"
+msgstr "Anv ar produ"
+
+#: includes/wspsc-cart-functions.php:82
+msgid "Quantity"
+msgstr "Kementad"
+
+#: includes/wspsc-cart-functions.php:82
+msgid "Price"
+msgstr "Priz"
+
+#: includes/wspsc-cart-functions.php:121
+msgid "Remove"
+msgstr "Dilemel"
+
+#: includes/wspsc-cart-functions.php:146
+msgid "Subtotal"
+msgstr "Is-hollad"
+
+#: includes/wspsc-cart-functions.php:159
+msgid "Enter Coupon Code"
+msgstr "Enankañ ur c’hod distaol"
+
+#: includes/wspsc-cart-functions.php:162
+msgid "Apply"
+msgstr "Arloañ"
+
+#: includes/wspsc-cart-functions.php:182
+msgid "paypal_checkout_EN.png"
+msgstr "paypal_checkout_EN.png"
+
+#: includes/wspsc-cart-functions.php:182
+msgid "Make payments with PayPal - it\\'s fast, free and secure!"
+msgstr "Paeañ gant PayPal: aes, prim ha suraet!"
+
+#: lib/gallery-wp-cart.php:32
+msgid "[View with PicLens]"
+msgstr "[View with PicLens]"

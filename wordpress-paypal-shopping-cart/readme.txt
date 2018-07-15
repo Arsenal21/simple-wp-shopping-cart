@@ -82,6 +82,7 @@ The following language translations are already available:
 * German
 * Spanish
 * French
+* Breton
 * Italian
 * Japanese
 * Polish
@@ -196,6 +197,9 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
+= WIP 4.4.1 =
+- Added Breton language files. Thanks to Florian for submitting the language files.
 
 = 4.4.0 =
 - The order date is now included in the exported CSV file.
