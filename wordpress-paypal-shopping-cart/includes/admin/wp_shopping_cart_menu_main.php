@@ -39,6 +39,7 @@ function wspsc_settings_interface() {
     $wpspc_plugin_tabs = array(
         'wspsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
+        'wspsc-menu-main&action=adv-settings' => __('Advanced Settings', 'wordpress-simple-paypal-shopping-cart'),
     );
     echo '<div class="wrap">';
     echo '<h1>' . (__("WP Paypal Shopping Cart Options", "wordpress-simple-paypal-shopping-cart")) . ' v'.WP_CART_VERSION . '</h1>';
@@ -68,6 +69,10 @@ function wspsc_settings_interface() {
             case 'email-settings':
                 include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_email_settings.php');
                 show_wp_cart_email_settings_page();
+                break;
+	    case 'adv-settings':
+                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_adv_settings.php');
+                show_wp_cart_adv_settings_page();
                 break;
         }
     } else {
