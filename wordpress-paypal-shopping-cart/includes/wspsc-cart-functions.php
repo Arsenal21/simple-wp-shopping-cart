@@ -280,10 +280,17 @@ function print_wp_shopping_cart( $args = array() ) {
 
 			onAuthorize: function (data, actions) {
 			    return actions.payment.execute().then(function (data) {
-				console.log(data);
+				jQuery.post('<?php echo get_admin_url(); ?>admin-ajax.php',
+					{'action': 'wpspsc_process_pp_smart_checkout', 'wpspsc_payment_data': data})
+					.done(function (result) {
+					    console.log(result);
+					    window.location.href = '<?php echo esc_js( $return_url ); ?>';
+					})
+					.fail(function (result) {
+					    console.log(result);
+					});
 			    });
 			}
-
 		    }, '.wp-cart-paypal-button-container');
 
 		</script>
