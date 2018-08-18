@@ -12,9 +12,13 @@ function show_wp_cart_adv_settings_page() {
 	    wp_die( 'Error! Nonce Security Check Failed! Go back to email settings menu and save the settings again.' );
 	}
 
-	$enable_pp_smart_checkout = filter_input( INPUT_POST, 'wpspc_enable_pp_smart_checkout', FILTER_SANITIZE_NUMBER_INT );
+	$enable_pp_smart_checkout	 = filter_input( INPUT_POST, 'wpspc_enable_pp_smart_checkout', FILTER_SANITIZE_NUMBER_INT );
+	$live_client_id			 = filter_input( INPUT_POST, 'wpspc_pp_live_client_id', FILTER_SANITIZE_STRING );
+	$test_client_id			 = filter_input( INPUT_POST, 'wpspc_pp_test_client_id', FILTER_SANITIZE_STRING );
 
 	update_option( 'wpspc_enable_pp_smart_checkout', $enable_pp_smart_checkout );
+	update_option( 'wpspc_pp_live_client_id', $live_client_id );
+	update_option( 'wpspc_pp_test_client_id', $test_client_id );
 
 	echo '<div id="message" class="updated fade"><p><strong>';
 	echo 'Advanced Settings Updated!';
@@ -70,6 +74,18 @@ function show_wp_cart_adv_settings_page() {
     		    <th scope="row"><?php _e( "Enable PayPal Smart Checkout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td><input type="checkbox" name="wpspc_enable_pp_smart_checkout" value="1"<?php echo get_option( 'wpspc_enable_pp_smart_checkout' ) ? ' checked' : ''; ?>/>
     			<span class="description"><?php _e( "Enable PayPal Smart Checkout.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Live Client ID", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td><input type="text" name="wpspc_pp_live_client_id" size="100" value="<?php echo get_option( 'wpspc_pp_live_client_id' ); ?>"/>
+    			<span class="description"><?php _e( "Enter your live Client ID.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Sandbox Client ID", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td><input type="text" name="wpspc_pp_test_client_id" size="100" value="<?php echo get_option( 'wpspc_pp_test_client_id' ); ?>"/>
+    			<span class="description"><?php _e( "Enter your sandbox Client ID.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
     		</tr>
 
