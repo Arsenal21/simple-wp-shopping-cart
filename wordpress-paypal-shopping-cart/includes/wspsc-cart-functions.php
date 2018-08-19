@@ -239,6 +239,11 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		<script>
 
+		//		    var wpspsc_pp_proceed = false;
+		//		    var wpspsc_pp_actions;
+		    var wpspsc_cci_do_submit = true;
+
+
 		    paypal.Button.render({
 
 			env: '<?php echo get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'sandbox' : 'production'; ?>',
@@ -264,6 +269,24 @@ function print_wp_shopping_cart( $args = array() ) {
 			    production: '<?php echo get_option( 'wpspc_pp_live_client_id' ); ?>'
 			},
 
+			validate: function (actions) {
+		//			    wpspsc_pp_actions = actions;
+		//			    wpspsc_pp_actions.disable();
+			},
+
+			onClick: function () {
+			    if (!wpspsc_pp_proceed) {
+				wpspsc_cci_do_submit = false;
+				var res = jQuery('.wp_cart_checkout_button').triggerHandler('click');
+				if (typeof res === "undefined" || res) {
+		//				    wpspsc_pp_actions.enable();
+				} else {
+		//				    wpspsc_pp_actions.disable();
+				}
+				wpspsc_cci_do_submit = true;
+			    }
+			},
+
 			payment: function (data, actions) {
 			    return actions.payment.create({
 				transactions: [{
@@ -283,8 +306,11 @@ function print_wp_shopping_cart( $args = array() ) {
 				jQuery.post('<?php echo get_admin_url(); ?>admin-ajax.php',
 					{'action': 'wpspsc_process_pp_smart_checkout', 'wpspsc_payment_data': data})
 					.done(function (result) {
-					    console.log(result);
-					    window.location.href = '<?php echo esc_js( $return_url ); ?>';
+					    if (result.success) {
+						window.location.href = '<?php echo esc_js( $return_url ); ?>';
+					    } else {
+						console.log(result);
+					    }
 					})
 					.fail(function (result) {
 					    console.log(result);

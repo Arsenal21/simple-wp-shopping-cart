@@ -15,10 +15,14 @@ function show_wp_cart_adv_settings_page() {
 	$enable_pp_smart_checkout	 = filter_input( INPUT_POST, 'wpspc_enable_pp_smart_checkout', FILTER_SANITIZE_NUMBER_INT );
 	$live_client_id			 = filter_input( INPUT_POST, 'wpspc_pp_live_client_id', FILTER_SANITIZE_STRING );
 	$test_client_id			 = filter_input( INPUT_POST, 'wpspc_pp_test_client_id', FILTER_SANITIZE_STRING );
+	$live_secret			 = filter_input( INPUT_POST, 'wpspc_pp_live_secret', FILTER_SANITIZE_STRING );
+	$test_secret			 = filter_input( INPUT_POST, 'wpspc_pp_test_secret', FILTER_SANITIZE_STRING );
 
 	update_option( 'wpspc_enable_pp_smart_checkout', $enable_pp_smart_checkout );
 	update_option( 'wpspc_pp_live_client_id', $live_client_id );
+	update_option( 'wpspc_pp_live_secret', $live_secret );
 	update_option( 'wpspc_pp_test_client_id', $test_client_id );
+	update_option( 'wpspc_pp_test_secret', $test_secret );
 
 	echo '<div id="message" class="updated fade"><p><strong>';
 	echo 'Advanced Settings Updated!';
@@ -83,9 +87,21 @@ function show_wp_cart_adv_settings_page() {
     		    </td>
     		</tr>
     		<tr valign="top">
+    		    <th scope="row"><?php _e( "Live Secret", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td><input type="text" name="wpspc_pp_live_secret" size="100" value="<?php echo get_option( 'wpspc_pp_live_secret' ); ?>"/>
+    			<span class="description"><?php _e( "Enter your live Secret.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
     		    <th scope="row"><?php _e( "Sandbox Client ID", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td><input type="text" name="wpspc_pp_test_client_id" size="100" value="<?php echo get_option( 'wpspc_pp_test_client_id' ); ?>"/>
     			<span class="description"><?php _e( "Enter your sandbox Client ID.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Sandbox Secret", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td><input type="text" name="wpspc_pp_test_secret" size="100" value="<?php echo get_option( 'wpspc_pp_test_secret' ); ?>"/>
+    			<span class="description"><?php _e( "Enter your sandbox Secret.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
     		</tr>
 

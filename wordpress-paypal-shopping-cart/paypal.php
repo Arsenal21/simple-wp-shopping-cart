@@ -369,8 +369,82 @@ class paypal_ipn_handler {
 	return false;
     }
 
+    function validate_ipn_smart_checkout() {
+
+	$is_sandbox = get_option( 'wp_shopping_cart_enable_sandbox' );
+
+	if ( $is_sandbox ) {
+	    $client_id	 = get_option( 'wpspc_pp_test_client_id' );
+	    $secret		 = get_option( 'wpspc_pp_test_secret' );
+	    $api_base	 = 'https://api.sandbox.paypal.com';
+	} else {
+	    $client_id	 = get_option( 'wpspc_pp_live_client_id' );
+	    $secret		 = get_option( 'wpspc_pp_live_secret' );
+	    $api_base	 = 'https://api.paypal.com';
+	}
+
+	$wp_request_headers = array(
+	    'Accept'	 => 'application/json',
+	    'Authorization'	 => 'Basic ' . base64_encode( $client_id . ':' . $secret ),
+	);
+
+	$res = wp_remote_request(
+	$api_base . '/v1/oauth2/token', array(
+	    'method'	 => 'POST',
+	    'headers'	 => $wp_request_headers,
+	    'body'		 => 'grant_type=client_credentials',
+	)
+	);
+
+	$code = wp_remote_retrieve_response_code( $res );
+
+	if ( $code !== 200 ) {
+	    //Some error occured.
+	    return 'Error occured during payment verification: ';
+	}
+
+	$body	 = wp_remote_retrieve_body( $res );
+	$body	 = json_decode( $body );
+
+	$token = $body->access_token;
+
+	$wp_request_headers = array(
+	    'Accept'	 => 'application/json',
+	    'Authorization'	 => 'Bearer ' . $token,
+	);
+
+	$res = wp_remote_request(
+	$api_base . '/v1/payments/payment/' . $this->ipn_data[ 'pay_id' ], array(
+	    'method'	 => 'GET',
+	    'headers'	 => $wp_request_headers,
+	)
+	);
+
+	$code = wp_remote_retrieve_response_code( $res );
+
+	if ( $code !== 200 ) {
+	    //Some error occured.
+	    return 'Error occured during payment verification: ';
+	}
+
+	$body	 = wp_remote_retrieve_body( $res );
+	$body	 = json_decode( $body );
+
+	//check payment details
+	if ( $body->transactions[ 0 ]->amount->total === $this->ipn_data[ 'mc_gross' ] &&
+	$body->transactions[ 0 ]->amount->currency === $this->ipn_data[ 'mc_currency' ] ) {
+	    //payment is valid
+	    return true;
+	} else {
+	    //payment is invalid
+	    return sprintf( "Payment check failed: invalid amount received. Expected %s %s, got %s %s.", $this->ipn_data[ 'mc_gross' ], $this->ipn_data[ 'mc_currency' ], $body->transactions[ 0 ]->amount->total, $body->transactions[ 0 ]->amount->currency );
+	}
+    }
+
     function create_ipn_from_smart_checkout( $data ) {
 	$ipn[ 'custom' ]		 = $_SESSION[ 'wp_cart_custom_values' ];
+	$ipn[ 'pay_id' ]		 = $data[ 'id' ];
+	$ipn[ 'create_time' ]		 = $data[ 'create_time' ];
 	$ipn[ 'txn_id' ]		 = $data[ 'transactions' ][ 0 ][ 'related_resources' ][ 0 ][ 'sale' ][ 'id' ];
 	$ipn[ 'txn_type' ]		 = 'cart';
 	$ipn[ 'payment_status' ]	 = ucfirst( $data[ 'transactions' ][ 0 ][ 'related_resources' ][ 0 ][ 'sale' ][ 'state' ] );
@@ -382,6 +456,11 @@ class paypal_ipn_handler {
 	$ipn[ 'first_name' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'first_name' ];
 	$ipn[ 'last_name' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'last_name' ];
 	$ipn[ 'payer_email' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'email' ];
+	$ipn[ 'address_street' ]	 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'line1' ];
+	$ipn[ 'address_city' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'city' ];
+	$ipn[ 'address_state' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'state' ];
+	$ipn[ 'address_zip' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'postal_code' ];
+	$ipn[ 'address_country' ]	 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'country_code' ];
 	//items data
 	$i				 = 1;
 	foreach ( $data[ 'transactions' ][ 0 ][ 'item_list' ][ 'items' ] as $item ) {

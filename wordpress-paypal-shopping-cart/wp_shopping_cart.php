@@ -127,6 +127,12 @@ function wpspsc_process_pp_smart_checkout() {
 	$ipn_handler_instance->ipn_log = true;
     }
 
+    $res = $ipn_handler_instance->validate_ipn_smart_checkout();
+
+    if ( $res !== true ) {
+	wp_send_json( array( 'success' => false, 'errMsg' => $res ) );
+    }
+
     $res = $ipn_handler_instance->validate_and_dispatch_product();
 
     if ( $res === true ) {
