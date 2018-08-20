@@ -103,7 +103,7 @@ function wpspsc_process_pp_smart_checkout() {
 	$data = $_POST[ 'wpspsc_payment_data' ];
     }
     if ( empty( $data ) ) {
-	wp_send_json( array( 'success' => false ) );
+	wp_send_json( array( 'success' => false, 'errMsg' => __( 'Empty payment data received.', "wordpress-simple-paypal-shopping-cart" ) ) );
     }
 
     include_once('paypal.php');
@@ -138,7 +138,7 @@ function wpspsc_process_pp_smart_checkout() {
     if ( $res === true ) {
 	wp_send_json( array( 'success' => true ) );
     } else {
-	wp_send_json( array( 'success' => false, 'errMsg' => 'Error occured during payment processing.' ) );
+	wp_send_json( array( 'success' => false, 'errMsg' => __( 'Error occured during payment processing. Check debug log for additional details.', "wordpress-simple-paypal-shopping-cart" ) ) );
     }
 }
 

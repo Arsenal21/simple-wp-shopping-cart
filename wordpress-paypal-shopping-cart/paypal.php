@@ -183,7 +183,7 @@ class paypal_ipn_handler {
 	$orig_individual_item_total	 = round( $orig_individual_item_total, 2 );
 	$individual_paid_item_total	 = round( $individual_paid_item_total, 2 );
 	$this->debug_log( 'Checking price. Original price: ' . $orig_individual_item_total . '. Paid price: ' . $individual_paid_item_total, true );
-	if ( $individual_paid_item_total < $orig_individual_item_total ) {  //Paid price is less so block this transaction.      
+	if ( $individual_paid_item_total < $orig_individual_item_total ) {  //Paid price is less so block this transaction.
 	    $this->debug_log( 'Error! Post payment price validation failed. The price amount may have been altered. This transaction will not be processed.', false );
 	    $this->debug_log( 'Original total price: ' . $orig_individual_item_total . '. Paid total price: ' . $individual_paid_item_total, false );
 	    return;
@@ -400,7 +400,8 @@ class paypal_ipn_handler {
 
 	if ( $code !== 200 ) {
 	    //Some error occured.
-	    return 'Error occured during payment verification: ';
+	    $body = wp_remote_retrieve_body( $res );
+	    return sprintf( __( 'Error occured during payment verification. Error code: %d. Message: %s', "wordpress-simple-paypal-shopping-cart" ), $code, $body );
 	}
 
 	$body	 = wp_remote_retrieve_body( $res );
@@ -424,7 +425,8 @@ class paypal_ipn_handler {
 
 	if ( $code !== 200 ) {
 	    //Some error occured.
-	    return 'Error occured during payment verification: ';
+	    $body = wp_remote_retrieve_body( $res );
+	    return sprintf( __( 'Error occured during payment verification. Error code: %d. Message: %s', "wordpress-simple-paypal-shopping-cart" ), $code, $body );
 	}
 
 	$body	 = wp_remote_retrieve_body( $res );
@@ -437,7 +439,7 @@ class paypal_ipn_handler {
 	    return true;
 	} else {
 	    //payment is invalid
-	    return sprintf( "Payment check failed: invalid amount received. Expected %s %s, got %s %s.", $this->ipn_data[ 'mc_gross' ], $this->ipn_data[ 'mc_currency' ], $body->transactions[ 0 ]->amount->total, $body->transactions[ 0 ]->amount->currency );
+	    return sprintf( __( "Payment check failed: invalid amount received. Expected %s %s, got %s %s.", "wordpress-simple-paypal-shopping-cart" ), $this->ipn_data[ 'mc_gross' ], $this->ipn_data[ 'mc_currency' ], $body->transactions[ 0 ]->amount->total, $body->transactions[ 0 ]->amount->currency );
 	}
     }
 
