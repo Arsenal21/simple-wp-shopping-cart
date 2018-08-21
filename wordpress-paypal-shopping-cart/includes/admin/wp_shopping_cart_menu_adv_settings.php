@@ -17,12 +17,14 @@ function show_wp_cart_adv_settings_page() {
 	$test_client_id			 = filter_input( INPUT_POST, 'wpspc_pp_test_client_id', FILTER_SANITIZE_STRING );
 	$live_secret			 = filter_input( INPUT_POST, 'wpspc_pp_live_secret', FILTER_SANITIZE_STRING );
 	$test_secret			 = filter_input( INPUT_POST, 'wpspc_pp_test_secret', FILTER_SANITIZE_STRING );
+	$disable_standard_checkout	 = filter_input( INPUT_POST, 'wpspc_disable_standard_checkout', FILTER_SANITIZE_NUMBER_INT );
 
 	update_option( 'wpspc_enable_pp_smart_checkout', $enable_pp_smart_checkout );
 	update_option( 'wpspc_pp_live_client_id', $live_client_id );
 	update_option( 'wpspc_pp_live_secret', $live_secret );
 	update_option( 'wpspc_pp_test_client_id', $test_client_id );
 	update_option( 'wpspc_pp_test_secret', $test_secret );
+	update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
 
 	echo '<div id="message" class="updated fade"><p><strong>';
 	echo 'Advanced Settings Updated!';
@@ -102,6 +104,12 @@ function show_wp_cart_adv_settings_page() {
     		    <th scope="row"><?php _e( "Sandbox Secret", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td><input type="text" name="wpspc_pp_test_secret" size="100" value="<?php echo get_option( 'wpspc_pp_test_secret' ); ?>"/>
     			<span class="description"><?php _e( "Enter your sandbox Secret.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1"<?php echo get_option( 'wpspc_disable_standard_checkout' ) ? ' checked' : ''; ?>/>
+    			<span class="description"><?php _e( "By default PayPal standard checkout is always enabled. If you only want to use the PayPal Smart Checkout instead then use this checkbox to disable the standard checkout option. This option will only have effect when Smart Checkout is enabled.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
     		</tr>
 

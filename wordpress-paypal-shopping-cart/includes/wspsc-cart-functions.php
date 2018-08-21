@@ -198,9 +198,10 @@ function print_wp_shopping_cart( $args = array() ) {
 	$output	 .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
 	$output	 .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . '>';
 	$output	 .= $form;
+	$style	 = get_option( 'wpspc_disable_standard_checkout' ) && get_option( 'wpspc_enable_pp_smart_checkout' ) ? 'display:none !important' : '';
 	if ( $count ) {
 	    $checkout_button_img_src = WP_CART_URL . '/images/' . (__( "paypal_checkout_EN.png", "wordpress-simple-paypal-shopping-cart" ));
-	    $output			 .= '<input type="image" src="' . apply_filters( 'wspsc_cart_checkout_button_image_src', $checkout_button_img_src ) . '" name="submit" class="wp_cart_checkout_button" alt="' . (__( "Make payments with PayPal - it\'s fast, free and secure!", "wordpress-simple-paypal-shopping-cart" )) . '" />';
+	    $output			 .= '<input type="image" src="' . apply_filters( 'wspsc_cart_checkout_button_image_src', $checkout_button_img_src ) . '" name="submit" class="wp_cart_checkout_button" style="' . $style . '" alt="' . (__( "Make payments with PayPal - it\'s fast, free and secure!", "wordpress-simple-paypal-shopping-cart" )) . '" />';
 	}
 
 	$output .= $urls . '
