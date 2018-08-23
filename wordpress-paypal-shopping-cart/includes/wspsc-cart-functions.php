@@ -205,7 +205,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	$style	 = get_option( 'wpspc_disable_standard_checkout' ) && get_option( 'wpspc_enable_pp_smart_checkout' ) ? 'display:none !important" data-wspsc-hidden="1' : '';
 	if ( $count ) {
 	    $checkout_button_img_src = WP_CART_URL . '/images/' . (__( "paypal_checkout_EN.png", "wordpress-simple-paypal-shopping-cart" ));
-	    $output			 .= '<input type="image" src="' . apply_filters( 'wspsc_cart_checkout_button_image_src', $checkout_button_img_src ) . '" name="submit" class="wp_cart_checkout_button" style="' . $style . '" alt="' . (__( "Make payments with PayPal - it\'s fast, free and secure!", "wordpress-simple-paypal-shopping-cart" )) . '" />';
+	    $output			 .= '<input type="image" src="' . apply_filters( 'wspsc_cart_checkout_button_image_src', $checkout_button_img_src ) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" style="' . $style . '" alt="' . (__( "Make payments with PayPal - it\'s fast, free and secure!", "wordpress-simple-paypal-shopping-cart" )) . '" />';
 	}
 
 	$output .= $urls . '
@@ -278,7 +278,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			},
 			onClick: function () {
 			    wpspsc_cci_do_submit = false;
-			    var res = jQuery('.wp_cart_checkout_button').closest().triggerHandler('click');
+			    var res = jQuery('.wp_cart_checkout_button_<?php echo $carts_cnt; ?>').triggerHandler('click');
 			    if (typeof res === "undefined" || res) {
 				//				    wpspsc_pp_actions.enable();
 			    } else {
