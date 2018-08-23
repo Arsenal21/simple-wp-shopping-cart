@@ -1,7 +1,11 @@
 <?php
+global $carts_cnt;
+$carts_cnt = 0;
 
 function print_wp_shopping_cart( $args = array() ) {
     $output = "";
+    global $carts_cnt;
+    $carts_cnt ++;
     if ( ! cart_not_empty() ) {
 	$empty_cart_text = get_option( 'wp_cart_empty_text' );
 	if ( ! empty( $empty_cart_text ) ) {
@@ -141,7 +145,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	if ( ! get_option( 'wp_shopping_cart_use_profile_shipping' ) ) {
 	    //Not using profile based shipping
 	    $postage_cost	 = wpspsc_number_format_price( $postage_cost );
-	    $form		 .= "<input type=\"hidden\" name=\"shipping_1\" value='" . esc_attr( $postage_cost ) . "' />"; //You can also use "handling_cart" variable to use shipping and handling here 
+	    $form		 .= "<input type=\"hidden\" name=\"shipping_1\" value='" . esc_attr( $postage_cost ) . "' />"; //You can also use "handling_cart" variable to use shipping and handling here
 	}
 
 	//Tackle the "no_shipping" parameter
@@ -231,12 +235,14 @@ function print_wp_shopping_cart( $args = array() ) {
 		//client ID is not set
 		$output .= '<div style="color: red;">' . sprintf( __( 'PayPal Smart Checkout error: %s client ID is not set. Please set it on the Advanced Settings tab.', "wordpress-simple-paypal-shopping-cart" ), get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'Sandbox' : 'Live' ) . '</div>';
 	    } else {
+		//checkout script should be inserted only once, otherwise it would produce JS error
+		if ( $carts_cnt <= 1 ) {
+		    $output .= '<script src="https://www.paypalobjects.com/api/checkout.js"></script>';
+		}
 		ob_start();
 		?>
 
-		<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-
-		<div class="wp-cart-paypal-button-container"></div>
+		<div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
 
 		<script>
 
@@ -272,7 +278,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			},
 			onClick: function () {
 			    wpspsc_cci_do_submit = false;
-			    var res = jQuery('.wp_cart_checkout_button').triggerHandler('click');
+			    var res = jQuery('.wp_cart_checkout_button').closest().triggerHandler('click');
 			    if (typeof res === "undefined" || res) {
 				//				    wpspsc_pp_actions.enable();
 			    } else {
@@ -298,7 +304,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			    alert('<?php echo esc_js( __( "Error occured during PayPal Smart Checkout process.", "wordpress-simple-paypal-shopping-cart" ) ); ?>\n\n' + error);
 			},
 			onAuthorize: function (data, actions) {
-			    jQuery(".wp-cart-paypal-button-container").hide();
+			    jQuery("[class^='wp-cart-paypal-button-container']").hide();
 			    jQuery('.wp_cart_checkout_button').hide();
 			    jQuery('.wpspsc-spinner-cont').css('display', 'inline-block');
 			    return actions.payment.execute().then(function (data) {
@@ -310,7 +316,7 @@ function print_wp_shopping_cart( $args = array() ) {
 					    } else {
 						console.log(result);
 						alert(result.errMsg)
-						jQuery(".wp-cart-paypal-button-container").show();
+						jQuery("[class^='wp-cart-paypal-button-container']").show();
 						if (jQuery('.wp_cart_checkout_button').data('wspsc-hidden') !== "1") {
 						    jQuery('.wp_cart_checkout_button').show();
 						}
@@ -320,7 +326,7 @@ function print_wp_shopping_cart( $args = array() ) {
 					})
 					.fail(function (result) {
 					    console.log(result);
-					    jQuery(".wp-cart-paypal-button-container").show();
+					    jQuery("[class^='wp-cart-paypal-button-container']").show();
 					    if (jQuery('.wp_cart_checkout_button').data('wspsc-hidden') !== "1") {
 						jQuery('.wp_cart_checkout_button').show();
 					    }
@@ -329,7 +335,7 @@ function print_wp_shopping_cart( $args = array() ) {
 					});
 			    });
 			}
-		    }, '.wp-cart-paypal-button-container');
+		    }, '.wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>');
 
 		</script>
 		<style>
