@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 4.4.0
+Stable tag: 4.4.1
 License: GPLv2 or later
 
 Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -27,6 +27,8 @@ https://www.youtube.com/watch?v=gPvXac_j_lI
 
 This plugin is a lightweight solution (with minimal number of lines of code and minimal options) so it doesn't slow down your site.
 
+The plugin also has an option to use the smart PayPal payment buttons. You can enable the PayPal smart button option in the settings menu of the plugin.
+
 It can be integrated with the NextGen Photo Gallery plugin to accommodate the selling of photographs from your gallery.
 
 WP simple PayPal Cart Plugin, interfaces with the PayPal sandbox to allow for testing.
@@ -47,6 +49,7 @@ or
 * Your customers will automatically get an email with the media file that they paid for.
 * Show a nicely formatted product display box on the fly using a simple shortcode.
 * You can use PayPal sandbox to do testing if needed (before you go live).
+* Option to use the smart payment buttons of PayPal. Allows the customers to checkout in a popup window (using a credit card, paypal or paypal credit).
 * Collect special instructions from your customers on the PayPal checkout page.
 * The orders menu will show you all the orders that you have received from your site.
 * Ability to configure an email that will get sent to your buyers after they purchase your product.
@@ -198,7 +201,8 @@ None
 
 == Changelog ==
 
-= WIP 4.4.1 =
+= 4.4.1 =
+- Added a new checkout option that uses the smart PayPal payment button. You can enable it from the advanced settings menu.
 - Added Breton language files. Thanks to Florian for submitting the language files.
 
 = 4.4.0 =
