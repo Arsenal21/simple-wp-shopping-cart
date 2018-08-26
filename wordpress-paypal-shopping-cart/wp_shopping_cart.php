@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-if ( version_compare( PHP_VERSION, '5.4.1' ) >= 0 ) {
+if ( version_compare( PHP_VERSION, '5.4.0' ) >= 0 ) {
     if ( session_status() == PHP_SESSION_NONE ) {
 	session_start();
     }
