@@ -288,15 +288,17 @@ function print_wp_shopping_cart( $args = array() ) {
 			},
 			payment: function (data, actions) {
 			    return actions.payment.create({
-				transactions: [{
-					amount: {total: '<?php echo $total + $postage_cost; ?>', currency: '<?php echo $paypal_currency; ?>',
-					    details: {subtotal: '<?php echo $total; ?>', shipping: '<?php echo $postage_cost; ?>'}
-					},
-					item_list: {
-					    items: [<?php echo $items_list; ?>
-					    ]
-					}
-				    }]
+				payment: {
+				    transactions: [{
+					    amount: {total: '<?php echo $total + $postage_cost; ?>', currency: '<?php echo $paypal_currency; ?>',
+						details: {subtotal: '<?php echo $total; ?>', shipping: '<?php echo $postage_cost; ?>'}
+					    },
+					    item_list: {
+						items: [<?php echo $items_list; ?>]
+					    }
+					}]
+				},
+				meta: {partner_attribution_id: 'TipsandTricks_SP'}
 			    });
 			},
 			onError: function (error) {
