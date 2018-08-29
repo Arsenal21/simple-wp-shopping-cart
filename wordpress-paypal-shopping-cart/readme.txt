@@ -27,7 +27,9 @@ https://www.youtube.com/watch?v=gPvXac_j_lI
 
 This plugin is a lightweight solution (with minimal number of lines of code and minimal options) so it doesn't slow down your site.
 
-The plugin also has an option to use the smart PayPal payment buttons. You can enable the PayPal smart button option in the settings menu of the plugin.
+The plugin also has an option to use the smart PayPal payment buttons. You can enable the PayPal smart button option in the settings menu of the plugin. The following video shows a checkout demo using PayPal smart button.
+
+https://www.youtube.com/watch?v=m0yDWDmtpKI
 
 It can be integrated with the NextGen Photo Gallery plugin to accommodate the selling of photographs from your gallery.
 
