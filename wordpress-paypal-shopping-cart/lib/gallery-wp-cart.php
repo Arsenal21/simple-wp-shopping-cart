@@ -25,15 +25,6 @@ Follow variables are useable :
 	</div>
 <?php } ?>
 
-<?php if ($gallery->show_piclens) { ?>
-	<!-- Piclense link -->
-	<div class="piclenselink">
-		<a class="piclenselink" href="<?php echo $gallery->piclens_link ?>">
-			<?php _e('[View with PicLens]','nggallery'); ?>
-		</a>
-	</div>
-<?php } ?>
-	
 	<!-- Thumbnails -->
 	<?php foreach ($images as $image) : ?>
 	
