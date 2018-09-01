@@ -239,6 +239,19 @@ function print_wp_shopping_cart( $args = array() ) {
 		if ( $carts_cnt <= 1 ) {
 		    $output .= '<script src="https://www.paypalobjects.com/api/checkout.js"></script>';
 		}
+
+		$btn_layout	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_layout' ) ) ? 'vertical' : get_option( 'wpspc_pp_smart_checkout_btn_layout' );
+		$btn_size	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_size' ) ) ? 'medium' : get_option( 'wpspc_pp_smart_checkout_btn_size' );
+		$btn_shape	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_shape' ) ) ? 'rect' : get_option( 'wpspc_pp_smart_checkout_btn_shape' );
+		$btn_color	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_color' ) ) ? 'gold' : get_option( 'wpspc_pp_smart_checkout_btn_color' );
+
+		$pm_str = '';
+
+		$pm_str	 .= empty( get_option( 'wpspc_pp_smart_checkout_payment_method_credit' ) ) ? '' : ', paypal.FUNDING.CREDIT';
+		$pm_str	 .= empty( get_option( 'wpspc_pp_smart_checkout_payment_method_elv' ) ) ? '' : ', paypal.FUNDING.ELV';
+
+
+
 		ob_start();
 		?>
 
@@ -255,17 +268,13 @@ function print_wp_shopping_cart( $args = array() ) {
 
 			env: '<?php echo get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'sandbox' : 'production'; ?>',
 			style: {
-			    layout: 'vertical', // horizontal | vertical
-			    size: 'medium', // medium | large | responsive
-			    shape: 'rect', // pill | rect
-			    color: 'gold'       // gold | blue | silver | black
+			    layout: '<?php echo esc_js( $btn_layout ); ?>',
+			    size: '<?php echo esc_js( $btn_size ); ?>',
+			    shape: '<?php echo esc_js( $btn_shape ); ?>',
+			    color: '<?php echo esc_js( $btn_color ); ?>'
 			},
-			// - paypal.FUNDING.CARD
-			// - paypal.FUNDING.CREDIT
-			// - paypal.FUNDING.ELV
-
 			funding: {
-			    allowed: [paypal.FUNDING.CARD, paypal.FUNDING.CREDIT],
+			    allowed: [paypal.FUNDING.CARD<?php echo $pm_str; ?>],
 			    disallowed: []
 			},
 			client: {

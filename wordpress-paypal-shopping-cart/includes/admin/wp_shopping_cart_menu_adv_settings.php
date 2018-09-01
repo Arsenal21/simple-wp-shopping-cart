@@ -18,6 +18,12 @@ function show_wp_cart_adv_settings_page() {
 	$live_secret			 = filter_input( INPUT_POST, 'wpspc_pp_live_secret', FILTER_SANITIZE_STRING );
 	$test_secret			 = filter_input( INPUT_POST, 'wpspc_pp_test_secret', FILTER_SANITIZE_STRING );
 	$disable_standard_checkout	 = filter_input( INPUT_POST, 'wpspc_disable_standard_checkout', FILTER_SANITIZE_NUMBER_INT );
+	$btn_size			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_size', FILTER_SANITIZE_STRING );
+	$btn_color			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_color', FILTER_SANITIZE_STRING );
+	$btn_shape			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_shape', FILTER_SANITIZE_STRING );
+	$btn_layout			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_layout', FILTER_SANITIZE_STRING );
+	$pm_credit			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_payment_method_credit', FILTER_SANITIZE_STRING );
+	$pm_elv				 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_payment_method_elv', FILTER_SANITIZE_STRING );
 
 	update_option( 'wpspc_enable_pp_smart_checkout', $enable_pp_smart_checkout );
 	update_option( 'wpspc_pp_live_client_id', $live_client_id );
@@ -25,6 +31,12 @@ function show_wp_cart_adv_settings_page() {
 	update_option( 'wpspc_pp_test_client_id', $test_client_id );
 	update_option( 'wpspc_pp_test_secret', $test_secret );
 	update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
+	update_option( 'wpspc_pp_smart_checkout_btn_size', $btn_size );
+	update_option( 'wpspc_pp_smart_checkout_btn_color', $btn_color );
+	update_option( 'wpspc_pp_smart_checkout_btn_shape', $btn_shape );
+	update_option( 'wpspc_pp_smart_checkout_btn_layout', $btn_layout );
+	update_option( 'wpspc_pp_smart_checkout_payment_method_credit', $pm_credit );
+	update_option( 'wpspc_pp_smart_checkout_payment_method_elv', $pm_elv );
 
 	echo '<div id="message" class="updated fade"><p><strong>';
 	echo 'Advanced Settings Updated!';
@@ -106,13 +118,72 @@ function show_wp_cart_adv_settings_page() {
     			<span class="description"><?php _e( "Enter your sandbox Secret.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
     		</tr>
+
+    	    </table>
+
+    	    <h4><?php _e( "Button Appearance Settings", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+    	    <hr />
+
+    	    <table class="form-table">
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Size", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td>
+    			<select name="wpspc_pp_smart_checkout_btn_size">
+    			    <option value="medium"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_size' ) === 'medium') ? ' selected' : ''; ?>><?php _e( "Medium", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+    			    <option value="large"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_size' ) === 'large') ? ' selected' : ''; ?>><?php _e( "Large", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+    			    <option value="responsive"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_size' ) === 'responsive') ? ' selected' : ''; ?>><?php _e( "Repsonsive", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+    			</select>
+    			<span class="description"><?php _e( "Select button size.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Color", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td>
+    			<select name="wpspc_pp_smart_checkout_btn_color">
+    			    <option value="gold"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'gold') ? ' selected' : ''; ?>><?php _e( "Gold", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+    			    <option value="blue"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'blue') ? ' selected' : ''; ?>><?php _e( "Blue", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+    			    <option value="silver"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'silver') ? ' selected' : ''; ?>><?php _e( "Silver", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+    			    <option value="black"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'black') ? ' selected' : ''; ?>><?php _e( "Black", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+    			</select>
+    			<span class="description"><?php _e( "Select button color.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Shape", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="rect"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_shape' ) === 'rect' || empty( get_option( 'wpspc_pp_smart_checkout_btn_shape' ) )) ? ' checked' : ''; ?>> <?php _e( "Rect", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="pill"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_shape' ) === 'pill') ? ' checked' : ''; ?>> <?php _e( "Pill", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p class="description"><?php _e( "Select button shape.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+    		    </td>
+    		</tr>
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Layout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="vertical"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_layout' ) === 'vertical' || empty( get_option( 'wpspc_pp_smart_checkout_btn_layout' ) )) ? ' checked' : ''; ?>> <?php _e( "Vertical", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="horizontal"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_layout' ) === 'horizontal') ? ' checked' : ''; ?>> <?php _e( "Horizontal", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p class="description"><?php _e( "Select button layout.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+    		    </td>
+    		</tr>
+    	    </table>
+
+    	    <h4><?php _e( "Additional Settings", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+    	    <hr />
+
+    	    <table class="form-table">
+    		<tr valign="top">
+    		    <th scope="row"><?php _e( "Payment Methods", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+    		    <td>
+    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_credit" value="1"<?php echo ( ! empty( get_option( 'wpspc_pp_smart_checkout_payment_method_credit' ) ) ) ? ' checked' : ''; ?>> <?php _e( "PayPal Credit", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_elv" value="1"<?php echo ( ! empty( get_option( 'wpspc_pp_smart_checkout_payment_method_elv' ) ) ) ? ' checked' : ''; ?>> <?php _e( "ELV", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p class="description"><?php _e( "Select payment methods that could be used by customers. Note that payment with cards is always enabled.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+    		    </td>
+    		</tr>
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1"<?php echo get_option( 'wpspc_disable_standard_checkout' ) ? ' checked' : ''; ?>/>
     			<span class="description"><?php _e( "By default PayPal standard checkout is always enabled. If you only want to use the PayPal Smart Checkout instead then use this checkbox to disable the standard checkout option. This option will only have effect when Smart Checkout is enabled.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
     		</tr>
-
     	    </table>
 
     	</div>
