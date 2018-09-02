@@ -240,15 +240,21 @@ function print_wp_shopping_cart( $args = array() ) {
 		    $output .= '<script src="https://www.paypalobjects.com/api/checkout.js"></script>';
 		}
 
-		$btn_layout	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_layout' ) ) ? 'vertical' : get_option( 'wpspc_pp_smart_checkout_btn_layout' );
-		$btn_size	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_size' ) ) ? 'medium' : get_option( 'wpspc_pp_smart_checkout_btn_size' );
-		$btn_shape	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_shape' ) ) ? 'rect' : get_option( 'wpspc_pp_smart_checkout_btn_shape' );
-		$btn_color	 = empty( get_option( 'wpspc_pp_smart_checkout_btn_color' ) ) ? 'gold' : get_option( 'wpspc_pp_smart_checkout_btn_color' );
+		$btn_layout	 = get_option( 'wpspc_pp_smart_checkout_btn_layout' );
+		$btn_layout	 = empty( $btn_layout ) ? 'vertical' : $btn_layout;
+		$btn_size	 = get_option( 'wpspc_pp_smart_checkout_btn_size' );
+		$btn_size	 = empty( $btn_size ) ? 'medium' : $btn_size;
+		$btn_shape	 = get_option( 'wpspc_pp_smart_checkout_btn_shape' );
+		$btn_shape	 = empty( $btn_shape ) ? 'rect' : $btn_shape;
+		$btn_color	 = get_option( 'wpspc_pp_smart_checkout_btn_color' );
+		$btn_color	 = empty( $btn_color ) ? 'gold' : $btn_color;
 
 		$pm_str = '';
 
-		$pm_str	 .= empty( get_option( 'wpspc_pp_smart_checkout_payment_method_credit' ) ) ? '' : ', paypal.FUNDING.CREDIT';
-		$pm_str	 .= empty( get_option( 'wpspc_pp_smart_checkout_payment_method_elv' ) ) ? '' : ', paypal.FUNDING.ELV';
+		$pm_credit	 = get_option( 'wpspc_pp_smart_checkout_payment_method_credit' );
+		$pm_str		 .= empty( $pm_credit ) ? '' : ', paypal.FUNDING.CREDIT';
+		$pm_elv		 = get_option( 'wpspc_pp_smart_checkout_payment_method_elv' );
+		$pm_str		 .= empty( $pm_elv ) ? '' : ', paypal.FUNDING.ELV';
 
 
 
