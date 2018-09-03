@@ -2,6 +2,8 @@
 
 function show_wp_cart_adv_settings_page() {
 
+    require_once(WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php');
+
     if ( ! current_user_can( 'manage_options' ) ) {
 	wp_die( 'You do not have permission to access the settings page.' );
     }
@@ -129,9 +131,14 @@ function show_wp_cart_adv_settings_page() {
     		    <th scope="row"><?php _e( "Size", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
     			<select name="wpspc_pp_smart_checkout_btn_size">
-    			    <option value="medium"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_size' ) === 'medium') ? ' selected' : ''; ?>><?php _e( "Medium", "wordpress-simple-paypal-shopping-cart" ); ?></option>
-    			    <option value="large"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_size' ) === 'large') ? ' selected' : ''; ?>><?php _e( "Large", "wordpress-simple-paypal-shopping-cart" ); ?></option>
-    			    <option value="responsive"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_size' ) === 'responsive') ? ' selected' : ''; ?>><?php _e( "Repsonsive", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+				<?php
+				$btn_size	 = get_option( 'wpspc_pp_smart_checkout_btn_size' );
+				echo WPSPCAdminUtils::gen_options( array(
+				    array( 'medium', __( "Medium", "wordpress-simple-paypal-shopping-cart" ) ),
+				    array( 'large', __( "Large", "wordpress-simple-paypal-shopping-cart" ) ),
+				    array( 'responsive', __( "Repsonsive", "wordpress-simple-paypal-shopping-cart" ) ),
+				), $btn_size );
+				?>
     			</select>
     			<span class="description"><?php _e( "Select button size.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
@@ -140,27 +147,36 @@ function show_wp_cart_adv_settings_page() {
     		    <th scope="row"><?php _e( "Color", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
     			<select name="wpspc_pp_smart_checkout_btn_color">
-    			    <option value="gold"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'gold') ? ' selected' : ''; ?>><?php _e( "Gold", "wordpress-simple-paypal-shopping-cart" ); ?></option>
-    			    <option value="blue"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'blue') ? ' selected' : ''; ?>><?php _e( "Blue", "wordpress-simple-paypal-shopping-cart" ); ?></option>
-    			    <option value="silver"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'silver') ? ' selected' : ''; ?>><?php _e( "Silver", "wordpress-simple-paypal-shopping-cart" ); ?></option>
-    			    <option value="black"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_color' ) === 'black') ? ' selected' : ''; ?>><?php _e( "Black", "wordpress-simple-paypal-shopping-cart" ); ?></option>
+				<?php
+				$btn_color	 = get_option( 'wpspc_pp_smart_checkout_btn_color' );
+				echo WPSPCAdminUtils::gen_options( array(
+				    array( 'gold', __( "Gold", "wordpress-simple-paypal-shopping-cart" ) ),
+				    array( 'blue', __( "Blue", "wordpress-simple-paypal-shopping-cart" ) ),
+				    array( 'silver', __( "Silver", "wordpress-simple-paypal-shopping-cart" ) ),
+				    array( 'black', __( "Black", "wordpress-simple-paypal-shopping-cart" ) ),
+				), $btn_color );
+				?>
     			</select>
     			<span class="description"><?php _e( "Select button color.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
     		</tr>
+		    <?php
+		    $btn_layout	 = get_option( 'wpspc_pp_smart_checkout_btn_layout' );
+		    $btn_shape	 = get_option( 'wpspc_pp_smart_checkout_btn_shape' );
+		    ?>
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Shape", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="rect"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_shape' ) === 'rect' || empty( get_option( 'wpspc_pp_smart_checkout_btn_shape' ) )) ? ' checked' : ''; ?>> <?php _e( "Rect", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="pill"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_shape' ) === 'pill') ? ' checked' : ''; ?>> <?php _e( "Pill", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="rect"<?php WPSPCAdminUtils::e_checked( $btn_shape, 'rect', true ); ?>> <?php _e( "Rect", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="pill"<?php WPSPCAdminUtils::e_checked( $btn_shape, 'pill' ); ?>> <?php _e( "Pill", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select button shape.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
     		    </td>
     		</tr>
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Layout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="vertical"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_layout' ) === 'vertical' || empty( get_option( 'wpspc_pp_smart_checkout_btn_layout' ) )) ? ' checked' : ''; ?>> <?php _e( "Vertical", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="horizontal"<?php echo (get_option( 'wpspc_pp_smart_checkout_btn_layout' ) === 'horizontal') ? ' checked' : ''; ?>> <?php _e( "Horizontal", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="vertical"<?php WPSPCAdminUtils::e_checked( $btn_layout, 'vertical', true ); ?>> <?php _e( "Vertical", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="horizontal"<?php WPSPCAdminUtils::e_checked( $btn_layout, 'horizontal' ); ?>> <?php _e( "Horizontal", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select button layout.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
     		    </td>
     		</tr>
@@ -168,13 +184,16 @@ function show_wp_cart_adv_settings_page() {
 
     	    <h4><?php _e( "Additional Settings", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
     	    <hr />
-
+		<?php
+		$pm_credit	 = get_option( 'wpspc_pp_smart_checkout_payment_method_credit' );
+		$pm_elv		 = get_option( 'wpspc_pp_smart_checkout_payment_method_elv' );
+		?>
     	    <table class="form-table">
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Payment Methods", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
-    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_credit" value="1"<?php echo ( ! empty( get_option( 'wpspc_pp_smart_checkout_payment_method_credit' ) ) ) ? ' checked' : ''; ?>> <?php _e( "PayPal Credit", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
-    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_elv" value="1"<?php echo ( ! empty( get_option( 'wpspc_pp_smart_checkout_payment_method_elv' ) ) ) ? ' checked' : ''; ?>> <?php _e( "ELV", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_credit" value="1"<?php WPSPCAdminUtils::e_checked( $pm_credit ); ?>> <?php _e( "PayPal Credit", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_elv" value="1"<?php WPSPCAdminUtils::e_checked( $pm_elv ); ?>> <?php _e( "ELV", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select payment methods that could be used by customers. Note that payment with cards is always enabled.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
     		    </td>
     		</tr>
