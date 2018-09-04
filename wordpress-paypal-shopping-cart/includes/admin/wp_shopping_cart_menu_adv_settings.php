@@ -167,7 +167,7 @@ function show_wp_cart_adv_settings_page() {
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Shape", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="rect"<?php WPSPCAdminUtils::e_checked( $btn_shape, 'rect', true ); ?>> <?php _e( "Rect", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="rect"<?php WPSPCAdminUtils::e_checked( $btn_shape, 'rect', true ); ?>> <?php _e( "Rectangular ", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="pill"<?php WPSPCAdminUtils::e_checked( $btn_shape, 'pill' ); ?>> <?php _e( "Pill", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select button shape.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
     		    </td>
