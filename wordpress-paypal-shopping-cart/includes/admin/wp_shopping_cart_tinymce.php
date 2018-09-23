@@ -88,7 +88,7 @@ function wp_cart_tinymce_ajax_handler() {
 
     	    // Validations
     	    if (product_name == '') {
-    		alert('Please enter product name');
+    		alert('<?php _e( "Please enter product name", 'wordpress-simple-paypal-shopping-cart' ); ?>');
     		document.getElementById('wpsppsc_product_name').focus();
     		return false;
     	    }
@@ -96,7 +96,7 @@ function wp_cart_tinymce_ajax_handler() {
     	    product_price = product_price || 0;
 
     	    if (product_price == 0) {
-    		alert('Please enter product price');
+    		alert('<?php _e( "Please enter product price", 'wordpress-simple-paypal-shopping-cart' ); ?>');
     		document.getElementById('wpsppsc_product_price').focus();
     		return false;
     	    }
@@ -145,7 +145,7 @@ function wp_cart_tinymce_ajax_handler() {
     	<!-- panel -->
     	<div id="wpsppsc_panel" class="panel current">
 
-    	    <p>Visit the <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank">Simple Cart Documentation</a> page to learn all the shortcode usage.</p>
+    	    <p><?php _e( sprintf( 'Visit the %s page to learn all the shortcode usage.', '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank">' . __( 'Simple Cart Documentation', 'wordpress-simple-paypal-shopping-cart' ) . '</a>' ), 'wordpress-simple-paypal-shopping-cart' ); ?></p>
     	    <br />
 
     	    <table border="0" cellpadding="4" cellspacing="0">
@@ -157,7 +157,7 @@ function wp_cart_tinymce_ajax_handler() {
     			<input type="text" id="wpsppsc_product_name" name="wpsppsc_product_name" value="" />
     		    </td>
     		    <td>
-    			Example: My Great Product
+			    <?php _e( "Example: My Great Product", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
@@ -168,7 +168,7 @@ function wp_cart_tinymce_ajax_handler() {
     			<input type="text" id="wpsppsc_product_price" name="wpsppsc_product_price" value="" />
     		    </td>
     		    <td>
-    			Example: 10 or 10.50
+			    <?php _e( "Example: 10 or 10.50", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
@@ -179,7 +179,7 @@ function wp_cart_tinymce_ajax_handler() {
     			<input type="text" id="wpsppsc_shipping" name="wpsppsc_shipping" value="" />
     		    </td>
     		    <td>
-    			Example: 10 or 10.50
+			    <?php _e( "Example: 10 or 10.50", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
@@ -190,14 +190,14 @@ function wp_cart_tinymce_ajax_handler() {
     			<input type="text" id="wpsppsc_file_url" name="wpsppsc_shipping" value="" />
     		    </td>
     		    <td>
-    			Example: http://www.your-site.com/wp-content/uploads/my-ebook.zip
+			    <?php _e( 'Example:' ); ?> http://www.your-site.com/wp-content/uploads/my-ebook.zip
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap" colspan="3">
     			<br/>
-    			<strong>Product Variations (Optional)</strong>
-    			<p>Example: For a T-Shirt product you may want to use a variation with name "Size" and values as "Small, Medium, Large"</p>
+    			<strong><?php _e( "Product Variations (Optional)", 'wordpress-simple-paypal-shopping-cart' ); ?></strong>
+    			<p><?php _e( 'Example: For a T-Shirt product you may want to use a variation with name "Size" and values as "Small, Medium, Large"', 'wordpress-simple-paypal-shopping-cart' ); ?></p>
     		    </td>
     		</tr>
     		<tr>
