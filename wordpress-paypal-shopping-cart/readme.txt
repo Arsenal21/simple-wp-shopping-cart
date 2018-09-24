@@ -203,6 +203,9 @@ None
 
 == Changelog ==
 
+= WIP 4.4.4 =
+- More texts are now translatable. POT file updated.
+
 = 4.4.3 =
 - Added button customization options (in the advanced settings) for the smart paypal checkout button.
 
