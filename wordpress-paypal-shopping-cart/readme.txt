@@ -204,6 +204,7 @@ None
 == Changelog ==
 
 = WIP 4.4.4 =
+- Customer Input addon fields are now exported to CSV as well.
 - More texts are now translatable. POT file updated.
 
 = 4.4.3 =
