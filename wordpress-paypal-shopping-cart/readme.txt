@@ -3,8 +3,8 @@ Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
 Requires at least: 3.0
-Tested up to: 4.9
-Stable tag: 4.4.3
+Tested up to: 5.0
+Stable tag: 4.4.4
 License: GPLv2 or later
 
 Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -203,9 +203,9 @@ None
 
 == Changelog ==
 
-= WIP 4.4.4 =
-- Customer Input addon fields are now exported to CSV as well.
+= 4.4.4 =
 - More texts are now translatable. POT file updated.
+- Added more filter hooks so the customer Input addon fields are now exported to CSV as well.
 
 = 4.4.3 =
 - Added button customization options (in the advanced settings) for the smart paypal checkout button.
