@@ -109,17 +109,17 @@ function wspsc_show_coupon_discount_settings_page()
     <tr valign="top">
 
     <td width="25%" align="left">
-    Coupon Code<br />
+    <?php _e("Coupon Code", 'wordpress-simple-paypal-shopping-cart' ); ?><br />
     <input name="wpspsc_coupon_code" type="text" size="15" value=""/>   
     </td>
 
     <td width="25%" align="left">
-    Discount Rate (%)<br />
+    <?php _e("Discount Rate (%)", 'wordpress-simple-paypal-shopping-cart' ); ?><br />
     <input name="wpspsc_coupon_rate" type="text" size="7" value=""/>            
     </td>
     
     <td width="25%" align="left">
-    Expiry Date<br />
+    <?php _e("Expiry Date", 'wordpress-simple-paypal-shopping-cart' ); ?><br />
     <input name="wpspsc_coupon_expiry_date" class="wpspsc_coupon_expiry" type="text" size="15" value=""/>            
     </td>
 

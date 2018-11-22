@@ -208,7 +208,7 @@ function wp_cart_tinymce_ajax_handler() {
     		    </td>
     		    <td>
 			    <?php _e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
-    			<input type="text" id="wpsppsc_custom1_values" name="wpsppsc_custom1_values" value="" /> Example: Small, Medium, Large
+    			<input type="text" id="wpsppsc_custom1_values" name="wpsppsc_custom1_values" value="" /><?php _e(" Example: Small, Medium, Large", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
@@ -219,7 +219,7 @@ function wp_cart_tinymce_ajax_handler() {
     		    </td>
     		    <td>
 			    <?php _e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
-    			<input type="text" id="wpsppsc_custom2_values" name="wpsppsc_custom2_values" value="" /> Example: Blue, Red, Black, White
+    			<input type="text" id="wpsppsc_custom2_values" name="wpsppsc_custom2_values" value="" /><?php _e(" Example: Blue, Red, Black, White", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
@@ -230,7 +230,7 @@ function wp_cart_tinymce_ajax_handler() {
     		    </td>
     		    <td>
 			    <?php _e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
-    			<input type="text" id="wpsppsc_custom3_values" name="wpsppsc_custom3_values" value="" /> Example: Short, Full
+    			<input type="text" id="wpsppsc_custom3_values" name="wpsppsc_custom3_values" value="" /><?php _e(" Example: Short, Full", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     	    </table>
