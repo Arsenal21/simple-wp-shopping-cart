@@ -42,7 +42,7 @@ class paypal_ipn_handler {
 	$state			 = $this->ipn_data[ 'address_state' ];
 	$zip			 = $this->ipn_data[ 'address_zip' ];
 	$country		 = $this->ipn_data[ 'address_country' ];
-	$phone			 = $this->ipn_data[ 'contact_phone' ];
+	$phone			 = isset( $this->ipn_data[ 'contact_phone' ] ) ? $this->ipn_data[ 'contact_phone' ] : '';
 
 	if ( empty( $street_address ) && empty( $city ) ) {
 	    //No address value present
@@ -138,7 +138,7 @@ class paypal_ipn_handler {
 	$post_id		 = $custom_values[ 'wp_cart_id' ];
 	$orig_cart_items	 = get_post_meta( $post_id, 'wpsc_cart_items', true );
 	$ip_address		 = $custom_values[ 'ip' ];
-	$applied_coupon_code	 = $custom_values[ 'coupon_code' ];
+	$applied_coupon_code	 = isset( $custom_values[ 'coupon_code' ] ) ? $custom_values[ 'coupon_code' ] : '';
 	$currency_symbol	 = get_option( 'cart_currency_symbol' );
 	$this->debug_log( 'Custom values', true );
 	$this->debug_log_array( $custom_values, true );
@@ -219,7 +219,7 @@ class paypal_ipn_handler {
 		}
 		$item_total	 = $item[ 'price' ] * $item[ 'quantity' ];
 		$product_details .= $item[ 'name' ] . " x " . $item[ 'quantity' ] . " - " . $currency_symbol . wpspsc_number_format_price( $item_total ) . "\n";
-		if ( $item[ 'file_url' ] ) {
+		if ( isset($item[ 'file_url' ]) ) {
 		    $file_url	 = base64_decode( $item[ 'file_url' ] );
 		    $product_details .= "Download Link: " . $file_url . "\n";
 		}
@@ -510,6 +510,10 @@ class paypal_ipn_handler {
 	if ( ! $this->ipn_log )
 	    return;  // is logging turned off?
 	// Timestamp
+	//check if need to convert array to string
+	if ( is_array( $message ) ) {
+	    $message = json_encode( $message );
+	}
 	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . (($success) ? 'SUCCESS :' : 'FAILURE :') . $message . "\n";
 
 	if ( $end ) {
