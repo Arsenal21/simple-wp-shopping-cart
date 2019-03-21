@@ -8,13 +8,15 @@ function wspsc_handle_admin_menu() {
 
     include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_discounts.php');
     include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php');
+    include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_addons.php');
     
     $menu_icon_url = 'dashicons-cart';
     add_menu_page(__('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), __('Simple Cart', 'wordpress-simple-paypal-shopping-cart'), WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG , 'wspsc_settings_interface', $menu_icon_url, 90);
     add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Settings', 'wordpress-simple-paypal-shopping-cart'),  __('Settings', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, WP_CART_MAIN_MENU_SLUG, 'wspsc_settings_interface');
     add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Coupons', 'wordpress-simple-paypal-shopping-cart'),  __('Coupons', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'wspsc-discounts', 'wspsc_show_coupon_discount_settings_page');
     add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Tools', 'wordpress-simple-paypal-shopping-cart'),  __('Tools', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'wspsc-tools', 'wspsc_show_tools_menu_page');
-    
+    add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Add-ons', 'wordpress-simple-paypal-shopping-cart'),  __('Add-ons', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'wspsc-addons', 'wspsc_show_addons_menu_page');
+        
     //Can set the "show_in_menu" parameter in the cart orders registration to false then add the menu in here using the following code
     //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Orders', 'wordpress-simple-paypal-shopping-cart'),  __('Orders', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'edit.php?post_type=wpsc_cart_orders');
     //add_submenu_page(WP_CART_MAIN_MENU_SLUG, __('Add Order', 'wordpress-simple-paypal-shopping-cart'),  __('Add Order', 'wordpress-simple-paypal-shopping-cart') , WP_CART_MANAGEMENT_PERMISSION, 'post-new.php?post_type=wpsc_cart_orders');
