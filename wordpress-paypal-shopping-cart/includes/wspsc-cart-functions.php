@@ -125,7 +125,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 	    $output .= "<td class='wspsc_cart_qty_td' style='text-align: center'><form method=\"post\"  action=\"\" name='pcquantity' style='display: inline'>" . wp_nonce_field( 'wspsc_cquantity', '_wpnonce', true, false ) . "
                 <input type=\"hidden\" name=\"wspsc_product\" value=\"" . htmlspecialchars( $item[ 'name' ] ) . "\" />
-	        <input type='hidden' name='cquantity' value='1' /><input type='text' class='wspsc_cart_item_qty' name='quantity' value='" . esc_attr( $item[ 'quantity' ] ) . "' size='1' onchange='document.pcquantity.submit();' onkeypress='document.getElementById(\"pinfo\").style.display = \"\";' /></form></td>
+	        <input type='hidden' name='cquantity' value='1' /><input type='number' class='wspsc_cart_item_qty' name='quantity' value='" . esc_attr( $item[ 'quantity' ] ) . "' min='0' step='1' size='3' onchange='document.pcquantity.submit();' onkeypress='document.getElementById(\"pinfo\").style.display = \"\";' /></form></td>
 	        <td style='text-align: center'>" . print_payment_currency( ($item[ 'price' ] * $item[ 'quantity' ] ), $paypal_symbol, $decimal ) . "</td>
 	        <td><form method=\"post\" action=\"\" class=\"wp_cart_remove_item_form\">" . wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, false ) . "
 	        <input type=\"hidden\" name=\"wspsc_product\" value=\"" . esc_attr( $item[ 'name' ] ) . "\" />

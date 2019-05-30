@@ -13,6 +13,10 @@ box-shadow: none;
 width:auto !important;
 margin: 0;
 }
+.shopping_cart input[type="number"]{
+max-width:5em !important;
+text-align:center;
+}
 div.shopping_cart table{
 border: none;    
 }

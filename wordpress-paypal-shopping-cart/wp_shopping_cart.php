@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Paypal Shopping cart
-  Version: 4.4.5
+  Version: 4.4.6
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,17 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-if ( version_compare( PHP_VERSION, '5.4.0' ) >= 0 ) {
-    if ( session_status() == PHP_SESSION_NONE ) {
-	session_start();
-    }
-} else {
-    if ( session_id() == '' ) {
-	session_start();
-    }
-}
-
-define( 'WP_CART_VERSION', '4.4.5' );
+define( 'WP_CART_VERSION', '4.4.6' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -40,12 +30,25 @@ if ( ! defined( 'WP_CART_MANAGEMENT_PERMISSION' ) ) {//This will allow the user 
 }
 define( 'WP_CART_MAIN_MENU_SLUG', 'wspsc-menu-main' );
 
-
-// loading language files
+//Loading language files
 //Set up localisation. First loaded overrides strings present in later loaded file
 $locale = apply_filters( 'plugin_locale', get_locale(), 'wordpress-simple-paypal-shopping-cart' );
 load_textdomain( 'wordpress-simple-paypal-shopping-cart', WP_LANG_DIR . "/wordpress-simple-paypal-shopping-cart-$locale.mo" );
 load_plugin_textdomain( 'wordpress-simple-paypal-shopping-cart', false, WP_CART_FOLDER . '/languages' );
+
+//PHP session
+if( !is_admin() ) {
+    //Only use session for front-end.
+    if ( version_compare( PHP_VERSION, '5.4.0' ) >= 0 ) {
+        if ( session_status() == PHP_SESSION_NONE ) {
+            session_start();
+        }
+    } else {
+        if ( session_id() == '' ) {
+            session_start();
+        }
+    }
+}
 
 include_once('wp_shopping_cart_utility_functions.php');
 include_once('wp_shopping_cart_shortcodes.php');

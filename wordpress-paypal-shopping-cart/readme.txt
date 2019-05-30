@@ -2,9 +2,9 @@
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
-Requires at least: 3.0
+Requires at least: 4.7
 Tested up to: 5.2
-Stable tag: 4.4.5
+Stable tag: 4.4.6
 License: GPLv2 or later
 
 Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -202,6 +202,10 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
+= 4.4.6 =
+- Changed the quantity input field to be a "number" type field. Customers will be able to change the number value easily.
+- The session for the shopping cart is only started on the front-end.
 
 = 4.4.5 =
 - Fixed issues with custom fields when using Collect Customer Input addon.
