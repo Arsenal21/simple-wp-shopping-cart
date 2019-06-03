@@ -37,16 +37,16 @@ load_textdomain( 'wordpress-simple-paypal-shopping-cart', WP_LANG_DIR . "/wordpr
 load_plugin_textdomain( 'wordpress-simple-paypal-shopping-cart', false, WP_CART_FOLDER . '/languages' );
 
 //PHP session
-if( !is_admin() ) {
-    //Only use session for front-end.
+if ( ! is_admin() || wp_doing_ajax() ) {
+    //Only use session for front-end and ajax.
     if ( version_compare( PHP_VERSION, '5.4.0' ) >= 0 ) {
-        if ( session_status() == PHP_SESSION_NONE ) {
-            session_start();
-        }
+	if ( session_status() == PHP_SESSION_NONE ) {
+	    session_start();
+	}
     } else {
-        if ( session_id() == '' ) {
-            session_start();
-        }
+	if ( session_id() == '' ) {
+	    session_start();
+	}
     }
 }
 
