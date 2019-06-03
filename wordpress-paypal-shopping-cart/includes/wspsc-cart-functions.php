@@ -83,14 +83,16 @@ function print_wp_shopping_cart( $args = array() ) {
     $total_items	 = 0;
     $total		 = 0;
     $form		 = '';
-    if ( $_SESSION[ 'simpleCart' ] && is_array( $_SESSION[ 'simpleCart' ] ) ) {
+    $sess		 = WPSPSCSessions::get_instance();
+    $simpleCart	 = $sess->get_data( 'simpleCart' );
+    if ( $simpleCart && is_array( $simpleCart ) ) {
 	$output			 .= '
         <tr class="wspsc_cart_item_row">
         <th class="wspsc_cart_item_name_th">' . (__( "Item Name", "wordpress-simple-paypal-shopping-cart" )) . '</th><th class="wspsc_cart_qty_th">' . (__( "Quantity", "wordpress-simple-paypal-shopping-cart" )) . '</th><th class="wspsc_cart_price_th">' . (__( "Price", "wordpress-simple-paypal-shopping-cart" )) . '</th><th></th>
         </tr>';
 	$item_total_shipping	 = 0;
 	$postage_cost		 = 0;
-	foreach ( $_SESSION[ 'simpleCart' ] as $item ) {
+	foreach ( $simpleCart as $item ) {
 	    $total			 += $item[ 'price' ] * $item[ 'quantity' ];
 	    $item_total_shipping	 += $item[ 'shipping' ] * $item[ 'quantity' ];
 	    $total_items		 += $item[ 'quantity' ];
@@ -108,7 +110,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	$item_tpl	 = "{name: '%s', quantity: '%d', price: '%s', currency: '" . $paypal_currency . "'}";
 	$items_list	 = '';
 
-	foreach ( $_SESSION[ 'simpleCart' ] as $item ) {
+	foreach ( $simpleCart as $item ) {
 	    //Let's form JS array of items for Smart Checkout
 	    $items_list .= sprintf( $item_tpl, esc_js( $item[ 'name' ] ), esc_js( $item[ 'quantity' ] ), esc_js( $item[ 'price' ] ) ) . ',';
 
@@ -171,8 +173,12 @@ function print_wp_shopping_cart( $args = array() ) {
 
 	$output .= "<tr class='wspsc_cart_total'><td colspan='2' style='font-weight: bold; text-align: right;'>" . (__( "Total", "wordpress-simple-paypal-shopping-cart" )) . ": </td><td style='text-align: center'>" . print_payment_currency( ($total + $postage_cost ), $paypal_symbol, $decimal ) . "</td><td></td></tr>";
 
-	if ( isset( $_SESSION[ 'wpspsc_cart_action_msg' ] ) && ! empty( $_SESSION[ 'wpspsc_cart_action_msg' ] ) ) {
-	    $output .= '<tr class="wspsc_cart_action_msg"><td colspan="4"><span class="wpspsc_cart_action_msg">' . $_SESSION[ 'wpspsc_cart_action_msg' ] . '</span></td></tr>';
+	$sess = WPSPSCSessions::get_instance();
+
+	$action_msg = $sess->get_data( 'wpspsc_cart_action_msg' );
+
+	if ( isset( $action_msg ) && ! empty( $action_msg ) ) {
+	    $output .= '<tr class="wspsc_cart_action_msg"><td colspan="4"><span class="wpspsc_cart_action_msg">' . $action_msg . '</span></td></tr>';
 	}
 
 	if ( get_option( 'wpspsc_enable_coupon' ) == '1' ) {

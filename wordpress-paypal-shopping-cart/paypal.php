@@ -219,7 +219,7 @@ class paypal_ipn_handler {
 		}
 		$item_total	 = $item[ 'price' ] * $item[ 'quantity' ];
 		$product_details .= $item[ 'name' ] . " x " . $item[ 'quantity' ] . " - " . $currency_symbol . wpspsc_number_format_price( $item_total ) . "\n";
-		if ( isset($item[ 'file_url' ]) ) {
+		if ( isset( $item[ 'file_url' ] ) ) {
 		    $file_url	 = base64_decode( $item[ 'file_url' ] );
 		    $product_details .= "Download Link: " . $file_url . "\n";
 		}
@@ -444,7 +444,8 @@ class paypal_ipn_handler {
     }
 
     function create_ipn_from_smart_checkout( $data ) {
-	$ipn[ 'custom' ]		 = $_SESSION[ 'wp_cart_custom_values' ];
+	$sess				 = WPSPSCSessions::get_instance();
+	$ipn[ 'custom' ]		 = $sess->get_data( 'wp_cart_custom_values' );
 	$ipn[ 'pay_id' ]		 = $data[ 'id' ];
 	$ipn[ 'create_time' ]		 = $data[ 'create_time' ];
 	$ipn[ 'txn_id' ]		 = $data[ 'transactions' ][ 0 ][ 'related_resources' ][ 0 ][ 'sale' ][ 'id' ];
