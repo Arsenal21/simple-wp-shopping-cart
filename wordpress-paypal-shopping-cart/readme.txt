@@ -203,6 +203,9 @@ None
 
 == Changelog ==
 
+= WIP 4.4.8 =
+- Fix - Undefined index notices.
+
 = 4.4.7 =
 - Fixed the "Order ID does not exist in IPN Notification" issue with smart paypal checkout option for some sites.
 

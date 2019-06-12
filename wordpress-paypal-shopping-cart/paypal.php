@@ -37,11 +37,11 @@ class paypal_ipn_handler {
 	$first_name		 = $this->ipn_data[ 'first_name' ];
 	$last_name		 = $this->ipn_data[ 'last_name' ];
 	$buyer_email		 = $this->ipn_data[ 'payer_email' ];
-	$street_address		 = $this->ipn_data[ 'address_street' ];
-	$city			 = $this->ipn_data[ 'address_city' ];
-	$state			 = $this->ipn_data[ 'address_state' ];
-	$zip			 = $this->ipn_data[ 'address_zip' ];
-	$country		 = $this->ipn_data[ 'address_country' ];
+	$street_address		 = isset( $this->ipn_data[ 'address_street' ] ) ? $this->ipn_data[ 'address_street' ] : '';
+	$city			 = isset( $this->ipn_data[ 'address_city' ] ) ? $this->ipn_data[ 'address_city' ] : '';
+	$state			 = isset( $this->ipn_data[ 'address_state' ] ) ? $this->ipn_data[ 'address_state' ] : '';
+	$zip			 = isset( $this->ipn_data[ 'address_zip' ] ) ? $this->ipn_data[ 'address_zip' ] : '';
+	$country		 = isset( $this->ipn_data[ 'address_country' ] ) ? $this->ipn_data[ 'address_country' ] : '';
 	$phone			 = isset( $this->ipn_data[ 'contact_phone' ] ) ? $this->ipn_data[ 'contact_phone' ] : '';
 
 	if ( empty( $street_address ) && empty( $city ) ) {
@@ -137,7 +137,7 @@ class paypal_ipn_handler {
 
 	$post_id		 = $custom_values[ 'wp_cart_id' ];
 	$orig_cart_items	 = get_post_meta( $post_id, 'wpsc_cart_items', true );
-	$ip_address		 = $custom_values[ 'ip' ];
+	$ip_address		 = isset( $custom_values[ 'ip' ] ) ? $custom_values[ 'ip' ] : '';
 	$applied_coupon_code	 = isset( $custom_values[ 'coupon_code' ] ) ? $custom_values[ 'coupon_code' ] : '';
 	$currency_symbol	 = get_option( 'cart_currency_symbol' );
 	$this->debug_log( 'Custom values', true );
