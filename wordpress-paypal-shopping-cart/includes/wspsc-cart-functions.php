@@ -86,7 +86,7 @@ function print_wp_shopping_cart( $args = array() ) {
     if ( $_SESSION[ 'simpleCart' ] && is_array( $_SESSION[ 'simpleCart' ] ) ) {
 	$output			 .= '
         <tr class="wspsc_cart_item_row">
-        <th class="wspsc_cart_item_name_th">' . (__( "Item Name", "wordpress-simple-paypal-shopping-cart" )) . '</th><th class="wspsc_cart_qty_th">' . (__( "Quantity", "wordpress-simple-paypal-shopping-cart" )) . '</th><th class="wspsc_cart_price_th">' . (__( "Price", "wordpress-simple-paypal-shopping-cart" )) . '</th><th></th>
+        <th class="wspsc_cart_item_name_th">' . (__( "Item Name", "wordpress-simple-paypal-shopping-cart" )) . '</th><th class="wspsc_cart_qty_th">' . (__( "Quantity", "wordpress-simple-paypal-shopping-cart" )) . '</th><th class="wspsc_cart_price_th">' . (__( "Price", "wordpress-simple-paypal-shopping-cart" )) . '</th><th class="wspsc_remove_item_th"></th>
         </tr>';
 	$item_total_shipping	 = 0;
 	$postage_cost		 = 0;
@@ -127,7 +127,7 @@ function print_wp_shopping_cart( $args = array() ) {
                 <input type=\"hidden\" name=\"wspsc_product\" value=\"" . htmlspecialchars( $item[ 'name' ] ) . "\" />
 	        <input type='hidden' name='cquantity' value='1' /><input type='number' class='wspsc_cart_item_qty' name='quantity' value='" . esc_attr( $item[ 'quantity' ] ) . "' min='0' step='1' size='3' onchange='document.pcquantity.submit();' onkeypress='document.getElementById(\"pinfo\").style.display = \"\";' /></form></td>
 	        <td style='text-align: center'>" . print_payment_currency( ($item[ 'price' ] * $item[ 'quantity' ] ), $paypal_symbol, $decimal ) . "</td>
-	        <td><form method=\"post\" action=\"\" class=\"wp_cart_remove_item_form\">" . wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, false ) . "
+	        <td class='wspsc_remove_item_td'><form method=\"post\" action=\"\" class=\"wp_cart_remove_item_form\">" . wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, false ) . "
 	        <input type=\"hidden\" name=\"wspsc_product\" value=\"" . esc_attr( $item[ 'name' ] ) . "\" />
 	        <input type='hidden' name='delcart' value='1' />
 	        <input type='image' src='" . WP_CART_URL . "/images/Shoppingcart_delete.png' value='" . (__( "Remove", "wordpress-simple-paypal-shopping-cart" )) . "' title='" . (__( "Remove", "wordpress-simple-paypal-shopping-cart" )) . "' /></form></td></tr>

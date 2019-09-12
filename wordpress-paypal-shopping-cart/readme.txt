@@ -204,6 +204,7 @@ None
 == Changelog ==
 
 = WIP 4.4.8 =
+- Added CSS class to the remove item table data.
 - Fix - Undefined index notices.
 
 = 4.4.7 =
