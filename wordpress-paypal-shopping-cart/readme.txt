@@ -207,6 +207,7 @@ None
 - Added CSS class to the remove item table data.
 - Updated the code related to quantity change (using the up/down arrows) to work better.
 - Fix: Undefined index notices.
+- Added a new utility function to write to log file.
 
 = 4.4.7 =
 - Fixed the "Order ID does not exist in IPN Notification" issue with smart paypal checkout option for some sites.

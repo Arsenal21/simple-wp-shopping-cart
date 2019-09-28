@@ -86,23 +86,6 @@ function wp_cart_get_custom_var_array($custom_val_string)
     return $customvariables;
 }
 
-function wspsc_reset_logfile()
-{
-    $log_reset = true;
-    $logfile = dirname(__FILE__).'/ipn_handle_debug.txt';
-    $text = '['.date('m/d/Y g:i A').'] - SUCCESS : Log file reset';
-    $text .= "\n------------------------------------------------------------------\n\n";
-    $fp = fopen($logfile, 'w');
-    if($fp != FALSE) {
-            @fwrite($fp, $text);
-            @fclose($fp);
-    }
-    else{
-            $log_reset = false;	
-    }
-    return $log_reset;
-}
-
 function wp_cart_ngg_template_handler($arg1,$arg2)
 {
     if($arg2=="gallery-wp-cart"){

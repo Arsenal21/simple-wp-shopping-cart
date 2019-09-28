@@ -1,5 +1,41 @@
 <?php
 
+function wspsc_log_payment_debug($message, $success, $end = false) {
+    $logfile = WP_CART_PATH . 'ipn_handle_debug.txt';
+    $debug = get_option( 'wp_shopping_cart_enable_debug' );
+    if ( !$debug ) {
+        //Debug is not enabled.
+        return;
+    }
+    
+    // Timestamp
+    $text = '[' . date('m/d/Y g:i A') . '] - ' . (($success) ? 'SUCCESS :' : 'FAILURE :') . $message . "\n";
+    if ($end) {
+        $text .= "\n------------------------------------------------------------------\n\n";
+    }
+    // Write to log
+    $fp = fopen($logfile, 'a');
+    fwrite($fp, $text);
+    fclose($fp);
+}
+
+function wspsc_reset_logfile()
+{
+    $log_reset = true;
+    $logfile = WP_CART_PATH . 'ipn_handle_debug.txt';
+    $text = '['.date('m/d/Y g:i A').'] - SUCCESS : Log file reset';
+    $text .= "\n------------------------------------------------------------------\n\n";
+    $fp = fopen($logfile, 'w');
+    if($fp != FALSE) {
+            @fwrite($fp, $text);
+            @fclose($fp);
+    }
+    else{
+            $log_reset = false;	
+    }
+    return $log_reset;
+}
+
 function wpspc_get_total_cart_qty() {
     $total_items = 0;
     if (!isset($_SESSION['simpleCart'])) {
