@@ -113,7 +113,8 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		foreach ( $_SESSION['simpleCart'] as $item ) {
 			//Let's form JS array of items for Smart Checkout
-			$items_list .= sprintf( $item_tpl, esc_js( $item['name'] ), esc_js( $item['quantity'] ), esc_js( $item['price'] ) ) . ',';
+                        $number_formatted_item_price = wpspsc_number_format_price($item['price']);
+			$items_list .= sprintf( $item_tpl, esc_js( $item['name'] ), esc_js( $item['quantity'] ), esc_js( $number_formatted_item_price ) ) . ',';
 
 			$output .= '<tr class="wspsc_cart_item_thumb"><td class="wspsc_cart_item_name_td" style="overflow: hidden;">';
 			$output .= '<div class="wp_cart_item_info">';
@@ -234,6 +235,13 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</form>';
 		if ( get_option( 'wpspc_enable_pp_smart_checkout' ) ) {
 			//Show PayPal Smart Payment Button
+                        
+                        //Some number formatting (before it is used in JS code.
+                        $formatted_total = wpspsc_number_format_price($total);
+                        $formatted_postage_cost = wpspsc_number_format_price($postage_cost);
+                        $totalpluspostage = ($total + $postage_cost);
+                        $formatted_totalpluspostage = wpspsc_number_format_price($totalpluspostage);
+                        
 			//check mode and if client ID is set for it
 			$client_id = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_pp_test_client_id' ) : get_option( 'wpspc_pp_live_client_id' );
 			if ( empty( $client_id ) ) {
@@ -308,8 +316,8 @@ function print_wp_shopping_cart( $args = array() ) {
 				return actions.payment.create({
 				payment: {
 					transactions: [{
-						amount: {total: '<?php echo $total + $postage_cost; ?>', currency: '<?php echo $paypal_currency; ?>',
-						details: {subtotal: '<?php echo $total; ?>', shipping: '<?php echo $postage_cost; ?>'}
+						amount: {total: '<?php echo $formatted_totalpluspostage; ?>', currency: '<?php echo $paypal_currency; ?>',
+						details: {subtotal: '<?php echo $formatted_total; ?>', shipping: '<?php echo $formatted_postage_cost; ?>'}
 						},
 						item_list: {
 						items: [<?php echo $items_list; ?>]
