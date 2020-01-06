@@ -205,6 +205,7 @@ None
 
 = 4.4.9 =
 - Smart Checkout fix with certain coupon code application (some discount amount was giving an invalid amount error).
+- Added link to smart checkout setup documentation.
 
 = 4.4.8 =
 - Added CSS class to the remove item table data.

@@ -93,7 +93,11 @@ function show_wp_cart_adv_settings_page() {
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Enable PayPal Smart Checkout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td><input type="checkbox" name="wpspc_enable_pp_smart_checkout" value="1"<?php echo get_option( 'wpspc_enable_pp_smart_checkout' ) ? ' checked' : ''; ?>/>
-    			<span class="description"><?php _e( "Enable PayPal Smart Checkout.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+    			<span class="description">
+                            <?php _e( "Enable PayPal Smart Checkout.", "wordpress-simple-paypal-shopping-cart" ); ?>
+                            <?php echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/enabling-smart-button-checkout-setup-and-configuration-4568" target="_blank">' . __( "View Documentation", "wordpress-simple-paypal-shopping-cart" ) . '</a>.'; ?>
+                        </span>
+
     		    </td>
     		</tr>
     		<tr valign="top">

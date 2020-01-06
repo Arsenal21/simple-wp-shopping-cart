@@ -384,6 +384,9 @@ msgstr ""
 msgid "Enable PayPal Smart Checkout."
 msgstr ""
 
+msgid "View Documentation"
+msgstr ""
+
 #: includes/admin/wp_shopping_cart_menu_adv_settings.php:100
 msgid "Live Client ID"
 msgstr ""
