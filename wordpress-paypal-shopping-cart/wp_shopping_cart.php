@@ -225,7 +225,7 @@ function wpspc_cart_actions_handler() {
 	    if ( ! is_numeric( $shipping ) ) {//Shipping price validation failed
 		wp_die( 'Error! The shipping price validation failed. The value must be numeric.' );
 	    }
-	    //At this stage the shipping price amt has already been sanitized and validated.            
+	    //At this stage the shipping price amt has already been sanitized and validated.
 	} else {
 	    wp_die( 'Error! Missing shipping price value. The price must be set.' );
 	}
@@ -386,6 +386,9 @@ function wp_cart_add_custom_field() {
 	$custom_field_val	 = wpc_append_values_to_custom_field( $name, $value );
     }
 
+    //Trigger action hook that can be used to append more custom fields value that is saved to the session ($_SESSION[ 'wp_cart_custom_values' ])
+    do_action('wspsc_cart_custom_field_appended');
+
     $custom_field_val	 = apply_filters( 'wpspc_cart_custom_field_value', $custom_field_val );
     $custom_field_val	 = urlencode( $custom_field_val ); //URL encode the custom field value so nothing gets lost when it is passed around.
     $output			 = '<input type="hidden" name="custom" value="' . $custom_field_val . '" />';
@@ -517,18 +520,18 @@ function wp_cart_add_read_form_javascript() {
 	<script type="text/javascript">
 	<!--
 	//
-	function ReadForm (obj1, tst) 
-	{ 
+	function ReadForm (obj1, tst)
+	{
 	    // Read the user form
 	    var i,j,pos;
-	    val_total="";val_combo="";		
-	
-	    for (i=0; i<obj1.length; i++) 
-	    {     
+	    val_total="";val_combo="";
+
+	    for (i=0; i<obj1.length; i++)
+	    {
 	        // run entire form
 	        obj = obj1.elements[i];           // a form element
-	
-	        if (obj.type == "select-one") 
+
+	        if (obj.type == "select-one")
 	        {   // just selects
 	            if (obj.name == "quantity" ||
 	                obj.name == "amount") continue;
@@ -594,7 +597,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	//Use the custom button image specified in the shortcode
 	$replacement .= '<input type="image" src="' . $atts[ 'button_image' ] . '" class="wp_cart_button" alt="' . (__( "Add to Cart", "wordpress-simple-paypal-shopping-cart" )) . '"/>';
     } else if ( isset( $atts[ 'button_text' ] ) && ! empty( $atts[ 'button_text' ] ) ) {
-	//Use the custom button text specified in the shortcode        
+	//Use the custom button text specified in the shortcode
 	$replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . apply_filters( 'wspsc_add_cart_submit_button_value', $atts[ 'button_text' ], $price ) . '" />';
     } else {
 	//Use the button text or image value from the settings

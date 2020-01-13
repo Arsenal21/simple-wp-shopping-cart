@@ -203,6 +203,9 @@ None
 
 == Changelog ==
 
+= WIP 4.5.0 =
+- Added a new action hook to allow affiliate plugin integration with the PayPal smart checkout option.
+
 = 4.4.9 =
 - Smart Checkout fix with certain coupon code application (some discount amount was giving an invalid amount error).
 - Added link to smart checkout setup documentation.
