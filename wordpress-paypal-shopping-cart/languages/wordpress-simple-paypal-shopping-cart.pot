@@ -1177,3 +1177,9 @@ msgstr ""
 #: includes/admin/wp_shopping_cart_tinymce.php:250
 msgid "Cancel"
 msgstr ""
+
+msgid "Item"
+msgstr ""
+
+msgid "Items"
+msgstr ""

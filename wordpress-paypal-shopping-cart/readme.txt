@@ -205,6 +205,7 @@ None
 
 = WIP 4.5.0 =
 - Added a new action hook to allow affiliate plugin integration with the PayPal smart checkout option.
+- The compact cart shortcode output can be translated fully.
 
 = 4.4.9 =
 - Smart Checkout fix with certain coupon code application (some discount amount was giving an invalid amount error).

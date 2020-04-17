@@ -31,7 +31,7 @@ function wp_cart_button_handler($atts){
 	}
         $price = wspsc_strip_char_from_price_amount($price);
         $shipping = wspsc_strip_char_from_price_amount($shipping);
-        
+
 	return print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
 }
 
@@ -44,7 +44,7 @@ function wp_cart_display_product_handler($atts)
         'shipping' => '0',
         'var1' => '',
         'var2' => '',
-        'var3' => '',    
+        'var3' => '',
         'thumbnail' => '',
         'thumb_target' => '',
         'thumb_alt' => '',
@@ -68,7 +68,7 @@ function wp_cart_display_product_handler($atts)
         //Use the product name as alt if the thumb_alt is not defined.
         $thumb_alt = $name;
     }
-    
+
     $price = wspsc_strip_char_from_price_amount($price);
     $shipping = wspsc_strip_char_from_price_amount($shipping);
     $thumbnail_code = '<img src="'.$thumbnail.'" alt="'.$thumb_alt.'">';
@@ -79,7 +79,7 @@ function wp_cart_display_product_handler($atts)
     $currency_symbol = WP_CART_CURRENCY_SYMBOL;
     $formatted_price = print_payment_currency($price, $currency_symbol);
     $button_code = print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
-    
+
     $display_code = <<<EOT
     <div class="wp_cart_product_display_box">
         <div class="wp_cart_product_thumbnail">
@@ -101,7 +101,7 @@ function wp_cart_display_product_handler($atts)
             </div>
     </div>
 EOT;
-    return $display_code; 
+    return $display_code;
 }
 
 function wspsc_compact_cart_handler($args)
@@ -112,11 +112,11 @@ function wspsc_compact_cart_handler($args)
 
     $output = "";
     $output .= '<div class="wpsps_compact_cart wpsps-cart-wrapper">';
-    $output .= '<div class="wpsps_compact_cart_container">';	
+    $output .= '<div class="wpsps_compact_cart_container">';
     if($num_items>0){
             $cart_total = wpspc_get_total_cart_sub_total();
-            $item_message = ($num_items == 1)? "Item" : "Items";
-            $output .= $num_items . " " . $item_message;		
+            $item_message = ($num_items <= 1) ? __("Item", "wordpress-simple-paypal-shopping-cart") : __("Items", "wordpress-simple-paypal-shopping-cart");
+            $output .= $num_items . " " . $item_message;
             $output .= '<span class="wpsps_compact_cart_price"> '. print_payment_currency($cart_total,$curSymbol).'</span>';
             if(!empty($checkout_url)){
                 $output .= '<a class="wpsps_compact_cart_co_btn" href="'.$checkout_url.'">'.__("View Cart", "wordpress-simple-paypal-shopping-cart").'</a>';
@@ -138,20 +138,20 @@ function wspsc_compact_cart2_handler($args)
     $checkout_url = get_option('cart_checkout_page_url');
     //$curSymbol = WP_CART_CURRENCY_SYMBOL;
     //$cart_total = wpspc_get_total_cart_sub_total();
-    
+
     $output = "";
     $output .= '<div class="wspsc_compact_cart2 wpsps-cart-wrapper">';
     $output .= '<div class="wspsc_compact_cart2_container">';
-    
-    $output .= '<div class="wspsc_compact_cart2_inside">';    
-    $item_message = ($num_items == 1)? "Item" : "Items";
-    
+
+    $output .= '<div class="wspsc_compact_cart2_inside">';
+    $item_message = ($num_items <= 1) ? __("Item", "wordpress-simple-paypal-shopping-cart") : __("Items", "wordpress-simple-paypal-shopping-cart");
+
     if(!empty($checkout_url)){
         $output .= '<a class="wspsc_compact_cart2_view_cart_link" href="'.$checkout_url.'">'.$num_items . " " . $item_message . '</a>';
     }else{
         $output .= $num_items . " " . $item_message;
     }
-    $output .= '</div>';//end of .wspsc_compact_cart2_inside    
+    $output .= '</div>';//end of .wspsc_compact_cart2_inside
 
     $output .= '</div>';//end of .wspsc_compact_cart2_container
     $output .= '</div>';
