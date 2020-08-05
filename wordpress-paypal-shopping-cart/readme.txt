@@ -3,8 +3,8 @@ Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
 Requires at least: 4.7
-Tested up to: 5.4
-Stable tag: 4.4.9
+Tested up to: 5.5
+Stable tag: 4.5.0
 License: GPLv2 or later
 
 Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -203,9 +203,10 @@ None
 
 == Changelog ==
 
-= WIP 4.5.0 =
+= 4.5.0 =
 - Added a new action hook to allow affiliate plugin integration with the PayPal smart checkout option.
 - The compact cart shortcode output can be translated fully.
+- Completed testing on WP 5.5
 
 = 4.4.9 =
 - Smart Checkout fix with certain coupon code application (some discount amount was giving an invalid amount error).
