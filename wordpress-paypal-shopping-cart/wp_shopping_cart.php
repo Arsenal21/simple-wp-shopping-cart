@@ -395,7 +395,7 @@ function wp_cart_add_custom_field() {
     return $output;
 }
 
-function print_wp_cart_button_new( $content ) {
+function print_wp_cart_button_deprecated( $content ) {
     $addcart = get_option( 'addToCartButtonName' );
     if ( ! $addcart || ($addcart == '') )
 	$addcart = __( "Add to Cart", "wordpress-simple-paypal-shopping-cart" );
@@ -770,7 +770,7 @@ add_action( 'widgets_init', 'wp_paypal_shopping_cart_load_widgets' );
 add_action( 'init', 'wp_cart_init_handler' );
 add_action( 'admin_init', 'wp_cart_admin_init_handler' );
 
-add_filter( 'the_content', 'print_wp_cart_button_new', 11 );
+add_filter( 'the_content', 'print_wp_cart_button_deprecated', 11 );
 add_filter( 'the_content', 'shopping_cart_show' );
 
 if ( ! is_admin() ) {
