@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Paypal Shopping cart
-  Version: 4.5.0
+  Version: 4.5.1
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.5.0' );
+define( 'WP_CART_VERSION', '4.5.1' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -191,14 +191,18 @@ function wpspc_cart_actions_handler() {
 	$post_stamp_pdf		 = isset( $_POST[ 'stamp_pdf' ] ) ? sanitize_text_field( $_POST[ 'stamp_pdf' ] ) : '';
 	$post_encoded_file_val	 = isset( $_POST[ 'file_url' ] ) ? sanitize_text_field( $_POST[ 'file_url' ] ) : '';
 	$post_thumbnail		 = isset( $_POST[ 'thumbnail' ] ) ? esc_url_raw( sanitize_text_field( $_POST[ 'thumbnail' ] ) ) : '';
+        $post_wspsc_tmp_name	 = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
+
 	//Sanitize and validate price
 	if ( isset( $_POST[ 'price' ] ) ) {
 	    $price		 = sanitize_text_field( $_POST[ 'price' ] );
 	    $hash_once_p	 = sanitize_text_field( $_POST[ 'hash_one' ] );
 	    $p_key		 = get_option( 'wspsc_private_key_one' );
-	    $hash_one_cm	 = md5( $p_key . '|' . $price );
+	    $hash_one_cm	 = md5( $p_key . '|' . $price . '|' . $post_wspsc_tmp_name );
 	    if ( $hash_once_p != $hash_one_cm ) {//Security check failed. Price field has been tampered. Fail validation.
-		wp_die( 'Error! The price field may have been tampered. Security check failed.' );
+                $error_msg = '<p>Error! The price field may have been tampered. Security check failed.</p>';
+                $error_msg .= '<p>If this site uses any caching, empty the cache then try again.</p>';
+		wp_die( $error_msg );
 	    }
 	    $price = str_replace( WP_CART_CURRENCY_SYMBOL, "", $price ); //Remove any currency symbol from the price.
 	    //Check that the price field is numeric.
@@ -215,7 +219,7 @@ function wpspc_cart_actions_handler() {
 	    $shipping	 = sanitize_text_field( $_POST[ 'shipping' ] );
 	    $hash_two_val	 = sanitize_text_field( $_POST[ 'hash_two' ] );
 	    $p_key		 = get_option( 'wspsc_private_key_one' );
-	    $hash_two_cm	 = md5( $p_key . '|' . $shipping );
+	    $hash_two_cm	 = md5( $p_key . '|' . $shipping . '|' . $post_wspsc_tmp_name );
 	    if ( $hash_two_val != $hash_two_cm ) {//Shipping validation failed
 		wp_die( 'Error! The shipping price validation failed.' );
 	    }
@@ -499,10 +503,10 @@ function print_wp_cart_button_deprecated( $content ) {
 	    $p_key = uniqid( '', true );
 	    update_option( 'wspsc_private_key_one', $p_key );
 	}
-	$hash_one	 = md5( $p_key . '|' . $pieces[ '1' ] ); //Price hash
+	$hash_one	 = md5( $p_key . '|' . $pieces[ '1' ] . '|' . $pieces[ '0' ] ); //Price hash
 	$replacement	 .= '<input type="hidden" name="hash_one" value="' . $hash_one . '" />';
 
-	$hash_two	 = md5( $p_key . '|' . $pieces[ '2' ] ); //Shipping hash
+	$hash_two	 = md5( $p_key . '|' . $pieces[ '2' ] . '|' . $pieces[ '0' ] ); //Shipping hash
 	$replacement	 .= '<input type="hidden" name="hash_two" value="' . $hash_two . '" />';
 
 	$replacement	 .= '<input type="hidden" name="cartLink" value="' . esc_url( cart_current_page_url() ) . '" />';
@@ -636,14 +640,14 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	$p_key = uniqid( '', true );
 	update_option( 'wspsc_private_key_one', $p_key );
     }
-    $hash_one	 = md5( $p_key . '|' . $price );
-    $replacement	 .= '<input type="hidden" name="hash_one" value="' . $hash_one . '" />';
+    $hash_one = md5( $p_key . '|' . $price . '|' . $name );
+    $replacement .= '<input type="hidden" name="hash_one" value="' . $hash_one . '" />';
 
-    $hash_two	 = md5( $p_key . '|' . $shipping );
-    $replacement	 .= '<input type="hidden" name="hash_two" value="' . $hash_two . '" />';
+    $hash_two = md5( $p_key . '|' . $shipping . '|' . $name );
+    $replacement .= '<input type="hidden" name="hash_two" value="' . $hash_two . '" />';
 
-    $replacement	 .= '</form>';
-    $replacement	 .= '</div>';
+    $replacement .= '</form>';
+    $replacement .= '</div>';
     return $replacement;
 }
 

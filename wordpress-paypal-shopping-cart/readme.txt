@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
 Requires at least: 4.7
 Tested up to: 5.5
-Stable tag: 4.5.0
+Stable tag: 4.5.1
 License: GPLv2 or later
 
 Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -202,6 +202,11 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
+= 4.5.1 =
+- If your site uses caching, empty the cache after you upgrade the plugin (to delete stale cached data).
+- Improved the price hash compare function. Thanks to @XshIsMe.
+- Added Spanish language translation files.
 
 = 4.5.0 =
 - Added a new action hook to allow affiliate plugin integration with the PayPal smart checkout option.

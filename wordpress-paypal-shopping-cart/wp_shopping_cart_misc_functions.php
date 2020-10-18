@@ -22,7 +22,7 @@ function wp_cart_init_handler()
     }
     if (is_admin()) {
         add_action('admin_init', 'wp_cart_add_tinymce_button');
-	
+
 	//TODO - can be removed at a later version.
 	if (isset($_GET['page']) && $_GET['page'] == 'wordpress-paypal-shopping-cart') {
 	    //let's redirect old settings page to new
@@ -156,7 +156,7 @@ function wpspc_run_activation()
     add_option('cart_return_from_paypal_url', get_bloginfo('wpurl'));
 
     //Add Confirmation Email Settings
-    add_option("wpspc_send_buyer_email", 1); 
+    add_option("wpspc_send_buyer_email", 1);
     $from_email_address = get_bloginfo('name')." <sales@your-domain.com>";
     add_option('wpspc_buyer_from_email', $from_email_address);
     $buyer_email_subj = "Thank you for the purchase";
@@ -165,18 +165,18 @@ function wpspc_run_activation()
     $email_body .= "\nThank you for your purchase! You ordered the following item(s):\n";
     $email_body .= "\n{product_details}";
     add_option('wpspc_buyer_email_body', $email_body);
-    
+
     $notify_email_address = get_bloginfo('admin_email');
     add_option('wpspc_notify_email_address', $notify_email_address);
     $seller_email_subj = "Notification of product sale";
     add_option('wpspc_seller_email_subj', $seller_email_subj);
     $seller_email_body = "Dear Seller\n";
     $seller_email_body .= "\nThis mail is to notify you of a product sale.\n";
-    $seller_email_body .= "\n{product_details}";        
+    $seller_email_body .= "\n{product_details}";
     $seller_email_body .= "\n\nThe sale was made to {first_name} {last_name} ({payer_email})";
     $seller_email_body .= "\n\nThanks";
     add_option('wpspc_seller_email_body', $seller_email_body);
-    
+
     //Generate and save a private key for this site
     $unique_id = uniqid('', true);
     add_option('wspsc_private_key_one',$unique_id);
@@ -186,8 +186,13 @@ function wpspsc_settings_menu_footer()
 {
     ?>
     <div class="wspsc_yellow_box">
-    <p><?php _e("Need a shopping cart plugin with a lot of features and good support? Check out our ", "wordpress-simple-paypal-shopping-cart"); ?>
-    <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
+    <p>
+        <?php _e("Need a shopping cart plugin with a lot of features and support? Check out our ", "wordpress-simple-paypal-shopping-cart"); ?>
+        <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a>
+    </p>
+    <p>
+        You can also try our free <a href="https://wordpress.org/plugins/wp-express-checkout/" target="_blank">WP Express Checkout</a> plugin to sell your products using PayPal's Express Checkout API.
+    </p>
     </div>
     <?php
 }
