@@ -205,6 +205,7 @@ None
 
 = WIP 4.5.2 =
 - JQuery UI CSS library is now included inside the plugin.
+- Added more input sanitization.
 
 = 4.5.1 =
 - If your site uses caching, empty the cache after you upgrade the plugin (to delete stale cached data).
