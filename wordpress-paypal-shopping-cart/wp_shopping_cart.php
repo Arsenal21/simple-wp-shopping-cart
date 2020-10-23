@@ -738,7 +738,8 @@ class WP_PayPal_Cart_Widget extends WP_Widget {
 
 function wspsc_admin_side_enqueue_scripts() {
     if ( isset( $_GET[ 'page' ] ) && $_GET[ 'page' ] == 'wspsc-discounts' ) { //simple paypal shopping cart discount page
-	wp_enqueue_style( 'jquery-ui-style', '//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css' );
+	wp_enqueue_style( 'jquery-ui-style', WP_CART_URL . '/assets/jquery.ui.min.css', array(), WP_CART_VERSION );
+
 	wp_register_script( 'wpspsc-admin', WP_CART_URL . '/lib/wpspsc_admin_side.js', array( 'jquery', 'jquery-ui-datepicker' ) );
 	wp_enqueue_script( 'wpspsc-admin' );
     }
