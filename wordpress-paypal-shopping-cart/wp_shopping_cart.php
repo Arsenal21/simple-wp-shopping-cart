@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Paypal Shopping cart
-  Version: 4.5.1
+  Version: 4.5.2
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.5.1' );
+define( 'WP_CART_VERSION', '4.5.2' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -199,11 +199,18 @@ function wpspc_cart_actions_handler() {
 	    $hash_once_p	 = sanitize_text_field( $_POST[ 'hash_one' ] );
 	    $p_key		 = get_option( 'wspsc_private_key_one' );
 	    $hash_one_cm	 = md5( $p_key . '|' . $price . '|' . $post_wspsc_tmp_name );
-	    if ( $hash_once_p != $hash_one_cm ) {//Security check failed. Price field has been tampered. Fail validation.
-                $error_msg = '<p>Error! The price field may have been tampered. Security check failed.</p>';
-                $error_msg .= '<p>If this site uses any caching, empty the cache then try again.</p>';
-		wp_die( $error_msg );
-	    }
+
+            if ( get_option( 'wspsc_disable_price_check_add_cart' ) ) {
+                //This site has disabled the price check for add cart button.
+                //Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
+            } else {
+                if ( $hash_once_p != $hash_one_cm ) {//Security check failed. Price field has been tampered. Fail validation.
+                    $error_msg = '<p>Error! The price field may have been tampered. Security check failed.</p>';
+                    $error_msg .= '<p>If this site uses any caching, empty the cache then try again.</p>';
+                    wp_die( $error_msg );
+                }
+            }
+
 	    $price = str_replace( WP_CART_CURRENCY_SYMBOL, "", $price ); //Remove any currency symbol from the price.
 	    //Check that the price field is numeric.
 	    if ( ! is_numeric( $price ) ) {//Price validation failed
@@ -220,9 +227,15 @@ function wpspc_cart_actions_handler() {
 	    $hash_two_val	 = sanitize_text_field( $_POST[ 'hash_two' ] );
 	    $p_key		 = get_option( 'wspsc_private_key_one' );
 	    $hash_two_cm	 = md5( $p_key . '|' . $shipping . '|' . $post_wspsc_tmp_name );
-	    if ( $hash_two_val != $hash_two_cm ) {//Shipping validation failed
-		wp_die( 'Error! The shipping price validation failed.' );
-	    }
+
+            if ( get_option( 'wspsc_disable_price_check_add_cart' ) ) {
+                //This site has disabled the price check for add cart button.
+                //Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
+            } else {
+                if ( $hash_two_val != $hash_two_cm ) {//Shipping validation failed
+                    wp_die( 'Error! The shipping price validation failed.' );
+                }
+            }
 
 	    $shipping = str_replace( WP_CART_CURRENCY_SYMBOL, "", $shipping ); //Remove any currency symbol from the price.
 	    //Check that the shipping price field is numeric.

@@ -3,12 +3,12 @@
 /*
  * General settings menu page
  */
-function wspsc_show_general_settings_page () 
+function wspsc_show_general_settings_page ()
 {
     if(!current_user_can('manage_options')){
         wp_die('You do not have permission to access this settings page.');
     }
-    
+
     if(isset($_POST['wspsc_reset_logfile'])) {
         // Reset the debug log file
         if(wspsc_reset_logfile()){
@@ -30,10 +30,10 @@ function wspsc_show_general_settings_page ()
         update_option('cart_payment_currency', $currency_code);
         update_option('cart_currency_symbol', sanitize_text_field($_POST["cart_currency_symbol"]));
         update_option('cart_base_shipping_cost', sanitize_text_field($_POST["cart_base_shipping_cost"]));
-        update_option('cart_free_shipping_threshold', sanitize_text_field($_POST["cart_free_shipping_threshold"]));   
-        update_option('wp_shopping_cart_collect_address', (isset($_POST['wp_shopping_cart_collect_address']) && $_POST['wp_shopping_cart_collect_address']!='') ? 'checked="checked"':'' );    
+        update_option('cart_free_shipping_threshold', sanitize_text_field($_POST["cart_free_shipping_threshold"]));
+        update_option('wp_shopping_cart_collect_address', (isset($_POST['wp_shopping_cart_collect_address']) && $_POST['wp_shopping_cart_collect_address']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_use_profile_shipping', (isset($_POST['wp_shopping_cart_use_profile_shipping']) && $_POST['wp_shopping_cart_use_profile_shipping']!='') ? 'checked="checked"':'' );
-                
+
         update_option('cart_paypal_email', sanitize_email($_POST["cart_paypal_email"]));
         update_option('addToCartButtonName', sanitize_text_field($_POST["addToCartButtonName"]));
         update_option('wp_cart_title', sanitize_text_field($_POST["wp_cart_title"]));
@@ -45,72 +45,73 @@ function wspsc_show_general_settings_page ()
         update_option('wp_shopping_cart_auto_redirect_to_checkout_page', (isset($_POST['wp_shopping_cart_auto_redirect_to_checkout_page']) && $_POST['wp_shopping_cart_auto_redirect_to_checkout_page']!='') ? 'checked="checked"':'' );
         update_option('cart_checkout_page_url', sanitize_text_field($_POST["cart_checkout_page_url"]));
         update_option('wspsc_open_pp_checkout_in_new_tab', (isset($_POST['wspsc_open_pp_checkout_in_new_tab']) && $_POST['wspsc_open_pp_checkout_in_new_tab']!='') ? 'checked="checked"':'' );
-        update_option('wp_shopping_cart_reset_after_redirection_to_return_page', (isset($_POST['wp_shopping_cart_reset_after_redirection_to_return_page']) && $_POST['wp_shopping_cart_reset_after_redirection_to_return_page']!='') ? 'checked="checked"':'' );        
+        update_option('wp_shopping_cart_reset_after_redirection_to_return_page', (isset($_POST['wp_shopping_cart_reset_after_redirection_to_return_page']) && $_POST['wp_shopping_cart_reset_after_redirection_to_return_page']!='') ? 'checked="checked"':'' );
 
         update_option('wp_shopping_cart_image_hide', (isset($_POST['wp_shopping_cart_image_hide']) && $_POST['wp_shopping_cart_image_hide']!='') ? 'checked="checked"':'' );
         update_option('wp_cart_paypal_co_page_style', sanitize_text_field($_POST["wp_cart_paypal_co_page_style"]));
         update_option('wp_shopping_cart_strict_email_check', (isset($_POST['wp_shopping_cart_strict_email_check']) && $_POST['wp_shopping_cart_strict_email_check']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_nonce_add_cart', (isset($_POST['wspsc_disable_nonce_add_cart']) && $_POST['wspsc_disable_nonce_add_cart']!='') ? 'checked="checked"':'' );
+        update_option('wspsc_disable_price_check_add_cart', (isset($_POST['wspsc_disable_price_check_add_cart']) && $_POST['wspsc_disable_price_check_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wp_use_aff_platform', (isset($_POST['wp_use_aff_platform']) && $_POST['wp_use_aff_platform']!='') ? 'checked="checked"':'' );
-        
+
         update_option('wp_shopping_cart_enable_sandbox', (isset($_POST['wp_shopping_cart_enable_sandbox']) && $_POST['wp_shopping_cart_enable_sandbox']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_enable_debug', (isset($_POST['wp_shopping_cart_enable_debug']) && $_POST['wp_shopping_cart_enable_debug']!='') ? 'checked="checked"':'' );
-        
+
         echo '<div id="message" class="updated fade">';
         echo '<p><strong>'.(__("Options Updated!", "wordpress-simple-paypal-shopping-cart")).'</strong></p></div>';
-    }	
-	
-    $defaultCurrency = get_option('cart_payment_currency');    
+    }
+
+    $defaultCurrency = get_option('cart_payment_currency');
     if (empty($defaultCurrency)) $defaultCurrency = __("USD", "wordpress-simple-paypal-shopping-cart");
-    
+
     $defaultSymbol = get_option('cart_currency_symbol');
     if (empty($defaultSymbol)) $defaultSymbol = __("$", "wordpress-simple-paypal-shopping-cart");
 
     $baseShipping = get_option('cart_base_shipping_cost');
     if (empty($baseShipping)) $baseShipping = 0;
-    
+
     $cart_free_shipping_threshold = get_option('cart_free_shipping_threshold');
 
     $defaultEmail = get_option('cart_paypal_email');
     if (empty($defaultEmail)) $defaultEmail = get_bloginfo('admin_email');
-    
+
     $return_url =  get_option('cart_return_from_paypal_url');
     $cancel_url = get_option('cart_cancel_from_paypal_url');
     $addcart = get_option('addToCartButtonName');
-    if (empty($addcart)) $addcart = __("Add to Cart", "wordpress-simple-paypal-shopping-cart");           
+    if (empty($addcart)) $addcart = __("Add to Cart", "wordpress-simple-paypal-shopping-cart");
 
     $title = get_option('wp_cart_title');
     $emptyCartText = get_option('wp_cart_empty_text');
-    $cart_products_page_url = get_option('cart_products_page_url');	  
+    $cart_products_page_url = get_option('cart_products_page_url');
     $cart_checkout_page_url = get_option('cart_checkout_page_url');
-    
+
     if (get_option('wp_shopping_cart_auto_redirect_to_checkout_page'))
         $wp_shopping_cart_auto_redirect_to_checkout_page = 'checked="checked"';
     else
-        $wp_shopping_cart_auto_redirect_to_checkout_page = '';	
-        
+        $wp_shopping_cart_auto_redirect_to_checkout_page = '';
+
     if (get_option('wspsc_open_pp_checkout_in_new_tab'))
         $wspsc_open_pp_checkout_in_new_tab = 'checked="checked"';
     else
         $wspsc_open_pp_checkout_in_new_tab = '';
-    
+
     if (get_option('wp_shopping_cart_reset_after_redirection_to_return_page'))
         $wp_shopping_cart_reset_after_redirection_to_return_page = 'checked="checked"';
     else
-        $wp_shopping_cart_reset_after_redirection_to_return_page = '';	
-                	    
+        $wp_shopping_cart_reset_after_redirection_to_return_page = '';
+
     if (get_option('wp_shopping_cart_collect_address'))
         $wp_shopping_cart_collect_address = 'checked="checked"';
     else
         $wp_shopping_cart_collect_address = '';
-        
+
     if (get_option('wp_shopping_cart_use_profile_shipping')){
         $wp_shopping_cart_use_profile_shipping = 'checked="checked"';
     }
     else {
         $wp_shopping_cart_use_profile_shipping = '';
     }
-                	
+
     if (get_option('wp_shopping_cart_image_hide')){
         $wp_cart_image_hide = 'checked="checked"';
     }
@@ -124,40 +125,45 @@ function wspsc_show_general_settings_page ()
     if (get_option('wp_shopping_cart_strict_email_check')){
         $wp_shopping_cart_strict_email_check = 'checked="checked"';
     }
-    
+
     $wspsc_disable_nonce_add_cart = '';
     if (get_option('wspsc_disable_nonce_add_cart')){
         $wspsc_disable_nonce_add_cart = 'checked="checked"';
     }
-    
+
+    $wspsc_disable_price_check_add_cart = '';
+    if (get_option('wspsc_disable_price_check_add_cart')){
+        $wspsc_disable_price_check_add_cart = 'checked="checked"';
+    }
+
     if (get_option('wp_use_aff_platform')){
         $wp_use_aff_platform = 'checked="checked"';
     }
     else{
         $wp_use_aff_platform = '';
     }
-                              
+
 	//$wp_shopping_cart_enable_sandbox = get_option('wp_shopping_cart_enable_sandbox');
     if (get_option('wp_shopping_cart_enable_sandbox'))
         $wp_shopping_cart_enable_sandbox = 'checked="checked"';
     else
-        $wp_shopping_cart_enable_sandbox = '';	
-    
+        $wp_shopping_cart_enable_sandbox = '';
+
     $wp_shopping_cart_enable_debug = '';
     if (get_option('wp_shopping_cart_enable_debug')){
         $wp_shopping_cart_enable_debug = 'checked="checked"';
-    }    
-    ?> 	
- 	
+    }
+    ?>
+
     <div class="wspsc_yellow_box">
     <p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
     <a href="https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768" target="_blank"><?php _e("WP Simple Cart Homepage", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
     </div>
-    
+
     <div class="postbox">
     <h3 class="hndle"><label for="title"><?php _e("Quick Usage Guide", "wordpress-simple-paypal-shopping-cart"); ?></label></h3>
     <div class="inside">
-	
+
         <p><strong><?php _e("Step 1) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php _e("To add an 'Add to Cart' button for a product simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [wp_cart_button name="<?php _e("PRODUCT-NAME", "wordpress-simple-paypal-shopping-cart"); ?>" price="<?php _e("PRODUCT-PRICE", "wordpress-simple-paypal-shopping-cart"); ?>"] <?php _e("to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price of your product.", "wordpress-simple-paypal-shopping-cart"); ?></p>
         <p><?php _e("Example add to cart button shortcode usage:", "wordpress-simple-paypal-shopping-cart");?> <p style="background-color: #DDDDDD; padding: 5px; display: inline;">[wp_cart_button name="Test Product" price="29.95"]</p></p>
 	<p><strong><?php _e("Step 2) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php _e("To add the shopping cart to a post or page (example: a checkout page) simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [show_wp_shopping_cart] <?php _e("to a post or page or use the sidebar widget to add the shopping cart to the sidebar.", "wordpress-simple-paypal-shopping-cart"); ?></p>
@@ -166,7 +172,7 @@ function wspsc_show_general_settings_page ()
 
     <form method="post" action="">
     <?php wp_nonce_field('wp_simple_cart_settings_update'); ?>
-    <input type="hidden" name="info_update" id="info_update" value="true" />    
+    <input type="hidden" name="info_update" id="info_update" value="true" />
 <?php
 echo '
 	<div class="postbox">
@@ -231,7 +237,7 @@ echo '
 
 echo '<tr valign="top">
 <th scope="row">'.(__("Currency Symbol", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_currency_symbol" value="'.esc_attr($defaultSymbol).'" size="3" style="width: 2em;" /> ('.(__("e.g.", "wordpress-simple-paypal-shopping-cart")).' $, &#163;, &#8364;) 
+<td><input type="text" name="cart_currency_symbol" value="'.esc_attr($defaultSymbol).'" size="3" style="width: 2em;" /> ('.(__("e.g.", "wordpress-simple-paypal-shopping-cart")).' $, &#163;, &#8364;)
 </td>
 </tr>
 
@@ -254,7 +260,7 @@ echo '<tr valign="top">
 <th scope="row">'.(__("Use PayPal Profile Based Shipping", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_use_profile_shipping" value="1" '.$wp_shopping_cart_use_profile_shipping.' /><br />'.(__("Check this if you want to use", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/setup-paypal-profile-based-shipping-5865" target="_blank">'.(__("PayPal profile based shipping", "wordpress-simple-paypal-shopping-cart")).'</a>. '.(__("Using this will ignore any other shipping options that you have specified in this plugin.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-		
+
 <tr valign="top">
 <th scope="row">'.(__("Add to Cart button text or Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="addToCartButtonName" value="'.esc_attr($addcart).'" size="100" />
@@ -272,7 +278,7 @@ echo '<tr valign="top">
 <th scope="row">'.(__("Cancel URL", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="cart_cancel_from_paypal_url" value="'.esc_attr($cancel_url).'" size="100" /><br />'.(__("The customer will be sent to the above page if the cancel link is clicked on the PayPal checkout page.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-		
+
 <tr valign="top">
 <th scope="row">'.(__("Products Page URL", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="cart_products_page_url" value="'.esc_attr($cart_products_page_url).'" size="100" /><br />'.(__("This is the URL of your products page if you have any. If used, the shopping cart widget will display a link to this page when cart is empty", "wordpress-simple-paypal-shopping-cart")).'</td>
@@ -331,6 +337,14 @@ echo '<tr valign="top">
 
 <table class="form-table">
 <tr valign="top">
+<th scope="row">'.(__("Disable Price Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wspsc_disable_price_check_add_cart" value="1" '.$wspsc_disable_price_check_add_cart.' />
+<br />'.(__("Using complex characters for the product name can trigger the error: The price field may have been tampered. Security check failed. This option will stop that check and remove the error.", "wordpress-simple-paypal-shopping-cart")).'</td>
+</tr>
+</table>
+
+<table class="form-table">
+<tr valign="top">
 <th scope="row">'.(__("Customize the Note to Seller Text", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td>'.(__("PayPal has removed this feature. We have created an addon so you can still collect instructions from customers at the time of checking out. ", "wordpress-simple-paypal-shopping-cart"))
 . '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-simple-cart-collect-customer-input-in-the-shopping-cart-4396" target="_blank">'.__("View the addon details", "wordpress-simple-paypal-shopping-cart").'</a>'.'</td>
@@ -349,9 +363,9 @@ echo '<tr valign="top">
 <div class="postbox">
     <h3 class="hndle"><label for="title">'.(__("Testing and Debugging Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
     <div class="inside">
-    
-    <table class="form-table"> 
-    
+
+    <table class="form-table">
+
     <tr valign="top">
     <th scope="row">'.(__("Enable Debug", "wordpress-simple-paypal-shopping-cart")).'</th>
     <td><input type="checkbox" name="wp_shopping_cart_enable_debug" value="1" '.$wp_shopping_cart_enable_debug.' />
@@ -361,7 +375,7 @@ echo '<tr valign="top">
             <li><a href="'.WP_CART_URL.'/ipn_handle_debug.txt" target="_blank">ipn_handle_debug.txt</a></li>
         </ul>
         </p>
-        <input type="submit" name="wspsc_reset_logfile" class="button" style="font-weight:bold; color:red" value="Reset Debug Log file"/> 
+        <input type="submit" name="wspsc_reset_logfile" class="button" style="font-weight:bold; color:red" value="Reset Debug Log file"/>
         <p class="description">It will reset the debug log file and timestamp it with a log file reset message.</a>
     </td></tr>
 
@@ -370,15 +384,15 @@ echo '<tr valign="top">
     <td><input type="checkbox" name="wp_shopping_cart_enable_sandbox" value="1" '.$wp_shopping_cart_enable_sandbox.' />
     <br />'.(__("Check this option if you want to do PayPal sandbox testing. You will need to create a PayPal sandbox account from PayPal Developer site", "wordpress-simple-paypal-shopping-cart")).'</td>
     </tr>
-    
+
     </table>
-    
+
     </div>
 </div>
 
     <div class="submit">
         <input type="submit" class="button-primary" name="info_update" value="'.(__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")).'" />
-    </div>						
+    </div>
  </form>
  ';
     echo (__("Like the Simple WordPress Shopping Cart Plugin?", "wordpress-simple-paypal-shopping-cart")).' <a href="https://wordpress.org/support/plugin/wordpress-simple-paypal-shopping-cart/reviews/?filter=5" target="_blank">'.(__("Give it a good rating", "wordpress-simple-paypal-shopping-cart")).'</a>';
