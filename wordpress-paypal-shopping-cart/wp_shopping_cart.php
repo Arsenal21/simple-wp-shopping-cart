@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Paypal Shopping cart
-  Version: 4.5.2
+  Version: 4.5.3
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.5.2' );
+define( 'WP_CART_VERSION', '4.5.3' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -36,20 +36,6 @@ $locale = apply_filters( 'plugin_locale', get_locale(), 'wordpress-simple-paypal
 load_textdomain( 'wordpress-simple-paypal-shopping-cart', WP_LANG_DIR . "/wordpress-simple-paypal-shopping-cart-$locale.mo" );
 load_plugin_textdomain( 'wordpress-simple-paypal-shopping-cart', false, WP_CART_FOLDER . '/languages' );
 
-//PHP session
-if ( ! is_admin() || wp_doing_ajax() ) {
-    //Only use session for front-end and ajax.
-    if ( version_compare( PHP_VERSION, '5.4.0' ) >= 0 ) {
-	if ( session_status() == PHP_SESSION_NONE ) {
-	    session_start();
-	}
-    } else {
-	if ( session_id() == '' ) {
-	    session_start();
-	}
-    }
-}
-
 include_once('wp_shopping_cart_utility_functions.php');
 include_once('wp_shopping_cart_shortcodes.php');
 include_once('wp_shopping_cart_misc_functions.php');
@@ -58,6 +44,8 @@ include_once('class-coupon.php');
 include_once('includes/wspsc-cart-functions.php');
 include_once('includes/admin/wp_shopping_cart_menu_main.php');
 include_once('includes/admin/wp_shopping_cart_tinymce.php');
+
+wspsc_check_and_start_session();
 
 function always_show_cart_handler( $atts ) {
     return print_wp_shopping_cart( $atts );
