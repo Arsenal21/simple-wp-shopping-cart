@@ -21,8 +21,16 @@ class paypal_ipn_handler {
 	$this->ipn_response	 = '';
     }
 
+    /*
+     * This function gets called for both the following scenarios.
+     * 1) Standard PayPal checkout IPN
+     * 2) Smart checkout (from the wpspsc_process_pp_smart_checkout() function).
+     */
     function validate_and_dispatch_product() {
 	//Check Product Name, Price, Currency, Receiver email
+
+        $this->debug_log( 'Executing validate_and_dispatch_product()', true );
+
 	//Decode the custom field before sanitizing.
 	$custom_field_value		 = urldecode( $this->ipn_data[ 'custom' ] ); //urldecode is harmless
 	$this->ipn_data[ 'custom' ]	 = $custom_field_value;
@@ -146,12 +154,12 @@ class paypal_ipn_handler {
 
 	//*** Do security checks ***
 	if ( empty( $post_id ) ) {
-	    $this->debug_log( 'Order ID ' . $post_id . ' does not exist in the IPN notification. This request will not be processed.', false );
+	    $this->debug_log( 'Order ID: ' . $post_id . ', does not exist in the IPN notification. This request will not be processed.', false );
 	    return;
 	}
 
 	if ( ! get_post_status( $post_id ) ) {
-	    $this->debug_log( 'Order ID ' . $post_id . ' does not exist in the database. This is not a Simple PayPal Shopping Cart order', false );
+	    $this->debug_log( 'Order ID: ' . $post_id . ', does not exist in the database. This is not a Simple PayPal Shopping Cart order', false );
 	    return;
 	}
 
@@ -549,7 +557,7 @@ class paypal_ipn_handler {
 
 // Start of IPN handling (script execution)
 function wpc_handle_paypal_ipn() {
-    $debug_log		 = "ipn_handle_debug.txt"; // Debug log file name    
+    $debug_log		 = "ipn_handle_debug.txt"; // Debug log file name
     $ipn_handler_instance	 = new paypal_ipn_handler();
 
     $debug_enabled	 = false;
