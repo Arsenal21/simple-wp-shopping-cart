@@ -95,6 +95,11 @@ function wpspsc_process_pp_smart_checkout() {
     }
     if ( empty( $data ) ) {
 	wp_send_json( array( 'success' => false, 'errMsg' => __( 'Empty payment data received.', "wordpress-simple-paypal-shopping-cart" ) ) );
+	}
+	
+	//Start session
+    if ( session_status() == PHP_SESSION_NONE ) {
+    	session_start();
     }
 
     include_once('paypal.php');
