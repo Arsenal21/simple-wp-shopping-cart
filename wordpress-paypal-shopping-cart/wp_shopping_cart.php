@@ -158,7 +158,7 @@ function reset_wp_cart() {
 
 function wpspc_cart_actions_handler() {
 	if ( isset( $_SESSION['wpspsc_cart_action_msg'] ) ) {
-		unset( $_SESSION['wpspsc_cart_action_msg'] )
+		unset( $_SESSION['wpspsc_cart_action_msg'] );
 	}
 
     if ( isset( $_POST[ 'addcart' ] ) ) {//Add to cart action
