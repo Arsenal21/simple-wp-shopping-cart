@@ -2,17 +2,17 @@
 class WPSPSC_Coupons_Collection
 {
     var $coupon_items = array();
-    
+
     function __construct()
     {
-        
+
     }
-    
+
     function add_coupon_item($coupon_item)
     {
         array_push($this->coupon_items, $coupon_item);
     }
-    
+
     function find_coupon_by_code($coupon_code)
     {
         if(empty($this->coupon_items)){
@@ -27,7 +27,7 @@ class WPSPSC_Coupons_Collection
         }
         return new stdClass();
     }
-    
+
     function delete_coupon_item_by_id($coupon_id)
     {
         $coupon_deleted = false;
@@ -43,19 +43,19 @@ class WPSPSC_Coupons_Collection
             WPSPSC_Coupons_Collection::save_object($this);
         }
     }
-    
+
     function print_coupons_collection()
     {
         foreach ($this->coupon_items as $item){
             $item->print_coupon_item_details();
         }
     }
-       
+
     static function save_object($obj_to_save)
     {
         update_option('wpspsc_coupons_collection', $obj_to_save);
     }
-    
+
     static function get_instance()
     {
         $obj = get_option('wpspsc_coupons_collection');
@@ -80,7 +80,7 @@ class WPSPSC_COUPON_ITEM
         $this->discount_rate = $discount_rate;
         $this->expiry_date = $expiry_date;
     }
-    
+
     function print_coupon_item_details()
     {
         echo "<br />".(__("Coupon ID: ", "wordpress-simple-paypal-shopping-cart")).$this->id;
@@ -110,7 +110,7 @@ function wpspsc_apply_cart_discount($coupon_code)
         $_SESSION['wpspsc_cart_action_msg'] = '<div class="wpspsc_error_message">'.__("Discount can only be applied once per checkout!", "wordpress-simple-paypal-shopping-cart").'</div>';
         return;
     }
-    
+
     //Apply the discount
     $curr_symbol = WP_CART_CURRENCY_SYMBOL;
     $discount_rate = $coupon_item->discount_rate;
@@ -120,9 +120,9 @@ function wpspsc_apply_cart_discount($coupon_code)
     {
         if ($item['price'] > 0)
         {
-            $item_discount = (($item['price_orig']*$discount_rate)/100);	            			
+            $item_discount = (($item['price_orig']*$discount_rate)/100);
             $discount_total = $discount_total + $item_discount*$item['quantity'];
-            $item['price'] = $item['price_orig'] - $item_discount;
+            $item['price'] = round(($item['price_orig'] - $item_discount), 2);
             unset($products[$key]);
             array_push($products, $item);
         }
@@ -141,5 +141,5 @@ function wpspsc_reapply_discount_coupon_if_needed()
         $coupon_code = $_SESSION['wpspsc_applied_coupon_code'];
         unset($_SESSION['wpspsc_discount_applied_once']);
         wpspsc_apply_cart_discount($coupon_code);
-    }    
+    }
 }

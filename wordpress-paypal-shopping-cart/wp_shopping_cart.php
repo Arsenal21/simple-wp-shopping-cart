@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Paypal Shopping cart
-  Version: 4.5.4
+  Version: 4.5.5
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.5.4' );
+define( 'WP_CART_VERSION', '4.5.5' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
