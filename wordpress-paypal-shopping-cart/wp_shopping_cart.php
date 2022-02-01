@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Paypal Shopping cart
-  Version: 4.5.5
+  Version: 4.5.6
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.5.5' );
+define( 'WP_CART_VERSION', '4.5.6' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -711,37 +711,23 @@ function simple_cart_total() {
 }
 
 function wp_paypal_shopping_cart_load_widgets() {
-    register_widget( 'WP_PayPal_Cart_Widget' );
+    $widget_options = array('classname' => 'wp_paypal_shopping_cart_widgets', 'description' => __("WP Paypal Shopping Cart Widget"));
+    wp_register_sidebar_widget('wp_paypal_shopping_cart_widgets', __('WP Paypal Shopping Cart'), 'show_wp_simple_cart_widget', $widget_options);
 }
 
-class WP_PayPal_Cart_Widget extends WP_Widget {
+function show_wp_simple_cart_widget(){
+    // outputs the content of the widget
+    extract( $args );
 
-    function __construct() {
-	parent::__construct( 'wp_paypal_shopping_cart_widgets', 'WP Paypal Shopping Cart', array( 'description' => 'WP Paypal Shopping Cart Widget' ) );
+    $cart_title	 = get_option( 'wp_cart_title' );
+    if ( empty( $cart_title ) ){
+        $cart_title	 = __( "Shopping Cart", "wordpress-simple-paypal-shopping-cart" );
     }
 
-    function form( $instance ) {
-	// outputs the options form on admin
-    }
-
-    function update( $new_instance, $old_instance ) {
-	// processes widget options to be saved
-    }
-
-    function widget( $args, $instance ) {
-	// outputs the content of the widget
-	extract( $args );
-
-	$cart_title	 = get_option( 'wp_cart_title' );
-	if ( empty( $cart_title ) )
-	    $cart_title	 = __( "Shopping Cart", "wordpress-simple-paypal-shopping-cart" );
-
-	echo $before_widget;
-	echo $before_title . $cart_title . $after_title;
-	echo print_wp_shopping_cart();
-	echo $after_widget;
-    }
-
+    echo $before_widget;
+    echo $before_title . $cart_title . $after_title;
+    echo print_wp_shopping_cart();
+    echo $after_widget;
 }
 
 function wspsc_admin_side_enqueue_scripts() {
