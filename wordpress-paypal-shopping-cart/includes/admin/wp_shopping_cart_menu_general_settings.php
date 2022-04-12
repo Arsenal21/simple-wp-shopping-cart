@@ -396,5 +396,6 @@ echo '<tr valign="top">
  </form>
  ';
     echo (__("Like the Simple WordPress Shopping Cart Plugin?", "wordpress-simple-paypal-shopping-cart")).' <a href="https://wordpress.org/support/plugin/wordpress-simple-paypal-shopping-cart/reviews/?filter=5" target="_blank">'.(__("Give it a good rating", "wordpress-simple-paypal-shopping-cart")).'</a>';
+    _e ( ". It will help us keep the plugin free & maintained.", "wordpress-simple-paypal-shopping-cart" );
     wpspsc_settings_menu_footer();
 }
