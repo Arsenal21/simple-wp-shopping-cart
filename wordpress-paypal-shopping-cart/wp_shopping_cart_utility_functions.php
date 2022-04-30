@@ -89,7 +89,7 @@ function wspsc_check_and_start_session() {
 	}
 
 	//Don't break Site Health test
-	$request_uri = filter_var( ! empty( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '', FILTER_SANITIZE_STRING );
+        $request_uri = ! empty( $_SERVER['REQUEST_URI'] ) ? sanitize_url( $_SERVER['REQUEST_URI'] ) : '';
 	if ( ! empty( $request_uri ) && ! empty( strpos( strtolower( $request_uri ), 'wp-site-health/v1/tests/loopback-requests' ) ) ) {
 		return false;
 	}

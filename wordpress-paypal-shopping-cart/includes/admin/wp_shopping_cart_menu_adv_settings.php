@@ -15,17 +15,17 @@ function show_wp_cart_adv_settings_page() {
 	}
 
 	$enable_pp_smart_checkout	 = filter_input( INPUT_POST, 'wpspc_enable_pp_smart_checkout', FILTER_SANITIZE_NUMBER_INT );
-	$live_client_id			 = filter_input( INPUT_POST, 'wpspc_pp_live_client_id', FILTER_SANITIZE_STRING );
-	$test_client_id			 = filter_input( INPUT_POST, 'wpspc_pp_test_client_id', FILTER_SANITIZE_STRING );
-	$live_secret			 = filter_input( INPUT_POST, 'wpspc_pp_live_secret', FILTER_SANITIZE_STRING );
-	$test_secret			 = filter_input( INPUT_POST, 'wpspc_pp_test_secret', FILTER_SANITIZE_STRING );
+	$live_client_id			 = sanitize_text_field( $_POST['wpspc_pp_live_client_id']);
+	$test_client_id			 = sanitize_text_field( $_POST['wpspc_pp_test_client_id']);
+	$live_secret			 = sanitize_text_field( $_POST['wpspc_pp_live_secret']);
+	$test_secret			 = sanitize_text_field( $_POST['wpspc_pp_test_secret']);
 	$disable_standard_checkout	 = filter_input( INPUT_POST, 'wpspc_disable_standard_checkout', FILTER_SANITIZE_NUMBER_INT );
-	$btn_size			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_size', FILTER_SANITIZE_STRING );
-	$btn_color			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_color', FILTER_SANITIZE_STRING );
-	$btn_shape			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_shape', FILTER_SANITIZE_STRING );
-	$btn_layout			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_btn_layout', FILTER_SANITIZE_STRING );
-	$pm_credit			 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_payment_method_credit', FILTER_SANITIZE_STRING );
-	$pm_elv				 = filter_input( INPUT_POST, 'wpspc_pp_smart_checkout_payment_method_elv', FILTER_SANITIZE_STRING );
+	$btn_size			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_size']);
+	$btn_color			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_color']);
+	$btn_shape			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_shape']);
+	$btn_layout			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_layout']);
+	$pm_credit			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_payment_method_credit']);
+	$pm_elv				 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_payment_method_elv']);
 
 	update_option( 'wpspc_enable_pp_smart_checkout', $enable_pp_smart_checkout );
 	update_option( 'wpspc_pp_live_client_id', $live_client_id );
