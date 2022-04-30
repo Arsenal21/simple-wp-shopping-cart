@@ -203,7 +203,7 @@ None
 
 == Changelog ==
  
-= WIP - 4.5.8 =
+= 4.5.8 =
 - PHP 8.1 related compatibility update.
 
 = 4.5.7 =
