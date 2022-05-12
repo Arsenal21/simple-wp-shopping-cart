@@ -1,9 +1,9 @@
-=== WordPress Simple PayPal Shopping Cart ===
+=== WordPress Simple Shopping Cart ===
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
-Requires at least: 5.0
-Tested up to: 5.9
+Requires at least: 5.5
+Tested up to: 6.0
 Stable tag: 4.5.8
 License: GPLv2 or later
 
