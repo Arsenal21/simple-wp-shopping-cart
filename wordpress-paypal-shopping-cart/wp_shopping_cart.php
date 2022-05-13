@@ -1,7 +1,7 @@
 <?php
 
 /*
-  Plugin Name: WP Simple Paypal Shopping cart
+  Plugin Name: WP Simple Shopping cart
   Version: 4.5.8
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
