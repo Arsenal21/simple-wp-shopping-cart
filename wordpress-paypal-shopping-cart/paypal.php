@@ -452,6 +452,13 @@ class paypal_ipn_handler {
     }
 
     function create_ipn_from_smart_checkout( $data ) {
+        
+        $address_street = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'line1' ];
+        if ( isset ( $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'line2' ] )){
+            //If address line 2 is present, add it to the address.
+            $address_street .= ", " . $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'line2' ];
+        }
+        
 	$ipn[ 'custom' ]		 = $_SESSION[ 'wp_cart_custom_values' ];
 	$ipn[ 'pay_id' ]		 = $data[ 'id' ];
 	$ipn[ 'create_time' ]		 = $data[ 'create_time' ];
@@ -466,7 +473,7 @@ class paypal_ipn_handler {
 	$ipn[ 'first_name' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'first_name' ];
 	$ipn[ 'last_name' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'last_name' ];
 	$ipn[ 'payer_email' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'email' ];
-	$ipn[ 'address_street' ]	 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'line1' ];
+	$ipn[ 'address_street' ]	 = $address_street;
 	$ipn[ 'address_city' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'city' ];
 	$ipn[ 'address_state' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'state' ];
 	$ipn[ 'address_zip' ]		 = $data[ 'payer' ][ 'payer_info' ][ 'shipping_address' ][ 'postal_code' ];
