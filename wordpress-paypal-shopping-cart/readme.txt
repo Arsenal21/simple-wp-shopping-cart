@@ -203,7 +203,7 @@ None
 
 == Changelog ==
  
-= WIP 4.5.9 =
+= 4.5.9 =
 - Collect and save address line 2 (if available) for PayPal Smart checkout option.
 
 = 4.5.8 =
