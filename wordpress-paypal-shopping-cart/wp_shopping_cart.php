@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Shopping cart
-  Version: 4.5.9
+  Version: 4.6.0
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.5.9' );
+define( 'WP_CART_VERSION', '4.6.0' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -174,7 +174,8 @@ function wpspc_cart_actions_handler() {
 	    }
 	}
 
-	setcookie( "cart_in_use", "true", time() + 21600, "/", COOKIE_DOMAIN );  //useful to not serve cached page when using with a caching plugin
+	setcookie( "cart_in_use", "true", time() + 21600, "/", COOKIE_DOMAIN );  //Useful to not serve cached page when using with a caching plugin
+        setcookie( "wp_cart_in_use", "1", time() + 21600, "/", COOKIE_DOMAIN );  //Exclusion rule for Batcache caching (used by some hosting like wordpress.com)
 	if ( function_exists( 'wp_cache_serve_cache_file' ) ) {//WP Super cache workaround
 	    setcookie( "comment_author_", "wp_cart", time() + 21600, "/", COOKIE_DOMAIN );
 	}
