@@ -219,7 +219,7 @@ class paypal_ipn_handler {
 	update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
 	$product_details = "";
 	$item_counter	 = 1;
-	$shipping	 = "";
+	$shipping = 0;
 	if ( $orig_cart_items ) {
 	    foreach ( $orig_cart_items as $item ) {
 		if ( $item_counter != 1 ) {
@@ -232,7 +232,7 @@ class paypal_ipn_handler {
 		    $product_details .= "Download Link: " . $file_url . "\n";
 		}
 		if ( ! empty( $item[ 'shipping' ] ) ) {
-		    $shipping += $item[ 'shipping' ] * $item[ 'quantity' ];
+		    $shipping += floatval($item[ 'shipping' ]) * $item[ 'quantity' ];
 		}
 		$item_counter ++;
 	    }
@@ -240,9 +240,9 @@ class paypal_ipn_handler {
 	if ( empty( $shipping ) ) {
 	    $shipping = "0.00";
 	} else {
-	    $baseShipping	 = get_option( 'cart_base_shipping_cost' );
-	    $shipping	 = $shipping + $baseShipping;
-	    $shipping	 = wpspsc_number_format_price( $shipping );
+	    $baseShipping = get_option( 'cart_base_shipping_cost' );
+	    $shipping = floatval($shipping) + floatval($baseShipping);
+	    $shipping = wpspsc_number_format_price( $shipping );
 	}
 	update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 	update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
