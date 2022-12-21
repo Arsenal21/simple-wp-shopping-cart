@@ -203,6 +203,9 @@ None
 
 == Changelog ==
 
+= WIP 4.6.2 =
+- Easy shortcode copy and paste option in the settings.
+
 = 4.6.1 =
 - Apply floatval to shipping amount (if used) to prevent an error in PHP8 system.
 
