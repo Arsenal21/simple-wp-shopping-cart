@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Shopping cart
-  Version: 4.6.1
+  Version: 4.6.2
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.6.1' );
+define( 'WP_CART_VERSION', '4.6.2' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -608,27 +608,27 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 
     if ( isset( $atts[ 'button_image' ] ) && ! empty( $atts[ 'button_image' ] ) ) {
 	//Use the custom button image specified in the shortcode
-	$replacement .= '<input type="image" src="' . $atts[ 'button_image' ] . '" class="wp_cart_button" alt="' . (__( "Add to Cart", "wordpress-simple-paypal-shopping-cart" )) . '"/>';
+	$replacement .= '<input type="image" src="' . esc_url_raw( $atts[ 'button_image' ] ) . '" class="wp_cart_button" alt="' . (__( "Add to Cart", "wordpress-simple-paypal-shopping-cart" )) . '"/>';
     } else if ( isset( $atts[ 'button_text' ] ) && ! empty( $atts[ 'button_text' ] ) ) {
 	//Use the custom button text specified in the shortcode
-	$replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . apply_filters( 'wspsc_add_cart_submit_button_value', $atts[ 'button_text' ], $price ) . '" />';
+	$replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . apply_filters( 'wspsc_add_cart_submit_button_value', esc_attr($atts[ 'button_text' ]), $price ) . '" />';
     } else {
 	//Use the button text or image value from the settings
 	if ( preg_match( "/http:/", $addcart ) || preg_match( "/https:/", $addcart ) ) {
 	    //Use the image as the add to cart button
-	    $replacement .= '<input type="image" src="' . $addcart . '" class="wp_cart_button" alt="' . (__( "Add to Cart", "wordpress-simple-paypal-shopping-cart" )) . '"/>';
+	    $replacement .= '<input type="image" src="' . esc_url_raw( $addcart ) . '" class="wp_cart_button" alt="' . (__( "Add to Cart", "wordpress-simple-paypal-shopping-cart" )) . '"/>';
 	} else {
 	    //Use plain text add to cart button
-	    $replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . apply_filters( 'wspsc_add_cart_submit_button_value', $addcart, $price ) . '" />';
+	    $replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . apply_filters( 'wspsc_add_cart_submit_button_value', esc_attr( $addcart ), $price ) . '" />';
 	}
     }
 
-    $replacement	 .= '<input type="hidden" name="wspsc_product" value="' . $name . '" />';
-    $replacement	 .= '<input type="hidden" name="price" value="' . $price . '" />';
-    $replacement	 .= '<input type="hidden" name="shipping" value="' . $shipping . '" />';
+    $replacement	 .= '<input type="hidden" name="wspsc_product" value="' . esc_attr( $name ) . '" />';
+    $replacement	 .= '<input type="hidden" name="price" value="' . esc_attr( $price ) . '" />';
+    $replacement	 .= '<input type="hidden" name="shipping" value="' . esc_attr( $shipping ) . '" />';
     $replacement	 .= '<input type="hidden" name="addcart" value="1" />';
     $replacement	 .= '<input type="hidden" name="cartLink" value="' . esc_url( cart_current_page_url() ) . '" />';
-    $replacement	 .= '<input type="hidden" name="product_tmp" value="' . $name . '" />';
+    $replacement	 .= '<input type="hidden" name="product_tmp" value="' . esc_attr( $name ) . '" />';
     isset( $atts[ 'item_number' ] ) ? $item_num	 = $atts[ 'item_number' ] : $item_num	 = '';
     $replacement	 .= '<input type="hidden" name="item_number" value="' . $item_num . '" />';
 

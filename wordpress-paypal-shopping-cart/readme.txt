@@ -4,16 +4,16 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.1
-Stable tag: 4.6.1
+Stable tag: 4.6.2
 License: GPLv2 or later
 
 Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
 
 == Description ==
 
-WordPress Simple PayPal Shopping Cart allows you to add an 'Add to Cart' button for your product on any posts or pages. This simple shopping cart plugin lets you sell products and services directly from your own wordpress site and turns your WP blog into an ecommerce site.
+WordPress Simple PayPal Shopping Cart allows you to create 'Add to Cart' buttons for your products or services on your site. This simple shopping cart plugin lets you sell products and services directly from your own WordPress site and turns your WP blog into an e-commerce site.
 
-It also allows you to add/display the shopping cart on any post or page or sidebar easily. The shopping cart shows the user what they currently have in the cart and allows them to change quantity or remove the items. 
+It also allows you to add/display the shopping cart on any post, page or sidebar easily. The shopping cart shows the user what they currently have in the cart and allows them to change quantity or remove the items. 
 
 https://www.youtube.com/watch?v=dJgGdD-tZW4
 
@@ -52,6 +52,8 @@ or
 * Show a nicely formatted product display box on the fly using a simple shortcode.
 * You can use PayPal sandbox to do testing if needed (before you go live).
 * Option to use the smart payment buttons of PayPal. Allows the customers to checkout in a popup window (using a credit card, paypal or paypal credit).
+* Uses the newest/latest PayPal checkout option.
+* Your customers will be able to use the PayPal' Pay in 4 payment option (Buy Now Pay Later).
 * Collect special instructions from your customers on the PayPal checkout page.
 * The orders menu will show you all the orders that you have received from your site.
 * Ability to configure an email that will get sent to your buyers after they purchase your product.
@@ -169,12 +171,19 @@ example usage: [wp_cart_button name="Test Product" price="29.95" var1="Size|smal
 == Frequently Asked Questions ==
 = Can this plugin be used to accept paypal payment for a service or a product? =
 Yes
+
 = Does this plugin have shopping cart =
 Yes
+
+= Does this plugin have the option to use the new PayPal checkout option =
+Yes. you can enable the new PayPal checkout option in the settings menu of the plugin.
+
 = Can the shopping cart be added to a checkout page? =
 Yes
+
 = Does this plugin has multiple currency support? =
 Yes
+
 = Is the 'Add to Cart' button customizable? =
 Yes
 = Does this plugin use a return URL to redirect customers to a specified page after PayPal has processed the payment? =
@@ -203,8 +212,9 @@ None
 
 == Changelog ==
 
-= WIP 4.6.2 =
+= 4.6.2 =
 - Easy shortcode copy and paste option in the settings.
+- Added output escaping to the [wp_cart_button] shortcode.
 
 = 4.6.1 =
 - Apply floatval to shipping amount (if used) to prevent an error in PHP8 system.
