@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Shopping cart
-  Version: 4.6.2
+  Version: 4.6.3
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.6.2' );
+define( 'WP_CART_VERSION', '4.6.3' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -681,23 +681,31 @@ function print_payment_currency( $price, $symbol, $decimal = '.' ) {
 }
 
 function cart_current_page_url() {
-    $pageURL = 'http';
-    if ( ! isset( $_SERVER[ "HTTPS" ] ) ) {
-	$_SERVER[ "HTTPS" ] = "";
-    }
-    if ( ! isset( $_SERVER[ "SERVER_PORT" ] ) ) {
-	$_SERVER[ "SERVER_PORT" ] = "";
-    }
-
-    if ( $_SERVER[ "HTTPS" ] == "on" ) {
-	$pageURL .= "s";
-    }
-    $pageURL .= "://";
-    if ( $_SERVER[ "SERVER_PORT" ] != "80" ) {
-	$pageURL .= $_SERVER[ "SERVER_NAME" ] . ":" . $_SERVER[ "SERVER_PORT" ] . $_SERVER[ "REQUEST_URI" ];
+    global $wp;
+    if( is_object( $wp ) && isset( $wp->request ) ){
+        //Try to get the URL from WP
+        $pageURL = home_url( add_query_arg( array(), $wp->request ) );
     } else {
-	$pageURL .= $_SERVER[ "SERVER_NAME" ] . $_SERVER[ "REQUEST_URI" ];
+        //Get URL using the other method.
+        $pageURL = 'http';
+        if ( ! isset( $_SERVER[ "HTTPS" ] ) ) {
+            $_SERVER[ "HTTPS" ] = "";
+        }
+        if ( ! isset( $_SERVER[ "SERVER_PORT" ] ) ) {
+            $_SERVER[ "SERVER_PORT" ] = "";
+        }
+
+        if ( $_SERVER[ "HTTPS" ] == "on" ) {
+            $pageURL .= "s";
+        }
+        $pageURL .= "://";
+        if ( $_SERVER[ "SERVER_PORT" ] != "80" ) {
+            $pageURL .= $_SERVER[ "SERVER_NAME" ] . ":" . $_SERVER[ "SERVER_PORT" ] . $_SERVER[ "REQUEST_URI" ];
+        } else {
+            $pageURL .= $_SERVER[ "SERVER_NAME" ] . $_SERVER[ "REQUEST_URI" ];
+        }
     }
+    $pageURL = apply_filters( 'wspsc_cart_current_page_url', $pageURL);
     return $pageURL;
 }
 
