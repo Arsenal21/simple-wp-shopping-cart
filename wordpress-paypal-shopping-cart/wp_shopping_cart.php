@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Shopping cart
-  Version: 4.6.3
+  Version: 4.6.4
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.6.3' );
+define( 'WP_CART_VERSION', '4.6.4' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -44,6 +44,8 @@ include_once('class-coupon.php');
 include_once('includes/wspsc-cart-functions.php');
 include_once('includes/admin/wp_shopping_cart_menu_main.php');
 include_once('includes/admin/wp_shopping_cart_tinymce.php');
+include_once(WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_discounts.php');
+include_once(WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php');
 
 wspsc_check_and_start_session();
 

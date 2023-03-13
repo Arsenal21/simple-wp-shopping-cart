@@ -22,6 +22,8 @@ function wp_cart_init_handler()
     }
     if (is_admin()) {
         add_action('admin_init', 'wp_cart_add_tinymce_button');
+        
+        wspsc_check_and_handle_csv_export();
 
 	//TODO - can be removed at a later version.
 	if (isset($_GET['page']) && $_GET['page'] == 'wordpress-paypal-shopping-cart') {

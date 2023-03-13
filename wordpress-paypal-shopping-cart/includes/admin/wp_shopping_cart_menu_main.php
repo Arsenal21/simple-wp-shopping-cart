@@ -6,8 +6,6 @@ add_action('admin_menu', 'wspsc_handle_admin_menu');
 // Handle the options page display
 function wspsc_handle_admin_menu() {
 
-    include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_discounts.php');
-    include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php');
     include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_addons.php');
     
     $menu_icon_url = 'dashicons-cart';
