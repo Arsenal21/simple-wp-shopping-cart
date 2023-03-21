@@ -529,8 +529,8 @@ function print_wp_cart_button_deprecated( $content ) {
 }
 
 function wp_cart_add_read_form_javascript() {
-    $debug_marker = "<!-- WP Simple Shopping Cart plugin v" . WP_CART_VERSION . " - https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768/ -->";
-    echo "\n${debug_marker}\n";
+    $debug_marker = "<!-- WP Simple Shopping Cart plugin v" . WP_CART_VERSION . " - https://wordpress.org/plugins/wordpress-simple-paypal-shopping-cart/ -->";
+    echo "\n". $debug_marker . "\n";
     echo '
 	<script type="text/javascript">
 	<!--
