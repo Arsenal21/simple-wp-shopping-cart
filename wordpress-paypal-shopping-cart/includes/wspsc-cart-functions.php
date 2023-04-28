@@ -3,10 +3,11 @@ global $carts_cnt;
 $carts_cnt = 0;
 
 function print_wp_shopping_cart( $args = array() ) {
+	$wspsc_cart = new WSPSC_Cart();
 	$output = '';
 	global $carts_cnt;
 	$carts_cnt ++;
-	if ( ! cart_not_empty() ) {
+	if ( ! $wspsc_cart->cart_not_empty() ) {
 		$empty_cart_text = get_option( 'wp_cart_empty_text' );
 		if ( ! empty( $empty_cart_text ) ) {
 			$output .= '<div class="wp_cart_empty_cart_section">';
@@ -86,17 +87,17 @@ function print_wp_shopping_cart( $args = array() ) {
 	$total_items = 0;
 	$total       = 0;
 	$form        = '';
-	if ( $_SESSION['simpleCart'] && is_array( $_SESSION['simpleCart'] ) ) {
+	if($wspsc_cart->get_items()){
 		$output             .= '
         <tr class="wspsc_cart_item_row">
         <th class="wspsc_cart_item_name_th">' . ( __( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_cart_qty_th">' . ( __( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_cart_price_th">' . ( __( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_remove_item_th"></th>
         </tr>';
 		$item_total_shipping = 0;
 		$postage_cost        = 0;
-		foreach ( $_SESSION['simpleCart'] as $item ) {
-			$total               += $item['price'] * $item['quantity'];
-			$item_total_shipping += $item['shipping'] * $item['quantity'];
-			$total_items         += $item['quantity'];
+		foreach ( $wspsc_cart->get_items() as $item ) {
+			$total               += $item->get_price() * $item->get_quantity();
+			$item_total_shipping += $item->get_shipping() * $item->get_quantity();
+			$total_items         += $item->get_quantity();
 		}
 		if ( ! empty( $item_total_shipping ) ) {
 			$baseShipping = get_option( 'cart_base_shipping_cost' );
@@ -111,17 +112,17 @@ function print_wp_shopping_cart( $args = array() ) {
 		$item_tpl   = "{name: '%s', quantity: '%d', price: '%s', currency: '" . $paypal_currency . "'}";
 		$items_list = '';
 
-		foreach ( $_SESSION['simpleCart'] as $item ) {
+		foreach ( $wspsc_cart->get_items() as $item ) {
 			//Let's form JS array of items for Smart Checkout
-                        $number_formatted_item_price = wpspsc_number_format_price($item['price']);
-			$items_list .= sprintf( $item_tpl, esc_js( $item['name'] ), esc_js( $item['quantity'] ), esc_js( $number_formatted_item_price ) ) . ',';
+                        $number_formatted_item_price = wpspsc_number_format_price($item->get_price());
+			$items_list .= sprintf( $item_tpl, esc_js( $item->get_name() ), esc_js( $item->get_quantity() ), esc_js( $number_formatted_item_price ) ) . ',';
 
 			$output .= '<tr class="wspsc_cart_item_thumb"><td class="wspsc_cart_item_name_td" style="overflow: hidden;">';
 			$output .= '<div class="wp_cart_item_info">';
 			if ( isset( $args['show_thumbnail'] ) ) {
-				$output .= '<span class="wp_cart_item_thumbnail"><img src="' . esc_url( $item['thumbnail'] ) . '" class="wp_cart_thumb_image" alt="' . esc_attr( $item['name'] ) . '" ></span>';
+				$output .= '<span class="wp_cart_item_thumbnail"><img src="' . esc_url( $item->get_thumbnail() ) . '" class="wp_cart_thumb_image" alt="' . esc_attr( $item->get_name() ) . '" ></span>';
 			}
-			$item_info = apply_filters( 'wspsc_cart_item_name', '<a href="' . esc_url( $item['cartLink'] ) . '">' . esc_attr( $item['name'] ) . '</a>', $item );
+			$item_info = apply_filters( 'wspsc_cart_item_name', '<a href="' . esc_url( $item->get_cart_link() ) . '">' . esc_attr( $item->get_name() ) . '</a>', $item );
 			$output   .= '<span class="wp_cart_item_name">' . $item_info . '</span>';
 			$output   .= '<span class="wp_cart_clear_float"></span>';
 			$output   .= '</div>';
@@ -130,20 +131,20 @@ function print_wp_shopping_cart( $args = array() ) {
 			$uniqid = uniqid();
 
 			$output .= "<td class='wspsc_cart_qty_td' style='text-align: center'><form method=\"post\"  action=\"\" name='pcquantity_" . $uniqid . "' style='display: inline'>" . wp_nonce_field( 'wspsc_cquantity', '_wpnonce', true, false ) . '
-                <input type="hidden" name="wspsc_product" value="' . htmlspecialchars( $item['name'] ) . "\" />
-	        <input type='hidden' name='cquantity' value='1' /><input type='number' class='wspsc_cart_item_qty' name='quantity' value='" . esc_attr( $item['quantity'] ) . "' min='0' step='1' size='3' onchange='document.pcquantity_" . $uniqid . ".submit();' onkeypress='document.getElementById(\"pinfo\").style.display = \"\";' /></form></td>
-	        <td style='text-align: center'>" . print_payment_currency( ( $item['price'] * $item['quantity'] ), $paypal_symbol, $decimal ) . "</td>
+                <input type="hidden" name="wspsc_product" value="' . htmlspecialchars( $item->get_name() ) . "\" />
+	        <input type='hidden' name='cquantity' value='1' /><input type='number' class='wspsc_cart_item_qty' name='quantity' value='" . esc_attr( $item->get_quantity() ) . "' min='0' step='1' size='3' onchange='document.pcquantity_" . $uniqid . ".submit();' onkeypress='document.getElementById(\"pinfo\").style.display = \"\";' /></form></td>
+	        <td style='text-align: center'>" . print_payment_currency( ( $item->get_price() * $item->get_quantity() ), $paypal_symbol, $decimal ) . "</td>
 	        <td class='wspsc_remove_item_td'><form method=\"post\" action=\"\" class=\"wp_cart_remove_item_form\">" . wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, false ) . '
-	        <input type="hidden" name="wspsc_product" value="' . esc_attr( $item['name'] ) . "\" />
+	        <input type="hidden" name="wspsc_product" value="' . esc_attr( $item->get_name() ) . "\" />
 	        <input type='hidden' name='delcart' value='1' />
 	        <input type='image' src='" . WP_CART_URL . "/images/Shoppingcart_delete.png' value='" . ( __( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ) . "' title='" . ( __( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ) . "' /></form></td></tr>
 	        ";
 
 			$form .= "
-	            <input type=\"hidden\" name=\"item_name_$count\" value=\"" . esc_attr( $item['name'] ) . "\" />
-	            <input type=\"hidden\" name=\"amount_$count\" value='" . wpspsc_number_format_price( $item['price'] ) . "' />
-	            <input type=\"hidden\" name=\"quantity_$count\" value=\"" . esc_attr( $item['quantity'] ) . "\" />
-	            <input type='hidden' name='item_number_$count' value='" . esc_attr( $item['item_number'] ) . "' />
+	            <input type=\"hidden\" name=\"item_name_$count\" value=\"" . esc_attr( $item->get_name() ) . "\" />
+	            <input type=\"hidden\" name=\"amount_$count\" value='" . wpspsc_number_format_price( $item->get_price() ) . "' />
+	            <input type=\"hidden\" name=\"quantity_$count\" value=\"" . esc_attr( $item->get_quantity() ) . "\" />
+	            <input type='hidden' name='item_number_$count' value='" . esc_attr( $item->get_item_number() ) . "' />
 	        ";
 			$count ++;
 		}
@@ -177,9 +178,10 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		$output .= "<tr class='wspsc_cart_total'><td colspan='2' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td><td></td></tr>';
 
-		if ( isset( $_SESSION['wpspsc_cart_action_msg'] ) && ! empty( $_SESSION['wpspsc_cart_action_msg'] ) ) {
-			$output .= '<tr class="wspsc_cart_action_msg"><td colspan="4"><span class="wpspsc_cart_action_msg">' . $_SESSION['wpspsc_cart_action_msg'] . '</span></td></tr>';
-		}
+		$wpspsc_cart_action_msg = $wspsc_cart->get_cart_action_msg();
+		if ( $wpspsc_cart_action_msg ) {
+			$output .= '<tr class="wspsc_cart_action_msg"><td colspan="4"><span class="wpspsc_cart_action_msg">' . $wpspsc_cart_action_msg . '</span></td></tr>';
+		 }
 
 		if ( get_option( 'wpspsc_enable_coupon' ) == '1' ) {
 			$output .= '<tr class="wspsc_cart_coupon_row"><td colspan="4">

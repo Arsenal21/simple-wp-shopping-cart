@@ -40,6 +40,9 @@ include_once('wp_shopping_cart_utility_functions.php');
 include_once('wp_shopping_cart_shortcodes.php');
 include_once('wp_shopping_cart_misc_functions.php');
 include_once('wp_shopping_cart_orders.php');
+include_once('includes/WSPSC_Cart.php');
+include_once('includes/WSPSC_Cart_Item.php');
+include_once('class-coupon.php');
 include_once('class-coupon.php');
 include_once('includes/wspsc-cart-functions.php');
 include_once('includes/admin/wp_shopping_cart_menu_main.php');
@@ -54,16 +57,18 @@ function always_show_cart_handler( $atts ) {
 }
 
 function show_wp_shopping_cart_handler( $atts ) {
-    $output = "";
-    if ( cart_not_empty() ) {
+    $wspsc_cart=new WSPSC_Cart();
+	$output = "";    
+	if ( $wspsc_cart->cart_not_empty() ) {
 	$output = print_wp_shopping_cart( $atts );
     }
     return $output;
 }
 
 function shopping_cart_show( $content ) {
+	$wspsc_cart=new WSPSC_Cart();
     if ( strpos( $content, "<!--show-wp-shopping-cart-->" ) !== FALSE ) {
-	if ( cart_not_empty() ) {
+	if( $wspsc_cart->cart_not_empty() ) {
 	    $content	 = preg_replace( '/<p>\s*<!--(.*)-->\s*<\/p>/i', "<!--$1-->", $content );
 	    $matchingText	 = '<!--show-wp-shopping-cart-->';
 	    $replacementText = print_wp_shopping_cart();
@@ -75,14 +80,16 @@ function shopping_cart_show( $content ) {
 
 // Reset cart option
 if ( isset( $_REQUEST[ "reset_wp_cart" ] ) && ! empty( $_REQUEST[ "reset_wp_cart" ] ) ) {
-    reset_wp_cart();
+	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart->reset_cart();
 }
 
 //Clear the cart if the customer landed on the thank you page (if this option is enabled)
 if ( get_option( 'wp_shopping_cart_reset_after_redirection_to_return_page' ) ) {
     //TODO - remove this field altogether later. Cart will always be reset using query prameter on the thank you page.
-    if ( get_option( 'cart_return_from_paypal_url' ) == cart_current_page_url() ) {
-	reset_wp_cart();
+    if ( get_option( 'cart_return_from_paypal_url' ) == cart_current_page_url() ) {	
+	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart->reset_cart();
     }
 }
 
@@ -140,6 +147,13 @@ function wpspsc_process_pp_smart_checkout() {
     }
 }
 
+/**
+ * @deprecated: Reset the WPSC cart and associated session variables.
+ * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'reset_cart()'
+ * method to reset the cart and associated variables.
+ *
+ * @return void
+ */
 function reset_wp_cart() {
     if ( ! isset( $_SESSION[ 'simpleCart' ] ) ) {
 	return;
@@ -159,9 +173,8 @@ function reset_wp_cart() {
 }
 
 function wpspc_cart_actions_handler() {
-	if ( isset( $_SESSION['wpspsc_cart_action_msg'] ) ) {
-		unset( $_SESSION['wpspsc_cart_action_msg'] );
-	}
+	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart->clear_cart_action_msg();
 
     if ( isset( $_POST[ 'addcart' ] ) ) {//Add to cart action
 	//Some sites using caching need to be able to disable nonce on the add cart button. Otherwise 48 hour old cached pages will have stale nonce value and fail for valid users.
@@ -248,13 +261,13 @@ function wpspc_cart_actions_handler() {
 
 	$count		 = 1;
 	$products	 = array();
-	if ( isset( $_SESSION[ 'simpleCart' ] ) ) {
-	    $products = $_SESSION[ 'simpleCart' ];
+	if ( $wspsc_cart->get_items() ) {
+		$products = $wspsc_cart->get_items();
 	    if ( is_array( $products ) ) {
 		foreach ( $products as $key => $item ) {
-		    if ( $item[ 'name' ] == $post_wspsc_product ) {
-			$count += $item[ 'quantity' ];
-			$item[ 'quantity' ] ++;
+			if ( $item->get_name() == $post_wspsc_product ) {
+			$count += $item->get_quantity();			
+			$item->set_quantity($item->get_quantity()+1);
 			unset( $products[ $key ] );
 			array_push( $products, $item );
 		    }
@@ -266,30 +279,42 @@ function wpspc_cart_actions_handler() {
 
 	if ( $count == 1 ) {
 	    //This is the first quantity of this item.
-
-	    $product = array( 'name' => $post_wspsc_product, 'price' => $price, 'price_orig' => $price, 'quantity' => $count, 'shipping' => $shipping, 'cartLink' => $post_cart_link, 'item_number' => $post_item_number );
+		$wspsc_cart_item = new WSPSC_Cart_Item();
+		$wspsc_cart_item->set_name($post_wspsc_product);
+		$wspsc_cart_item->set_price($price);
+		$wspsc_cart_item->set_price_orig($price);
+		$wspsc_cart_item->set_quantity($count);
+		$wspsc_cart_item->set_shipping($shipping);
+		$wspsc_cart_item->set_cart_link($post_cart_link);
+		$wspsc_cart_item->set_item_number($post_item_number);
 	    if ( ! empty( $post_encoded_file_val ) ) {
-		$product[ 'file_url' ] = $post_encoded_file_val;
+		$wspsc_cart_item->set_file_url($post_encoded_file_val);
 	    }
 	    if ( ! empty( $post_thumbnail ) ) {
-		$product[ 'thumbnail' ] = $post_thumbnail;
+		$wspsc_cart_item->set_thumbnail($post_thumbnail);
 	    }
 	    $product[ 'stamp_pdf' ] = $post_stamp_pdf;
-
-	    array_push( $products, $product );
+		$wspsc_cart_item->set_stamp_pdf($post_stamp_pdf);		
+		array_push( $products, $wspsc_cart_item );
 	}
 
 	sort( $products );
-	$_SESSION[ 'simpleCart' ] = $products;
+	$wspsc_cart->add_items($products);
 
-	wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
-
-	if ( ! isset( $_SESSION[ 'simple_cart_id' ] ) && empty( $_SESSION[ 'simple_cart_id' ] ) ) {
-	    wpspc_insert_new_record();
+	//if cart is not yet created, save the returned products
+	//so it can be saved when cart is created
+	$products_discount = wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary	
+	if(is_array($products_discount))
+	{
+		$products = $products_discount;
+	}	
+	if(!$wspsc_cart->get_cart_id()){
+		$wspsc_cart->create_cart();	
+		$wspsc_cart->add_items($products);
 	} else {
 	    //cart updating
-	    if ( isset( $_SESSION[ 'simple_cart_id' ] ) && ! empty( $_SESSION[ 'simple_cart_id' ] ) ) {
-		wpspc_update_cart_items_record();
+		if ( $wspsc_cart->get_cart_id() ) {
+		$wspsc_cart->add_items($products);
 	    } else {
 		echo "<p>" . (__( "Error! Your session is out of sync. Please reset your session.", "wordpress-simple-paypal-shopping-cart" )) . "</p>";
 	    }
@@ -316,23 +341,23 @@ function wpspc_cart_actions_handler() {
 	if ( ! is_numeric( $post_quantity ) ) {
 	    wp_die( 'Error! The quantity value must be numeric.' );
 	}
-	$products = $_SESSION[ 'simpleCart' ];
+	$products=$wspsc_cart->get_items();
 	foreach ( $products as $key => $item ) {
-	    if ( (stripslashes( $item[ 'name' ] ) == $post_wspsc_product) && $post_quantity ) {
-		$item[ 'quantity' ] = $post_quantity;
+	    if ( (stripslashes( $item->get_name() ) == $post_wspsc_product) && $post_quantity ) {
+		$item->set_quantity($post_quantity);
 		unset( $products[ $key ] );
 		array_push( $products, $item );
-	    } else if ( ($item[ 'name' ] == $post_wspsc_product) && ! $post_quantity ) {
+	    } else if ( ($item->get_name() == $post_wspsc_product) && ! $post_quantity ) {
 		unset( $products[ $key ] );
 	    }
 	}
 	sort( $products );
-	$_SESSION[ 'simpleCart' ] = $products;
+	$wspsc_cart->add_items($products);
 
 	wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
 
-	if ( isset( $_SESSION[ 'simple_cart_id' ] ) && ! empty( $_SESSION[ 'simple_cart_id' ] ) ) {
-	    wpspc_update_cart_items_record();
+	if( $wspsc_cart->get_cart_id() ) {
+		$wspsc_cart->add_items($products);
 	}
     } else if ( isset( $_POST[ 'delcart' ] ) ) {
 	$nonce = $_REQUEST[ '_wpnonce' ];
@@ -340,20 +365,18 @@ function wpspc_cart_actions_handler() {
 	    wp_die( 'Error! Nonce Security Check Failed!' );
 	}
 	$post_wspsc_product	 = isset( $_POST[ 'wspsc_product' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'wspsc_product' ] ) ) : '';
-	$products		 = $_SESSION[ 'simpleCart' ];
+	$products=$wspsc_cart->get_items();
 	foreach ( $products as $key => $item ) {
-	    if ( $item[ 'name' ] == $post_wspsc_product )
+	    if ( $item->get_name() == $post_wspsc_product )
 		unset( $products[ $key ] );
 	}
-	$_SESSION[ 'simpleCart' ] = $products;
+	$wspsc_cart->add_items($products);
 
+	//update the products in database after apply coupon
 	wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
 
-	if ( isset( $_SESSION[ 'simple_cart_id' ] ) && ! empty( $_SESSION[ 'simple_cart_id' ] ) ) {
-	    wpspc_update_cart_items_record();
-	}
-	if ( count( $_SESSION[ 'simpleCart' ] ) < 1 ) {
-	    reset_wp_cart();
+	if ( ! $wspsc_cart->get_items() ) {	    
+		$wspsc_cart->reset_cart();
 	}
     } else if ( isset( $_POST[ 'wpspsc_coupon_code' ] ) ) {
 	$nonce = $_REQUEST[ '_wpnonce' ];
@@ -361,18 +384,17 @@ function wpspc_cart_actions_handler() {
 	    wp_die( 'Error! Nonce Security Check Failed!' );
 	}
 	$coupon_code = isset( $_POST[ 'wpspsc_coupon_code' ] ) ? sanitize_text_field( $_POST[ 'wpspsc_coupon_code' ] ) : '';
-	wpspsc_apply_cart_discount( $coupon_code );
-	if ( isset( $_SESSION[ 'simple_cart_id' ] ) && ! empty( $_SESSION[ 'simple_cart_id' ] ) ) {
-	    wpspc_update_cart_items_record();
-	}
+	wpspsc_apply_cart_discount( $coupon_code );	//apply discount and update cart products in database
     }
 }
 
 function wp_cart_add_custom_field() {
+	$wspsc_cart = new WSPSC_Cart();
+	$collection_obj = WPSPSC_Coupons_Collection::get_instance();
     $_SESSION[ 'wp_cart_custom_values' ]	 = "";
     $custom_field_val			 = "";
     $name					 = 'wp_cart_id';
-    $value					 = $_SESSION[ 'simple_cart_id' ];
+	$value					 = $wspsc_cart->get_cart_id();
     $custom_field_val			 = wpc_append_values_to_custom_field( $name, $value );
 
     $clientip = $_SERVER[ 'REMOTE_ADDR' ];
@@ -395,9 +417,9 @@ function wp_cart_add_custom_field() {
 	}
     }
 
-    if ( isset( $_SESSION[ 'wpspsc_applied_coupon_code' ] ) ) {
+	if($collection_obj->get_applied_coupon_code($wspsc_cart->get_cart_id())){
 	$name			 = "coupon_code";
-	$value			 = $_SESSION[ 'wpspsc_applied_coupon_code' ];
+	$value			 = $collection_obj->get_applied_coupon_code($wspsc_cart->get_cart_id());
 	$custom_field_val	 = wpc_append_values_to_custom_field( $name, $value );
     }
 
@@ -662,6 +684,10 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
     return $replacement;
 }
 
+/**
+ * @deprecated This method has been deprecated. Use cart_not_empty() from WSPSC_Cart instead.
+ * @return int Returns the total number of items in the cart.
+ */
 function cart_not_empty() {
     $count = 0;
     if ( isset( $_SESSION[ 'simpleCart' ] ) && is_array( $_SESSION[ 'simpleCart' ] ) ) {
@@ -711,11 +737,17 @@ function cart_current_page_url() {
     return $pageURL;
 }
 
+/**
+ * @deprecated This method has been deprecated. Use simple_cart_total() from WSPSC_Cart instead.
+ * @return int Returns the total with shipping
+ */
 function simple_cart_total() {
     $grand_total = 0;
+	$total=0;
+    $item_total_shipping=0;	
     foreach ( (array) $_SESSION[ 'simpleCart' ] as $item ) {
-	$total			 += $item[ 'price' ] * $item[ 'quantity' ];
-	$item_total_shipping	 += $item[ 'shipping' ] * $item[ 'quantity' ];
+	$total			 += $item->get_price() * $item->get_quantity();
+	$item_total_shipping	 += $item->get_shipping() * $item->get_quantity();
     }
     $grand_total = $total + $item_total_shipping;
     return wpspsc_number_format_price( $grand_total );
