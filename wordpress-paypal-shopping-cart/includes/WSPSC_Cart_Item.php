@@ -12,8 +12,7 @@ class WSPSC_Cart_Item {
     protected $thumbnail;
     protected $stamp_pdf;
 
-    function __construct()
-    {
+    function __construct() {
         
     }
 
@@ -98,5 +97,3 @@ class WSPSC_Cart_Item {
     }
 
 }
-
-?>

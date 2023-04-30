@@ -5,8 +5,6 @@ class WSPSC_Cart
     private $item;
     private $cart_id = 0;
 
-
-
     public function __construct()
     {
         $this->cart_id = isset($_COOKIE['simple_cart_id']) ? $_COOKIE['simple_cart_id'] : 0;
@@ -212,7 +210,6 @@ class WSPSC_Cart
 
     public function set_cart_action_msg($msg)
     {
-
         if ($this->get_cart_id()) {
             $transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_id();
             $expiration = 3600; // 1 hour
