@@ -36,24 +36,32 @@ function wspsc_reset_logfile()
     return $log_reset;
 }
 
+/**
+ * @deprecated This method has been deprecated. Use get_total_cart_qty() from WSPSC_Cart instead.
+ * @return int Returns the total number of items in the cart.
+ */
 function wpspc_get_total_cart_qty() {
     $total_items = 0;
     if (!isset($_SESSION['simpleCart'])) {
         return $total_items;
     }
     foreach ($_SESSION['simpleCart'] as $item) {
-        $total_items += $item['quantity'];
+        $total_items += $item->get_quantity();
     }
     return $total_items;
 }
 
+/**
+ * @deprecated This method has been deprecated. Use get_total_cart_sub_total() from WSPSC_Cart instead.
+ * @return int Returns the total number of items in the cart.
+ */
 function wpspc_get_total_cart_sub_total() {
     $sub_total = 0;
     if (!isset($_SESSION['simpleCart'])) {
         return $sub_total;
     }
     foreach ($_SESSION['simpleCart'] as $item) {
-        $sub_total += $item['price'] * $item['quantity'];
+        $sub_total += $item->get_price() * $item->get_quantity();
     }
     return $sub_total;
 }

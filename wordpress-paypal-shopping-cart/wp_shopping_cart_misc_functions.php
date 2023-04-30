@@ -98,6 +98,14 @@ function wp_cart_ngg_template_handler($arg1,$arg2)
     return $arg1;
 }
 
+/**
+ * @deprecated: Adds new cart record in the database.
+ *
+ * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'create_cart()'
+ * method to create a new.
+ *
+ * @return void
+ */
 function wpspc_insert_new_record()
 {
     //First time adding to the cart
@@ -129,6 +137,14 @@ function wpspc_insert_new_record()
     }
 }
 
+/**
+ * @deprecated: Update the cart items record in the database using the 'wpsc_cart_items' post meta.
+ *
+ * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'add_items()'
+ * method to add items to the cart and update the cart items record in the database.
+ *
+ * @return void
+ */
 function wpspc_update_cart_items_record()
 {
     if(isset($_SESSION['simpleCart']) && !empty($_SESSION['simpleCart']))

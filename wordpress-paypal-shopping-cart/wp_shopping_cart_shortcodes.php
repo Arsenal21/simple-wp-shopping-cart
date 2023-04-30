@@ -106,7 +106,8 @@ EOT;
 
 function wspsc_compact_cart_handler($args)
 {
-    $num_items = wpspc_get_total_cart_qty();
+    $wspsc_cart = new WSPSC_Cart();
+    $num_items = $wspsc_cart->get_total_cart_qty();
     $curSymbol = WP_CART_CURRENCY_SYMBOL;
     $checkout_url = get_option('cart_checkout_page_url');
 
@@ -114,7 +115,7 @@ function wspsc_compact_cart_handler($args)
     $output .= '<div class="wpsps_compact_cart wpsps-cart-wrapper">';
     $output .= '<div class="wpsps_compact_cart_container">';
     if($num_items>0){
-            $cart_total = wpspc_get_total_cart_sub_total();
+            $cart_total = $wspsc_cart->get_total_cart_sub_total();
             $item_message = ($num_items <= 1) ? __("Item", "wordpress-simple-paypal-shopping-cart") : __("Items", "wordpress-simple-paypal-shopping-cart");
             $output .= $num_items . " " . $item_message;
             $output .= '<span class="wpsps_compact_cart_price"> '. print_payment_currency($cart_total,$curSymbol).'</span>';
@@ -134,7 +135,8 @@ function wspsc_compact_cart_handler($args)
 
 function wspsc_compact_cart2_handler($args)
 {
-    $num_items = wpspc_get_total_cart_qty();
+    $wspsc_cart = new WSPSC_Cart();
+    $num_items = $wspsc_cart->get_total_cart_qty();
     $checkout_url = get_option('cart_checkout_page_url');
     //$curSymbol = WP_CART_CURRENCY_SYMBOL;
     //$cart_total = wpspc_get_total_cart_sub_total();
