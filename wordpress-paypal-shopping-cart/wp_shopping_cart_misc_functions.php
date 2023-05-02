@@ -101,57 +101,27 @@ function wp_cart_ngg_template_handler($arg1,$arg2)
 /**
  * @deprecated: Adds new cart record in the database.
  *
- * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'create_cart()'
+ * This function is deprecated and should no longer be used. Please use the 'WSPSC_Cart' class and its 'create_cart()'
  * method to create a new.
- *
- * @return void
  */
 function wpspc_insert_new_record()
 {
     //First time adding to the cart
-    //$cart_id = uniqid();
-    //$_SESSION['simple_cart_id'] = $cart_id;
-    $wpsc_order = array(
-    'post_title'    => 'WPSC Cart Order',
-    'post_type'     => 'wpsc_cart_orders',
-    'post_content'  => '',
-    'post_status'   => 'trash',
-    );
-    // Insert the post into the database
-    $post_id  = wp_insert_post($wpsc_order);
-    if($post_id){
-        //echo "post id: ".$post_id;
-        $_SESSION['simple_cart_id'] = $post_id;
-        $updated_wpsc_order = array(
-            'ID'             => $post_id,
-            'post_title'    => $post_id,
-            'post_type'     => 'wpsc_cart_orders',
-        );
-        wp_update_post($updated_wpsc_order);
-        $status = "In Progress";
-        update_post_meta($post_id, 'wpsc_order_status', $status);
-        if(isset($_SESSION['simpleCart']) && !empty($_SESSION['simpleCart']))
-        {
-            update_post_meta( $post_id, 'wpsc_cart_items', $_SESSION['simpleCart']);
-        }
-    }
+    $wspsc_cart = new WSPSC_Cart();
+    $wspsc_cart->create_cart();
 }
 
 /**
  * @deprecated: Update the cart items record in the database using the 'wpsc_cart_items' post meta.
  *
- * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'add_items()'
+ * This function is deprecated and should no longer be used. Please use the 'WSPSC_Cart' class and its 'add_items()'
  * method to add items to the cart and update the cart items record in the database.
- *
- * @return void
  */
 function wpspc_update_cart_items_record()
 {
-    if(isset($_SESSION['simpleCart']) && !empty($_SESSION['simpleCart']))
-    {
-        $post_id = $_SESSION['simple_cart_id'];
-        update_post_meta( $post_id, 'wpsc_cart_items', $_SESSION['simpleCart']);
-    }
+    $wspsc_cart = new WSPSC_Cart();
+    $items = $wspsc_cart->get_items();
+    $wspsc_cart->add_items($items);
 }
 
 function wpspc_apply_dynamic_tags_on_email($text, $ipn_data, $args)

@@ -22,32 +22,36 @@ class WSPSC_Cart
      */
     public function create_cart()
     {
-        // Create a new order
+        //This is normally used when first time an item is added to the cart. It creates a new cart ID and set the cookie.
+        
+        //Create a new order
         $wpsc_order = array(
             'post_title'    => 'WPSC Cart Order',
             'post_type'     => 'wpsc_cart_orders',
             'post_content'  => '',
             'post_status'   => 'trash',
         );
-        // Insert the post into the database
+        //Insert the post into the database
         $post_id  = wp_insert_post($wpsc_order);
 
         if ($post_id) {
-            $cookie_expiration = time() + (86400 * 30); // 30 days
+            $cookie_expiration = time() + (86400 * 14); // 14 days
             setcookie('simple_cart_id', $post_id, $cookie_expiration, '/');
             $this->set_cart_id($post_id);
 
+            //Update the post title with the cart ID
             $updated_wpsc_order = array(
-                'ID'             => $this->get_cart_id(),
-                'post_title'    => $this->get_cart_id(),
-                'post_type'     => 'wpsc_cart_orders',
+                'ID'         => $this->get_cart_id(),
+                'post_title' => $this->get_cart_id(),
+                'post_type'  => 'wpsc_cart_orders',
             );
             wp_update_post($updated_wpsc_order);
-            $status = "In Progress";
 
+            //Update the order status
+            $status = "In Progress";
             update_post_meta($this->get_cart_id(), 'wpsc_order_status', $status);
 
-            //save items if added into cart
+            //Save cart items (if items were added to cart)
             $this->save_items();
         }
     }
@@ -77,11 +81,9 @@ class WSPSC_Cart
     public function save_items()
     {
         if ($this->get_cart_id()) {
-            update_post_meta($this->get_cart_id(), 'wpsc_cart_items', $this->items);
+            update_post_meta( $this->get_cart_id(), 'wpsc_cart_items', $this->items );
         }
     }
-
-
 
     public function reset_cart()
     {

@@ -149,27 +149,12 @@ function wpspsc_process_pp_smart_checkout() {
 
 /**
  * @deprecated: Reset the WPSC cart and associated session variables.
- * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'reset_cart()'
+ * This function is deprecated and should no longer be used. Please use the 'WSPSC_Cart' class and its 'reset_cart()'
  * method to reset the cart and associated variables.
- *
- * @return void
  */
 function reset_wp_cart() {
-    if ( ! isset( $_SESSION[ 'simpleCart' ] ) ) {
-	return;
-    }
-    $products = $_SESSION[ 'simpleCart' ];
-    if ( ! is_array( $products ) ) {
-	return;
-    }
-    foreach ( $products as $key => $item ) {
-	unset( $products[ $key ] );
-    }
-    $_SESSION[ 'simpleCart' ] = $products;
-    unset( $_SESSION[ 'simple_cart_id' ] );
-    unset( $_SESSION[ 'wpspsc_cart_action_msg' ] );
-    unset( $_SESSION[ 'wpspsc_discount_applied_once' ] );
-    unset( $_SESSION[ 'wpspsc_applied_coupon_code' ] );
+	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart->reset_cart();
 }
 
 function wpspc_cart_actions_handler() {
@@ -685,17 +670,12 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 }
 
 /**
- * @deprecated This method has been deprecated. Use cart_not_empty() from WSPSC_Cart instead.
+ * @deprecated This method has been DEPRECATED. Use cart_not_empty() from WSPSC_Cart instead.
  * @return int Returns the total number of items in the cart.
  */
 function cart_not_empty() {
-    $count = 0;
-    if ( isset( $_SESSION[ 'simpleCart' ] ) && is_array( $_SESSION[ 'simpleCart' ] ) ) {
-	foreach ( $_SESSION[ 'simpleCart' ] as $item )
-	    $count ++;
-	return $count;
-    } else
-	return 0;
+	$wspsc_cart = new WSPSC_Cart();
+	return $wspsc_cart->cart_not_empty();
 }
 
 function print_payment_currency( $price, $symbol, $decimal = '.' ) {
@@ -739,18 +719,10 @@ function cart_current_page_url() {
 
 /**
  * @deprecated This method has been deprecated. Use simple_cart_total() from WSPSC_Cart instead.
- * @return int Returns the total with shipping
  */
 function simple_cart_total() {
-    $grand_total = 0;
-	$total=0;
-    $item_total_shipping=0;	
-    foreach ( (array) $_SESSION[ 'simpleCart' ] as $item ) {
-	$total			 += $item->get_price() * $item->get_quantity();
-	$item_total_shipping	 += $item->get_shipping() * $item->get_quantity();
-    }
-    $grand_total = $total + $item_total_shipping;
-    return wpspsc_number_format_price( $grand_total );
+	$wspsc_cart = new WSPSC_Cart();
+	return $wspsc_cart->simple_cart_total();
 }
 
 function wp_paypal_shopping_cart_load_widgets() {

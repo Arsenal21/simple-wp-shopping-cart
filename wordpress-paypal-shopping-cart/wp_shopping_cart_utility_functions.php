@@ -41,13 +41,8 @@ function wspsc_reset_logfile()
  * @return int Returns the total number of items in the cart.
  */
 function wpspc_get_total_cart_qty() {
-    $total_items = 0;
-    if (!isset($_SESSION['simpleCart'])) {
-        return $total_items;
-    }
-    foreach ($_SESSION['simpleCart'] as $item) {
-        $total_items += $item->get_quantity();
-    }
+    $wspsc_cart = new WSPSC_Cart();
+    $total_items = $wspsc_cart->get_total_cart_qty();
     return $total_items;
 }
 
@@ -56,14 +51,9 @@ function wpspc_get_total_cart_qty() {
  * @return int Returns the total number of items in the cart.
  */
 function wpspc_get_total_cart_sub_total() {
-    $sub_total = 0;
-    if (!isset($_SESSION['simpleCart'])) {
-        return $sub_total;
-    }
-    foreach ($_SESSION['simpleCart'] as $item) {
-        $sub_total += $item->get_price() * $item->get_quantity();
-    }
-    return $sub_total;
+    $wspsc_cart = new WSPSC_Cart();
+    $total_sub_total = $wspsc_cart->get_total_cart_sub_total();
+    return $total_sub_total;
 }
 
 function wspsc_clean_incomplete_old_cart_orders() {
