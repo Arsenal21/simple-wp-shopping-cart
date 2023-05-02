@@ -87,19 +87,16 @@ class WSPSC_Cart
 
     public function reset_cart()
     {
-        $collection_obj = WPSPSC_Coupons_Collection::get_instance();
-
-        if (sizeof($this->get_items()) == 0) {
-            return;
-        }
-
+        //This function may get called with some items in the cart or 0 items in the cart. It will reset the cart and clear the cookie.
         $this->set_items(array());
 
         $this->clear_cart_action_msg();
+
+        $collection_obj = WPSPSC_Coupons_Collection::get_instance();
         $collection_obj->clear_discount_applied_once($this->get_cart_id());        
         $collection_obj->clear_applied_coupon_code($this->get_cart_id());
 
-        //set cookie in past to expire it
+        //set cookie in the past to expire it
         setcookie('simple_cart_id', '', time() - 3600, '/');
         $this->set_cart_id(0);
     }
