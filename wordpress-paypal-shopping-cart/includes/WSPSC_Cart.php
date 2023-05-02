@@ -35,7 +35,7 @@ class WSPSC_Cart
         $post_id  = wp_insert_post($wpsc_order);
 
         if ($post_id) {
-            $cookie_expiration = time() + (86400 * 14); // 14 days
+            $cookie_expiration = time() + (86400 * 30); // 30 days
             setcookie('simple_cart_id', $post_id, $cookie_expiration, '/');
             $this->set_cart_id($post_id);
 
