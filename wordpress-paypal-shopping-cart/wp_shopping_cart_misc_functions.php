@@ -107,7 +107,7 @@ function wp_cart_ngg_template_handler($arg1,$arg2)
 function wpspc_insert_new_record()
 {
     //First time adding to the cart
-    $wspsc_cart = new WSPSC_Cart();
+    $wspsc_cart = WSPSC_Cart::get_instance();
     $wspsc_cart->create_cart();
 }
 
@@ -119,7 +119,7 @@ function wpspc_insert_new_record()
  */
 function wpspc_update_cart_items_record()
 {
-    $wspsc_cart = new WSPSC_Cart();
+    $wspsc_cart = WSPSC_Cart::get_instance();
     $items = $wspsc_cart->get_items();
     $wspsc_cart->add_items($items);
 }

@@ -57,7 +57,7 @@ function always_show_cart_handler( $atts ) {
 }
 
 function show_wp_shopping_cart_handler( $atts ) {
-    $wspsc_cart=new WSPSC_Cart();
+    $wspsc_cart= WSPSC_Cart::get_instance();
 	$output = "";    
 	if ( $wspsc_cart->cart_not_empty() ) {
 	$output = print_wp_shopping_cart( $atts );
@@ -66,7 +66,7 @@ function show_wp_shopping_cart_handler( $atts ) {
 }
 
 function shopping_cart_show( $content ) {
-	$wspsc_cart=new WSPSC_Cart();
+	$wspsc_cart= WSPSC_Cart::get_instance();
     if ( strpos( $content, "<!--show-wp-shopping-cart-->" ) !== FALSE ) {
 	if( $wspsc_cart->cart_not_empty() ) {
 	    $content	 = preg_replace( '/<p>\s*<!--(.*)-->\s*<\/p>/i', "<!--$1-->", $content );
@@ -80,16 +80,18 @@ function shopping_cart_show( $content ) {
 
 // Reset cart option
 if ( isset( $_REQUEST[ "reset_wp_cart" ] ) && ! empty( $_REQUEST[ "reset_wp_cart" ] ) ) {
-	$wspsc_cart = new WSPSC_Cart();
-	$wspsc_cart->reset_cart();
+	$wspsc_cart =  WSPSC_Cart::get_instance();
+
+	//resets cart and cart_id after payment is made.
+	$wspsc_cart->reset_cart(true);
 }
 
 //Clear the cart if the customer landed on the thank you page (if this option is enabled)
 if ( get_option( 'wp_shopping_cart_reset_after_redirection_to_return_page' ) ) {
     //TODO - remove this field altogether later. Cart will always be reset using query prameter on the thank you page.
     if ( get_option( 'cart_return_from_paypal_url' ) == cart_current_page_url() ) {	
-	$wspsc_cart = new WSPSC_Cart();
-	$wspsc_cart->reset_cart();
+	$wspsc_cart =  WSPSC_Cart::get_instance();	
+	$wspsc_cart->reset_cart(true);
     }
 }
 
@@ -153,15 +155,22 @@ function wpspsc_process_pp_smart_checkout() {
  * method to reset the cart and associated variables.
  */
 function reset_wp_cart() {
-	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart =  WSPSC_Cart::get_instance();
 	$wspsc_cart->reset_cart();
 }
 
 function wpspc_cart_actions_handler() {
-	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart =  WSPSC_Cart::get_instance();
 	$wspsc_cart->clear_cart_action_msg();
 
     if ( isset( $_POST[ 'addcart' ] ) ) {//Add to cart action
+		
+		//create new cart object when add to cart button is clicked the first time
+		if(!$wspsc_cart->get_cart_id())
+		{			
+			$wspsc_cart->create_cart();
+		}		
+
 	//Some sites using caching need to be able to disable nonce on the add cart button. Otherwise 48 hour old cached pages will have stale nonce value and fail for valid users.
 	if ( get_option( 'wspsc_disable_nonce_add_cart' ) ) {
 	    //This site has disabled the nonce check for add cart button.
@@ -284,7 +293,12 @@ function wpspc_cart_actions_handler() {
 	}
 
 	sort( $products );
-	$wspsc_cart->add_items($products);
+
+	if( $wspsc_cart->get_cart_id() )
+	{
+		$wspsc_cart->add_items( $products );
+	}
+	
 
 	//if cart is not yet created, save the returned products
 	//so it can be saved when cart is created
@@ -351,11 +365,17 @@ function wpspc_cart_actions_handler() {
 	}
 	$post_wspsc_product	 = isset( $_POST[ 'wspsc_product' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'wspsc_product' ] ) ) : '';
 	$products=$wspsc_cart->get_items();
-	foreach ( $products as $key => $item ) {
-	    if ( $item->get_name() == $post_wspsc_product )
-		unset( $products[ $key ] );
-	}
-	$wspsc_cart->add_items($products);
+	
+	//if user clears cart & refresh the page and click on submit form again
+	// there comes a php warning since $products is false in this case
+	if($products)
+	{
+		foreach ( $products as $key => $item ) {
+			if ( $item->get_name() == $post_wspsc_product )
+			unset( $products[ $key ] );
+		}
+		$wspsc_cart->add_items($products);
+	}	
 
 	//update the products in database after apply coupon
 	wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
@@ -374,7 +394,7 @@ function wpspc_cart_actions_handler() {
 }
 
 function wp_cart_add_custom_field() {
-	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart =  WSPSC_Cart::get_instance();
 	$collection_obj = WPSPSC_Coupons_Collection::get_instance();
     $_SESSION[ 'wp_cart_custom_values' ]	 = "";
     $custom_field_val			 = "";
@@ -674,7 +694,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
  * @return int Returns the total number of items in the cart.
  */
 function cart_not_empty() {
-	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart =  WSPSC_Cart::get_instance();
 	return $wspsc_cart->cart_not_empty();
 }
 
@@ -721,7 +741,7 @@ function cart_current_page_url() {
  * @deprecated This method has been deprecated. Use simple_cart_total() from WSPSC_Cart instead.
  */
 function simple_cart_total() {
-	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart =  WSPSC_Cart::get_instance();
 	return $wspsc_cart->simple_cart_total();
 }
 
