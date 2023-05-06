@@ -3,7 +3,7 @@ global $carts_cnt;
 $carts_cnt = 0;
 
 function print_wp_shopping_cart( $args = array() ) {
-	$wspsc_cart = new WSPSC_Cart();
+	$wspsc_cart = WSPSC_Cart::get_instance();
 	$output = '';
 	global $carts_cnt;
 	$carts_cnt ++;

@@ -41,7 +41,7 @@ function wspsc_reset_logfile()
  * @return int Returns the total number of items in the cart.
  */
 function wpspc_get_total_cart_qty() {
-    $wspsc_cart = new WSPSC_Cart();
+    $wspsc_cart = WSPSC_Cart::get_instance();
     $total_items = $wspsc_cart->get_total_cart_qty();
     return $total_items;
 }
@@ -51,7 +51,7 @@ function wpspc_get_total_cart_qty() {
  * @return int Returns the total number of items in the cart.
  */
 function wpspc_get_total_cart_sub_total() {
-    $wspsc_cart = new WSPSC_Cart();
+    $wspsc_cart = WSPSC_Cart::get_instance();
     $total_sub_total = $wspsc_cart->get_total_cart_sub_total();
     return $total_sub_total;
 }

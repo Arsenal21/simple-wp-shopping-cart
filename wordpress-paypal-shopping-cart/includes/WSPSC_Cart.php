@@ -4,11 +4,22 @@ class WSPSC_Cart
     private $items = array();
     private $item;
     private $cart_id = 0;
+    private $post_type="";
+    protected static $instance=null;
 
     public function __construct()
     {
         $this->cart_id = isset($_COOKIE['simple_cart_id']) ? $_COOKIE['simple_cart_id'] : 0;
+        $this->post_type="wpsc_cart_orders";
     }
+
+    public static function get_instance() {
+        // If the single instance hasn't been set, set it now.
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+   }
 
     /**
      * Create a new cart order in the database and set a cookie with the cart ID.
@@ -27,7 +38,7 @@ class WSPSC_Cart
         //Create a new order
         $wpsc_order = array(
             'post_title'    => 'WPSC Cart Order',
-            'post_type'     => 'wpsc_cart_orders',
+            'post_type'     => $this->post_type,
             'post_content'  => '',
             'post_status'   => 'trash',
         );
@@ -43,7 +54,7 @@ class WSPSC_Cart
             $updated_wpsc_order = array(
                 'ID'         => $this->get_cart_id(),
                 'post_title' => $this->get_cart_id(),
-                'post_type'  => 'wpsc_cart_orders',
+                'post_type'  => $this->post_type,
             );
             wp_update_post($updated_wpsc_order);
 
@@ -85,9 +96,18 @@ class WSPSC_Cart
         }
     }
 
-    public function reset_cart()
+    /**
+     * Resets the cart
+     *
+     * when $is_complete=true, removes the cart id from cookie when user has made payment
+     * 
+     * @return void
+     */    
+    public function reset_cart($is_complete=false)
     {
-        //This function may get called with some items in the cart or 0 items in the cart. It will reset the cart and clear the cookie.
+        //This function may get called with some items in the cart or 0 items in the cart. It will reset only the cart items.
+        //This is to avoid creating multiple cart order objects when calling reset_cart()
+        //Thus keeping only one cart order object for one user
         $this->set_items(array());
 
         $this->clear_cart_action_msg();
@@ -96,9 +116,12 @@ class WSPSC_Cart
         $collection_obj->clear_discount_applied_once($this->get_cart_id());        
         $collection_obj->clear_applied_coupon_code($this->get_cart_id());
 
-        //set cookie in the past to expire it
-        setcookie('simple_cart_id', '', time() - 3600, '/');
-        $this->set_cart_id(0);
+        if($is_complete==true)
+        {
+             //set cookie in the past to expire it
+            setcookie('simple_cart_id', '', time() - 3600, '/');
+            $this->set_cart_id(0);
+        }
     }
 
     public function get_total_cart_qty()
@@ -142,13 +165,20 @@ class WSPSC_Cart
         return wpspsc_number_format_price($grand_total);
     }
 
+    //Scanerio: User gets back after 2 days, he has cart order id: 3 in his cookie
+    //But site admin has deleted all the trash posts
+    //So the cart order id: 3 is basically an orphan, which will not save any cart items and throws errors on payment page
+    //Fix: checking if the cart_id is the id of an actual post of `wpsc_cart_orders` post type.
     public function get_cart_id()
     {
         if ($this->cart_id == 0) {
             return false;
         }
-
-        return $this->cart_id;
+        //if cart_id has value, check if that post exists & is of correct post type
+        if( get_post_type( $this->cart_id ) === $this->post_type && get_post( $this->cart_id ) ) {
+            return $this->cart_id;
+        }
+        return false;
     }
 
     public function set_cart_id($cart_id)

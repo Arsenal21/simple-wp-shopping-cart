@@ -106,7 +106,7 @@ EOT;
 
 function wspsc_compact_cart_handler($args)
 {
-    $wspsc_cart = new WSPSC_Cart();
+    $wspsc_cart = WSPSC_Cart::get_instance();
     $num_items = $wspsc_cart->get_total_cart_qty();
     $curSymbol = WP_CART_CURRENCY_SYMBOL;
     $checkout_url = get_option('cart_checkout_page_url');
@@ -135,7 +135,7 @@ function wspsc_compact_cart_handler($args)
 
 function wspsc_compact_cart2_handler($args)
 {
-    $wspsc_cart = new WSPSC_Cart();
+    $wspsc_cart = WSPSC_Cart::get_instance();
     $num_items = $wspsc_cart->get_total_cart_qty();
     $checkout_url = get_option('cart_checkout_page_url');
     //$curSymbol = WP_CART_CURRENCY_SYMBOL;
