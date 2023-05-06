@@ -13,6 +13,8 @@ class paypal_ipn_handler {
     var $ipn_data	 = array();  // array contains the POST values for IPN
     var $fields		 = array();    // array holds the fields to submit to paypal
     var $sandbox_mode	 = false;
+	var $paypal_url	 = 'https://www.paypal.com/cgi-bin/webscr';   // paypal url
+	var $post_string	 = '';
 
     function __construct() {
 	$this->paypal_url	 = 'https://www.paypal.com/cgi-bin/webscr';
@@ -30,6 +32,8 @@ class paypal_ipn_handler {
 	//Check Product Name, Price, Currency, Receiver email
 
         $this->debug_log( 'Executing validate_and_dispatch_product()', true );
+
+		$error_msg = '';
 
 	//Decode the custom field before sanitizing.
 	$custom_field_value		 = urldecode( $this->ipn_data[ 'custom' ] ); //urldecode is harmless
@@ -185,7 +189,7 @@ class paypal_ipn_handler {
 	//Validate prices
 	$orig_individual_item_total = 0;
 	foreach ( $orig_cart_items as $item ) {
-	    $orig_individual_item_total += $item->get_price() * $item->get_quantity();
+	    $orig_individual_item_total += $item[ 'price' ] * $item[ 'quantity' ];
 	}
 
 	$orig_individual_item_total	 = round( $orig_individual_item_total, 2 );
@@ -219,20 +223,20 @@ class paypal_ipn_handler {
 	update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
 	$product_details = "";
 	$item_counter	 = 1;
-	$shipping = 0;	
+	$shipping = 0;
 	if ( $orig_cart_items ) {
 	    foreach ( $orig_cart_items as $item ) {
 		if ( $item_counter != 1 ) {
 		    $product_details .= "\n";
 		}
-		$item_total	 = $item->get_price() * $item->get_quantity();
-		$product_details .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpspsc_number_format_price( $item_total ) . "\n";
-		if ( $item->get_file_url() ) {
-		    $file_url	 = base64_decode( $item->get_file_url() );
+		$item_total	 = $item[ 'price' ] * $item[ 'quantity' ];
+		$product_details .= $item[ 'name' ] . " x " . $item[ 'quantity' ] . " - " . $currency_symbol . wpspsc_number_format_price( $item_total ) . "\n";
+		if ( isset($item[ 'file_url' ]) ) {
+		    $file_url	 = base64_decode( $item[ 'file_url' ] );
 		    $product_details .= "Download Link: " . $file_url . "\n";
 		}
-		if ( ! empty( $item->get_shipping() ) ) {
-		    $shipping += floatval($item->get_shipping()) * $item->get_quantity();
+		if ( ! empty( $item[ 'shipping' ] ) ) {
+		    $shipping += floatval($item[ 'shipping' ]) * $item[ 'quantity' ];
 		}
 		$item_counter ++;
 	    }
