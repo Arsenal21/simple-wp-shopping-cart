@@ -87,11 +87,9 @@ class WSPSC_Cart {
     }
 
     /**
-     * Resets the cart
-     *
-     * When $is_txn_complete = true, it does a full reset by removing the cart id from cookie (for example: when user has copmleted the transaction)
+     * Resets the cart items and action messages.
      */    
-    public function reset_cart( $is_txn_complete = false ) {
+    public function reset_cart() {
         //This function may get called with some items in the cart or 0 items in the cart. It will reset only the cart items.
         //This is to avoid creating multiple cart order objects when calling reset_cart()
         //Thus keeping only one cart order object for one user
@@ -102,13 +100,25 @@ class WSPSC_Cart {
         $collection_obj = WPSPSC_Coupons_Collection::get_instance();
         $collection_obj->clear_discount_applied_once($this->get_cart_id());        
         $collection_obj->clear_applied_coupon_code($this->get_cart_id());
+    }
 
-        if( $is_txn_complete ) {
-            //Task completed. Fully reset the cart and the cookie.
-            //Set cookie in the past to expire it
-            setcookie('simple_cart_id', '', time() - 3600, '/');
-            $this->set_cart_id(0);
-        }
+    /**
+     * It does a full reset by removing the cart id from cookie.
+     */
+    public function reset_cart_after_txn() {
+        //This function will get called after the transaction (from the thank you page).
+        //This function doesn't empty the items array in the order post (so that the admin can see the order details).
+        $this->items = array();//Set the items to empty array but don't update the order post.
+
+        $this->clear_cart_action_msg();
+
+        $collection_obj = WPSPSC_Coupons_Collection::get_instance();
+        $collection_obj->clear_discount_applied_once($this->get_cart_id());        
+        $collection_obj->clear_applied_coupon_code($this->get_cart_id());
+
+        //Set cookie in the past to expire it
+        setcookie('simple_cart_id', '', time() - 3600, '/');
+        $this->set_cart_id(0);
     }
 
     public function get_total_cart_qty() {

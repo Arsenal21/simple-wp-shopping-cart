@@ -83,7 +83,7 @@ if ( isset( $_REQUEST[ "reset_wp_cart" ] ) && ! empty( $_REQUEST[ "reset_wp_cart
 	$wspsc_cart =  WSPSC_Cart::get_instance();
 
 	//resets cart and cart_id after payment is made.
-	$wspsc_cart->reset_cart(true);
+	$wspsc_cart->reset_cart_after_txn();
 }
 
 //Clear the cart if the customer landed on the thank you page (if this option is enabled)
@@ -91,7 +91,7 @@ if ( get_option( 'wp_shopping_cart_reset_after_redirection_to_return_page' ) ) {
     //TODO - remove this field altogether later. Cart will always be reset using query prameter on the thank you page.
     if ( get_option( 'cart_return_from_paypal_url' ) == cart_current_page_url() ) {	
 	$wspsc_cart =  WSPSC_Cart::get_instance();	
-	$wspsc_cart->reset_cart(true);
+	$wspsc_cart->reset_cart_after_txn();
     }
 }
 
