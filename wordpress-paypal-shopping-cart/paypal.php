@@ -148,8 +148,8 @@ class paypal_ipn_handler {
 
 		$post_id = $custom_values['wp_cart_id'];
 		$orig_cart_items = get_post_meta( $post_id, 'wpsc_cart_items', true );
-		$this->debug_log( 'Original cart items from the order post below.', true );
-		$this->debug_log_array( $orig_cart_items, true );
+		//$this->debug_log( 'Original cart items from the order post below.', true );
+		//$this->debug_log_array( $orig_cart_items, true );
 
 		$ip_address = isset( $custom_values['ip'] ) ? $custom_values['ip'] : '';
 		$applied_coupon_code = isset( $custom_values['coupon_code'] ) ? $custom_values['coupon_code'] : '';
@@ -468,7 +468,6 @@ class paypal_ipn_handler {
 		$wspsc_cart =  WSPSC_Cart::get_instance();
 		$cart_id = $wspsc_cart->get_cart_id();
 		$custom_field_values = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );
-		//$ipn['custom'] = $_SESSION['wp_cart_custom_values'];
 		$ipn['custom'] = $custom_field_values;
 
 		$ipn['pay_id'] = $data['id'];

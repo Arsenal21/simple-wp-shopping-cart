@@ -58,7 +58,7 @@ function wpc_append_values_to_custom_field($name,$value)
 {
     $wspsc_cart = WSPSC_Cart::get_instance();
     $custom_field_val = $wspsc_cart->get_cart_custom_values(); 
-    //$_SESSION['wp_cart_custom_values'];
+
     $new_val = $name.'='.$value;
     if (empty($custom_field_val)){
         $custom_field_val = $new_val;
@@ -66,8 +66,8 @@ function wpc_append_values_to_custom_field($name,$value)
     else{
         $custom_field_val = $custom_field_val.'&'.$new_val;
     }
+    
     $wspsc_cart->set_cart_custom_values($custom_field_val);
-    //$_SESSION['wp_cart_custom_values'] = $custom_field_val;
     return $custom_field_val;
 }
 

@@ -397,7 +397,6 @@ function wp_cart_add_custom_field() {
 	$wspsc_cart =  WSPSC_Cart::get_instance();
 	$collection_obj = WPSPSC_Coupons_Collection::get_instance();
 
-    //$_SESSION[ 'wp_cart_custom_values' ]	 = "";
 	$cart_id = $wspsc_cart->get_cart_id();
 	if ( ! $cart_id ) {
 		echo '<div class="wspsc_yellow_box">Error! cart ID is missing. cannot add custom field values.</div>';
