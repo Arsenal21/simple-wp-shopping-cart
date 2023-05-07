@@ -13,7 +13,7 @@ class WSPSC_Admin_User_Feedback {
 	/**
 	 * How many days after activation it should display the user feedback notice.
 	 */
-	const DELAY_NOTICE = 0;
+	const DELAY_NOTICE = 14;
 
 	/**
 	 * Initialize user feedback notice functionality.
