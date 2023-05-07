@@ -396,7 +396,16 @@ function wpspc_cart_actions_handler() {
 function wp_cart_add_custom_field() {
 	$wspsc_cart =  WSPSC_Cart::get_instance();
 	$collection_obj = WPSPSC_Coupons_Collection::get_instance();
-    $_SESSION[ 'wp_cart_custom_values' ]	 = "";
+
+    //$_SESSION[ 'wp_cart_custom_values' ]	 = "";
+	$cart_id = $wspsc_cart->get_cart_id();
+	if ( ! $cart_id ) {
+		echo '<div class="wspsc_yellow_box">Error! cart ID is missing. cannot add custom field values.</div>';
+		return;
+	}
+	$wspsc_cart->set_cart_custom_values( "" );
+
+	//Create the custom field name value pairs.	
     $custom_field_val			 = "";
     $name					 = 'wp_cart_id';
 	$value					 = $wspsc_cart->get_cart_id();
@@ -432,8 +441,11 @@ function wp_cart_add_custom_field() {
     do_action('wspsc_cart_custom_field_appended');
 
     $custom_field_val	 = apply_filters( 'wpspc_cart_custom_field_value', $custom_field_val );
-    $custom_field_val	 = urlencode( $custom_field_val ); //URL encode the custom field value so nothing gets lost when it is passed around.
-    $output			 = '<input type="hidden" name="custom" value="' . $custom_field_val . '" />';
+	//Save the custom field values to the order post meta.
+	update_post_meta( $cart_id, 'wpsc_cart_custom_values', $custom_field_val );
+
+    $custom_field_val	 = urlencode( $custom_field_val ); //URL encode the custom field value so nothing gets lost when it is passed around.	
+	$output = '<input type="hidden" name="custom" value="' . $custom_field_val . '" />';
     return $output;
 }
 

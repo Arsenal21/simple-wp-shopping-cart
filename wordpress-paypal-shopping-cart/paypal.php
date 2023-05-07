@@ -465,7 +465,12 @@ class paypal_ipn_handler {
 			$address_street .= ", " . $data['payer']['payer_info']['shipping_address']['line2'];
 		}
 
-		$ipn['custom'] = $_SESSION['wp_cart_custom_values'];
+		$wspsc_cart =  WSPSC_Cart::get_instance();
+		$cart_id = $wspsc_cart->get_cart_id();
+		$custom_field_values = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );
+		//$ipn['custom'] = $_SESSION['wp_cart_custom_values'];
+		$ipn['custom'] = $custom_field_values;
+
 		$ipn['pay_id'] = $data['id'];
 		$ipn['create_time'] = $data['create_time'];
 		$ipn['txn_id'] = $data['transactions'][0]['related_resources'][0]['sale']['id'];

@@ -4,7 +4,8 @@ class WSPSC_Cart {
     private $item;
     private $cart_id = 0;
     private $post_type = "";
-    protected static $instance=null;
+    protected static $instance = null;
+    protected $cart_custom_values = "";
 
     public function __construct() {
         $this->cart_id = isset($_COOKIE['simple_cart_id']) ? $_COOKIE['simple_cart_id'] : 0;
@@ -218,6 +219,14 @@ class WSPSC_Cart {
     public function set_items($items) {
         $this->items = $items;
         $this->save_items();
+    }
+
+    public function set_cart_custom_values($custom_val_string) {
+        $this->cart_custom_values = $custom_val_string;
+    }
+
+    public function get_cart_custom_values() {
+        return $this->cart_custom_values;
     }
 
     public function get_cart_action_msg() {
