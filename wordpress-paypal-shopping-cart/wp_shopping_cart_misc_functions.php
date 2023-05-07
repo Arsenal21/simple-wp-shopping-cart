@@ -35,9 +35,16 @@ function wp_cart_init_handler()
     }
 }
 
-function wp_cart_admin_init_handler()
-{
+/*
+* This function gets called when admin_init hook is executed
+*/
+function wp_cart_admin_init_handler() {
     wpspc_add_meta_boxes();
+
+    //Handle feedback in the admin area.
+	include_once WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_user_feedback.php';
+	$user_feedback = new WSPSC_Admin_User_Feedback();
+	$user_feedback->init();    
 }
 
 function wpspsc_number_format_price($price)
@@ -171,6 +178,11 @@ function wpspc_run_activation()
     //Generate and save a private key for this site
     $unique_id = uniqid('', true);
     add_option('wspsc_private_key_one',$unique_id);
+
+	// Set plugin activation time.
+	if ( empty( get_option( 'wspsc_plugin_activated_time' ) ) ) {
+		add_option( 'wspsc_plugin_activated_time', time() );
+	}
 }
 
 function wpspsc_settings_menu_footer()

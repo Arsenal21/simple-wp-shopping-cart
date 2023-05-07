@@ -215,6 +215,8 @@ None
 = WIP 4.6.5 =
 - Reworked the main cart function to use a class instead of PHP session. This is part of a series of improvements that we are making to the plugin.
 - Optimized the saving of the cart to the order post meta.
+- The custom field values are saved to the order post meta instead of session.
+- Although the upgrade is designed to be seamless and compatible with older versions, significant changes have been made in this version. Therefore, it is advisable to back up your site before proceeding with the upgrade.
 
 = 4.6.4 =
 - The CSV export now directly streams the CSV file to the browser so you can save/download the exported orders data directly to your PC.
