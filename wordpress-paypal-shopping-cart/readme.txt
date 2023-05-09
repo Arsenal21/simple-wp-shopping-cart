@@ -212,6 +212,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Improvements to stop a hash error when the product name contains a special character.
+
 = 4.6.5 =
 - Reworked the main cart function to use a class instead of PHP session. This is part of a series of improvements that we are making to the plugin.
 - Optimized the saving of the cart to the order post meta.
