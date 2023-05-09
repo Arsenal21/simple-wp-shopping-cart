@@ -190,20 +190,23 @@ function wpspc_cart_actions_handler() {
 	}
 
 	//Sanitize post data
-	$post_wspsc_product	 = isset( $_POST[ 'wspsc_product' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'wspsc_product' ] ) ) : '';
-	$post_item_number	 = isset( $_POST[ 'item_number' ] ) ? sanitize_text_field( $_POST[ 'item_number' ] ) : '';
-	$post_cart_link		 = isset( $_POST[ 'cartLink' ] ) ? esc_url_raw( sanitize_text_field( urldecode( $_POST[ 'cartLink' ] ) ) ) : '';
-	$post_stamp_pdf		 = isset( $_POST[ 'stamp_pdf' ] ) ? sanitize_text_field( $_POST[ 'stamp_pdf' ] ) : '';
-	$post_encoded_file_val	 = isset( $_POST[ 'file_url' ] ) ? sanitize_text_field( $_POST[ 'file_url' ] ) : '';
-	$post_thumbnail		 = isset( $_POST[ 'thumbnail' ] ) ? esc_url_raw( sanitize_text_field( $_POST[ 'thumbnail' ] ) ) : '';
-        $post_wspsc_tmp_name	 = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
+	$post_wspsc_product = isset( $_POST[ 'wspsc_product' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'wspsc_product' ] ) ) : '';
+	$post_item_number = isset( $_POST[ 'item_number' ] ) ? sanitize_text_field( $_POST[ 'item_number' ] ) : '';
+	$post_cart_link = isset( $_POST[ 'cartLink' ] ) ? esc_url_raw( sanitize_text_field( urldecode( $_POST[ 'cartLink' ] ) ) ) : '';
+	$post_stamp_pdf = isset( $_POST[ 'stamp_pdf' ] ) ? sanitize_text_field( $_POST[ 'stamp_pdf' ] ) : '';
+	$post_encoded_file_val = isset( $_POST[ 'file_url' ] ) ? sanitize_text_field( $_POST[ 'file_url' ] ) : '';
+	$post_thumbnail = isset( $_POST[ 'thumbnail' ] ) ? esc_url_raw( sanitize_text_field( $_POST[ 'thumbnail' ] ) ) : '';
+
+    //$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
+	//encode the product name to avoid any special characters in the product name creating hashing issues
+	$post_wspsc_tmp_name_two = isset( $_POST[ 'product_tmp_two' ] ) ? stripslashes( sanitize_text_field( htmlspecialchars($_POST[ 'product_tmp_two' ]) ) ) : '';
 
 	//Sanitize and validate price
 	if ( isset( $_POST[ 'price' ] ) ) {
 	    $price		 = sanitize_text_field( $_POST[ 'price' ] );
 	    $hash_once_p	 = sanitize_text_field( $_POST[ 'hash_one' ] );
 	    $p_key		 = get_option( 'wspsc_private_key_one' );
-	    $hash_one_cm	 = md5( $p_key . '|' . $price . '|' . $post_wspsc_tmp_name );
+	    $hash_one_cm	 = md5( $p_key . '|' . $price . '|' . $post_wspsc_tmp_name_two );
 
             if ( get_option( 'wspsc_disable_price_check_add_cart' ) ) {
                 //This site has disabled the price check for add cart button.
@@ -228,19 +231,19 @@ function wpspc_cart_actions_handler() {
 
 	//Sanitize and validate shipping price
 	if ( isset( $_POST[ 'shipping' ] ) ) {
-	    $shipping	 = sanitize_text_field( $_POST[ 'shipping' ] );
-	    $hash_two_val	 = sanitize_text_field( $_POST[ 'hash_two' ] );
-	    $p_key		 = get_option( 'wspsc_private_key_one' );
-	    $hash_two_cm	 = md5( $p_key . '|' . $shipping . '|' . $post_wspsc_tmp_name );
+	    $shipping = sanitize_text_field( $_POST[ 'shipping' ] );
+	    $hash_two_val = sanitize_text_field( $_POST[ 'hash_two' ] );
+	    $p_key = get_option( 'wspsc_private_key_one' );
+	    $hash_two_cm = md5( $p_key . '|' . $shipping . '|' . $post_wspsc_tmp_name_two );
 
-            if ( get_option( 'wspsc_disable_price_check_add_cart' ) ) {
-                //This site has disabled the price check for add cart button.
-                //Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
-            } else {
-                if ( $hash_two_val != $hash_two_cm ) {//Shipping validation failed
-                    wp_die( 'Error! The shipping price validation failed.' );
-                }
-            }
+		if ( get_option( 'wspsc_disable_price_check_add_cart' ) ) {
+			//This site has disabled the price check for add cart button.
+			//Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
+		} else {
+			if ( $hash_two_val != $hash_two_cm ) {//Shipping validation failed
+				wp_die( 'Error! The shipping price validation failed.' );
+			}
+		}
 
 	    $shipping = str_replace( WP_CART_CURRENCY_SYMBOL, "", $shipping ); //Remove any currency symbol from the price.
 	    //Check that the shipping price field is numeric.
@@ -530,21 +533,25 @@ function print_wp_cart_button_deprecated( $content ) {
 	    $replacement .= '<input type="image" src="' . $addcart . '" class="wp_cart_button" alt="' . (__( "Add to Cart", "wordpress-simple-paypal-shopping-cart" )) . '"/>';
 	} else {
 	    //Plain text add to cart button
-	    $replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . $addcart . '" />';
+	    $replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . esc_attr($addcart) . '" />';
 	}
 
-	$replacement	 .= '<input type="hidden" name="wspsc_product" value="' . $pieces[ '0' ] . '" /><input type="hidden" name="price" value="' . $pieces[ '1' ] . '" />';
-	$replacement	 .= '<input type="hidden" name="product_tmp" value="' . $pieces[ '0' ] . '" />';
+	$replacement .= '<input type="hidden" name="wspsc_product" value="' . esc_attr($pieces[ '0' ]) . '" /><input type="hidden" name="price" value="' . esc_attr($pieces[ '1' ]) . '" />';
+	$replacement .= '<input type="hidden" name="product_tmp" value="' . esc_attr($pieces[ '0' ]) . '" />';
+	//encode the product name to avoid any special characters in the product name creating hashing issues
+	$product_tmp_two = htmlentities($pieces[ '0' ]);
+	$replacement .= '<input type="hidden" name="product_tmp_two" value="' . esc_attr($product_tmp_two) . '" />';
+
 	if ( sizeof( $pieces ) > 2 ) {
 	    //We likely have shipping
 	    if ( ! is_numeric( $pieces[ '2' ] ) ) {//Shipping parameter has non-numeric value. Discard it and set it to 0.
 		$pieces[ '2' ] = 0;
 	    }
-	    $replacement .= '<input type="hidden" name="shipping" value="' . $pieces[ '2' ] . '" />';
+	    $replacement .= '<input type="hidden" name="shipping" value="' . esc_attr($pieces[ '2' ]) . '" />';
 	} else {
 	    //Set shipping to 0 by default (when no shipping is specified in the shortcode)
 	    $pieces[ '2' ]	 = 0;
-	    $replacement	 .= '<input type="hidden" name="shipping" value="' . $pieces[ '2' ] . '" />';
+	    $replacement	 .= '<input type="hidden" name="shipping" value="' . esc_attr($pieces[ '2' ]) . '" />';
 	}
 
 	$p_key = get_option( 'wspsc_private_key_one' );
@@ -552,10 +559,10 @@ function print_wp_cart_button_deprecated( $content ) {
 	    $p_key = uniqid( '', true );
 	    update_option( 'wspsc_private_key_one', $p_key );
 	}
-	$hash_one	 = md5( $p_key . '|' . $pieces[ '1' ] . '|' . $pieces[ '0' ] ); //Price hash
+	$hash_one	 = md5( $p_key . '|' . $pieces[ '1' ] . '|' . $product_tmp_two ); //Price hash
 	$replacement	 .= '<input type="hidden" name="hash_one" value="' . $hash_one . '" />';
 
-	$hash_two	 = md5( $p_key . '|' . $pieces[ '2' ] . '|' . $pieces[ '0' ] ); //Shipping hash
+	$hash_two	 = md5( $p_key . '|' . $pieces[ '2' ] . '|' . $product_tmp_two ); //Shipping hash
 	$replacement	 .= '<input type="hidden" name="hash_two" value="' . $hash_two . '" />';
 
 	$replacement	 .= '<input type="hidden" name="cartLink" value="' . esc_url( cart_current_page_url() ) . '" />';
@@ -606,6 +613,9 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
     if ( ! $addcart || ($addcart == '') ) {
 	$addcart = __( "Add to Cart", "wordpress-simple-paypal-shopping-cart" );
     }
+
+	//encode the product name to avoid any special characters in the product name creating hashing issues
+	$product_tmp_two = htmlentities($name);
 
     $var_output = "";
     if ( ! empty( $var1 ) ) {
@@ -669,6 +679,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
     $replacement	 .= '<input type="hidden" name="addcart" value="1" />';
     $replacement	 .= '<input type="hidden" name="cartLink" value="' . esc_url( cart_current_page_url() ) . '" />';
     $replacement	 .= '<input type="hidden" name="product_tmp" value="' . esc_attr( $name ) . '" />';
+	$replacement	 .= '<input type="hidden" name="product_tmp_two" value="' . esc_attr( $product_tmp_two ) . '" />';
     isset( $atts[ 'item_number' ] ) ? $item_num	 = $atts[ 'item_number' ] : $item_num	 = '';
     $replacement	 .= '<input type="hidden" name="item_number" value="' . $item_num . '" />';
 
@@ -689,10 +700,10 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	$p_key = uniqid( '', true );
 	update_option( 'wspsc_private_key_one', $p_key );
     }
-    $hash_one = md5( $p_key . '|' . $price . '|' . $name );
+    $hash_one = md5( $p_key . '|' . $price . '|' . $product_tmp_two );
     $replacement .= '<input type="hidden" name="hash_one" value="' . $hash_one . '" />';
 
-    $hash_two = md5( $p_key . '|' . $shipping . '|' . $name );
+    $hash_two = md5( $p_key . '|' . $shipping . '|' . $product_tmp_two );
     $replacement .= '<input type="hidden" name="hash_two" value="' . $hash_two . '" />';
 
     $replacement .= '</form>';
