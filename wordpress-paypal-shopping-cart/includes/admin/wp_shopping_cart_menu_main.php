@@ -40,6 +40,7 @@ function wspsc_settings_interface() {
         'wspsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=adv-settings' => __('Advanced Settings', 'wordpress-simple-paypal-shopping-cart'),
+        'wspsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
     );
     echo '<div class="wrap">';
     echo '<h1>' . (__("WP Paypal Shopping Cart Options", "wordpress-simple-paypal-shopping-cart")) . ' v'.WP_CART_VERSION . '</h1>';
@@ -73,6 +74,10 @@ function wspsc_settings_interface() {
 	    case 'adv-settings':
                 include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_adv_settings.php');
                 show_wp_cart_adv_settings_page();
+                break;
+        case 'stripe-settings':
+                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_stripe_settings.php');
+                show_wp_cart_stripe_settings_page();
                 break;
         }
     } else {

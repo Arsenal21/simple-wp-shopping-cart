@@ -19,6 +19,12 @@ function wp_cart_init_handler()
             wpc_handle_paypal_ipn();
             exit;
         }
+        else if(isset($_REQUEST["simple_cart_stripe_ipn"]))
+        {
+            include_once('stripe.php');
+            wpc_handle_stripe_ipn();
+            exit;
+        }
     }
     if (is_admin()) {
         add_action('admin_init', 'wp_cart_add_tinymce_button');
@@ -198,4 +204,23 @@ function wpspsc_settings_menu_footer()
     </p>
     </div>
     <?php
+}
+
+function wpspsc_amount_in_cents($amountFormatted) {    
+    $amountUnformatted = str_replace(['.', ','], '', $amountFormatted);    
+    $centsAmount = intval($amountUnformatted);    
+    return $centsAmount; 
+}
+
+
+function wpspsc_is_zero_cents_currency($payment_currency){
+    $zero_cents_currencies= array( 'JPY', 'MGA', 'VND', 'KRW' ) ;
+    return in_array( $payment_currency, $zero_cents_currencies ) ;
+}
+
+function wpspsc_load_stripe_lib() {
+    //this function loads Stripe PHP SDK and ensures only once instance is loaded
+    if ( ! class_exists( '\Stripe\Stripe' ) ) {
+        require_once WP_CART_PATH . 'lib/stripe-gateway/init.php';        
+    }
 }
