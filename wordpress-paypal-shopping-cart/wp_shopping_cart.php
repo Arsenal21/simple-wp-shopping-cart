@@ -98,6 +98,107 @@ if ( get_option( 'wp_shopping_cart_reset_after_redirection_to_return_page' ) ) {
 if ( wp_doing_ajax() ) {
     add_action( 'wp_ajax_wpspsc_process_pp_smart_checkout', 'wpspsc_process_pp_smart_checkout' );
     add_action( 'wp_ajax_nopriv_wpspsc_process_pp_smart_checkout', 'wpspsc_process_pp_smart_checkout' );
+
+	add_action( 'wp_ajax_wspsc_stripe_create_checkout_session', 'wspsc_stripe_create_checkout_session' );
+	add_action( 'wp_ajax_nopriv_wspsc_stripe_create_checkout_session', 'wspsc_stripe_create_checkout_session' );	
+}
+
+function wspsc_stripe_create_checkout_session() {
+	$wspsc_cart = WSPSC_Cart::get_instance();
+	
+	$cart_id=$wspsc_cart->get_cart_id();
+	$currency        = get_option('cart_payment_currency');
+	$symbol          = get_option('cart_currency_symbol');	
+	$return_url = get_option('cart_return_from_paypal_url');
+	$cancel_url= get_option('cart_cancel_from_paypal_url');	
+	$secret_key =get_option('wp_shopping_cart_enable_sandbox') ? get_option('wpspc_stripe_test_secret_key') : get_option('wpspc_stripe_live_secret_key');
+	$cart_total = $wspsc_cart->get_cart_total();	
+	$force_collect_address = get_option('wp_shopping_cart_collect_address');	
+	//Custom field data.
+	$custom_input = filter_input( INPUT_POST, 'custom', FILTER_SANITIZE_STRING );
+
+
+	// Extracting individual parameters
+	$decoded_custom = urldecode($custom_input);
+	$custom_metadata = array();
+	parse_str($decoded_custom, $custom_metadata);	
+
+	$cart_total = wpspsc_amount_in_cents($cart_total);
+	
+	if (empty($currency)) {
+		$currency = __('USD', 'wordpress-simple-paypal-shopping-cart');
+	}
+
+	if (empty($symbol)) {
+		$symbol = __('$', 'wordpress-simple-paypal-shopping-cart');
+	}	
+	if (empty($return_url)) {
+		$return_url = WP_CART_SITE_URL . '/';
+	}
+
+	$return_url=$return_url."/?simple_cart_stripe_ipn=1&ref_id=".$wspsc_cart->get_cart_id();
+
+	
+	wpspsc_load_stripe_lib();
+
+	try {
+
+		\Stripe\Stripe::setApiKey( $secret_key);
+		\Stripe\Stripe::setApiVersion("2022-08-01");
+
+		
+			$opts = array(
+				'payment_method_types'       => array( 'card' ),
+				'client_reference_id'        => $cart_id,
+				'billing_address_collection' => $force_collect_address ? 'required' : 'auto',						
+				'mode' => 'payment',
+				'success_url'                => $return_url				
+			);
+
+			if(!empty($cancel_url))
+			{
+				$opts["cancel_url"]=$cancel_url;
+			}
+
+			if(sizeof($custom_metadata)>0)
+			{
+				$opts["metadata"]=$custom_metadata;
+			}
+
+			$lineItems = array();
+
+			foreach ($wspsc_cart->get_items() as $item) {
+				$item_price = $item->get_price();
+
+				if ( !wpspsc_is_zero_cents_currency($currency) ) {	
+					$item_price = wpspsc_amount_in_cents($item_price);
+				} 
+
+				$lineItem = array(
+					'price_data' => array(
+						'currency' => $currency,
+						'unit_amount' => $item_price,
+						'product_data' => array(
+							'name' => $item->get_name(),							
+						),
+					),
+					'quantity' => $item->get_quantity()
+				);
+
+				$lineItems[] = $lineItem;
+			}			
+			
+			$opts["line_items"]=$lineItems;
+		
+		$opts = apply_filters( 'wpspsc_stripe_sca_session_opts', $opts, $cart_id );
+
+		$session = \Stripe\Checkout\Session::create( $opts );
+	} catch ( Exception $e ) {
+		$err = $e->getMessage();
+		wp_send_json( array( 'error' => 'Error occurred: ' . $err ) );
+	}
+	wp_send_json( array( 'session_id' => $session->id ) );
+
 }
 
 function wpspsc_process_pp_smart_checkout() {
@@ -802,6 +903,9 @@ function wspsc_admin_side_styles() {
 
 function wspsc_front_side_enqueue_scripts() {
     wp_enqueue_style( 'wspsc-style', WP_CART_URL . '/wp_shopping_cart_style.css', array(), WP_CART_VERSION );
+	
+	//Stripe library
+	wp_register_script("wspsc.stripe", "https://js.stripe.com/v3/", array("jquery"), WP_CART_VERSION);
 }
 
 function wpspc_plugin_install() {

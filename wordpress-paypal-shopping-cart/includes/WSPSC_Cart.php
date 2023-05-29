@@ -253,4 +253,35 @@ class WSPSC_Cart {
         }
     }
 
+    /**
+     * Calculate the total cart value including item prices and shipping costs.
+     *
+     * @return string The formatted total cart value.
+     */
+    public function get_cart_total(){
+        $total=0;
+        $postage_cost=0;
+        $item_total_shipping=0;
+
+        foreach ($this->get_items() as $item) {
+			$total               += $item->get_price() * $item->get_quantity();
+			$item_total_shipping += $item->get_shipping() * $item->get_quantity();			
+		}
+		
+		
+		if (!empty($item_total_shipping)) {
+			$baseShipping = get_option('cart_base_shipping_cost');
+			$postage_cost = $item_total_shipping + $baseShipping;
+		}
+		
+		$cart_free_shipping_threshold = get_option('cart_free_shipping_threshold');
+		if (!empty($cart_free_shipping_threshold) && $total > $cart_free_shipping_threshold) {
+			$postage_cost = 0;
+		}
+
+        $grand_total=$total + $postage_cost;
+
+        return wpspsc_number_format_price($grand_total);
+    }
+
 }

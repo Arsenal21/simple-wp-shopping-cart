@@ -259,8 +259,8 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Must Collect Shipping Address on PayPal", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_collect_address" value="1" '.$wp_shopping_cart_collect_address.' /><br />'.(__("If checked the customer will be forced to enter a shipping address on PayPal when checking out.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(__("Must Collect Shipping Address on PayPal / Stripe", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_collect_address" value="1" '.$wp_shopping_cart_collect_address.' /><br />'.(__("If checked the customer will be forced to enter a shipping address on PayPal / Stripe when checking out.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
