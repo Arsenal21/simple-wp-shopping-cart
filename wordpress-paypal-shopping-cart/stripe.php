@@ -155,6 +155,7 @@ class stripe_ipn_handler {
 			'ID' => $post_id,
 			'post_status' => 'publish',
 			'post_type' => 'wpsc_cart_orders',
+			'post_date' => current_time('Y-m-d H:i:s')
 		);
 		wp_update_post( $updated_wpsc_order );
 

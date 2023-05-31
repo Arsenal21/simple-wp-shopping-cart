@@ -21,19 +21,31 @@ class CaseInsensitiveArray implements \ArrayAccess, \Countable, \IteratorAggrega
         $this->container = \array_change_key_case($initial_array, \CASE_LOWER);
     }
 
+    /**
+     * @return int
+     */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return \count($this->container);
     }
 
+    /**
+     * @return \ArrayIterator
+     */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->container);
     }
 
+    /**
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
-        $offset = static::maybeLowercase($offset);
+        $offset = self::maybeLowercase($offset);
         if (null === $offset) {
             $this->container[] = $value;
         } else {
@@ -41,22 +53,34 @@ class CaseInsensitiveArray implements \ArrayAccess, \Countable, \IteratorAggrega
         }
     }
 
+    /**
+     * @return bool
+     */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
-        $offset = static::maybeLowercase($offset);
+        $offset = self::maybeLowercase($offset);
 
         return isset($this->container[$offset]);
     }
 
+    /**
+     * @return void
+     */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
-        $offset = static::maybeLowercase($offset);
+        $offset = self::maybeLowercase($offset);
         unset($this->container[$offset]);
     }
 
+    /**
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        $offset = static::maybeLowercase($offset);
+        $offset = self::maybeLowercase($offset);
 
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }

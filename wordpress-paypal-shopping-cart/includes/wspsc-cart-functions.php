@@ -408,11 +408,12 @@ function print_wp_shopping_cart( $args = array() ) {
 			wp_enqueue_script("wspsc.stripe");	
 			
 			$stripe_js_obj="stripe_".$wspsc_Cart->get_cart_id();
-			wp_add_inline_script("wspsc.stripe","var ".$stripe_js_obj." = Stripe('".esc_js( $publishable_key )."');");
+			//wp_add_inline_script("wspsc.stripe","var ".$stripe_js_obj." = Stripe('".esc_js( $publishable_key )."');");
 
 			ob_start();
 			?>
 			<script>	
+
 			jQuery(document).ready(function(){
 				jQuery('#wspsc-stripe-payment-form-<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>').on('submit',function(e) {
 					e.preventDefault();
