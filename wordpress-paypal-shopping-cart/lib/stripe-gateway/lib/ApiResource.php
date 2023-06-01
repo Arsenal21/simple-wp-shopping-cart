@@ -4,7 +4,8 @@ namespace Stripe;
 
 /**
  * Class ApiResource.
- */
+ *
+ * */
 abstract class ApiResource extends StripeObject
 {
     use ApiOperations\Request;
@@ -39,8 +40,8 @@ abstract class ApiResource extends StripeObject
     {
         parent::__set($k, $v);
         $v = $this->{$k};
-        if ((static::getSavedNestedResources()->includes($k)) &&
-            ($v instanceof ApiResource)) {
+        if ((static::getSavedNestedResources()->includes($k))
+            && ($v instanceof ApiResource)) {
             $v->saveWithParent = true;
         }
     }
@@ -82,6 +83,8 @@ abstract class ApiResource extends StripeObject
     {
         // Replace dots with slashes for namespaced resources, e.g. if the object's name is
         // "foo.bar", then its URL will be "/v1/foo/bars".
+
+        /** @phpstan-ignore-next-line */
         $base = \str_replace('.', '/', static::OBJECT_NAME);
 
         return "/v1/{$base}s";
