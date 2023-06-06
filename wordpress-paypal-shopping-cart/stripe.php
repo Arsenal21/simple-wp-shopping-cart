@@ -31,29 +31,19 @@ class stripe_ipn_handler {
 		
         $wspsc_cart = WSPSC_Cart::get_instance();
         		
-		$this->ipn_data['custom'] = $this->ipn_data->custom_metadata;
-
-				
-		$txn_id = $this->ipn_data->charges->data[0]->id;
+		$txn_id = $this->ipn_data["txn_id"];
         $transaction_type='cart';
-		$payment_status = $this->ipn_data->status;		
+		$payment_status = $this->ipn_data["status"];		
 
         // Let's try to get first_name and last_name from full name.
-		$name       = trim( $this->ipn_data->charges->data[0]->billing_details->name );
-		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
-		$first_name = trim( preg_replace( '#' . $last_name . '#', '', $name ) );
-
-		$first_name = $first_name;
-		$last_name = $last_name;
-		$buyer_email = $this->ipn_data->charges->data[0]->billing_details->email;
-
-        $bd_addr = $this->ipn_data->charges->data[0]->billing_details->address;
-
-		$street_address = isset( $bd_addr->line1 ) ? $bd_addr->line1 : '';
-		$city = isset( $bd_addr->city ) ? $bd_addr->city : '';
-		$state = isset( $bd_addr->state ) ? $bd_addr->state : '';
-		$zip = isset( $bd_addr->postal_code ) ? $bd_addr->postal_code : '';
-		$country = isset( $bd_addr->country ) ? $bd_addr->country : '';
+		$first_name  = $this->ipn_data["first_name"];
+		$last_name = $this->ipn_data["last_name"];
+		$buyer_email = $this->ipn_data["payer_email"];
+		$street_address = $this->ipn_data["address_street"];
+		$city = $this->ipn_data["address_city"];
+		$state = $this->ipn_data["address_state"];
+		$zip = $this->ipn_data["address_zip"];
+		$country = $this->ipn_data["address_country"];
 		
 		if (empty( $street_address ) && empty( $city )) {
 			//No address value present
@@ -63,7 +53,7 @@ class stripe_ipn_handler {
 			$address = $street_address . ", " . $city . ", " . $state . ", " . $zip . ", " . $country;
 		}
 
-        $custom_values=json_decode(json_encode($this->ipn_data->custom_metadata), true);
+        $custom_values=json_decode(json_encode($this->ipn_data["custom"]), true);
         $this->debug_log( 'Custom field value in the IPN: ' . json_encode($custom_values), true );		
 
 		$this->debug_log( 'Payment Status: ' . $payment_status, true );
@@ -82,17 +72,8 @@ class stripe_ipn_handler {
 			$this->debug_log( 'Number of Cart Items: ' . sizeof($cart_items), true );
         }
 		
-        $price_in_cents = floatval( $this->ipn_data->amount_received );
-		$currency_code_payment  = strtoupper( $this->ipn_data->currency );
-
-		
-		if (wpspsc_is_zero_cents_currency($currency_code_payment)) {
-			$payment_amount = $price_in_cents;
-		} else {
-			$payment_amount = $price_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
-		}
-
-		$payment_amount = floatval( $payment_amount );
+        $payment_amount = floatval( $this->ipn_data["mc_gross"] );
+		$currency_code_payment  = strtoupper( $this->ipn_data["mc_currency"] );		
 
 		$post_id = $custom_values['wp_cart_id'];
 		$orig_cart_items = $wspsc_cart->get_items();
@@ -325,8 +306,11 @@ class stripe_ipn_handler {
             //ref id matched
             $pi_id = $sess->payment_intent;
             $pi = \Stripe\PaymentIntent::retrieve( $pi_id );
-            $this->ipn_data = $pi;
-            $this->ipn_data->custom_metadata=$sess->metadata;
+            
+             $pi->custom_metadata=$sess->metadata;
+
+			//formatting ipn_data
+			 $this->create_ipn_from_stripe($pi);
 
         }  catch ( Exception $e ) {
 			$error_msg = 'Error occurred: ' . $e->getMessage();
@@ -339,6 +323,75 @@ class stripe_ipn_handler {
 		//$this->debug_log( 'IPN Response: ' . print_r( $response, true ), true);		
 		
         $this->debug_log( 'IPN successfully verified.', true );
+		return true;
+	}
+
+	function create_ipn_from_stripe( $data ) {
+
+		//converting data to array
+		$data = json_decode(json_encode($data),TRUE) ;
+		$ipn = $data;
+
+		$bd_addr = $data['charges']['data'][0]['billing_details']['address'];;
+		$city = isset($bd_addr['city']) ? $bd_addr['city'] : '';
+		$state = isset($bd_addr['state']) ? $bd_addr['state'] : '';
+		$zip = isset($bd_addr['postal_code']) ? $bd_addr['postal_code'] : '';
+		$country = isset($bd_addr['country']) ? $bd_addr['country'] : '';
+
+		$price_in_cents = floatval($data['amount_received']);
+		$currency_code_payment = strtoupper($data['currency']);
+
+		$payment_amount=0;
+		
+		if (wpspsc_is_zero_cents_currency($currency_code_payment)) {
+			$payment_amount = $price_in_cents;
+		} else {
+			$payment_amount = $price_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
+		}
+
+		$address_street = isset($bd_addr['line1']) ? $bd_addr['line1'] : '';
+		if (isset($bd_addr['line2'])) {
+			// If address line 2 is present, add it to the address.
+			$address_street .= ", " . $bd_addr['line2'];
+		}
+
+		$wspsc_cart =  WSPSC_Cart::get_instance();
+
+		$ipn['custom'] = $data['custom_metadata'];
+		$ipn['pay_id'] = $data['id'];
+		$ipn['create_time'] = $data['created'];
+		$ipn['txn_id'] = $data['charges']['data'][0]['id'];
+		$ipn['txn_type'] = 'cart';
+		$ipn['payment_status'] = ucfirst($data['status']);
+		$ipn['transaction_subject'] = '';
+		$ipn['mc_currency'] = $data['currency'];
+		$ipn['mc_gross'] = $payment_amount;
+		
+		//customer info
+		$name = trim($data['charges']['data'][0]['billing_details']['name']);
+		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
+		$first_name = trim( preg_replace( '#' . $last_name . '#', '', $name ) );
+
+		$ipn['first_name'] = $first_name;
+		$ipn['last_name'] = $last_name;
+		$ipn['payer_email'] = $data['charges']['data'][0]['billing_details']['email'];
+		$ipn['address_street'] = $address_street;
+		$ipn['address_city'] = $city;
+		$ipn['address_state'] = $state;
+		$ipn['address_zip'] = $zip;
+		$ipn['address_country'] = $country;
+
+		//items data
+		$i = 1;
+		foreach ( $wspsc_cart->get_items() as $item ) {
+			$ipn[ 'item_number' . $i ] = '';
+			$ipn[ 'item_name' . $i ] = $item->get_name();
+			$ipn[ 'quantity' . $i ] = $item->get_quantity();
+			$ipn[ 'mc_gross_' . $i ] = $item->get_price() * $item->get_quantity();
+			$i++;
+		}
+		$ipn['num_cart_items'] = $i - 1;
+		$this->ipn_data = $ipn;
 		return true;
 	}
 

@@ -113,10 +113,31 @@ function wspsc_stripe_create_checkout_session() {
 	$cancel_url= get_option('cart_cancel_from_paypal_url');	
 	$secret_key =get_option('wp_shopping_cart_enable_sandbox') ? get_option('wpspc_stripe_test_secret_key') : get_option('wpspc_stripe_live_secret_key');
 	$cart_total = $wspsc_cart->get_cart_total();	
-	$force_collect_address = get_option('wp_shopping_cart_collect_address');	
+	$force_collect_address = get_option('wpspc_stripe_collect_address');	
 	//Custom field data.
 	$custom_input = filter_input( INPUT_POST, 'custom', FILTER_SANITIZE_STRING );
 
+	$postage_cost=0;
+	$item_total_shipping=0;
+	$total=0;
+	foreach ( $wspsc_cart->get_items() as $item ) {
+		$total               += $item->get_price() * $item->get_quantity();
+		$item_total_shipping += $item->get_shipping() * $item->get_quantity();
+	}
+	if ( ! empty( $item_total_shipping ) ) {
+		$baseShipping = get_option( 'cart_base_shipping_cost' );
+		$postage_cost = $item_total_shipping + $baseShipping;
+	}
+
+	$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
+
+	if ( ! empty( $cart_free_shipping_threshold ) && $total > $cart_free_shipping_threshold ) {
+		$postage_cost = 0;
+	}
+
+	if ( !wpspsc_is_zero_cents_currency($currency) ) {	
+		$postage_cost = wpspsc_amount_in_cents($postage_cost);
+	} 
 
 	// Extracting individual parameters
 	$decoded_custom = urldecode($custom_input);
@@ -189,6 +210,24 @@ function wspsc_stripe_create_checkout_session() {
 			}			
 			
 			$opts["line_items"]=$lineItems;
+
+			// Add shipping options
+			if($postage_cost>0)
+			{
+				$opts["shipping_options"] = array(
+					array(
+						'shipping_rate_data' => array(
+							'type' => 'fixed_amount',
+							'fixed_amount' => array(
+								'amount' => $postage_cost,
+								'currency' => $currency,
+							),
+							'display_name' => 'shipping',
+						),
+					),
+				);
+			}
+			
 		
 		$opts = apply_filters( 'wpspsc_stripe_sca_session_opts', $opts, $cart_id );
 
