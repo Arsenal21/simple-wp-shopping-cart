@@ -99,7 +99,7 @@ function show_wp_cart_stripe_settings_page()
                     <tr valign="top">
                         <th scope="row"><?php _e("Collect Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td><input type="checkbox" name="wpspc_stripe_collect_address" value="1" <?php echo $wpspc_stripe_collect_address;?> />
-                        <span class="description"><?php _e("If checked the customer will be forced to enter a address on Stripe when checking out.", "wordpress-simple-paypal-shopping-cart")?></span></td>
+                        <span class="description"><?php _e("If this option is checked, customers will be required to enter their address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
                     </tr>
 
                 </table>
