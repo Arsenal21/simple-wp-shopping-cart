@@ -30,6 +30,7 @@ function show_wp_cart_stripe_settings_page()
         update_option('wpspc_stripe_live_secret_key', $live_secret_key);
         update_option('wpspc_stripe_test_publishable_key', $test_publishable_key);
         update_option('wpspc_stripe_test_secret_key', $test_secret_key);
+        update_option('wpspc_stripe_collect_address', (isset($_POST['wpspc_stripe_collect_address']) && $_POST['wpspc_stripe_collect_address']!='') ? 'checked="checked"':'' );
 
         update_option('wpspc_stripe_button_image_url', $wpspc_stripe_button_image_url);
 
@@ -37,6 +38,10 @@ function show_wp_cart_stripe_settings_page()
         echo 'Stripe Settings Updated!';
         echo '</strong></p></div>';
     }
+    if (get_option('wpspc_stripe_collect_address'))
+        $wpspc_stripe_collect_address = 'checked="checked"';
+    else
+        $wpspc_stripe_collect_address = '';
 ?>
 
     <div class="wspsc_yellow_box">
@@ -90,6 +95,11 @@ function show_wp_cart_stripe_settings_page()
                         <td><input type="text" name="wpspc_stripe_test_secret_key" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_test_secret_key')); ?>" />
                             <span class="description"><?php _e("Enter your test Secret Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
                         </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row"><?php _e("Collect Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <td><input type="checkbox" name="wpspc_stripe_collect_address" value="1" <?php echo $wpspc_stripe_collect_address;?> />
+                        <span class="description"><?php _e("If checked the customer will be forced to enter a address on Stripe when checking out.", "wordpress-simple-paypal-shopping-cart")?></span></td>
                     </tr>
 
                 </table>
