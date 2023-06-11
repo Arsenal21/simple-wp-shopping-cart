@@ -172,8 +172,17 @@ class WSPSC_Cart {
         if ($this->cart_id == 0) {
             return false;
         }
-        //if cart_id has value, check if that post exists & is of correct post type
+        //Check if cart_id has value, check if that post exists & is of correct post type
         if( get_post_type( $this->cart_id ) === $this->post_type && get_post( $this->cart_id ) ) {
+            //Check if this post status is "paid". If it is paid then a new cart ID need to be issued.
+            $post_id = $this->cart_id;
+            $status = get_post_meta($post_id, 'wpsc_order_status', true);
+            if (strcasecmp($status, "paid") == 0) {
+                //This cart transaction already copleted. Need to create a new one.
+                wspsc_log_payment_debug('The transaction for this cart ID (' . $this->cart_id . ') already copleted. Need to create a new cart ID.', true);
+                return false;
+            }
+            //Use the cart ID.
             return $this->cart_id;
         }
         return false;
