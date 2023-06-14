@@ -945,12 +945,12 @@ function wspsc_front_side_enqueue_scripts() {
 	
 	//Stripe library
 	wp_register_script("wspsc.stripe", "https://js.stripe.com/v3/", array("jquery"), WP_CART_VERSION);
-
-	$wspsc_Cart = WSPSC_Cart::get_instance();
-	$publishable_key = get_option('wp_shopping_cart_enable_sandbox') ? get_option('wpspc_stripe_test_publishable_key') : get_option('wpspc_stripe_live_publishable_key');
-	$stripe_js_obj="stripe_".$wspsc_Cart->get_cart_id();
-	wp_add_inline_script("wspsc.stripe","var ".$stripe_js_obj." = Stripe('".esc_js( $publishable_key )."');");
-
+	
+	$publishable_key = get_option('wp_shopping_cart_enable_sandbox') ? get_option('wpspc_stripe_test_publishable_key') : get_option('wpspc_stripe_live_publishable_key');	
+	$stripe_js_obj="wspsc_stripe_js_obj";
+	wp_add_inline_script("wspsc.stripe","var ".$stripe_js_obj." = Stripe('".esc_js( $publishable_key )."'); var wspsc_ajax_url='".esc_js( admin_url( 'admin-ajax.php' ) )."';");
+    
+	wp_register_script("wspsc-checkout-stripe", WP_CART_URL."/assets/js/wspsc-checkout-stripe.js", array("jquery","wspsc.stripe"), WP_CART_VERSION);	
 }
 
 function wpspc_plugin_install() {

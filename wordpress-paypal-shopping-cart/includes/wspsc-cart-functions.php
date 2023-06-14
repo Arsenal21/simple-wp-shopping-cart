@@ -402,77 +402,18 @@ function print_wp_shopping_cart( $args = array() ) {
 		}
 		//Stripe checkout.
 		if (get_option('wpspc_enable_stripe_checkout')) {
-			$wspsc_Cart = WSPSC_Cart::get_instance();
-			$publishable_key = get_option('wp_shopping_cart_enable_sandbox') ? get_option('wpspc_stripe_test_publishable_key') : get_option('wpspc_stripe_live_publishable_key');
+			$wspsc_Cart = WSPSC_Cart::get_instance();			
 
-			wp_enqueue_script("wspsc.stripe");	
+			wp_enqueue_script("wspsc.stripe");				
+			wp_enqueue_script("wspsc-checkout-stripe");
 			
-			$stripe_js_obj="stripe_".$wspsc_Cart->get_cart_id();
-			//wp_add_inline_script("wspsc.stripe","var ".$stripe_js_obj." = Stripe('".esc_js( $publishable_key )."');");
-
-			ob_start();
-			?>
-			<script>	
-
-			jQuery(document).ready(function(){
-				jQuery('#wspsc-stripe-payment-form-<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>').on('submit',function(e) {
-					e.preventDefault();
-
-					jQuery('#wpspsc_spinner_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>').css('display', 'inline-block');
-					jQuery("#wspsc_strip_btn_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>").hide();
-					
-					var formData = jQuery(this).serializeArray();
-					var payload = {
-						'action': 'wspsc_stripe_create_checkout_session'
-					};
-
-					var custom_field= jQuery("#wspsc-stripe-payment-form-<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>").find('input[name="custom"]');					
-					if(custom_field)
-					{						
-						payload["custom"]=custom_field.val();						
-					}
-
-					jQuery.post('<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>', payload).done(function (response) {
-							if (!response.error) {
-								
-							jQuery('#wpspsc_spinner_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>').hide();
-							jQuery("#wspsc_strip_btn_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>").show();
-
-								<?php echo $stripe_js_obj;?>.redirectToCheckout({sessionId: response.session_id}).then(function (result) {
-							});			
-							} else {
-								alert(response.error);		
-								
-								
-							jQuery('#wpspsc_spinner_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>').hide();
-							jQuery("#wspsc_strip_btn_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>").show();
-
-								return false;
-							}
-
-
-					}).fail(function(e) {
-
-						jQuery('#wpspsc_spinner_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>').hide();
-						jQuery("#wspsc_strip_btn_<?php echo esc_js( $wspsc_Cart->get_cart_id() ); ?>").show();
-
-						alert("HTTP error occurred during AJAX request. Error code: "+e.status);						
-						return false;
-					});
-				});
-			});
-				
-			</script>
-			<?php
-			$output .= ob_get_clean();
-			
-			$output .= '<form id="wspsc-stripe-payment-form-'.esc_js( $wspsc_Cart->get_cart_id() ).'" >';
+			$output .= '<form class="wspsc-stripe-payment-form" >';
 			$stripe_checkout_button_img_src = WP_CART_URL . '/images/' . (__('stripe_checkout_EN.gif', 'wordpress-simple-paypal-shopping-cart'));
 
 			if (get_option('wpspc_stripe_button_image_url')) {
 				$stripe_checkout_button_img_src = get_option('wpspc_stripe_button_image_url');
 			}
-			$output                 .= '<input id="wspsc_strip_btn_'.esc_js( $wspsc_Cart->get_cart_id() ).'" value="wspsc_stripe_checkout" type="image" src="' . apply_filters('wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" style="' . $style . '" alt="' . (__("Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart')) . '" />';	
+			$output                 .= '<input class="wspsc_strip_btn"  value="wspsc_stripe_checkout" type="image" src="' . apply_filters('wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" style="' . $style . '" alt="' . (__("Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart')) . '" />';	
 
 			$output .= wp_cart_add_custom_field();
 			$extra_stripe_fields = apply_filters('wspsc_cart_extra_stripe_fields', ''); //Can be used to add extra PayPal hidden input fields for the cart checkout
