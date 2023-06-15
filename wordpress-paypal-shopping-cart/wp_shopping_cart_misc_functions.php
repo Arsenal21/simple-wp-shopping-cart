@@ -207,9 +207,23 @@ function wpspsc_settings_menu_footer()
 }
 
 function wpspsc_amount_in_cents($amountFormatted) {    
-    $amountUnformatted = str_replace(['.', ','], '', $amountFormatted);    
-    $centsAmount = intval($amountUnformatted);    
+    
+    $centsAmount = $amountFormatted;
+
+    //if amount is not decimal. multiply by 100
+    if (strpos($amountFormatted, '.') === false) {
+        $amountUnformatted = str_replace(['.', ','], '', $amountFormatted);
+        $centsAmount = intval($amountUnformatted) * 100;
+    }
+    else{
+        //if amount is decimal, remove the period and comma.
+        $amountUnformatted = str_replace(['.', ','], '', $amountFormatted);    
+        $centsAmount = intval($amountUnformatted);    
+    }
+    
+
     return $centsAmount; 
+
 }
 
 
