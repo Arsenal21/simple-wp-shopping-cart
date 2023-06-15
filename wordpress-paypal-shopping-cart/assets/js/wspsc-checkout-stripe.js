@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){
-    jQuery('.wspsc_strip_btn').on('click',function(e) {
+    jQuery('.wspsc_stripe_btn').on('click',function(e) {
         e.preventDefault();
 
         var spinnerContainer = jQuery(this).closest('.wspsc-stripe-payment-form').find('.wpspsc-spinner-cont');
