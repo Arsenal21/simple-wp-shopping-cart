@@ -1,4 +1,8 @@
 jQuery(document).ready(function(){
+    jQuery(".wspsc-stripe-payment-form").on("submit",function(e){
+        e.preventDefault();
+    });    
+
     jQuery('.wspsc_stripe_btn').on('click',function(e) {
         e.preventDefault();
 
