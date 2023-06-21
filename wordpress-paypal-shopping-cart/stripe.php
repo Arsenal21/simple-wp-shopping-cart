@@ -2,8 +2,6 @@
 
 status_header( 200 );
 
-$debug_log = "ipn_handle_debug.txt"; // Debug log file name
-
 class stripe_ipn_handler {
 
 	var $last_error; // holds the last error encountered

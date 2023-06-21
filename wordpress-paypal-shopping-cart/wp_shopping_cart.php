@@ -106,16 +106,21 @@ if ( wp_doing_ajax() ) {
 function wspsc_stripe_create_checkout_session() {
 	$wspsc_cart = WSPSC_Cart::get_instance();
 	
-	$cart_id=$wspsc_cart->get_cart_id();
-	$currency        = get_option('cart_payment_currency');
-	$symbol          = get_option('cart_currency_symbol');	
+	$cart_id = $wspsc_cart->get_cart_id();
+	$currency = get_option('cart_payment_currency');
+	$symbol = get_option('cart_currency_symbol');	
 	$return_url = get_option('cart_return_from_paypal_url');
 	$cancel_url= get_option('cart_cancel_from_paypal_url');	
 	$secret_key =get_option('wp_shopping_cart_enable_sandbox') ? get_option('wpspc_stripe_test_secret_key') : get_option('wpspc_stripe_live_secret_key');
 	$cart_total = $wspsc_cart->get_cart_total();	
-	$force_collect_address = get_option('wpspc_stripe_collect_address');	
-	//Custom field data.
-	$custom_input = filter_input( INPUT_POST, 'custom', FILTER_SANITIZE_STRING );
+	$force_collect_address = get_option('wpspc_stripe_collect_address');
+
+	//Custom field data. 
+	//Decode the custom field before sanitizing.
+	$custom_input = isset( $_POST['custom'] ) ? $_POST['custom'] : '';
+	$decoded_custom = urldecode($custom_input);
+	$decoded_custom = sanitize_text_field(stripslashes($decoded_custom));
+	//wspsc_log_payment_debug('Stripe custom field input value: ' . $decoded_custom, true);
 
 	$postage_cost=0;
 	$item_total_shipping=0;
@@ -140,7 +145,6 @@ function wspsc_stripe_create_checkout_session() {
 	} 
 
 	// Extracting individual parameters
-	$decoded_custom = urldecode($custom_input);
 	$custom_metadata = array();
 	parse_str($decoded_custom, $custom_metadata);	
 
@@ -153,13 +157,10 @@ function wspsc_stripe_create_checkout_session() {
 	if (empty($symbol)) {
 		$symbol = __('$', 'wordpress-simple-paypal-shopping-cart');
 	}	
-	if (empty($return_url)) {
-		$return_url = WP_CART_SITE_URL . '/';
-	}
 
-	$return_url=$return_url."/?simple_cart_stripe_ipn=1&ref_id=".$wspsc_cart->get_cart_id();
+	$query_args = array( 'simple_cart_stripe_ipn' => '1', 'ref_id' => $wspsc_cart->get_cart_id() );
+	$stripe_ipn_url = add_query_arg( $query_args, WP_CART_SITE_URL );	
 
-	
 	wpspsc_load_stripe_lib();
 
 	try {
@@ -167,13 +168,12 @@ function wspsc_stripe_create_checkout_session() {
 		\Stripe\Stripe::setApiKey( $secret_key);
 		\Stripe\Stripe::setApiVersion("2022-08-01");
 
-		
 			$opts = array(
-				'payment_method_types'       => array( 'card' ),
-				'client_reference_id'        => $cart_id,
+				'payment_method_types' => array( 'card' ),
+				'client_reference_id' => $cart_id,
 				'billing_address_collection' => $force_collect_address ? 'required' : 'auto',						
 				'mode' => 'payment',
-				'success_url'                => $return_url				
+				'success_url' => $stripe_ipn_url				
 			);
 
 			if(!empty($cancel_url))
