@@ -68,8 +68,12 @@ class stripe_ipn_handler {
 			$this->debug_log( 'Transaction Type: Shopping Cart', true );
 			
             // Cart Items
-			$cart_items = $wspsc_cart->get_items();            
-			$this->debug_log( 'Number of Cart Items: ' . sizeof($cart_items), true );
+			$cart_items = $wspsc_cart->get_items();
+			$num_cart_items = 0;
+			if( !empty($cart_items)){
+				$num_cart_items = count($cart_items);
+			}
+			$this->debug_log( 'Number of Cart Items: ' . $num_cart_items, true );
         }
 		
         $payment_amount = floatval( $this->ipn_data["mc_gross"] );
@@ -382,8 +386,9 @@ class stripe_ipn_handler {
 		$ipn['address_country'] = $country;
 
 		//items data
+		$cart_items = $wspsc_cart->get_items();
 		$i = 1;
-		foreach ( $wspsc_cart->get_items() as $item ) {
+		foreach ( $cart_items as $item ) {
 			$ipn[ 'item_number' . $i ] = '';
 			$ipn[ 'item_name' . $i ] = $item->get_name();
 			$ipn[ 'quantity' . $i ] = $item->get_quantity();
@@ -477,7 +482,6 @@ function wpc_handle_stripe_ipn() {
 	}
 
 	if ($debug_enabled) {
-		echo 'Debug is enabled. Check the ' . $debug_log . ' file for debug output.';
 		$ipn_handler_instance->ipn_log = true;
 		//$ipn_handler_instance->ipn_log_file = realpath(dirname(__FILE__)).'/'.$debug_log;
 	}
@@ -489,6 +493,17 @@ function wpc_handle_stripe_ipn() {
 	$ipn_handler_instance->debug_log( 'Stripe Class Initiated by ' . $_SERVER['REMOTE_ADDR'], true );
 	// Validate the IPN
 	if ($ipn_handler_instance->validate_ipn()) {
+
+		//Check if cart items are empty
+		$wspsc_cart = WSPSC_Cart::get_instance();
+		$cart_items = $wspsc_cart->get_items();
+		if( empty($cart_items)){
+			$ipn_handler_instance->debug_log( 'Stripe IPN hook was accessed with empty cart items array.', true );
+			wp_die('Stripe IPN hook was accessed with empty cart items array. Cannot process this.');
+			return;
+		}
+
+		//Process the IPN.
 		$ipn_handler_instance->debug_log( 'Creating product Information to send.', true );
 		if (! $ipn_handler_instance->validate_and_dispatch_product()) {
 			$error_msg='IPN product validation failed.';
@@ -504,19 +519,12 @@ function wpc_handle_stripe_ipn() {
 	}	
 
 	$order_id = isset($_GET["ref_id"])?$_GET["ref_id"]:'';
-
-	if (strpos($return_url, '?') !== false) {
-		// URL already contains a query string
-		$return_url .= '&order_id=' . $order_id;
-	  } else {
-		// URL does not contain a query string
-		$return_url .= '?order_id=' . $order_id;
-	  }
+	$redirect_url = add_query_arg( 'order_id', $order_id, $return_url );
 	
 	if ( ! headers_sent() ) {
-		header( 'Location: ' . $return_url );
+		header( 'Location: ' . $redirect_url );
 	} else {
-		echo '<meta http-equiv="refresh" content="0;url=' . $return_url . '" />';
+		echo '<meta http-equiv="refresh" content="0;url=' . $redirect_url . '" />';
 	}
 
 }
