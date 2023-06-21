@@ -1,31 +1,33 @@
 === WordPress Simple Shopping Cart ===
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
-Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, selling, sell products, online shop, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, e-shop, compact cart, coupon, discount
+Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.2
 Stable tag: 4.6.5
 License: GPLv2 or later
 
-Very easy to use Simple WordPress PayPal Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
+Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
 
 == Description ==
 
-WordPress Simple PayPal Shopping Cart allows you to create 'Add to Cart' buttons for your products or services on your site. This simple shopping cart plugin lets you sell products and services directly from your own WordPress site and turns your WP blog into an e-commerce site.
+The WordPress Simple Shopping Cart plugin allows you to create 'Add to Cart' buttons for your products or services on your site. This simple shopping cart plugin lets you sell products and services directly from your own WordPress site and turns your WP blog into an e-commerce site.
 
-It also allows you to add/display the shopping cart on any post, page or sidebar easily. The shopping cart shows the user what they currently have in the cart and allows them to change quantity or remove the items. 
+With this plugin, your customers have the convenience of paying for their selected items using popular payment gateways such as PayPal and/or Stripe.
+
+It allows you to add/display the shopping cart on any post, page or sidebar easily. The shopping cart shows the user what they currently have in the cart and allows them to change quantity or remove the items. 
 
 https://www.youtube.com/watch?v=dJgGdD-tZW4
 
 You will be able to create products by using shortcodes dynamically.
 
-The shopping cart output will be responsive if you are using it with a responsive theme.
+If you have a responsive theme, the shopping cart's output will adapt seamlessly to ensure a mobile-friendly shopping experience.
 
-You can sell digital products via this plugin easily too. The following video shows how you can sell your digital media files using the simple cart plugin:
+Furthermore, this plugin provides a simple solution for selling digital products. To see a demonstration of how you can effectively sell your digital media files using the simple cart plugin, please refer to the following video:
 
 https://www.youtube.com/watch?v=gPvXac_j_lI
 
-This plugin is a lightweight solution (with minimal number of lines of code and minimal options) so it doesn't slow down your site.
+Designed as a lightweight solution with minimal lines of code and a streamlined set of options, this plugin ensures optimal site performance. Moreover, it is designed to be a low maintenance solution, minimizing the likelihood of frequent site disruptions caused by upgrades. With this plugin, you can enjoy a stable and hassle-free shopping cart functionality while maintaining the overall stability of your website.
 
 The plugin also has an option to use the smart PayPal payment buttons. You can enable the PayPal smart button option in the settings menu of the plugin. The following video shows a checkout demo using PayPal smart button.
 
@@ -33,7 +35,7 @@ https://www.youtube.com/watch?v=m0yDWDmtpKI
 
 It can be integrated with the NextGen Photo Gallery plugin to accommodate the selling of photographs from your gallery.
 
-WP simple PayPal Cart Plugin, interfaces with the PayPal sandbox to allow for testing.
+WP Simple Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to allow for testing.
 
 For video tutorial, screenshots, detailed documentation, support and updates, please visit:
 [WP Simple Cart Details Page](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768)
@@ -50,11 +52,13 @@ or
 * Sell any type of media file that you upload to your WordPress site. For example: you can sell ebooks (PDF), music files (MP3), audio files, videos, photos, images etc.
 * Your customers will automatically get an email with the media file that they paid for.
 * Show a nicely formatted product display box on the fly using a simple shortcode.
-* You can use PayPal sandbox to do testing if needed (before you go live).
 * Option to use the smart payment buttons of PayPal. Allows the customers to checkout in a popup window (using a credit card, paypal or paypal credit).
 * Uses the newest/latest PayPal checkout option.
 * Your customers will be able to use the PayPal' Pay in 4 payment option (Buy Now Pay Later).
 * Collect special instructions from your customers on the PayPal checkout page.
+* You can use PayPal sandbox to do testing if needed (before you go live).
+* Ability to offer the Stripe checkout option. Your customers can conveniently make credit card payments through the secure Stripe payment gateway.
+* You can use Stripe testmode to do testing if needed (before going live).
 * The orders menu will show you all the orders that you have received from your site.
 * Ability to configure an email that will get sent to your buyers after they purchase your product.
 * Ability to configure a sale notification email that gets sent to the site admin when a customer purchase your item(s).
@@ -172,6 +176,9 @@ example usage: [wp_cart_button name="Test Product" price="29.95" var1="Size|smal
 = Can this plugin be used to accept paypal payment for a service or a product? =
 Yes
 
+= Can this plugin be used to sell products and services using the Stripe payment gateway? =
+Yes
+
 = Does this plugin have shopping cart =
 Yes
 
@@ -212,9 +219,9 @@ None
 
 == Changelog ==
 
-= WIP =
+= WIP 4.6.6 =
+- [TODO Documentation] Added Stripe payment gateway checkout option. The Stripe checkout option can be enabled in the settings menu.
 - Improvements to stop a hash error when the product name contains a special character.
-- [TODO Documentation] Added Stripe payment gateway checkout option.
 
 = 4.6.5 =
 - Reworked the main cart function to use a class instead of PHP session. This is part of a series of improvements that we are making to the plugin.
