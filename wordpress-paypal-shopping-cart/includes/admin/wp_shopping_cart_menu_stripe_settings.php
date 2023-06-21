@@ -46,7 +46,7 @@ function show_wp_cart_stripe_settings_page()
 
     <div class="wspsc_yellow_box">
         <p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
-            <a href="https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768" target="_blank"><?php _e("WP Simple Cart Homepage", "wordpress-simple-paypal-shopping-cart"); ?></a>
+            <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php _e("WP Simple Cart Homepage", "wordpress-simple-paypal-shopping-cart"); ?></a>
         </p>
     </div>
 
@@ -67,7 +67,10 @@ function show_wp_cart_stripe_settings_page()
                         <td><input type="checkbox" name="wpspc_enable_stripe_checkout" value="1" <?php echo get_option('wpspc_enable_stripe_checkout') ? ' checked' : ''; ?> />
                             <span class="description">
                                 <?php _e("Enable Stripe Checkout.", "wordpress-simple-paypal-shopping-cart"); ?>
-                                <?php echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/_TBD_" target="_blank">' . __("View Documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.'; ?>
+                                <?php 
+                                //TODO - Add link to documentation when ready.
+                                //echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . __("View Documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.'; 
+                                ?>
                             </span>
 
                         </td>
