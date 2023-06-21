@@ -178,8 +178,8 @@ class WSPSC_Cart {
             $post_id = $this->cart_id;
             $status = get_post_meta($post_id, 'wpsc_order_status', true);
             if (strcasecmp($status, "paid") == 0) {
-                //This cart transaction already copleted. Need to create a new one.
-                wspsc_log_payment_debug('The transaction for this cart ID (' . $this->cart_id . ') already copleted. Need to create a new cart ID.', true);
+                //This cart transaction already completed. Need to create a new one.
+                wspsc_log_payment_debug('The transaction status for this cart ID (' . $this->cart_id . ') is paid. Need to create a new cart ID.', true);
                 return false;
             }
             //Use the cart ID.

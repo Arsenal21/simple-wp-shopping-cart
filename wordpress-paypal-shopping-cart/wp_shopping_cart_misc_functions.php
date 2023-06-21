@@ -206,8 +206,7 @@ function wpspsc_settings_menu_footer()
     <?php
 }
 
-function wpspsc_amount_in_cents($amountFormatted) {    
-    
+function wpspsc_amount_in_cents($amountFormatted) {
     $centsAmount = $amountFormatted;
 
     //if amount is not decimal. multiply by 100
@@ -220,10 +219,7 @@ function wpspsc_amount_in_cents($amountFormatted) {
         $amountUnformatted = str_replace(['.', ','], '', $amountFormatted);    
         $centsAmount = intval($amountUnformatted);    
     }
-    
-
     return $centsAmount; 
-
 }
 
 

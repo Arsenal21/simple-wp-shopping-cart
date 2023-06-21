@@ -223,6 +223,7 @@ class paypal_ipn_handler {
 		$status = "Paid";
 		update_post_meta( $post_id, 'wpsc_order_status', $status );
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
+		
 		$product_details = "";
 		$item_counter = 1;
 		$shipping = 0;
@@ -586,7 +587,7 @@ function wpc_handle_paypal_ipn() {
 	if ($debug_enabled) {
 		echo 'Debug is enabled. Check the ' . $debug_log . ' file for debug output.';
 		$ipn_handler_instance->ipn_log = true;
-		//$ipn_handler_instance->ipn_log_file = realpath(dirname(__FILE__)).'/'.$debug_log;
+		//Alternatively, can use the wspsc_log_payment_debug() function.
 	}
 	$sandbox = get_option( 'wp_shopping_cart_enable_sandbox' );
 	if ($sandbox) { // Enable sandbox testing

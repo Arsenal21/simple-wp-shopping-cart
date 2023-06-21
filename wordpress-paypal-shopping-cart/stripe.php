@@ -51,8 +51,10 @@ class stripe_ipn_handler {
 			$address = $street_address . ", " . $city . ", " . $state . ", " . $zip . ", " . $country;
 		}
 
-        $custom_values=json_decode(json_encode($this->ipn_data["custom"]), true);
-        $this->debug_log( 'Custom field value in the IPN: ' . json_encode($custom_values), true );		
+        //$custom_values = json_decode(json_encode($this->ipn_data["custom"]), true);
+		$custom_value_str = $this->ipn_data["custom"];
+        $this->debug_log( 'Custom field value in the IPN data: ' . $custom_value_str, true );
+		$custom_values = wp_cart_get_custom_var_array( $custom_value_str );	
 
 		$this->debug_log( 'Payment Status: ' . $payment_status, true );
 		if ($payment_status == "succeeded" || $payment_status == "processing") {
@@ -89,11 +91,9 @@ class stripe_ipn_handler {
 		$this->debug_log_array( $custom_values, true );
 		$this->debug_log( 'Order post id: ' . $post_id, true );
 
-        
-
 		//*** Do security checks ***		
 		if (empty( $post_id )) {
-			$error_msg='Order ID: ' . $post_id . ', does not exist in the stripe notification. This request will not be processed.';
+			$error_msg = 'Order ID: ' . $post_id . ', does not exist in the stripe notification. This request will not be processed.';
 			$this->debug_log( $error_msg, false );
 			wp_die(esc_html($error_msg));
 		}
@@ -148,14 +148,9 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_txn_id', $txn_id );		
 		update_post_meta( $post_id, 'wpsc_total_amount', $payment_amount );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
-		update_post_meta( $post_id, 'wpsc_address', $address );		
-		$status = "Paid";
-		update_post_meta( $post_id, 'wpsc_order_status', $status );
+		update_post_meta( $post_id, 'wpsc_address', $address );
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
         update_post_meta( $post_id, 'wpsc_payment_gateway', "stripe" );
-
-		//Clearing cart.
-		$wspsc_cart->reset_cart_after_txn();
 
 		$product_details = "";
 		$item_counter = 1;
@@ -187,6 +182,8 @@ class stripe_ipn_handler {
 		}
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
+		$status = "Paid";
+		update_post_meta( $post_id, 'wpsc_order_status', $status );		
 
 		$args = array();
 		$args['product_details'] = $product_details;
@@ -232,8 +229,7 @@ class stripe_ipn_handler {
 			}
 		}
 
-
-		/*	 * ** Affiliate plugin integratin *** */
+		/* Affiliate plugin integratin */
 		$this->debug_log( 'Updating Affiliate Database Table with Sales Data if Using the WP Affiliate Platform Plugin.', true );
 		if (function_exists( 'wp_aff_platform_install' )) {
 			$this->debug_log( 'WP Affiliate Platform is installed, registering sale...', true );
@@ -255,6 +251,9 @@ class stripe_ipn_handler {
 
 		//Empty any incomplete old cart orders.
 		wspsc_clean_incomplete_old_cart_orders();
+
+		//Reset/clear the cart.
+		$wspsc_cart->reset_cart_after_txn();
 
 		return true;
 	}
@@ -309,7 +308,7 @@ class stripe_ipn_handler {
             $pi_id = $sess->payment_intent;
             $pi = \Stripe\PaymentIntent::retrieve( $pi_id );
             
-             $pi->custom_metadata=$sess->metadata;
+            $pi->custom_metadata = $sess->metadata;
 
 			//formatting ipn_data
 			 $this->create_ipn_from_stripe($pi);
@@ -359,7 +358,14 @@ class stripe_ipn_handler {
 
 		$wspsc_cart =  WSPSC_Cart::get_instance();
 
-		$ipn['custom'] = $data['custom_metadata'];
+		$cart_id = $wspsc_cart->get_cart_id();
+		$custom_field_values = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );
+		// if( is_array($data['custom_metadata'])){
+		// 	//Alternative way to get custom field values for Stripe checkout.
+		// 	$custom_field_values = http_build_query($data['custom_metadata']);
+		// }
+
+		$ipn['custom'] = $custom_field_values;
 		$ipn['pay_id'] = $data['id'];
 		$ipn['create_time'] = $data['created'];
 		$ipn['txn_id'] = $data['charges']['data'][0]['id'];
@@ -467,9 +473,8 @@ class stripe_ipn_handler {
 
 }
 
-// Start of IPN handling (script execution)
+// Start of Stripe IPN handling (script execution)
 function wpc_handle_stripe_ipn() {
-	$debug_log = "ipn_handle_debug.txt"; // Debug log file name
 	$ipn_handler_instance = new stripe_ipn_handler();
 	$return_url = get_option('cart_return_from_paypal_url');
 
@@ -477,12 +482,19 @@ function wpc_handle_stripe_ipn() {
 	$debug = get_option( 'wp_shopping_cart_enable_debug' );
 	if ($debug) {
 		$debug_enabled = true;
+		$ipn_handler_instance->ipn_log = true;
+		//Alternatively, can use the wspsc_log_payment_debug() function.
 	}
 
-	if ($debug_enabled) {
-		$ipn_handler_instance->ipn_log = true;
-		//$ipn_handler_instance->ipn_log_file = realpath(dirname(__FILE__)).'/'.$debug_log;
+	//Check if cart items are empty
+	$wspsc_cart = WSPSC_Cart::get_instance();
+	$cart_items = $wspsc_cart->get_items();
+	if( empty($cart_items)){
+		$ipn_handler_instance->debug_log( 'Stripe IPN hook was accessed with empty cart items array.', true );
+		wp_die('Stripe IPN hook was accessed with empty cart items array. Cannot process this.');
+		return;
 	}
+
 	$sandbox = get_option( 'wp_shopping_cart_enable_sandbox' );
 	if ($sandbox) { // Enable sandbox testing
 		$ipn_handler_instance->secret_key = get_option("wpspc_stripe_test_secret_key");
@@ -491,16 +503,6 @@ function wpc_handle_stripe_ipn() {
 	$ipn_handler_instance->debug_log( 'Stripe Class Initiated by ' . $_SERVER['REMOTE_ADDR'], true );
 	// Validate the IPN
 	if ($ipn_handler_instance->validate_ipn()) {
-
-		//Check if cart items are empty
-		$wspsc_cart = WSPSC_Cart::get_instance();
-		$cart_items = $wspsc_cart->get_items();
-		if( empty($cart_items)){
-			$ipn_handler_instance->debug_log( 'Stripe IPN hook was accessed with empty cart items array.', true );
-			wp_die('Stripe IPN hook was accessed with empty cart items array. Cannot process this.');
-			return;
-		}
-
 		//Process the IPN.
 		$ipn_handler_instance->debug_log( 'Creating product Information to send.', true );
 		if (! $ipn_handler_instance->validate_and_dispatch_product()) {

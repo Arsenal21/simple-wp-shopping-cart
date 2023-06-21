@@ -176,14 +176,12 @@ function wspsc_stripe_create_checkout_session() {
 				'success_url' => $stripe_ipn_url				
 			);
 
-			if(!empty($cancel_url))
-			{
-				$opts["cancel_url"]=$cancel_url;
+			if(!empty($cancel_url)) {
+				$opts["cancel_url"] = $cancel_url;
 			}
 
-			if(sizeof($custom_metadata)>0)
-			{
-				$opts["metadata"]=$custom_metadata;
+			if( sizeof($custom_metadata) > 0 ) {
+				$opts["metadata"] = $custom_metadata;
 			}
 
 			$lineItems = array();
@@ -209,11 +207,10 @@ function wspsc_stripe_create_checkout_session() {
 				$lineItems[] = $lineItem;
 			}			
 			
-			$opts["line_items"]=$lineItems;
+			$opts["line_items"] = $lineItems;
 
 			// Add shipping options
-			if($postage_cost>0)
-			{
+			if( $postage_cost > 0 ) {
 				$opts["shipping_options"] = array(
 					array(
 						'shipping_rate_data' => array(
