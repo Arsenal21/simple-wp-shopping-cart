@@ -47,9 +47,11 @@ class WSPSC_Blocks {
 
 		// Register all blocks.
 		require_once( WP_CART_PATH . '/includes/classes/class.wspsc_add_to_cart_block.php' );
+		require_once( WP_CART_PATH . '/includes/classes/class.wspsc_product_box_block.php' );
 		require_once( WP_CART_PATH . '/includes/classes/class.wspsc_shopping_cart_block.php' );
 
 		new WSPSC_ADD_TO_CART( 'wspsc_block_script_dependencies' );
+		new WSPSC_PRODUCT_BOX( 'wspsc_block_script_dependencies' );
 		new WSPSC_SHOPPING_CART( 'wspsc_block_script_dependencies' );
 	}
 

@@ -33,19 +33,19 @@ wspsc_register_block_type(
                             {
                                 style: {padding: "16px",}
                             },
-                            [
-                                wspsc_element(
-                                    wspsc_toggle_control,
-                                    {
-                                        label: wspsc_sc_block_compact_view_meta.label,
-                                        help: wspsc_sc_block_compact_view_meta.description,
-                                        checked: props.attributes.compact_mode,
-                                        onChange: (value) => {
-                                            props.setAttributes({compact_mode: value});
-                                        },
-                                    }
-                                ),
-                            ]
+
+                            wspsc_element(
+                                wspsc_select_control,
+                                {
+                                    label: wspsc_sc_block_display_option_meta.label,
+                                    value: props.attributes.display_option,
+                                    help: wspsc_sc_block_display_option_meta.description,
+                                    options: wspsc_sc_block_display_option_meta.options,
+                                    onChange: (value) => {
+                                        props.setAttributes({display_option: value});
+                                    },
+                                }
+                            ),
                         ),
                     ]
                 ),

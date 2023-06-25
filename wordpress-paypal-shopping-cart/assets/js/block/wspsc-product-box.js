@@ -1,5 +1,5 @@
 /**
- * Add to Cart Button block.
+ * Product Box block.
  *
  * @package wordpress-simple-paypal-shopping-cart
  */
@@ -7,14 +7,14 @@
 /**
  * Renders block attribute configuration fields from an array received from server side.
  */
-function wspsc_add_to_cart_btn_atts_field_sets(props) {
+function wspsc_product_box_atts_field_sets(props) {
     let panels = [];
 
-    for (let field_set_key in wspsc_cb_block_attrs_meta) {
+    for (let field_set_key in wspsc_pb_block_attrs_meta) {
 
         let fields = [];
 
-        let field_sets = wspsc_cb_block_attrs_meta[field_set_key];
+        let field_sets = wspsc_pb_block_attrs_meta[field_set_key];
         let field_sets_fields = field_sets['fields'];
 
         for (let field_key in field_sets_fields) {
@@ -70,10 +70,10 @@ function wspsc_add_to_cart_btn_atts_field_sets(props) {
 }
 
 wspsc_register_block_type(
-    wspsc_cb_block_block_meta.name,
+    wspsc_pb_block_block_meta.name,
     {
-        title: wspsc_cb_block_block_meta.title,
-        description: wspsc_cb_block_block_meta.description,
+        title: wspsc_pb_block_block_meta.title,
+        description: wspsc_pb_block_block_meta.description,
         icon: 'cart',
         category: 'common',
 
@@ -83,7 +83,7 @@ wspsc_register_block_type(
                 wspsc_element(
                     wspsc_serverSideRender,
                     {
-                        block: wspsc_cb_block_block_meta.name,
+                        block: wspsc_pb_block_block_meta.name,
                         attributes: props.attributes,
                     }
                 ),
@@ -94,7 +94,7 @@ wspsc_register_block_type(
                     wspsc_element(
                         wspsc_panel,
                         {},
-                        wspsc_add_to_cart_btn_atts_field_sets(props),
+                        wspsc_product_box_atts_field_sets(props),
                     ),
                 ),
             ];
