@@ -25,7 +25,7 @@ function show_wp_cart_adv_settings_page() {
 	$btn_shape			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_shape']);
 	$btn_layout			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_layout']);
 	$pm_credit			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_payment_method_credit']);
-	$pm_elv				 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_payment_method_elv']);
+	$pm_elv= isset($_POST['wpspc_pp_smart_checkout_payment_method_elv']) ? sanitize_text_field( $_POST['wpspc_pp_smart_checkout_payment_method_elv']) : '';
 
 	update_option( 'wpspc_enable_pp_smart_checkout', $enable_pp_smart_checkout );
 	update_option( 'wpspc_pp_live_client_id', $live_client_id );
