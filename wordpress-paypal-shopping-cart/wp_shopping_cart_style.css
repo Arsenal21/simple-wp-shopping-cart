@@ -171,3 +171,10 @@ color: #FFFFFF !important;
 text-decoration: none;
 }
 /* End of compact cart 2 css */
+
+/* block editor related styles */
+.wspsc_block_description_text{
+    font-size: smaller !important;
+    color: #6c757d !important;
+}
+
