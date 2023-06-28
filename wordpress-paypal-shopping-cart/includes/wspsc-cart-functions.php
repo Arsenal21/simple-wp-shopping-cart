@@ -119,7 +119,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 			$output .= '<tr class="wspsc_cart_item_thumb"><td class="wspsc_cart_item_name_td" style="overflow: hidden;">';
 			$output .= '<div class="wp_cart_item_info">';
-			if ( isset( $args['show_thumbnail'] ) ) {
+			if ( isset( $args['show_thumbnail'] ) && ! empty( $item->get_thumbnail() ) ) {
 				$output .= '<span class="wp_cart_item_thumbnail"><img src="' . esc_url( $item->get_thumbnail() ) . '" class="wp_cart_thumb_image" alt="' . esc_attr( $item->get_name() ) . '" ></span>';
 			}
 			$item_info = apply_filters( 'wspsc_cart_item_name', '<a href="' . esc_url( $item->get_cart_link() ) . '">' . esc_attr( $item->get_name() ) . '</a>', $item );
