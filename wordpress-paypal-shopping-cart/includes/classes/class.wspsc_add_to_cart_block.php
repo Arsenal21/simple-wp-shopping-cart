@@ -62,27 +62,27 @@ class WSPSC_ADD_TO_CART {
 				'fields'      => array(
 					'name'         => array(
 						'label'       => __( "Name (required)", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the product name.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'price'        => array(
 						'label'       => __( "Price (required)", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the price of the product without currency symbol.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'shipping'     => array(
 						'label'       => __( "Shipping Cost", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Add a shipping cost for this product if required.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'button_text'  => array(
 						'label'       => __( "Button Text", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Customize the cart button text.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'button_image' => array(
-						'label'       => __( "Button Image", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'label'       => __( "Button Image URL", 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Add image URL for using an image as the cart button.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'file_url'     => array(
 						'label'       => __( "File URL", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify a file URL to send it as an attachment with the purchase confirmation email. This can be useful for selling digital goods.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 //					'item_number'  => array(
 //						'label'       => __( "Item Number", 'wordpress-simple-paypal-shopping-cart' ),
@@ -204,6 +204,10 @@ class WSPSC_ADD_TO_CART {
 
 			return sanitize_text_field( $field );
 		}, $atts );
+
+		if ( empty( $atts['name']) && empty( $atts['price'] ))  {
+			return '<p style="color: red;">' . __( 'You must specify the required fields of this block first!' ) . '</p>';
+		}
 
 		if ( empty( $atts['name'] ) ) {
 			return '<p style="color: red;">' . __( 'Error! You must specify product name.' ) . '</p>';

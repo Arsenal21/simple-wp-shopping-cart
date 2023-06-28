@@ -52,14 +52,10 @@ function wspsc_product_box_atts_field_sets(props) {
                         field_sets.description
                     ),
                     wspsc_element(
-                        wspsc_panel_row,
+                        'div',
                         {},
-                        wspsc_element(
-                            'div',
-                            {},
-                            fields,
-                        )
-                    ),
+                        fields,
+                    )
                 ]
             )
         )
