@@ -62,35 +62,35 @@ class WSPSC_PRODUCT_BOX {
 				'fields'          => array(
 					'name'         => array(
 						'label'       => __( "Name (required)", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the product name.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'price'        => array(
 						'label'       => __( "Price (required)", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the price of the product without currency symbol.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'description'  => array(
 						'label'       => __( "Description", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Write a description for the product.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'shipping'     => array(
 						'label'       => __( "Shipping Cost", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Add a shipping cost for this product if required.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'file_url'     => array(
 						'label'       => __( "File URL", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify a file URL to send it as an attachment with the purchase confirmation email. This can be useful for selling digital goods.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'thumbnail'    => array(
 						'label'       => __( "Thumbnail URL (required)", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the image URL for the product thumbnail.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'thumb_alt'    => array(
 						'label'       => __( "Thumbnail Alt Text", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Add an alternative text for the thumbnail.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'thumb_target' => array(
 						'label'       => __( "Thumbnail Target URL", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Add a target URL to the thumbnail to redirect the customer to some other places. This is useful for showing the details page.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 				),
 			),
@@ -221,6 +221,10 @@ class WSPSC_PRODUCT_BOX {
 
 			return sanitize_text_field( $value );
 		}, $atts );
+
+		if ( empty( $atts['name']) && empty( $atts['price'] ) && empty( $atts['thumbnail'] ) )  {
+			return '<p style="color: red;">' . __( 'You must specify the required fields of this block first!' ) . '</p>';
+		}
 
 		if ( empty( $atts['name'] ) ) {
 			return '<p style="color: red;">' . __( 'Error! You must specify product name.' ) . '</p>';
