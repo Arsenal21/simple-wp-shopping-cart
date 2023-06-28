@@ -37,13 +37,13 @@ class WSPSC_PRODUCT_BOX {
 			'wspsc_cart_block_styles',
 			WP_CART_URL . '/wp_shopping_cart_style.css',
 			null,
-			WP_CART_VERSION,
+			WP_CART_VERSION
 		);
 
 		$block_meta          = array(
 			'title'       => 'Simple Cart - Product Box',
 			'name'        => 'wp-shopping-cart/product-box',
-			'description' => __( "Renders a product box with an 'Add to Cart' button.", 'wordpress-simple-paypal-shopping-cart' ),
+			'description' => __( "Renders a product box with an 'Add to Cart' button.", 'wordpress-simple-paypal-shopping-cart' )
 		);
 		$wspsc_pb_block_meta = 'const wspsc_pb_block_block_meta = ' . wp_json_encode( $block_meta );
 
@@ -131,7 +131,7 @@ class WSPSC_PRODUCT_BOX {
 						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 				),
-			),
+			)
 		);
 		$wspsc_pb_attrs_meta = 'const wspsc_pb_block_attrs_meta = ' . wp_json_encode( $attrs_meta );
 
@@ -193,7 +193,7 @@ class WSPSC_PRODUCT_BOX {
 			'thumb_alt'    => array(
 				'type'    => 'string',
 				'default' => '',
-			),
+			)
 		);
 
 		register_block_type(
@@ -202,7 +202,7 @@ class WSPSC_PRODUCT_BOX {
 				'attributes'      => $attributes,
 				'editor_script'   => $this->block_script_handler,
 				'editor_style'    => 'wspsc_cart_block_styles',
-				'render_callback' => array( $this, 'render_block' ),
+				'render_callback' => array( $this, 'render_block' )
 			)
 		);
 	}
