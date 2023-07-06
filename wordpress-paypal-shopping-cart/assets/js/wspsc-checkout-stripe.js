@@ -4,10 +4,27 @@ jQuery(document).ready(function(){
     });    
 
     jQuery('.wspsc_stripe_btn').on('click',function(e) {
-        e.preventDefault();
+        e.preventDefault();        
+        var form =jQuery(this).closest('.wspsc-stripe-payment-form');
+        var requiredFields = jQuery(this).closest("table").find('.wpspsc_cci_input').filter("[required]:visible");
+        var isValid = true;
+        if(requiredFields)
+        {
+            requiredFields.each(function() {
+                var field = jQuery(this);
+                if (field.val().trim() === '') {
+                    isValid = false;                
+                }
+            });
+        }        
+
+        if(!isValid)
+        {
+            return;
+        }
 
         var spinnerContainer = jQuery(this).closest('.wspsc-stripe-payment-form').find('.wpspsc-spinner-cont');
-        var form =jQuery(this).closest('.wspsc-stripe-payment-form');
+        
         spinnerContainer.css('display', 'inline-block');
         jQuery(this).hide();
                 
