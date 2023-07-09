@@ -104,7 +104,7 @@ class WSPSC_SHOPPING_CART {
 		$wp_context = isset( $_GET['context'] ) ? sanitize_text_field( stripslashes ( $_GET['context'] ) ) : '';
 		$is_backend = defined( 'REST_REQUEST' ) && REST_REQUEST === true && $wp_context === 'edit';
 		if ( $is_backend ) {
-			return '<p style="padding: 10px 16px; margin-bottom: 12px; background-color: #eee; border: 1px solid gray;">' . __( 'The shopping cart will be rendered here on the front end.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+			return '<p style="padding: 10px 16px; margin-bottom: 12px; background-color: #eee; border: 1px solid gray;">' . __( 'The shopping cart will be rendered here on the front-end.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
 		}
 
 		return do_shortcode( '[' . $sc_str . ']' );

@@ -43,7 +43,7 @@ class WSPSC_ADD_TO_CART {
 		$block_meta          = array(
 			'title'       => 'Simple Cart - Add to Cart Button',
 			'name'        => 'wp-shopping-cart/add-to-cart-btn',
-			'description' => __( "Places an 'Add to Cart' button.", 'wordpress-simple-paypal-shopping-cart' )
+			'description' => __( "Inserts an 'add to cart' button for a product/item.", 'wordpress-simple-paypal-shopping-cart' )
 		);
 		$wspsc_cb_block_meta = 'const wspsc_cb_block_block_meta = ' . wp_json_encode( $block_meta );
 
@@ -66,7 +66,7 @@ class WSPSC_ADD_TO_CART {
 					),
 					'price'        => array(
 						'label'       => __( "Price (required)", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( 'Specify the price of the product without currency symbol.', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the price of the product without the currency symbol.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'shipping'     => array(
 						'label'       => __( "Shipping Cost", 'wordpress-simple-paypal-shopping-cart' ),
@@ -82,7 +82,7 @@ class WSPSC_ADD_TO_CART {
 					),
 					'file_url'     => array(
 						'label'       => __( "File URL", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( 'Specify a file URL to send it as an attachment with the purchase confirmation email. This can be useful for selling digital goods.', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the file URL of the item in case it is a digital download.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 //					'item_number'  => array(
 //						'label'       => __( "Item Number", 'wordpress-simple-paypal-shopping-cart' ),

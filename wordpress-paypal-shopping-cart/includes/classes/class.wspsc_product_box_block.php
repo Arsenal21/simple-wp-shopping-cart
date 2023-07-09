@@ -43,7 +43,7 @@ class WSPSC_PRODUCT_BOX {
 		$block_meta          = array(
 			'title'       => 'Simple Cart - Product Box',
 			'name'        => 'wp-shopping-cart/product-box',
-			'description' => __( "Renders a product box with an 'Add to Cart' button.", 'wordpress-simple-paypal-shopping-cart' )
+			'description' => __( "Renders a product box with the item name, description, price and an 'add to cart' button.", 'wordpress-simple-paypal-shopping-cart' )
 		);
 		$wspsc_pb_block_meta = 'const wspsc_pb_block_block_meta = ' . wp_json_encode( $block_meta );
 
@@ -78,7 +78,7 @@ class WSPSC_PRODUCT_BOX {
 					),
 					'file_url'     => array(
 						'label'       => __( "File URL", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( 'Specify a file URL to send it as an attachment with the purchase confirmation email. This can be useful for selling digital goods.', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Specify the file URL of the item in case it is a digital download.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'thumbnail'    => array(
 						'label'       => __( "Thumbnail URL (required)", 'wordpress-simple-paypal-shopping-cart' ),
@@ -90,7 +90,7 @@ class WSPSC_PRODUCT_BOX {
 					),
 					'thumb_target' => array(
 						'label'       => __( "Thumbnail Target URL", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( 'Add a target URL to the thumbnail to redirect the customer to some other places. This is useful for showing the details page.', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'This option enables you to add a target URL to the thumbnail, allowing you to send customers to the details page of the product.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 				),
 			),
