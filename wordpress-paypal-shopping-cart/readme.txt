@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.2
-Stable tag: 4.6.5
+Stable tag: 4.6.6
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -38,6 +38,7 @@ It can be integrated with the NextGen Photo Gallery plugin to accommodate the se
 WP Simple Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to allow for testing.
 
 For video tutorial, screenshots, detailed documentation, support and updates, please visit:
+
 [WP Simple Cart Details Page](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768)
 or
 [WP Simple Cart Documentation](https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart)
@@ -81,9 +82,9 @@ or
 
 = Shopping Cart Setup Video Tutorials =
 
-There is a series of video tutorials to show you how to setup the shopping cart on your site. 
+There is a series of video tutorials to show you how to setup the shopping cart plugin on your site. 
 
-Check the video tutorials [here](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768).
+Check the [video tutorials here](https://www.tipsandtricks-hq.com/ecommerce/wordpress-simple-shopping-cart-video-tutorial-969).
 
 = Language Translations =
 
@@ -122,13 +123,21 @@ There are a few exact duplicate copies of this plugin that other people made. We
 * Check the developer's site.
 
 == Usage ==
-1. To add an 'Add to Cart' button for a product, simply add the shortcode [wp_cart_button name="PRODUCT-NAME" price="PRODUCT-PRICE"] to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price.
+#1) To add an 'Add to Cart' button for a product, simply add the following shortcode to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price.
 
-2. To add the 'Add to Cart' button on the sidebar or from other template files use the following function:
-<?php echo print_wp_cart_button_for_product('PRODUCT-NAME', PRODUCT-PRICE); ?>
+ [wp_cart_button name="PRODUCT-NAME" price="PRODUCT-PRICE"]
+
+#2) To add the shopping cart to a post or page (eg. checkout page) add the following shortcode to a post or page or use the sidebar widget to add the shopping cart to the sidebar. The shopping cart will only be visible in a post or page when a customer adds a product.
+
+[show_wp_shopping_cart]
+
+#3) Alternatively, you have the option to utilize the Gutenberg editor blocks provided by this plugin to conveniently insert the add to cart button and shopping cart in desired locations within your content.
+
+#4) To insert the 'Add to Cart' button from a template or PHP file, you can utilize the following PHP function:
+
+&lt;?php echo print_wp_cart_button_for_product('PRODUCT-NAME', PRODUCT-PRICE); ?&gt;
+
 Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price.
-
-3. To add the shopping cart to a post or page (eg. checkout page) simply add the shortcode [show_wp_shopping_cart] to a post or page or use the sidebar widget to add the shopping cart to the sidebar. The shopping cart will only be visible in a post or page when a customer adds a product.
 
 = Using Product Display Box =
 
@@ -173,24 +182,20 @@ example usage: [wp_cart_button name="Test Product" price="29.95" var1="Size|smal
 4. Use the shortcode to add a product to a post or page where you want it to appear.
 
 == Frequently Asked Questions ==
+
+= Where can I find the documentation for this pluign? =
+Visit the [documentation page here](https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart) 
+
 = Can this plugin be used to accept paypal payment for a service or a product? =
 Yes
-
 = Can this plugin be used to sell products and services using the Stripe payment gateway? =
 Yes
-
 = Does this plugin have shopping cart =
 Yes
-
 = Does this plugin have the option to use the new PayPal checkout option =
 Yes. you can enable the new PayPal checkout option in the settings menu of the plugin.
-
 = Can the shopping cart be added to a checkout page? =
 Yes
-
-= Does this plugin has multiple currency support? =
-Yes
-
 = Is the 'Add to Cart' button customizable? =
 Yes
 = Does this plugin use a return URL to redirect customers to a specified page after PayPal has processed the payment? =
@@ -209,6 +214,8 @@ Yes.
 Yes.
 = Can the customers be sent to a cancel URL when they click "cancel" from the PayPal checkout page? =
 Yes.
+= Does this plugin have a Stripe Checkout option? =
+Yes, you can configure the Stripe checkout option in the settings menu of the plugin.
 
 == Screenshots ==
 Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768 for screenshots.
@@ -219,8 +226,8 @@ None
 
 == Changelog ==
 
-= WIP 4.6.6 =
-- [TODO Documentation] Added Stripe payment gateway checkout option. The Stripe checkout option can be enabled in the settings menu.
+= 4.6.6 =
+- Added Stripe payment gateway checkout option. The Stripe checkout option can be enabled in the settings menu.
 - Improvements to stop a hash error when the product name contains a special character.
 - Three new gutenberg blocks (Add-to-Cart, Product Box and Shopping Cart) added.
 
