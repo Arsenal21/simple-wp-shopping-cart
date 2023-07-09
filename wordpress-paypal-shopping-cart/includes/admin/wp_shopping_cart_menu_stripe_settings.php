@@ -66,10 +66,9 @@ function show_wp_cart_stripe_settings_page()
                         <th scope="row"><?php _e("Enable Stripe Checkout", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="checkbox" name="wpspc_enable_stripe_checkout" value="1" <?php echo get_option('wpspc_enable_stripe_checkout') ? ' checked' : ''; ?> />
                             <span class="description">
-                                <?php _e("Enable Stripe Checkout.", "wordpress-simple-paypal-shopping-cart"); ?>
                                 <?php 
-                                //TODO - Add link to documentation when ready.
-                                //echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . __("View Documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.'; 
+                                _e("To learn how to enable Stripe, please refer to ", "wordpress-simple-paypal-shopping-cart");
+                                echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . __("the documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.'; 
                                 ?>
                             </span>
 
