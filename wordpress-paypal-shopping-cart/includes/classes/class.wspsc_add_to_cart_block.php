@@ -229,7 +229,7 @@ class WSPSC_ADD_TO_CART {
 
 		foreach ( $atts as $key => $value ) {
 			if ( $value ) {
-				$sc_str .= " " . $key . "='" . $value . "'";
+				$sc_str .= ' '. $key . '="' . esc_attr( $value ) . '"';
 			}
 		}
 

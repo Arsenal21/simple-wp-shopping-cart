@@ -225,6 +225,8 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+= WIP =
+- Issue using quotes in the block attribute fields has fixed.
 
 = 4.6.6 =
 - Added Stripe payment gateway checkout option. The Stripe checkout option can be enabled in the settings menu.

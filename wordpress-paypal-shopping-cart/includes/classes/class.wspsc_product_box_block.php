@@ -249,7 +249,7 @@ class WSPSC_PRODUCT_BOX {
 
 		foreach ( $atts as $key => $value ) {
 			if ( $value ) {
-				$sc_str .= " " . $key . "='" . $value . "'";
+				$sc_str .= ' '. $key . '="' . esc_attr( $value ) . '"';
 			}
 		}
 
