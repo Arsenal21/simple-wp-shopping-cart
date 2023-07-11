@@ -22,6 +22,7 @@ function wspsc_add_to_cart_btn_atts_field_sets(props) {
                 wspsc_element(
                     wspsc_test_control,
                     {
+                        key: "wspsc-add-to-cart-block-text-control-"+field_set_key+"-"+field_key+"-key", // unique key.
                         label: field_sets_fields[field_key].label,
                         help: field_sets_fields[field_key].description,
                         value: props.attributes[field_key],
@@ -39,6 +40,7 @@ function wspsc_add_to_cart_btn_atts_field_sets(props) {
             wspsc_element(
                 wspsc_panel_body,
                 {
+                    key: "wspsc-add-to-cart-block-panel-body-"+field_set_key+"-key", // unique key.
                     title: field_sets.title,
                     initialOpen: field_sets.initialOpen,
                     scrollAfterOpen: field_sets.scrollAfterOpen,
@@ -47,13 +49,16 @@ function wspsc_add_to_cart_btn_atts_field_sets(props) {
                     wspsc_element(
                         'p',
                         {
+                            key: "wspsc-add-to-cart-block-p-"+field_set_key+"-key", // unique key.
                             className: 'wspsc_block_description_text'
                         },
                         field_sets.description
                     ),
                     wspsc_element(
                         'div',
-                        {},
+                        {
+                            key: "wspsc-add-to-cart-block-div-"+field_set_key+"-key", // unique key.
+                        },
                         fields,
                     )
                 ]
@@ -79,6 +84,7 @@ wspsc_register_block_type(
                 wspsc_element(
                     wspsc_serverSideRender,
                     {
+                        key: "wspsc-add-to-cart-block-serverSideRender-key", // unique key.
                         block: wspsc_cb_block_block_meta.name,
                         attributes: props.attributes,
                     }
@@ -86,10 +92,14 @@ wspsc_register_block_type(
 
                 wspsc_element(
                     wspsc_inspector_controls,
-                    null,
+                    {
+                        key: "wspsc-add-to-cart-block-inspector-controls-key", // unique key.
+                    },
                     wspsc_element(
                         wspsc_panel,
-                        {},
+                        {
+                            key: "wspsc-add-to-cart-block-panel-key", // unique key.
+                        },
                         wspsc_add_to_cart_btn_atts_field_sets(props),
                     ),
                 ),
