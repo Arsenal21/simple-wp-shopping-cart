@@ -210,7 +210,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
 		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . '>';
 		$output .= $form;
-		$style   = get_option( 'wpspc_disable_standard_checkout' ) && get_option( 'wpspc_enable_pp_smart_checkout' ) ? 'display:none !important" data-wspsc-hidden="1' : '';
+		$style   = get_option( 'wpspc_disable_standard_checkout' ) ? 'display:none !important" data-wspsc-hidden="1' : '';
 		if ( $count ) {
 			$checkout_button_img_src = WP_CART_URL . '/images/' . ( __( 'paypal_checkout_EN.png', 'wordpress-simple-paypal-shopping-cart' ) );
 			$output                 .= '<input type="image" src="' . apply_filters( 'wspsc_cart_checkout_button_image_src', $checkout_button_img_src ) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" style="' . $style . '" alt="' . ( __( "Make payments with PayPal - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
@@ -413,7 +413,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			if (get_option('wpspc_stripe_button_image_url')) {
 				$stripe_checkout_button_img_src = get_option('wpspc_stripe_button_image_url');
 			}
-			$output                 .= '<input class="wspsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . apply_filters('wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" style="' . $style . '" alt="' . (__("Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart')) . '" />';	
+			$output                 .= '<input class="wspsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . apply_filters('wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" alt="' . (__("Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart')) . '" />';	
 
 			$output .= wp_cart_add_custom_field();
 			$extra_stripe_fields = apply_filters('wspsc_cart_extra_stripe_fields', ''); //Can be used to add extra PayPal hidden input fields for the cart checkout
