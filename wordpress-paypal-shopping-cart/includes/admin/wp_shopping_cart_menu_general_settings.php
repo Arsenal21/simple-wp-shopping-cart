@@ -27,6 +27,7 @@ function wspsc_show_general_settings_page ()
 
         $currency_code = sanitize_text_field($_POST["cart_payment_currency"]);
         $currency_code = trim(strtoupper($currency_code));//Currency code must be uppercase.
+        $disable_standard_checkout	 = filter_input( INPUT_POST, 'wpspc_disable_standard_checkout', FILTER_SANITIZE_NUMBER_INT );
         update_option('cart_payment_currency', $currency_code);
         update_option('cart_currency_symbol', sanitize_text_field($_POST["cart_currency_symbol"]));
         update_option('cart_base_shipping_cost', sanitize_text_field($_POST["cart_base_shipping_cost"]));
@@ -53,6 +54,7 @@ function wspsc_show_general_settings_page ()
         update_option('wspsc_disable_nonce_add_cart', (isset($_POST['wspsc_disable_nonce_add_cart']) && $_POST['wspsc_disable_nonce_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_price_check_add_cart', (isset($_POST['wspsc_disable_price_check_add_cart']) && $_POST['wspsc_disable_price_check_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wp_use_aff_platform', (isset($_POST['wp_use_aff_platform']) && $_POST['wp_use_aff_platform']!='') ? 'checked="checked"':'' );
+        update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
 
         update_option('wp_shopping_cart_enable_sandbox', (isset($_POST['wp_shopping_cart_enable_sandbox']) && $_POST['wp_shopping_cart_enable_sandbox']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_enable_debug', (isset($_POST['wp_shopping_cart_enable_debug']) && $_POST['wp_shopping_cart_enable_debug']!='') ? 'checked="checked"':'' );
@@ -141,6 +143,13 @@ function wspsc_show_general_settings_page ()
     }
     else{
         $wp_use_aff_platform = '';
+    }
+
+    if (get_option('wpspc_disable_standard_checkout')){
+        $wpspc_disable_standard_checkout = 'checked="checked"';
+    }
+    else{
+        $wpspc_disable_standard_checkout = '';
     }
 
 	//$wp_shopping_cart_enable_sandbox = get_option('wp_shopping_cart_enable_sandbox');
@@ -365,6 +374,16 @@ echo '<tr valign="top">
 <br />'.(__("Check this if using with the", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/wordpress-affiliate-platform-plugin-simple-affiliate-program-for-wordpress-blogsite-1474" target="_blank">WP Affiliate Platform plugin</a>. '.(__("This plugin lets you run your own affiliate campaign/program and allows you to reward (pay commission) your affiliates for referred sales", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 </table>
+
+<table class="form-table">
+<tr valign="top">
+    		    <th scope="row">'.__( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ).'</th>
+    		    <td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1" '.$wpspc_disable_standard_checkout.' />
+    			<span class="description">'. __( "By default PayPal standard checkout is always enabled. If you only want to use the PayPal Smart Checkout instead then use this checkbox to disable the standard checkout option. This option will only have effect when Smart Checkout is enabled.", "wordpress-simple-paypal-shopping-cart" ).'</span>
+    		    </td>
+    		</tr>
+</table>
+
 </div></div>
 
 <div class="postbox">

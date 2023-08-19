@@ -18,8 +18,7 @@ function show_wp_cart_adv_settings_page() {
 	$live_client_id			 = sanitize_text_field( $_POST['wpspc_pp_live_client_id']);
 	$test_client_id			 = sanitize_text_field( $_POST['wpspc_pp_test_client_id']);
 	$live_secret			 = sanitize_text_field( $_POST['wpspc_pp_live_secret']);
-	$test_secret			 = sanitize_text_field( $_POST['wpspc_pp_test_secret']);
-	$disable_standard_checkout	 = filter_input( INPUT_POST, 'wpspc_disable_standard_checkout', FILTER_SANITIZE_NUMBER_INT );
+	$test_secret			 = sanitize_text_field( $_POST['wpspc_pp_test_secret']);	
 	$btn_size			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_size']);
 	$btn_color			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_color']);
 	$btn_shape			 = sanitize_text_field( $_POST['wpspc_pp_smart_checkout_btn_shape']);
@@ -32,7 +31,6 @@ function show_wp_cart_adv_settings_page() {
 	update_option( 'wpspc_pp_live_secret', $live_secret );
 	update_option( 'wpspc_pp_test_client_id', $test_client_id );
 	update_option( 'wpspc_pp_test_secret', $test_secret );
-	update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
 	update_option( 'wpspc_pp_smart_checkout_btn_size', $btn_size );
 	update_option( 'wpspc_pp_smart_checkout_btn_color', $btn_color );
 	update_option( 'wpspc_pp_smart_checkout_btn_shape', $btn_shape );
@@ -199,12 +197,6 @@ function show_wp_cart_adv_settings_page() {
     			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_credit" value="1"<?php WPSPCAdminUtils::e_checked( $pm_credit ); ?>> <?php _e( "PayPal Credit", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_elv" value="1"<?php WPSPCAdminUtils::e_checked( $pm_elv ); ?>> <?php _e( "ELV", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select payment methods that could be used by customers. Note that payment with cards is always enabled.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
-    		    </td>
-    		</tr>
-    		<tr valign="top">
-    		    <th scope="row"><?php _e( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
-    		    <td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1"<?php echo get_option( 'wpspc_disable_standard_checkout' ) ? ' checked' : ''; ?>/>
-    			<span class="description"><?php _e( "By default PayPal standard checkout is always enabled. If you only want to use the PayPal Smart Checkout instead then use this checkbox to disable the standard checkout option. This option will only have effect when Smart Checkout is enabled.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
     		    </td>
     		</tr>
     	    </table>
