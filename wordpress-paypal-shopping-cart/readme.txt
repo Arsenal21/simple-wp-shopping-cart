@@ -225,8 +225,11 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
 = WIP =
 - Issue using quotes in the block attribute fields has fixed.
+- Moved the 'Disable Standard PayPal Checkout' option to the general settings so it can work in combination with the Stripe checkout settings.
+- Fixed the per checkout shipping amount issue with the newly added Stripe checkout option
 
 = 4.6.6 =
 - Added Stripe payment gateway checkout option. The Stripe checkout option can be enabled in the settings menu.

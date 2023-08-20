@@ -133,6 +133,8 @@ function wspsc_stripe_create_checkout_session() {
 	if ( ! empty( $item_total_shipping ) ) {
 		$baseShipping = get_option( 'cart_base_shipping_cost' );
 		$postage_cost = $item_total_shipping + $baseShipping;
+		//Round it to 2 decimal places to avoid issues with Stripe's zero decimal currencies.
+		$postage_cost = round( $postage_cost, 2);
 	}
 
 	$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
