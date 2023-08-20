@@ -191,21 +191,21 @@ function wspsc_show_general_settings_page ()
     <input type="hidden" name="info_update" id="info_update" value="true" />
 <?php
 echo '
-	<div class="postbox">
-	<h3 class="hndle"><label for="title">'.(__("PayPal and Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
-	<div class="inside">';
+<div class="postbox">
+<h3 class="hndle"><label for="title">'.(__("PayPal Standard Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
+<div class="inside">
 
-echo '
 <table class="form-table">
+
 <tr valign="top">
 <th scope="row">'.(__("Paypal Email Address", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="cart_paypal_email" value="'.esc_attr($defaultEmail).'" size="40" /></td>
 </tr>
 <tr valign="top">
-    <th scope="row">'.__( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ).'</th>
-    <td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1" '.$wpspc_disable_standard_checkout.' />
-    <span class="description">'. __( "By default PayPal standard checkout is always enabled. If you only want to use the PayPal Smart Checkout or Stripe option then use this checkbox to disable the standard PayPal checkout option.", "wordpress-simple-paypal-shopping-cart" ).'</span>
-    </td>
+<th scope="row">'.__( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ).'</th>
+<td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1" '.$wpspc_disable_standard_checkout.' />
+<span class="description">'. __( "By default PayPal standard checkout is always enabled. If you only want to use the PayPal Smart Checkout or Stripe option then use this checkbox to disable the standard PayPal checkout option.", "wordpress-simple-paypal-shopping-cart" ).'</span>
+</td>
 </tr>
 <tr valign="top">
 <th scope="row">'.(__("Must Collect Shipping Address on PayPal", "wordpress-simple-paypal-shopping-cart")).'</th>
@@ -233,6 +233,19 @@ echo '
 <td>'.(__("PayPal has removed this feature. We have created an addon so you can still collect instructions from customers at the time of checking out. ", "wordpress-simple-paypal-shopping-cart"))
 . '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-simple-cart-collect-customer-input-in-the-shopping-cart-4396" target="_blank">'.__("View the addon details", "wordpress-simple-paypal-shopping-cart").'</a>'.'</td>
 </tr>
+
+</table>
+
+</div>
+</div>
+';
+
+echo '
+<div class="postbox">
+<h3 class="hndle"><label for="title">'.(__("Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
+<div class="inside">
+
+<table class="form-table">
 
 <tr valign="top">
 <th scope="row">'.(__("Shopping Cart title", "wordpress-simple-paypal-shopping-cart")).'</th>
@@ -336,7 +349,6 @@ echo '<tr valign="top">
 <br />'.(__("If checked the shopping cart will be reset when the customer lands on the return URL (Thank You) page.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 </table>
-
 
 <table class="form-table">
 <tr valign="top">
