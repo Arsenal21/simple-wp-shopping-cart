@@ -211,27 +211,28 @@ echo '
 <th scope="row">'.(__("Must Collect Shipping Address on PayPal", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_collect_address" value="1" '.$wp_shopping_cart_collect_address.' /><br />'.(__("If checked the customer will be forced to enter a shipping address on PayPal when checking out.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-
 <tr valign="top">
 <th scope="row">'.(__("Use PayPal Profile Based Shipping", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_use_profile_shipping" value="1" '.$wp_shopping_cart_use_profile_shipping.' /><br />'.(__("Check this if you want to use", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/setup-paypal-profile-based-shipping-5865" target="_blank">'.(__("PayPal profile based shipping", "wordpress-simple-paypal-shopping-cart")).'</a>. '.(__("Using this will ignore any other shipping options that you have specified in this plugin.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-
 <tr valign="top">
 <th scope="row">'.(__("Open PayPal Checkout Page in a New Tab", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wspsc_open_pp_checkout_in_new_tab" value="1" '.$wspsc_open_pp_checkout_in_new_tab.' />
 <br />'.(__("If checked the PayPal checkout page will be opened in a new tab/window when the user clicks the checkout button.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-
 <tr valign="top">
 <th scope="row">'.(__("Use Strict PayPal Email Address Checking", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_strict_email_check" value="1" '.$wp_shopping_cart_strict_email_check.' /><br />'.(__("If checked the script will check to make sure that the PayPal email address specified is the same as the account where the payment was deposited (Usage of PayPal Email Alias will fail too).", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-
 <tr valign="top">
 <th scope="row">'.(__("Customize the Note to Seller Text", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td>'.(__("PayPal has removed this feature. We have created an addon so you can still collect instructions from customers at the time of checking out. ", "wordpress-simple-paypal-shopping-cart"))
 . '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-simple-cart-collect-customer-input-in-the-shopping-cart-4396" target="_blank">'.__("View the addon details", "wordpress-simple-paypal-shopping-cart").'</a>'.'</td>
+</tr>
+<tr valign="top">
+<th scope="row">'.(__("Custom Checkout Page Logo Image", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="text" name="wp_cart_paypal_co_page_style" value="'.esc_attr($wp_cart_paypal_co_page_style).'" size="100" />
+<br />'.(__("Specify an image URL if you want to customize the paypal checkout page with a custom logo/image. The image URL must be a 'https' URL otherwise PayPal will ignore it.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 </table>
@@ -348,40 +349,24 @@ echo '<tr valign="top">
 <td><input type="checkbox" name="wp_shopping_cart_reset_after_redirection_to_return_page" value="1" '.$wp_shopping_cart_reset_after_redirection_to_return_page.' />
 <br />'.(__("If checked the shopping cart will be reset when the customer lands on the return URL (Thank You) page.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-</table>
 
-<table class="form-table">
 <tr valign="top">
 <th scope="row">'.(__("Hide Shopping Cart Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_image_hide" value="1" '.$wp_cart_image_hide.' /><br />'.(__("If ticked the shopping cart image will not be shown.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-</table>
 
-<table class="form-table">
-<tr valign="top">
-<th scope="row">'.(__("Custom Checkout Page Logo Image", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="wp_cart_paypal_co_page_style" value="'.esc_attr($wp_cart_paypal_co_page_style).'" size="100" />
-<br />'.(__("Specify an image URL if you want to customize the paypal checkout page with a custom logo/image. The image URL must be a 'https' URL otherwise PayPal will ignore it.", "wordpress-simple-paypal-shopping-cart")).'</td>
-</tr>
-</table>
-
-<table class="form-table">
 <tr valign="top">
 <th scope="row">'.(__("Disable Nonce Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wspsc_disable_nonce_add_cart" value="1" '.$wspsc_disable_nonce_add_cart.' />
 <br />'.(__("Check this option if you are using a caching solution on your site. This will bypass the nonce check on the add to cart buttons.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-</table>
 
-<table class="form-table">
 <tr valign="top">
 <th scope="row">'.(__("Disable Price Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wspsc_disable_price_check_add_cart" value="1" '.$wspsc_disable_price_check_add_cart.' />
 <br />'.(__("Using complex characters for the product name can trigger the error: The price field may have been tampered. Security check failed. This option will stop that check and remove the error.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-</table>
 
-<table class="form-table">
 <tr valign="top">
 <th scope="row">'.(__("Use WP Affiliate Platform", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_use_aff_platform" value="1" '.$wp_use_aff_platform.' />

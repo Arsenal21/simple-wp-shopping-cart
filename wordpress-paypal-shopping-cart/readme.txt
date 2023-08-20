@@ -3,8 +3,8 @@ Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
-Tested up to: 6.2
-Stable tag: 4.6.6
+Tested up to: 6.3
+Stable tag: 4.6.7
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -226,7 +226,8 @@ None
 
 == Changelog ==
 
-= WIP =
+= 4.6.7 =
+- The general settings menu items have been reorganized into two separate sections: PayPal Settings and Shopping Cart Settings.
 - Issue using quotes in the block attribute fields has fixed.
 - Moved the 'Disable Standard PayPal Checkout' option to the general settings so it can work in combination with the Stripe checkout settings.
 - Fixed the per checkout shipping amount issue with the newly added Stripe checkout option
