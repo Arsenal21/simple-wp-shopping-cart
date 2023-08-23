@@ -2,6 +2,7 @@
 
 status_header( 200 );
 
+//Alternatively, we can use the wspsc_log_payment_debug() function directly.
 $debug_log = "ipn_handle_debug.txt"; // Debug log file name
 
 class paypal_ipn_handler {

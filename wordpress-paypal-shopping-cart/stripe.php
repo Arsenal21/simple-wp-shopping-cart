@@ -7,10 +7,10 @@ class stripe_ipn_handler {
 	var $last_error; // holds the last error encountered
 	var $ipn_log; // bool: log IPN results to text file?
 	var $ipn_log_file; // filename of the IPN log
-	var $ipn_response; // holds the IPN response from paypal
+	var $ipn_response; // holds the IPN response
 	var $ipn_data; 
 	var $sandbox_mode = false;
-	var $secret_key = ''; // paypal url
+	var $secret_key = '';
 	var $get_string = '';
     var $order_id=0;    
 
@@ -417,13 +417,13 @@ class stripe_ipn_handler {
 			$text .= 'FAIL: ' . $this->last_error . "\n";
 
 		// Log the POST variables
-		$text .= "IPN POST Vars from Paypal:\n";
+		$text .= "IPN POST vars from payment gateway:\n";
 		foreach ( $this->ipn_data as $key => $value ) {
 			$text .= "$key=$value, ";
 		}
 
-		// Log the response from the paypal server
-		$text .= "\nIPN Response from Paypal Server:\n " . $this->ipn_response;
+		// Log the response
+		$text .= "\nIPN Response from payment gateway Server:\n " . $this->ipn_response;
 
 		// Write to log
 		$fp = fopen( $this->ipn_log_file, 'a' );

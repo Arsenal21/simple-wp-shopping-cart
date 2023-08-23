@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Shopping cart
-  Version: 4.6.7
+  Version: 4.6.8
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
 }
 
-define( 'WP_CART_VERSION', '4.6.7' );
+define( 'WP_CART_VERSION', '4.6.8' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -133,8 +133,11 @@ function wspsc_stripe_create_checkout_session() {
 	if ( ! empty( $item_total_shipping ) ) {
 		$baseShipping = get_option( 'cart_base_shipping_cost' );
 		$postage_cost = $item_total_shipping + $baseShipping;
-		//Round it to 2 decimal places to avoid issues with Stripe's zero decimal currencies.
+		//Rounding and formatting to avoid issues with Stripe's zero decimal currencies.
+		//Use round and then number_format to ensure that there is always 2 decimal places (even if the trailing zero is dropped by the round function)
 		$postage_cost = round( $postage_cost, 2);
+		$postage_cost = number_format( $postage_cost, 2);
+		//wspsc_log_payment_debug('Postage cost after round and number format: ' . $postage_cost, true);
 	}
 
 	$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
