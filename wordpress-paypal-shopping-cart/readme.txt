@@ -227,7 +227,7 @@ None
 == Changelog ==
 
 = 4.6.8 =
-- Stripe payment gateway: fixed a rounding issue with the base shipping amount .
+- Stripe payment gateway: fixed a rounding issue with the base shipping amount.
 
 = 4.6.7 =
 - The general settings menu items have been reorganized into two separate sections: PayPal Settings and Shopping Cart Settings.
