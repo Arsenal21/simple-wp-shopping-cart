@@ -954,6 +954,9 @@ function wspsc_front_side_enqueue_scripts() {
 	wp_add_inline_script("wspsc.stripe","var ".$stripe_js_obj." = Stripe('".esc_js( $publishable_key )."'); var wspsc_ajax_url='".esc_js( admin_url( 'admin-ajax.php' ) )."';");
     
 	wp_register_script("wspsc-checkout-stripe", WP_CART_URL."/assets/js/wspsc-checkout-stripe.js", array("jquery","wspsc.stripe"), WP_CART_VERSION);	
+
+	//Paypal smart checkout
+	wp_register_script("wspsc-checkout-paypal-objects", "https://www.paypalobjects.com/api/checkout.js",array("jquery"), WP_CART_VERSION,false );	
 }
 
 function wpspc_plugin_install() {
