@@ -272,99 +272,48 @@ function print_wp_shopping_cart( $args = array() ) {
 				$pm_elv    = get_option( 'wpspc_pp_smart_checkout_payment_method_elv' );
 				$pm_str   .= empty( $pm_elv ) ? '' : ', paypal.FUNDING.ELV';
 
-				wp_enqueue_script('wspsc-checkout-paypal-objects');
-				$paypal_smartcheckout_evn=get_option( 'wp_shopping_cart_enable_sandbox' ) ? "sandbox" : "production";
-				$paypal_smartcheckout_btn_code = 'var wpspsc_cci_do_submit = true;
-				paypal.Button.render({	
-					env: "'. $paypal_smartcheckout_evn .'",
-					style: {
-						layout: "'.esc_js( $btn_layout ).'",
-						size: "'.esc_js( $btn_size ).'",
-						shape: "'.esc_js( $btn_shape ).'",
-						color: "'.esc_js( $btn_color ).'"
-					},
-					funding: {
-						allowed: [paypal.FUNDING.CARD'.$pm_str.'],
-						disallowed: []
-					},
-					client: {
-						sandbox: "'.get_option( 'wpspc_pp_test_client_id' ).'",
-						production: "'.get_option( 'wpspc_pp_live_client_id' ).'"
-					},
-					validate: function (actions) {
-						//			    wpspsc_pp_actions = actions;
-						//			    wpspsc_pp_actions.disable();
-					},
-					onClick: function () {
-						wpspsc_cci_do_submit = false;
-						var res = jQuery(".wp_cart_checkout_button_'.$carts_cnt.'").triggerHandler("click");
-						if (typeof res === "undefined" || res) {
-						//				    wpspsc_pp_actions.enable();
-						} else {
-						//				    wpspsc_pp_actions.disable();
-						}
-						wpspsc_cci_do_submit = true;
-					},
-					payment: function (data, actions) {
-						return actions.payment.create({
-						payment: {
-							transactions: [{
-								amount: {total: "'.$formatted_totalpluspostage.'", currency: "'.$paypal_currency.'",
-								details: {subtotal: "'.$formatted_total.'", shipping: "'.$formatted_postage_cost.'"}
-								},
-								item_list: {
-								items: ['.$items_list.']
-								}
-							}]
-						},
-						meta: {partner_attribution_id: "TipsandTricks_SP"}
-						});
-					},
-					onError: function (error) {
-						console.log(error);
-						alert("'.esc_js( __( 'Error occured during PayPal Smart Checkout process.', 'wordpress-simple-paypal-shopping-cart' ) ).'\n\n" + error);
-					},
-					onAuthorize: function (data, actions) {
-						jQuery("[class^=\'wp-cart-paypal-button-container\']").hide();
-						jQuery(".wp_cart_checkout_button").hide();
-						jQuery(".wpspsc-spinner-cont").css("display", "inline-block");
-						return actions.payment.execute().then(function (data) {
-						jQuery.post("'.get_admin_url().'admin-ajax.php",
-							{"action": "wpspsc_process_pp_smart_checkout", "wpspsc_payment_data": data})
-							.done(function (result) {
-								if (result.success) {
-								window.location.href = "'.esc_js( $return_url ).'";
-								} else {
-								console.log(result);
-								alert(result.errMsg)
-								jQuery("[class^=\'wp-cart-paypal-button-container\']").show();
-								if (jQuery(".wp_cart_checkout_button").data("wspsc-hidden") !== "1") {
-									jQuery(".wp_cart_checkout_button").show();
-								}
-								jQuery(".wp_cart_checkout_button").show();
-								jQuery(".wpspsc-spinner-cont").hide();
-								}
-							})
-							.fail(function (result) {
-								console.log(result);
-								jQuery("[class^=\'wp-cart-paypal-button-container\']").show();
-								if (jQuery(".wp_cart_checkout_button").data("wspsc-hidden") !== "1") {
-								jQuery(".wp_cart_checkout_button").show();
-								}
-								jQuery(".wpspsc-spinner-cont").hide();
-								alert("'.esc_js( __( 'HTTP error occured during payment process:', 'wordpress-simple-paypal-shopping-cart' ) ).'" + " " + result.status + " " + result.statusText);
-							});
-						});
-					}
-					}, ".wp-cart-paypal-button-container-'.$carts_cnt.'");';
 
-				wp_add_inline_script("wspsc-checkout-paypal-objects",$paypal_smartcheckout_btn_code);
+				$pm_str_var = array("card");
 
+				$pm_credit_var = get_option('wpspc_pp_smart_checkout_payment_method_credit');
+				if(!empty($pm_credit_var))
+				{
+					$pm_str_var[]="credit";
+				}
+
+				$pm_elv_var = get_option('wpspc_pp_smart_checkout_payment_method_elv');
+				if(!empty($pm_elv_var))
+				{
+					$pm_str_var[]="elv";
+				}
+
+
+				//wp_enqueue_script('wspsc-checkout-paypal-objects');
+				$paypal_smartcheckout_evn=get_option( 'wp_shopping_cart_enable_sandbox' ) ? "sandbox" : "production";			
 				ob_start();
 				?>
 
 		<div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
 
+		<script>
+			render_paypal_buttons(
+				"<?=$return_url?>",
+				<?=json_encode($pm_str_var)?>,
+				"<?=$paypal_smartcheckout_evn?>",
+				"<?=$btn_layout?>",
+				"<?=$btn_size?>",
+				"<?=$btn_shape?>",
+				"<?=$btn_color?>",
+				"<?=$formatted_totalpluspostage?>",
+				"<?=$paypal_currency?>",
+				"<?=$formatted_total?>",
+				"<?=$formatted_postage_cost?>",
+				<?=json_encode($items_list)?>,
+				"<?=$carts_cnt?>",
+				"<?=get_option( 'wpspc_pp_test_client_id' )?>",
+				"<?=get_option( 'wpspc_pp_live_client_id' )?>"
+			);
+		</script>
 		<style>
 			@keyframes wpspsc-spinner {
 			to {transform: rotate(360deg);}
