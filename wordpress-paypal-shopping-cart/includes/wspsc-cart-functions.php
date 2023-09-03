@@ -252,7 +252,10 @@ function print_wp_shopping_cart( $args = array() ) {
 			} else {
 				//checkout script should be inserted only once, otherwise it would produce JS error
 				if ( $carts_cnt <= 1 ) {
-					$output .= '<script src="https://www.paypalobjects.com/api/checkout.js"></script>';
+					//The enqueue method is better, it will work with the block inserter option as well.
+					//$output .= '<script src="https://www.paypalobjects.com/api/checkout.js"></script>';
+					//Just need to have the script enqueued, so it is loaded anywhere on the page before the button is rendered (before the paypal.Button.render() call) 
+					wp_enqueue_script( 'wspsc-checkout-pp-smart', 'https://www.paypalobjects.com/api/checkout.js', array());
 				}
 
 				$btn_layout = get_option( 'wpspc_pp_smart_checkout_btn_layout' );
