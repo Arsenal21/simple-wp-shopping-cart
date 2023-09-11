@@ -232,7 +232,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= wp_cart_add_custom_field();
 
 		$extra_pp_fields = apply_filters( 'wspsc_cart_extra_paypal_fields', '' ); //Can be used to add extra PayPal hidden input fields for the cart checkout
-		$output         .= $extra_pp_fields;
+		$output .= $extra_pp_fields;
 
 		$output .= '</form>';
 		if ( get_option( 'wpspc_enable_pp_smart_checkout' ) ) {
@@ -251,12 +251,8 @@ function print_wp_shopping_cart( $args = array() ) {
 				$output .= '<div style="color: red;">' . sprintf( __( 'PayPal Smart Checkout error: %s client ID is not set. Please set it on the Advanced Settings tab.', 'wordpress-simple-paypal-shopping-cart' ), get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'Sandbox' : 'Live' ) . '</div>';
 			} else {
 				//checkout script should be inserted only once, otherwise it would produce JS error
-				if ( $carts_cnt <= 1 ) {
-					//The enqueue method is better, it will work with the block inserter option as well.
-					//$output .= '<script src="https://www.paypalobjects.com/api/checkout.js"></script>';
-					//Just need to have the script enqueued, so it is loaded anywhere on the page before the button is rendered (before the paypal.Button.render() call) 
-					wp_enqueue_script( 'wspsc-checkout-pp-smart', 'https://www.paypalobjects.com/api/checkout.js', array());
-				}
+				//Load the JS SDK on footer so it only loads once per page (if the cart is present)
+				add_action( 'wp_footer', 'wspsc_load_paypal_smart_checkout_js' );
 
 				$btn_layout = get_option( 'wpspc_pp_smart_checkout_btn_layout' );
 				$btn_layout = empty( $btn_layout ) ? 'vertical' : $btn_layout;
@@ -279,15 +275,13 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		<div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
 
-		<script>
-
-			//		    var wpspsc_pp_proceed = false;
-			//		    var wpspsc_pp_actions;
+		<script type="text/javascript">
+    		document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function() {
+        	//Anything that goes here will only be executed after the PayPal SDK is loaded.
+			console.log('PayPal Smart Checkout SDK loaded.');
 			var wpspsc_cci_do_submit = true;
 
-
 			paypal.Button.render({
-
 			env: '<?php echo get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'sandbox' : 'production'; ?>',
 			style: {
 				layout: '<?php echo esc_js( $btn_layout ); ?>',
@@ -370,6 +364,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			}
 			}, '.wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>');
 
+		});
 		</script>
 		<style>
 			@keyframes wpspsc-spinner {
@@ -431,4 +426,24 @@ function print_wp_shopping_cart( $args = array() ) {
 	$output .= '</table></div>';
 	$output  = apply_filters( 'wpspsc_after_cart_output', $output );
 	return $output;
+}
+
+/**
+ * Loads the checkout.js script from PayPal that is used for PayPal Smart Checkout. 
+ * Then it triggers the wspsc_paypal_smart_checkout_sdk_loaded event.
+ */
+function wspsc_load_paypal_smart_checkout_js() {
+	$script_url = 'https://www.paypalobjects.com/api/checkout.js';
+	?>
+	<script type="text/javascript">
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.async = true;
+		script.src = '<?php echo esc_url_raw($script_url); ?>';
+		script.onload = function() {
+			document.dispatchEvent(new Event('wspsc_paypal_smart_checkout_sdk_loaded'));
+		};
+		document.getElementsByTagName('head')[0].appendChild(script);
+	</script>
+	<?php
 }
