@@ -237,7 +237,10 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</form>';
 		if ( get_option( 'wpspc_enable_pp_smart_checkout' ) ) {
 			//Show PayPal Smart Payment Button
-                        
+            
+			//adding form in smart checkout button, so simple cart collect customer input adon works
+			$output.='<form action="" method="POST" class="wpspc_pp_smart_checkout_form">';    
+
                         //Some number formatting (before it is used in JS code.
                         $formatted_total = wpspsc_number_format_price($total);
                         $formatted_postage_cost = wpspsc_number_format_price($postage_cost);
@@ -274,9 +277,15 @@ function print_wp_shopping_cart( $args = array() ) {
 				?>
 
 		<div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
+		<input type="submit" class="wpspc_pp_smart_checkout_form_<?php echo $carts_cnt;?> wp_cart_checkout_button" style="display:none" />
+		</form>
 
 		<script type="text/javascript">
     		document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function() {
+			
+			//disable form submission, as it is smart checkout
+			jQuery(".wpspc_pp_smart_checkout_form").submit(false);
+
         	//Anything that goes here will only be executed after the PayPal SDK is loaded.
 			console.log('PayPal Smart Checkout SDK loaded.');
 			var wpspsc_cci_do_submit = true;
@@ -303,7 +312,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			},
 			onClick: function () {
 				wpspsc_cci_do_submit = false;
-				var res = jQuery('.wp_cart_checkout_button_<?php echo $carts_cnt; ?>').triggerHandler('click');
+				var res = jQuery('.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>').triggerHandler('click');
 				if (typeof res === "undefined" || res) {
 				//				    wpspsc_pp_actions.enable();
 				} else {
