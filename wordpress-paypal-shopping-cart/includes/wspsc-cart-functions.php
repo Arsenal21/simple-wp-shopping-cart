@@ -237,7 +237,10 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</form>';
 		if ( get_option( 'wpspc_enable_pp_smart_checkout' ) ) {
 			//Show PayPal Smart Payment Button
-                        
+            
+			//adding form in smart checkout button, so simple cart collect customer input adon works
+			$output.='<form action="" method="POST" class="wpspc_pp_smart_checkout_form">';    
+
                         //Some number formatting (before it is used in JS code.
                         $formatted_total = wpspsc_number_format_price($total);
                         $formatted_postage_cost = wpspsc_number_format_price($postage_cost);
@@ -274,9 +277,15 @@ function print_wp_shopping_cart( $args = array() ) {
 				?>
 
 		<div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
+		<input type="submit" class="wpspc_pp_smart_checkout_form_<?php echo $carts_cnt;?> wp_cart_checkout_button" style="display:none" />
+		</form>
 
 		<script type="text/javascript">
     		document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function() {
+			
+			//disable form submission, as it is smart checkout
+			jQuery(".wpspc_pp_smart_checkout_form").submit(false);
+
         	//Anything that goes here will only be executed after the PayPal SDK is loaded.
 			console.log('PayPal Smart Checkout SDK loaded.');
 			var wpspsc_cci_do_submit = true;
@@ -300,15 +309,54 @@ function print_wp_shopping_cart( $args = array() ) {
 			validate: function (actions) {
 				//			    wpspsc_pp_actions = actions;
 				//			    wpspsc_pp_actions.disable();
+				
+				//validate only runs when buttons render first time
+				jQuery(document).ready(function($){
+
+					actions.enable();
+
+					//customer input adon is installed & there are fields added
+					if(jQuery('.wpspsc_cci_input').length>0)
+					{
+						//check if any wpspsc_cci_input has required attribute
+						jQuery('.wpspsc_cci_input').each(function(){
+							if(jQuery(this).prop("required")){
+								actions.disable();								
+							}
+						});
+					}
+
+					//this will only run if customer input adon is installed
+					jQuery('.wpspsc_cci_input').on('change', function() {
+						
+							// Get the input element's value
+							var inputValue = $(this).val().trim();
+
+							// Check if the input has the 'required' attribute
+							if ($(this).prop('required')) {
+								if (inputValue !== '') {									
+									// The input is both required and has a non-empty value
+									actions.enable();
+								} else {									
+									// The input is required but has an empty value
+									actions.disable();									
+								}
+							} else {
+								actions.enable();
+								// The input is not required
+								console.log('Input is not required.');
+							}
+					});
+				});
 			},
 			onClick: function () {
 				wpspsc_cci_do_submit = false;
-				var res = jQuery('.wp_cart_checkout_button_<?php echo $carts_cnt; ?>').triggerHandler('click');
-				if (typeof res === "undefined" || res) {
+				var res = jQuery('.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>').triggerHandler('click');
+				// if (typeof res === "undefined" || res) {
 				//				    wpspsc_pp_actions.enable();
-				} else {
+				// } else {
 				//				    wpspsc_pp_actions.disable();
-				}
+				// }
 				wpspsc_cci_do_submit = true;
 			},
 			payment: function (data, actions) {
