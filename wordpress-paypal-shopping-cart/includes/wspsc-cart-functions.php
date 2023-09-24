@@ -309,43 +309,30 @@ function print_wp_shopping_cart( $args = array() ) {
 			validate: function (actions) {
 				//			    wpspsc_pp_actions = actions;
 				//			    wpspsc_pp_actions.disable();
-				
+
 				//validate only runs when buttons render first time
 				jQuery(document).ready(function($){
 
 					actions.enable();
 
-					//customer input adon is installed & there are fields added
-					if(jQuery('.wpspsc_cci_input').length>0)
+                    /**
+                     * The codes below will run only if the customer input addon is installed and there are fields added.
+                     */
+
+                    // checks if there is any required input field with empty value.
+					if(jQuery('.wpspsc_cci_input').length>0 && has_empty_required_input('.wpspsc_cci_input'))
 					{
-						//check if any wpspsc_cci_input has required attribute
-						jQuery('.wpspsc_cci_input').each(function(){
-							if(jQuery(this).prop("required")){
-								actions.disable();								
-							}
-						});
+                        actions.disable();
 					}
 
-					//this will only run if customer input adon is installed
+                    // listen to change in inputs and check if any empty required input fields.
 					jQuery('.wpspsc_cci_input').on('change', function() {
-						
-							// Get the input element's value
-							var inputValue = $(this).val().trim();
+                        if (has_empty_required_input('.wpspsc_cci_input')){
+                            actions.disable();
+                            return;
+                        }
 
-							// Check if the input has the 'required' attribute
-							if ($(this).prop('required')) {
-								if (inputValue !== '') {									
-									// The input is both required and has a non-empty value
-									actions.enable();
-								} else {									
-									// The input is required but has an empty value
-									actions.disable();									
-								}
-							} else {
-								actions.enable();
-								// The input is not required
-								console.log('Input is not required.');
-							}
+                        actions.enable();
 					});
 				});
 			},
@@ -413,6 +400,22 @@ function print_wp_shopping_cart( $args = array() ) {
 			}, '.wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>');
 
 		});
+
+        /**
+         * Checks if any input element has required attribute with empty value
+         * @param el Input element selector.
+         * @returns {boolean}
+         */
+        function has_empty_required_input(el){
+            let has_any = false;
+            jQuery(el).each(function(){
+                if (jQuery(this).prop("required") && !jQuery(this).val().trim()) {
+                    has_any = true;
+                }
+            });
+
+            return has_any;
+        }
 		</script>
 		<style>
 			@keyframes wpspsc-spinner {
