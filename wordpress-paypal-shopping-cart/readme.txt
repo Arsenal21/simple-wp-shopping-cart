@@ -228,6 +228,8 @@ None
 
 = WIP 4.6.9 =
 - Cart block inserter related: fixed a rendering issue when both a shortcode and a block inserter is used with the smart checkout option.
+- Issue with "Cart Customer Input" plugin's form validation and smart PayPal checkout button fixed.
+- Jquery loading issue fixed.
 
 = 4.6.8 =
 - Stripe payment gateway: fixed a rounding issue with the base shipping amount.
