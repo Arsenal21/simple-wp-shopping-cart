@@ -282,7 +282,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		<script type="text/javascript">
     		document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function() {
-			
+
 			//disable form submission, as it is smart checkout
 			jQuery(".wpspc_pp_smart_checkout_form").submit(false);
 
@@ -320,14 +320,14 @@ function print_wp_shopping_cart( $args = array() ) {
                      */
 
                     // checks if there is any required input field with empty value.
-					if(jQuery('.wpspsc_cci_input').length>0 && has_empty_required_input('.wpspsc_cci_input'))
+					if(jQuery('.wpspsc_cci_input').length>0 && has_empty_required_input(<?php echo $carts_cnt; ?>))
 					{
                         actions.disable();
 					}
 
                     // listen to change in inputs and check if any empty required input fields.
 					jQuery('.wpspsc_cci_input').on('change', function() {
-                        if (has_empty_required_input('.wpspsc_cci_input')){
+                        if (has_empty_required_input(<?php echo $carts_cnt; ?>)){
                             actions.disable();
                             return;
                         }
@@ -403,12 +403,15 @@ function print_wp_shopping_cart( $args = array() ) {
 
         /**
          * Checks if any input element has required attribute with empty value
-         * @param el Input element selector.
+         * @param cart_no Target cart no.
          * @returns {boolean}
          */
-        function has_empty_required_input(el){
+        function has_empty_required_input(cart_no){
             let has_any = false;
-            jQuery(el).each(function(){
+            let target_input = '.wpspsc_cci_input';
+            let target_form = jQuery('.wpspc_pp_smart_checkout_form_'+cart_no).closest('.shopping_cart');
+
+            jQuery(target_form).find(target_input).each(function(){
                 if (jQuery(this).prop("required") && !jQuery(this).val().trim()) {
                     has_any = true;
                 }
