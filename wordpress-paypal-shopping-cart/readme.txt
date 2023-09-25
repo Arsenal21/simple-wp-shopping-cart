@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.3
-Stable tag: 4.6.8
+Stable tag: 4.6.9
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -226,9 +226,9 @@ None
 
 == Changelog ==
 
-= WIP 4.6.9 =
-- Cart block inserter related: fixed a rendering issue when both a shortcode and a block inserter is used with the smart checkout option.
-- Issue with "Cart Customer Input" plugin's form validation and smart PayPal checkout button fixed.
+= 4.6.9 =
+- Shopping Cart block inserter related: fixed a rendering issue when both a shortcode and a block inserter is used with the smart checkout option.
+- Issue with "Collect Customer Input" addon's form validation and smart PayPal checkout button fixed.
 - Jquery loading issue fixed.
 
 = 4.6.8 =
