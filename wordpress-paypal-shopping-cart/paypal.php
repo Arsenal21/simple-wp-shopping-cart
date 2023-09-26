@@ -3,7 +3,7 @@
 status_header( 200 );
 
 //Alternatively, we can use the wspsc_log_payment_debug() function directly.
-$debug_log = "ipn_handle_debug.txt"; // Debug log file name
+$debug_log = wspsc_get_log_file_name(); // Debug log file name
 
 class paypal_ipn_handler {
 
@@ -20,7 +20,7 @@ class paypal_ipn_handler {
 	function __construct() {
 		$this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
 		$this->last_error = '';
-		$this->ipn_log_file = WP_CART_PATH . 'ipn_handle_debug.txt';
+		$this->ipn_log_file = wspsc_get_log_file();
 		$this->ipn_response = '';
 	}
 
@@ -576,7 +576,7 @@ class paypal_ipn_handler {
 
 // Start of IPN handling (script execution)
 function wpc_handle_paypal_ipn() {
-	$debug_log = "ipn_handle_debug.txt"; // Debug log file name
+	$debug_log = wspsc_get_log_file_name(); // Debug log file name
 	$ipn_handler_instance = new paypal_ipn_handler();
 
 	$debug_enabled = false;

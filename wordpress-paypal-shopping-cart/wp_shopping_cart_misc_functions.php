@@ -50,7 +50,20 @@ function wp_cart_admin_init_handler() {
     //Handle feedback in the admin area.
 	include_once WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_user_feedback.php';
 	$user_feedback = new WSPSC_Admin_User_Feedback();
-	$user_feedback->init();    
+	$user_feedback->init();
+
+    // View log
+    $action = isset( $_GET['wspsc-action'] ) ? sanitize_text_field( stripslashes ( $_GET['wspsc-action'] ) ) : '';
+	if ( ! empty( $action ) && $action === 'view_log' ) {
+        check_admin_referer( 'wspsc_view_log_nonce' );
+        $logfile = fopen( wspsc_get_log_file(), 'rb' );
+        if (!$logfile) {
+            wp_die( __('Log file dosen\'t exists.', 'wordpress-simple-paypal-shopping-cart') );
+        }
+        header( 'Content-Type: text/plain' );
+        fpassthru( $logfile );
+        die;
+	}
 }
 
 function wpspsc_number_format_price($price)

@@ -17,7 +17,7 @@ class stripe_ipn_handler {
 	function __construct() {
 		$this->secret_key = get_option("wpspc_stripe_live_secret_key");
 		$this->last_error = '';
-		$this->ipn_log_file = WP_CART_PATH . 'ipn_handle_debug.txt';
+		$this->ipn_log_file = wspsc_get_log_file();
 		$this->ipn_response = '';
         $this->order_id=0;
 	}
