@@ -29,6 +29,7 @@ if ( ! defined( 'WP_CART_MANAGEMENT_PERMISSION' ) ) {//This will allow the user 
     define( 'WP_CART_MANAGEMENT_PERMISSION', 'manage_options' );
 }
 define( 'WP_CART_MAIN_MENU_SLUG', 'wspsc-menu-main' );
+define( 'WP_CART_LOG_FILENAME', 'wspsc-debug-log' );
 
 //Loading language files
 //Set up localisation. First loaded overrides strings present in later loaded file

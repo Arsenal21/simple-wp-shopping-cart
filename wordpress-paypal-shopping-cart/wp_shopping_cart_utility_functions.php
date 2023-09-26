@@ -1,7 +1,41 @@
 <?php
 
+/**
+ * Generates a unique suffix for filename.
+ *
+ * @return string File name suffix.
+ */
+function wspsc_get_log_file_suffix() {
+    $suffix = get_option( 'wspsc_logfile_suffix' );
+    if ( $suffix ) {
+        return $suffix;
+    }
+
+    $suffix = uniqid();
+    update_option( 'wspsc_logfile_suffix', $suffix );
+    return $suffix;
+}
+
+/**
+ * Get the log file with a unique name.
+ *
+ * @return string Log file name.
+ */
+function wspsc_get_log_file_name() {
+    return WP_CART_LOG_FILENAME . '-' . wspsc_get_log_file_suffix() . '.txt';
+}
+
+/**
+ * Get the log filename with absolute path.
+ *
+ * @return string Debug log file.
+ */
+function wspsc_get_log_file(){
+    return WP_CART_PATH . wspsc_get_log_file_name();
+}
+
 function wspsc_log_payment_debug($message, $success, $end = false) {
-    $logfile = WP_CART_PATH . 'ipn_handle_debug.txt';
+    $logfile = wspsc_get_log_file();
     $debug = get_option( 'wp_shopping_cart_enable_debug' );
     if ( !$debug ) {
         //Debug is not enabled.
@@ -22,7 +56,7 @@ function wspsc_log_payment_debug($message, $success, $end = false) {
 function wspsc_reset_logfile()
 {
     $log_reset = true;
-    $logfile = WP_CART_PATH . 'ipn_handle_debug.txt';
+    $logfile = wspsc_get_log_file();
     $text = '['.date('m/d/Y g:i A').'] - SUCCESS : Log file reset';
     $text .= "\n------------------------------------------------------------------\n\n";
     $fp = fopen($logfile, 'w');

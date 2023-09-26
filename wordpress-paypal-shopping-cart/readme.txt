@@ -226,6 +226,9 @@ None
 
 == Changelog ==
 
+= WIP +
+- Unique name for log file implemented to prevent direct access.
+
 = 4.6.9 =
 - Shopping Cart block inserter related: fixed a rendering issue when both a shortcode and a block inserter is used with the smart checkout option.
 - Issue with "Collect Customer Input" addon's form validation and smart PayPal checkout button fixed.

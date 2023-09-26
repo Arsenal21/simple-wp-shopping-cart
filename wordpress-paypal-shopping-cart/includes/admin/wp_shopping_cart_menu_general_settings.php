@@ -387,9 +387,13 @@ echo '<tr valign="top">
     <td><input type="checkbox" name="wp_shopping_cart_enable_debug" value="1" '.$wp_shopping_cart_enable_debug.' />
     <br />'.(__("If checked, debug output will be written to the log file. This is useful for troubleshooting post payment failures", "wordpress-simple-paypal-shopping-cart")).'
         <p><i>You can check the debug log file by clicking on the link below (The log file can be viewed using any text editor):</i>
-        <ul>
-            <li><a href="'.WP_CART_URL.'/ipn_handle_debug.txt" target="_blank">ipn_handle_debug.txt</a></li>
-        </ul>
+            <ul>
+                <li>
+                    <a class="button" href="'. esc_url( wp_nonce_url( get_admin_url() . '?wspsc-action=view_log', 'wspsc_view_log_nonce' ) ) . '" target="_blank">' .
+                    esc_html__( 'View Debug Log File', 'wordpress-simple-paypal-shopping-cart' ) . '</a><br>
+                    <p class="description">It will display the log messages in a separate window</p>
+                </li>
+            </ul>
         </p>
         <input type="submit" name="wspsc_reset_logfile" class="button" style="font-weight:bold; color:red" value="Reset Debug Log file"/>
         <p class="description">It will reset the debug log file and timestamp it with a log file reset message.</a>
