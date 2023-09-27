@@ -37,6 +37,7 @@ $locale = apply_filters( 'plugin_locale', get_locale(), 'wordpress-simple-paypal
 load_textdomain( 'wordpress-simple-paypal-shopping-cart', WP_LANG_DIR . "/wordpress-simple-paypal-shopping-cart-$locale.mo" );
 load_plugin_textdomain( 'wordpress-simple-paypal-shopping-cart', false, WP_CART_FOLDER . '/languages' );
 
+include_once(WP_CART_PATH . 'includes/wspsc_debug_logging_functions.php');
 include_once('wp_shopping_cart_utility_functions.php');
 include_once('wp_shopping_cart_shortcodes.php');
 include_once('wp_shopping_cart_misc_functions.php');
