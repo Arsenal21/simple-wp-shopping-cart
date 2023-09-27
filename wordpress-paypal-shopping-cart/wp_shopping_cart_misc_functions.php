@@ -52,17 +52,11 @@ function wp_cart_admin_init_handler() {
 	$user_feedback = new WSPSC_Admin_User_Feedback();
 	$user_feedback->init();
 
-    // View log
+    // View log file if requested.
     $action = isset( $_GET['wspsc-action'] ) ? sanitize_text_field( stripslashes ( $_GET['wspsc-action'] ) ) : '';
 	if ( ! empty( $action ) && $action === 'view_log' ) {
         check_admin_referer( 'wspsc_view_log_nonce' );
-        $logfile = fopen( wspsc_get_log_file(), 'rb' );
-        if (!$logfile) {
-            wp_die( __('Log file dosen\'t exists.', 'wordpress-simple-paypal-shopping-cart') );
-        }
-        header( 'Content-Type: text/plain' );
-        fpassthru( $logfile );
-        die;
+        wspsc_read_log_file();
 	}
 }
 
