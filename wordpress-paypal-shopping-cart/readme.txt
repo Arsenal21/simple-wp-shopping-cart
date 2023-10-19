@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.3
-Stable tag: 4.6.9
+Stable tag: 4.7.0
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -113,15 +113,6 @@ You can translate the plugin using [this documentation](https://www.tipsandtrick
 * If you are a developer and you need some extra hooks or filters for this plugin please let us know.
 * Github repository - https://github.com/Arsenal21/simple-wp-shopping-cart
 
-= Note =
-
-There are a few exact duplicate copies of this plugin that other people made. We have a few users who are getting confused as to which one is the original simple shopping cart plugin. This is the original simple PayPal shopping cart and you can verify it with the following information:
-
-* Check the stats tab of the plugin and you will be able to see a history of when this plugin was first added to WordPress.
-* Check the number of downloads on the sidebar. The original plugin always gets more downloads than the copycats.
-* Check the number of ratings. The original plugin should have more votes.
-* Check the developer's site.
-
 == Usage ==
 #1) To add an 'Add to Cart' button for a product, simply add the following shortcode to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price.
 
@@ -132,6 +123,8 @@ There are a few exact duplicate copies of this plugin that other people made. We
 [show_wp_shopping_cart]
 
 #3) Alternatively, you have the option to utilize the Gutenberg editor blocks provided by this plugin to conveniently insert the add to cart button and shopping cart in desired locations within your content.
+
+Read the [documentation for using the blocks](https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-blocks)
 
 #4) To insert the 'Add to Cart' button from a template or PHP file, you can utilize the following PHP function:
 
@@ -226,10 +219,11 @@ None
 
 == Changelog ==
 
-= WIP +
+= 4.7.0 =
 - Unique names for debug log file name.
 - Updated the translation POT file.
 - Added a CSS wrapper class to the product box shortcode output.
+- Added documentation for using the blocks in the new WordPress editor.
 
 = 4.6.9 =
 - Shopping Cart block inserter related: fixed a rendering issue when both a shortcode and a block inserter is used with the smart checkout option.
