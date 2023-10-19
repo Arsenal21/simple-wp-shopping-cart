@@ -229,6 +229,7 @@ None
 = WIP +
 - Unique names for debug log file name.
 - Updated the translation POT file.
+- Added a CSS wrapper class to the product box shortcode output.
 
 = 4.6.9 =
 - Shopping Cart block inserter related: fixed a rendering issue when both a shortcode and a block inserter is used with the smart checkout option.

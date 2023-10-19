@@ -81,6 +81,7 @@ function wp_cart_display_product_handler($atts)
     $button_code = print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
 
     $display_code = <<<EOT
+    <div class="wp_cart_product_display_box_wrapper">
     <div class="wp_cart_product_display_box">
         <div class="wp_cart_product_thumbnail">
             $thumbnail_code
@@ -99,6 +100,7 @@ function wp_cart_display_product_handler($atts)
                 $button_code
                 </div>
             </div>
+    </div>
     </div>
 EOT;
     return $display_code;
