@@ -3,7 +3,7 @@ Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: 4.7.0
 License: GPLv2 or later
 
@@ -218,6 +218,9 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
+= WIP =
+- Shows the string "Item" for 1. Show the string "Items" for 0 or more than 1.
 
 = 4.7.0 =
 - Unique names for debug log file name.

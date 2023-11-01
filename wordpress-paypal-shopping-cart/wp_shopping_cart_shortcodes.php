@@ -118,7 +118,8 @@ function wspsc_compact_cart_handler($args)
     $output .= '<div class="wpsps_compact_cart_container">';
     if($num_items>0){
             $cart_total = $wspsc_cart->get_total_cart_sub_total();
-            $item_message = ($num_items <= 1) ? __("Item", "wordpress-simple-paypal-shopping-cart") : __("Items", "wordpress-simple-paypal-shopping-cart");
+            //Shows "Item" for 1.  Shows "Items" for 0 or more than 1.
+            $item_message = ($num_items == 1) ? __("Item", "wordpress-simple-paypal-shopping-cart") : __("Items", "wordpress-simple-paypal-shopping-cart");
             $output .= $num_items . " " . $item_message;
             $output .= '<span class="wpsps_compact_cart_price"> '. print_payment_currency($cart_total,$curSymbol).'</span>';
             if(!empty($checkout_url)){
@@ -148,7 +149,8 @@ function wspsc_compact_cart2_handler($args)
     $output .= '<div class="wspsc_compact_cart2_container">';
 
     $output .= '<div class="wspsc_compact_cart2_inside">';
-    $item_message = ($num_items <= 1) ? __("Item", "wordpress-simple-paypal-shopping-cart") : __("Items", "wordpress-simple-paypal-shopping-cart");
+    //Shows "Item" for 1.  Shows "Items" for 0 or more than 1.
+    $item_message = ($num_items == 1) ? __("Item", "wordpress-simple-paypal-shopping-cart") : __("Items", "wordpress-simple-paypal-shopping-cart");
 
     if(!empty($checkout_url)){
         $output .= '<a class="wspsc_compact_cart2_view_cart_link" href="'.$checkout_url.'">'.$num_items . " " . $item_message . '</a>';
