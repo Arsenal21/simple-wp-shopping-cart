@@ -221,6 +221,7 @@ None
 
 = WIP =
 - Shows the string "Item" for 1. Show the string "Items" for 0 or more than 1.
+- PHP8 related update for the shipping calculation in the cart.
 
 = 4.7.0 =
 - Unique names for debug log file name.

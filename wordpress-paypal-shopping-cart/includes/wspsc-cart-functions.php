@@ -101,7 +101,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		}
 		if ( ! empty( $item_total_shipping ) ) {
 			$baseShipping = get_option( 'cart_base_shipping_cost' );
-			$postage_cost = $item_total_shipping + $baseShipping;
+			$postage_cost = (float)$item_total_shipping + (float)$baseShipping;
 		}
 
 		$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
