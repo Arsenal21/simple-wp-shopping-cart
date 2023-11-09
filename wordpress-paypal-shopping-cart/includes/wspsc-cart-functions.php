@@ -69,6 +69,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 	global $plugin_dir_name;
 	$output .= '<div class="shopping_cart">';
+	$output .= '<a name="wpspsc_cart_anchor"></a>';
 	if ( ! get_option( 'wp_shopping_cart_image_hide' ) ) {
 		$cart_icon_img_src = WP_CART_URL . '/images/shopping_cart_icon.png';
 		$cart_icon_img_src = apply_filters( 'wspsc_cart_icon_image_src', $cart_icon_img_src );
