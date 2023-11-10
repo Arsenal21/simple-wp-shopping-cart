@@ -478,6 +478,7 @@ function wpspc_cart_actions_handler() {
 		exit;
 	    }
 	}
+	wpspsc_redirect_if_using_anchor();
     } else if ( isset( $_POST[ 'cquantity' ] ) ) {
 	$nonce = $_REQUEST[ '_wpnonce' ];
 	if ( ! wp_verify_nonce( $nonce, 'wspsc_cquantity' ) ) {
@@ -506,6 +507,8 @@ function wpspc_cart_actions_handler() {
 	if( $wspsc_cart->get_cart_id() ) {
 		$wspsc_cart->add_items($products);
 	}
+
+	wpspsc_redirect_if_using_anchor();
     } else if ( isset( $_POST[ 'delcart' ] ) ) {
 	$nonce = $_REQUEST[ '_wpnonce' ];
 	if ( ! wp_verify_nonce( $nonce, 'wspsc_delcart' ) ) {
@@ -531,6 +534,8 @@ function wpspc_cart_actions_handler() {
 	if ( ! $wspsc_cart->get_items() ) {	    
 		$wspsc_cart->reset_cart();
 	}
+
+	wpspsc_redirect_if_using_anchor();
     } else if ( isset( $_POST[ 'wpspsc_coupon_code' ] ) ) {
 	$nonce = $_REQUEST[ '_wpnonce' ];
 	if ( ! wp_verify_nonce( $nonce, 'wspsc_coupon' ) ) {
@@ -538,7 +543,71 @@ function wpspc_cart_actions_handler() {
 	}
 	$coupon_code = isset( $_POST[ 'wpspsc_coupon_code' ] ) ? sanitize_text_field( $_POST[ 'wpspsc_coupon_code' ] ) : '';
 	wpspsc_apply_cart_discount( $coupon_code );	//apply discount and update cart products in database
+	wpspsc_js_redirect_if_using_anchor();
+	}
+}
+
+function wpspsc_redirect_if_using_anchor()
+{
+    if (get_option('shopping_cart_anchor')) {
+        $anchor_name = wspsc_current_page_url() . "#wpspsc_cart_anchor";
+        wspsc_redirect_to_url($anchor_name, null, '0');
     }
+}
+
+function wpspsc_js_redirect_if_using_anchor()
+{
+    if (get_option('shopping_cart_anchor')) {
+		add_action('wp_footer', function(){
+			$anchor_name = "#wpspsc_cart_anchor";
+			?>
+			<script>
+				document.addEventListener("DOMContentLoaded", function(){
+					window.location.href = "<?php echo $anchor_name; ?>";
+				})
+			</script>
+			<?php	
+		});
+    }
+}
+
+function wspsc_redirect_to_url($url, $delay = '0', $exit = '1')
+{
+    if (empty($url)) {
+        echo "<br /><strong>".__("Error! The URL value is empty. Please specify a correct URL value to redirect to!", "wordpress-simple-paypal-shopping-cart")."</strong>";
+        exit;
+    }
+
+    $url = apply_filters('wspsc_redirect_to_url', $url);
+
+    if (!headers_sent()) {
+        header('Location: ' . $url);
+    } else {
+        echo '<meta http-equiv="refresh" content="' . $delay . ';url=' . $url . '" />';
+    }
+    if ($exit == '1') {
+        exit;
+    }
+}
+
+function wspsc_current_page_url()
+{
+    $pageURL = 'http';
+
+    if (isset($_SERVER['SCRIPT_URI']) && !empty($_SERVER['SCRIPT_URI'])) {
+        return $_SERVER['SCRIPT_URI'];
+    }
+
+    if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] == "on")) {
+        $pageURL .= "s";
+    }
+    $pageURL .= "://";
+    if (isset($_SERVER["SERVER_PORT"]) && ($_SERVER["SERVER_PORT"] != "80") && ($_SERVER["SERVER_PORT"] != "443")) {
+        $pageURL .= ltrim($_SERVER["SERVER_NAME"], ".*") . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+    } else {
+        $pageURL .= ltrim($_SERVER["SERVER_NAME"], ".*") . $_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
 }
 
 function wp_cart_add_custom_field() {

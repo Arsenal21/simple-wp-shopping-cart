@@ -54,6 +54,7 @@ function wspsc_show_general_settings_page ()
         update_option('wspsc_disable_nonce_add_cart', (isset($_POST['wspsc_disable_nonce_add_cart']) && $_POST['wspsc_disable_nonce_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_price_check_add_cart', (isset($_POST['wspsc_disable_price_check_add_cart']) && $_POST['wspsc_disable_price_check_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wp_use_aff_platform', (isset($_POST['wp_use_aff_platform']) && $_POST['wp_use_aff_platform']!='') ? 'checked="checked"':'' );
+        update_option('shopping_cart_anchor', (isset($_POST['shopping_cart_anchor']) && $_POST['shopping_cart_anchor']!='') ? 'checked="checked"':'' );
         update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
 
         update_option('wp_shopping_cart_enable_sandbox', (isset($_POST['wp_shopping_cart_enable_sandbox']) && $_POST['wp_shopping_cart_enable_sandbox']!='') ? 'checked="checked"':'' );
@@ -143,6 +144,13 @@ function wspsc_show_general_settings_page ()
     }
     else{
         $wp_use_aff_platform = '';
+    }
+
+    if (get_option('shopping_cart_anchor')){
+        $shopping_cart_anchor = 'checked="checked"';
+    }
+    else{
+        $shopping_cart_anchor = '';
     }
 
     if (get_option('wpspc_disable_standard_checkout')){
@@ -372,6 +380,13 @@ echo '<tr valign="top">
 <td><input type="checkbox" name="wp_use_aff_platform" value="1" '.$wp_use_aff_platform.' />
 <br />'.(__("Check this if using with the", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/wordpress-affiliate-platform-plugin-simple-affiliate-program-for-wordpress-blogsite-1474" target="_blank">WP Affiliate Platform plugin</a>. '.(__("This plugin lets you run your own affiliate campaign/program and allows you to reward (pay commission) your affiliates for referred sales", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
+
+<tr valign="top">
+<th scope="row">'.__("Allow Shopping Cart Anchor", "wordpress-simple-paypal-shopping-cart").'</th>
+<td><input type="checkbox" name="shopping_cart_anchor" value="1" '.$shopping_cart_anchor.' />
+<br /><p class="description">'. __('If checked the visitor will be taken to the Shopping cart anchor point within the page after a product Add, Delete or Quantity Change.', 'wordpress-simple-paypal-shopping-cart') .'</p></td>
+</tr>
+
 </table>
 
 </div></div>
