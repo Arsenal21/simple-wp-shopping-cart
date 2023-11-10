@@ -353,6 +353,12 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
+<th scope="row">'.__("Allow Shopping Cart Anchor", "wordpress-simple-paypal-shopping-cart").'</th>
+<td><input type="checkbox" name="shopping_cart_anchor" value="1" '.$shopping_cart_anchor.' />
+<br /><p class="description">'. __('If checked the visitor will be taken to the Shopping cart anchor point within the page after a product Add, Delete or Quantity Change.', 'wordpress-simple-paypal-shopping-cart') .'</p></td>
+</tr>
+
+<tr valign="top">
 <th scope="row">'.(__("Reset Cart After Redirection to Return Page", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_reset_after_redirection_to_return_page" value="1" '.$wp_shopping_cart_reset_after_redirection_to_return_page.' />
 <br />'.(__("If checked the shopping cart will be reset when the customer lands on the return URL (Thank You) page.", "wordpress-simple-paypal-shopping-cart")).'</td>
@@ -379,12 +385,6 @@ echo '<tr valign="top">
 <th scope="row">'.(__("Use WP Affiliate Platform", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_use_aff_platform" value="1" '.$wp_use_aff_platform.' />
 <br />'.(__("Check this if using with the", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/wordpress-affiliate-platform-plugin-simple-affiliate-program-for-wordpress-blogsite-1474" target="_blank">WP Affiliate Platform plugin</a>. '.(__("This plugin lets you run your own affiliate campaign/program and allows you to reward (pay commission) your affiliates for referred sales", "wordpress-simple-paypal-shopping-cart")).'</td>
-</tr>
-
-<tr valign="top">
-<th scope="row">'.__("Allow Shopping Cart Anchor", "wordpress-simple-paypal-shopping-cart").'</th>
-<td><input type="checkbox" name="shopping_cart_anchor" value="1" '.$shopping_cart_anchor.' />
-<br /><p class="description">'. __('If checked the visitor will be taken to the Shopping cart anchor point within the page after a product Add, Delete or Quantity Change.', 'wordpress-simple-paypal-shopping-cart') .'</p></td>
 </tr>
 
 </table>

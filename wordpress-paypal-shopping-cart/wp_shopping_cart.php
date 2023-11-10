@@ -11,7 +11,7 @@
   Domain Path: /languages/
  */
 
-//Slug - wspsc
+//Slug - wpsc. Use this slug/prefix for all the functions and classes.
 
 if ( ! defined( 'ABSPATH' ) ) {//Exit if accessed directly
     exit;
@@ -537,21 +537,21 @@ function wpspc_cart_actions_handler() {
 
 	wpspsc_redirect_if_using_anchor();
     } else if ( isset( $_POST[ 'wpspsc_coupon_code' ] ) ) {
-	$nonce = $_REQUEST[ '_wpnonce' ];
-	if ( ! wp_verify_nonce( $nonce, 'wspsc_coupon' ) ) {
-	    wp_die( 'Error! Nonce Security Check Failed!' );
-	}
-	$coupon_code = isset( $_POST[ 'wpspsc_coupon_code' ] ) ? sanitize_text_field( $_POST[ 'wpspsc_coupon_code' ] ) : '';
-	wpspsc_apply_cart_discount( $coupon_code );	//apply discount and update cart products in database
-	wpspsc_js_redirect_if_using_anchor();
+		$nonce = $_REQUEST[ '_wpnonce' ];
+		if ( ! wp_verify_nonce( $nonce, 'wspsc_coupon' ) ) {
+			wp_die( 'Error! Nonce Security Check Failed!' );
+		}
+		$coupon_code = isset( $_POST[ 'wpspsc_coupon_code' ] ) ? sanitize_text_field( $_POST[ 'wpspsc_coupon_code' ] ) : '';
+		wpspsc_apply_cart_discount( $coupon_code );	//apply discount and update cart products in database
+		wpspsc_js_redirect_if_using_anchor();
 	}
 }
 
 function wpspsc_redirect_if_using_anchor()
 {
     if (get_option('shopping_cart_anchor')) {
-        $anchor_name = wspsc_current_page_url() . "#wpspsc_cart_anchor";
-        wspsc_redirect_to_url($anchor_name, null, '0');
+        $anchor_name = wpsc_current_page_url() . "#wpsc_cart_anchor";
+        wpsc_redirect_to_url($anchor_name, null, '0');
     }
 }
 
@@ -559,7 +559,7 @@ function wpspsc_js_redirect_if_using_anchor()
 {
     if (get_option('shopping_cart_anchor')) {
 		add_action('wp_footer', function(){
-			$anchor_name = "#wpspsc_cart_anchor";
+			$anchor_name = "#wpsc_cart_anchor";
 			?>
 			<script>
 				document.addEventListener("DOMContentLoaded", function(){
@@ -571,14 +571,14 @@ function wpspsc_js_redirect_if_using_anchor()
     }
 }
 
-function wspsc_redirect_to_url($url, $delay = '0', $exit = '1')
+function wpsc_redirect_to_url($url, $delay = '0', $exit = '1')
 {
     if (empty($url)) {
         echo "<br /><strong>".__("Error! The URL value is empty. Please specify a correct URL value to redirect to!", "wordpress-simple-paypal-shopping-cart")."</strong>";
         exit;
     }
 
-    $url = apply_filters('wspsc_redirect_to_url', $url);
+    $url = apply_filters('wpsc_redirect_to_url', $url);
 
     if (!headers_sent()) {
         header('Location: ' . $url);
@@ -590,7 +590,7 @@ function wspsc_redirect_to_url($url, $delay = '0', $exit = '1')
     }
 }
 
-function wspsc_current_page_url()
+function wpsc_current_page_url()
 {
     $pageURL = 'http';
 
