@@ -545,8 +545,11 @@ function wpspc_cart_actions_handler() {
 
 function wpspsc_redirect_if_using_anchor() {
 	if ( get_option( 'shopping_cart_anchor' ) ) {
-		$anchor_name = wpsc_current_page_url() . "#wpsc_cart_anchor";
-		wpsc_redirect_to_url( $anchor_name, null, '0' );
+		$current_url = wpsc_current_page_url();
+		//Remove trailing slash if there is one.
+		$current_url = rtrim($current_url,"/");
+		$anchor_url =  $current_url . "#wpsc_cart_anchor";
+		wpsc_redirect_to_url( $anchor_url );
 	}
 }
 
