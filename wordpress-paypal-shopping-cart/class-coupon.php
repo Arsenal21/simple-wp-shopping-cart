@@ -180,8 +180,12 @@ function wpspsc_apply_cart_discount($coupon_code)
     $curr_symbol = WP_CART_CURRENCY_SYMBOL;
     $discount_rate = $coupon_item->discount_rate;
     $products = $wspsc_cart->get_items();
+    if( !isset($products) || !is_array($products) ){
+        //Cart is empty. No need to run the discount code.
+        return;
+    }
     $discount_total = 0;
-    foreach ($products as $key => $item)
+    foreach ( $products as $key => $item )
     {
         if ($item->get_price() > 0)
         {
@@ -191,7 +195,7 @@ function wpspsc_apply_cart_discount($coupon_code)
             unset($products[$key]);
             array_push($products, $item);
         }
-    }    
+    }
     $wspsc_cart->add_items($products);
     $disct_amt_msg = print_payment_currency($discount_total, $curr_symbol);
     $wspsc_cart->set_cart_action_msg('<div class="wpspsc_success_message">'.__("Discount applied successfully! Total Discount: ", "wordpress-simple-paypal-shopping-cart").$disct_amt_msg.'</div>');

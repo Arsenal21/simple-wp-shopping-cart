@@ -76,7 +76,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output           .= "<img src='" . $cart_icon_img_src . "' class='wspsc_cart_header_image' value='" . ( __( 'Cart', 'wordpress-simple-paypal-shopping-cart' ) ) . "' alt='" . ( __( 'Cart', 'wordpress-simple-paypal-shopping-cart' ) ) . "' />";
 	}
 	if ( ! empty( $title ) ) {
-		$output .= '<h2>';
+		$output .= '<h2 class="wpsc_cart_title">';
 		$output .= $title;
 		$output .= '</h2>';
 	}
