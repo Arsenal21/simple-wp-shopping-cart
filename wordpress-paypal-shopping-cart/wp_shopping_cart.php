@@ -470,12 +470,12 @@ function wpspc_cart_actions_handler() {
 			if ( empty( $checkout_url ) ) {
 				echo "<br /><strong>" . ( __( "Shopping Cart Configuration Error! You must specify a value in the 'Checkout Page URL' field for the automatic redirection feature to work!", "wordpress-simple-paypal-shopping-cart" ) ) . "</strong><br />";
 			} else {
-				$redirection_parameter = 'Location: ' . $checkout_url;
-				header( $redirection_parameter );
+				wpsc_redirect_to_url( $checkout_url );
 				exit;
 			}
 		}
-		wpspsc_redirect_if_using_anchor();
+		//Redirect to the anchor if the anchor option is enabled.
+		wpsc_redirect_if_using_anchor();
 	} else if ( isset( $_POST['cquantity'] ) ) {
 		$nonce = $_REQUEST['_wpnonce'];
 		if ( ! wp_verify_nonce( $nonce, 'wspsc_cquantity' ) ) {
@@ -504,8 +504,8 @@ function wpspc_cart_actions_handler() {
 		if ( $wspsc_cart->get_cart_id() ) {
 			$wspsc_cart->add_items( $products );
 		}
-
-		wpspsc_redirect_if_using_anchor();
+		//Redirect to the anchor if the anchor option is enabled.
+		wpsc_redirect_if_using_anchor();
 	} else if ( isset( $_POST['delcart'] ) ) {
 		$nonce = $_REQUEST['_wpnonce'];
 		if ( ! wp_verify_nonce( $nonce, 'wspsc_delcart' ) ) {
@@ -530,22 +530,24 @@ function wpspc_cart_actions_handler() {
 		if ( ! $wspsc_cart->get_items() ) {
 			$wspsc_cart->reset_cart();
 		}
-
-		wpspsc_redirect_if_using_anchor();
+		//Redirect to the anchor if the anchor option is enabled.
+		wpsc_redirect_if_using_anchor();
 	} else if ( isset( $_POST['wpspsc_coupon_code'] ) ) {
 		$nonce = $_REQUEST['_wpnonce'];
 		if ( ! wp_verify_nonce( $nonce, 'wspsc_coupon' ) ) {
 			wp_die( 'Error! Nonce Security Check Failed!' );
 		}
 		$coupon_code = isset( $_POST['wpspsc_coupon_code'] ) ? sanitize_text_field( $_POST['wpspsc_coupon_code'] ) : '';
-		wpspsc_apply_cart_discount( $coupon_code ); //apply discount and update cart products in database
-		wpspsc_js_redirect_if_using_anchor();
+		//Apply discount and update cart products in database
+		wpspsc_apply_cart_discount( $coupon_code );
+		//Redirect to the anchor if the anchor option is enabled. This redirect needs to be handled using JS.
+		wpsc_js_redirect_if_using_anchor();
 	}
 }
 
-function wpspsc_redirect_if_using_anchor() {
+function wpsc_redirect_if_using_anchor() {
 	if ( get_option( 'shopping_cart_anchor' ) ) {
-		$current_url = wpsc_current_page_url();
+		$current_url = wpsc_get_current_page_url();
 		//Remove trailing slash if there is one.
 		$current_url = rtrim($current_url,"/");
 		$anchor_url =  $current_url . "#wpsc_cart_anchor";
@@ -553,7 +555,7 @@ function wpspsc_redirect_if_using_anchor() {
 	}
 }
 
-function wpspsc_js_redirect_if_using_anchor() {
+function wpsc_js_redirect_if_using_anchor() {
 	if ( get_option( 'shopping_cart_anchor' ) ) {
 		add_action( 'wp_footer', function () {
 			$anchor_name = "#wpsc_cart_anchor";
@@ -586,7 +588,7 @@ function wpsc_redirect_to_url( $url, $delay = '0', $exit = '1' ) {
 	}
 }
 
-function wpsc_current_page_url() {
+function wpsc_get_current_page_url() {
 	$pageURL = 'http';
 
 	if ( isset( $_SERVER['SCRIPT_URI'] ) && ! empty( $_SERVER['SCRIPT_URI'] ) ) {
