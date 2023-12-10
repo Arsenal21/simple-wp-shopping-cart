@@ -466,7 +466,7 @@ function wpspc_cart_actions_handler() {
 
 
 		if ( get_option( 'wp_shopping_cart_auto_redirect_to_checkout_page' ) ) {
-			$checkout_url = get_option( 'cart_checkout_page_url' );
+			$checkout_url = sanitize_text_field(get_option( 'cart_checkout_page_url' ));
 			if ( empty( $checkout_url ) ) {
 				echo "<br /><strong>" . ( __( "Shopping Cart Configuration Error! You must specify a value in the 'Checkout Page URL' field for the automatic redirection feature to work!", "wordpress-simple-paypal-shopping-cart" ) ) . "</strong><br />";
 			} else {
