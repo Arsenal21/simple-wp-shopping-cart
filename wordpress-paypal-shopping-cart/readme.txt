@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.4
-Stable tag: 4.7.1
+Stable tag: 4.7.2
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -219,8 +219,8 @@ None
 
 == Changelog ==
 
-= WIP =
-- Sanitization added to checkout page redirection url.
+= 4.7.2 =
+- Output escaping & sanitization added to checkout page redirection url.
 
 = 4.7.1 =
 - Shows the string "Item" for 1. Show the string "Items" for 0 or more than 1.
