@@ -219,6 +219,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Sanitization added to checkout page redirection url.
+
 = 4.7.1 =
 - Shows the string "Item" for 1. Show the string "Items" for 0 or more than 1.
 - Updated the help text for the sandbox mode option to include Stripe testmode.
