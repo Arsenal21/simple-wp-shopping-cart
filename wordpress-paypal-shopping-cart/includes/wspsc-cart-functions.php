@@ -209,7 +209,26 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output = apply_filters( 'wpspsc_before_checkout_form', $output );
 
 		$output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
-		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . '>';
+		// Check if terms and conditions are enabled or not.
+		$is_tnc_enabled = get_option('wp_shopping_cart_enable_tnc') != '';
+		if ($is_tnc_enabled){
+			wp_enqueue_script("wspsc-checkout-paypal-standard");
+			$wp_shopping_cart_tnc_text = get_option('wp_shopping_cart_tnc_text');
+			if ( !empty($wp_shopping_cart_tnc_text) ){
+				$tnc_checkbox = '<div class="wp-shopping-cart-tnc-wrap" class="pure-u-1" style="margin-top: 10px;">';
+				$tnc_checkbox .= '<p>';
+				$tnc_checkbox .= '<label for="wp_shopping_cart_tnc_input" class="pure-checkbox">';
+				$tnc_checkbox .= '<input id="wp_shopping_cart_tnc_input" type="checkbox" value="1">';
+				$tnc_checkbox .= wp_kses_post($wp_shopping_cart_tnc_text);
+				$tnc_checkbox .= '</label>';
+				$tnc_checkbox .= '<br />';
+				$tnc_checkbox .= '<span class="wp-shopping-cart-tnc-error" style="color: #cc0000; font-size: smaller;" role="alert"></span>';
+				$tnc_checkbox .= '</p>';
+				$tnc_checkbox .= '</div>';
+				$output .= $tnc_checkbox;
+			}
+		}
+		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . ' class="wspsc_checkout_form_standard">';
 		$output .= $form;
 		$style   = get_option( 'wpspc_disable_standard_checkout' ) ? 'display:none !important" data-wspsc-hidden="1' : '';
 		if ( $count ) {
@@ -289,6 +308,11 @@ function print_wp_shopping_cart( $args = array() ) {
 
         	//Anything that goes here will only be executed after the PayPal SDK is loaded.
 			console.log('PayPal Smart Checkout SDK loaded.');
+
+			// Get terms and condition elements.
+			const wspscTncCheckbox = document.getElementById('wp_shopping_cart_tnc_input');
+			const wspscTncCheckboxErrorDiv = document.querySelector('.wp-shopping-cart-tnc-error');
+
 			var wpspsc_cci_do_submit = true;
 
 			paypal.Button.render({
@@ -335,6 +359,21 @@ function print_wp_shopping_cart( $args = array() ) {
 
                         actions.enable();
 					});
+
+					// Check is terms and condition enabled by checking if the html element is present or not.
+					if (wspscTncCheckbox !== null) {
+						if (!wspscTncCheckbox.checked) {
+							actions.disable();
+						}
+						wspscTncCheckbox.addEventListener('change', function() {
+							if (wspscTncCheckbox.checked) {
+								actions.enable();
+								wspscTncCheckboxErrorDiv.innerText = '';
+							}else{
+								actions.disable();
+							}
+						});
+					}
 				});
 			},
 			onClick: function () {
@@ -346,6 +385,16 @@ function print_wp_shopping_cart( $args = array() ) {
 				//				    wpspsc_pp_actions.disable();
 				// }
 				wpspsc_cci_do_submit = true;
+
+				// Check if terms and condition is enabled and append error message if not checked.
+				if (wspscTncCheckbox !== null) { 
+					if (wspscTncCheckbox.checked) {
+						wspscTncCheckboxErrorDiv.innerText = '';
+					}else{
+						wspscTncCheckboxErrorDiv.innerText = "<?php _e("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart")?>";
+					}
+				}
+
 			},
 			payment: function (data, actions) {
 				return actions.payment.create({
@@ -476,7 +525,7 @@ function print_wp_shopping_cart( $args = array() ) {
 					</div>';
 			$output .= '</form>';
 		}
-		$output .= '</td></tr>';
+		$output .= '</td></input>';
 	}
 	$output .= '</table></div>';
 	$output  = apply_filters( 'wpspsc_after_cart_output', $output );
