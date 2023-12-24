@@ -2,20 +2,15 @@ jQuery(document).ready(function(){
     jQuery(".wspsc-stripe-payment-form").on("submit",function(e){
         e.preventDefault();
     });    
-
-    const wspscTncCheckbox = document.getElementById('wp_shopping_cart_tnc_input');
-    const wspscTncCheckboxErrorDiv = document.querySelector('.wp-shopping-cart-tnc-error');
     
     jQuery('.wspsc_stripe_btn').on('click',function(e) {
         e.preventDefault();
-        if (wspscTncCheckbox !== null) {   
-            if (!wspscTncCheckbox.checked) {
-                wspscTncCheckboxErrorDiv.innerText = wp.i18n.__("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart");
-                return;
-            } else {
-                wspscTncCheckboxErrorDiv.innerText = "";
-            }        
+        
+        // Validate terms and conditions.
+        if (!wspscValidateTnc()) {   
+            return       
         }
+
         var form =jQuery(this).closest('.wspsc-stripe-payment-form');
         var requiredFields = jQuery(this).closest("table").find('.wpspsc_cci_input').filter("[required]:visible");
         var isValid = true;
