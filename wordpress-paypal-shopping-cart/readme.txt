@@ -218,6 +218,8 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+= WIP =
+- Terms and conditions settings added for checkout forms.
 
 = 4.7.2 =
 - Output escaping & sanitization added to checkout page redirection url.

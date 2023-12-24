@@ -2,9 +2,15 @@ jQuery(document).ready(function(){
     jQuery(".wspsc-stripe-payment-form").on("submit",function(e){
         e.preventDefault();
     });    
-
+    
     jQuery('.wspsc_stripe_btn').on('click',function(e) {
-        e.preventDefault();        
+        e.preventDefault();
+        
+        // Validate terms and conditions.
+        if (!wspscValidateTnc()) {   
+            return       
+        }
+
         var form =jQuery(this).closest('.wspsc-stripe-payment-form');
         var requiredFields = jQuery(this).closest("table").find('.wpspsc_cci_input').filter("[required]:visible");
         var isValid = true;

@@ -59,7 +59,10 @@ function wspsc_show_general_settings_page ()
 
         update_option('wp_shopping_cart_enable_sandbox', (isset($_POST['wp_shopping_cart_enable_sandbox']) && $_POST['wp_shopping_cart_enable_sandbox']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_enable_debug', (isset($_POST['wp_shopping_cart_enable_debug']) && $_POST['wp_shopping_cart_enable_debug']!='') ? 'checked="checked"':'' );
-
+        
+        update_option('wp_shopping_cart_enable_tnc', (isset($_POST['wp_shopping_cart_enable_tnc']) && $_POST['wp_shopping_cart_enable_tnc']!='') ? 'checked="checked"': '' );
+        update_option('wp_shopping_cart_tnc_text', (isset($_POST['wp_shopping_cart_tnc_text']) && $_POST['wp_shopping_cart_tnc_text']!='') ? wp_kses_post($_POST['wp_shopping_cart_tnc_text']) :'' );
+        
         echo '<div id="message" class="updated fade">';
         echo '<p><strong>'.(__("Options Updated!", "wordpress-simple-paypal-shopping-cart")).'</strong></p></div>';
     }
@@ -169,6 +172,15 @@ function wspsc_show_general_settings_page ()
     $wp_shopping_cart_enable_debug = '';
     if (get_option('wp_shopping_cart_enable_debug')){
         $wp_shopping_cart_enable_debug = 'checked="checked"';
+    }
+
+    $wp_shopping_cart_enable_tnc = '';
+    if (get_option('wp_shopping_cart_enable_tnc')){
+        $wp_shopping_cart_enable_tnc = 'checked="checked"';
+    }
+    $wp_shopping_cart_tnc_text = '';
+    if (get_option('wp_shopping_cart_tnc_text')){
+        $wp_shopping_cart_tnc_text = wp_kses_post(get_option('wp_shopping_cart_tnc_text'));
     }
     ?>
 
@@ -390,6 +402,36 @@ echo '<tr valign="top">
 </table>
 
 </div></div>
+
+<div class="postbox">
+    <h3 class="hndle"><label for="title">'.(__("Terms and Conditions Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
+    <div class="inside">
+        <p>' . __( 'This section allows you to configure Terms and Conditions or Privacy Policy that customer must accept before making payment. This, for example, can be used to comply with EU GDPR.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>
+        <table class="form-table">
+            <tr valign="top">
+                <th scope="row">
+                    <label for="wp_shopping_cart_enable_tnc">'.(__("Enable Terms and Conditions", "wordpress-simple-paypal-shopping-cart")).'<label>
+                </th>
+                <td>
+                    <input type="checkbox" id="wp_shopping_cart_enable_tnc" name="wp_shopping_cart_enable_tnc" value="1" '.$wp_shopping_cart_enable_tnc.' />
+                    <br />
+                    <p class="description">'.(__("Enable Terms and Conditions checkbox.", "wordpress-simple-paypal-shopping-cart")).'</a>
+                </td>
+            </tr>
+
+            <tr valign="top">
+                <th scope="row">
+                    <label for="wp_shopping_cart_tnc_text">'.(__("Checkbox Text", "wordpress-simple-paypal-shopping-cart")).'<label>
+                </th>
+                <td>
+                    <textarea id="wp_shopping_cart_tnc_text" name="wp_shopping_cart_tnc_text" rows="4" cols="70">' . esc_html( $wp_shopping_cart_tnc_text ) . '</textarea>
+                    <br />
+                    <p class="description">'.(__("Text to be displayed on checkbox. It accepts HTML code so you can put a link to your terms and conditions page.", "wordpress-simple-paypal-shopping-cart")).'</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 
 <div class="postbox">
     <h3 class="hndle"><label for="title">'.(__("Testing and Debugging Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
