@@ -192,6 +192,9 @@ function wpspc_run_activation()
     $unique_id = uniqid('', true);
     add_option('wspsc_private_key_one',$unique_id);
 
+    $wspsc_default_tnc_text = __('I accept the <a href="https://example.com/terms-and-conditions/" target="_blank">Terms and Conditions</a>', "wordpress-simple-paypal-shopping-cart");
+    add_option('wp_shopping_cart_tnc_text', $wspsc_default_tnc_text);
+
 	// Set plugin activation time.
 	if ( empty( get_option( 'wspsc_plugin_activated_time' ) ) ) {
 		add_option( 'wspsc_plugin_activated_time', time() );
