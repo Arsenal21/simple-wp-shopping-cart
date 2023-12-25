@@ -406,7 +406,7 @@ echo '<tr valign="top">
 <div class="postbox">
     <h3 class="hndle"><label for="title">'.(__("Terms and Conditions Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
     <div class="inside">
-        <p>' . __( 'This section allows you to configure Terms and Conditions or Privacy Policy that customer must accept before making payment. This, for example, can be used to comply with EU GDPR.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>
+        <p>' . __( 'This section allows you to configure Terms and Conditions that the customer must accept before making payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row">
@@ -426,7 +426,7 @@ echo '<tr valign="top">
                 <td>
                     <textarea id="wp_shopping_cart_tnc_text" name="wp_shopping_cart_tnc_text" rows="4" cols="70">' . esc_html( $wp_shopping_cart_tnc_text ) . '</textarea>
                     <br />
-                    <p class="description">'.(__("Text to be displayed on checkbox. It accepts HTML code so you can put a link to your terms and conditions page.", "wordpress-simple-paypal-shopping-cart")).'</a>
+                    <p class="description">'.(__("Specify the text for the checkbox. It accepts HTML code so you can add a link to your terms and conditions page.", "wordpress-simple-paypal-shopping-cart")).'</a>
                 </td>
             </tr>
         </table>
