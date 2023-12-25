@@ -542,13 +542,14 @@ function wspsc_load_paypal_smart_checkout_js() {
 function wspsc_generate_tnc_section(){
 	$html = '';
 
-	$wp_shopping_cart_tnc_text = !empty(get_option('wp_shopping_cart_tnc_text')) ? wp_kses_post(get_option('wp_shopping_cart_tnc_text')) : __('I accept all the terms and conditions.',  "wordpress-simple-paypal-shopping-cart");
+	$wspsc_default_tnc_text = __('I accept the <a href="https://example.com/terms-and-conditions/" target="_blank">Terms and Conditions</a>', "wordpress-simple-paypal-shopping-cart");
+	$wspsc_tnc_text = !empty(get_option('wp_shopping_cart_tnc_text')) ? wp_kses_post(get_option('wp_shopping_cart_tnc_text')) : $wspsc_default_tnc_text;
 
 	$html .= '<div class="wp-shopping-cart-tnc-wrap" class="pure-u-1" style="margin-top: 10px;">';
 	$html .= '<p>';
 	$html .= '<label for="wp_shopping_cart_tnc_input" class="pure-checkbox">';
 	$html .= '<input id="wp_shopping_cart_tnc_input" type="checkbox" value="1">';
-	$html .= $wp_shopping_cart_tnc_text;
+	$html .= $wspsc_tnc_text;
 	$html .= '</label>';
 	$html .= '<br />';
 	$html .= '<span class="wp-shopping-cart-tnc-error" style="color: #cc0000; font-size: smaller;" role="alert"></span>';
