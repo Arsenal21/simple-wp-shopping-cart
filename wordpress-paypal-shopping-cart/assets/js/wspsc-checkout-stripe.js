@@ -7,7 +7,7 @@ jQuery(document).ready(function(){
         e.preventDefault();
         
         // Validate terms and conditions.
-        if (!wspscValidateTnc()) {   
+        if (!wspsc_validateTnc(e.target)) {   
             return       
         }
 
