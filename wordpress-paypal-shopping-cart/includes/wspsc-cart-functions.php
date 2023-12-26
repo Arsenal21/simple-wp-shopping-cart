@@ -215,7 +215,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		// Check if terms and conditions are enabled or not.
 		$is_tnc_enabled = get_option('wp_shopping_cart_enable_tnc') != '';
 		if ($is_tnc_enabled) {
-			$output .= wspsc_generate_tnc_section();
+			$output .= wspsc_generate_tnc_section($carts_cnt);
 		}
 		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . ' class="wspsc_checkout_form_standard">';
 		$output .= $form;
@@ -290,9 +290,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		</form>
 
 		<script type="text/javascript">
-			// Get terms and condition elements.
-			var wspscTncCheckbox = '#wp_shopping_cart_tnc_input';
-			var wspscTncCheckboxErrorDiv = '.wp-shopping-cart-tnc-error';
+			// Get terms and condition settings.
 			var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
 
     		document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function() {
@@ -341,23 +339,26 @@ function print_wp_shopping_cart( $args = array() ) {
 					}
 
 					// Disable paypal smart checkout form submission if terms and condition validation error.
-					if (!wspscValidateTnc(false)) {
+					const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
+					if (!wspsc_validateTnc(currentSmartPaymentForm, false)) {
 						actions.disable();
 					}
 
                     // listen to change in inputs and check if any empty required input fields.
-					jQuery('.wpspsc_cci_input, #wp_shopping_cart_tnc_input').on('change', function() {
+					jQuery('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').on('change', function() {
                         if (has_empty_required_input(<?php echo $carts_cnt; ?>)){
                             actions.disable();
                             return;
                         }
 						// Also check if terms and condition has checked.
 						if(wpspscTncEnabled) {
-							if (wspscValidateTnc(false)) {
+							if (wspsc_validateTnc(currentSmartPaymentForm, false)) {
 								actions.enable();
 							}else{
 								actions.disable();
 							}
+						}else{
+							actions.enable();
 						}
 					});
 				});
@@ -373,8 +374,10 @@ function print_wp_shopping_cart( $args = array() ) {
 				wpspsc_cci_do_submit = true;
 
 				// Check if terms and condition is enabled and append error message if not checked.
-				if (wpspscTncEnabled) { 
-					handleTncErrorMsg();
+				if (wpspscTncEnabled) {
+					const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
+					const tncContainer = wspsc_getClosestElement(currentSmartPaymentForm, wspscTncContainerSelector)
+					wspsc_handleTncErrorMsg(tncContainer);
 				}
 
 			},
@@ -536,19 +539,21 @@ function wspsc_load_paypal_smart_checkout_js() {
 
 /**
  * Generate the rendering code for term and conditions if enabled.
- *
+ * 
+ * @param int $carts_cnt The cart no.
+ * 		
  * @return string HTML output.
  */
-function wspsc_generate_tnc_section(){
+function wspsc_generate_tnc_section($carts_cnt){
 	$html = '';
 
 	$wspsc_default_tnc_text = __('I accept the <a href="https://example.com/terms-and-conditions/" target="_blank">Terms and Conditions</a>', "wordpress-simple-paypal-shopping-cart");
 	$wspsc_tnc_text = !empty(get_option('wp_shopping_cart_tnc_text')) ? wp_kses_post(get_option('wp_shopping_cart_tnc_text')) : $wspsc_default_tnc_text;
 
-	$html .= '<div class="wp-shopping-cart-tnc-wrap" class="pure-u-1" style="margin-top: 10px;">';
+	$html .= '<div class="wp-shopping-cart-tnc-container pure-u-1" style="margin-top: 10px;">';
 	$html .= '<p>';
-	$html .= '<label for="wp_shopping_cart_tnc_input" class="pure-checkbox">';
-	$html .= '<input id="wp_shopping_cart_tnc_input" type="checkbox" value="1">';
+	$html .= '<label for="wp_shopping_cart_tnc_input_'. $carts_cnt .'" class="pure-checkbox">';
+	$html .= '<input class="wp_shopping_cart_tnc_input" id="wp_shopping_cart_tnc_input_'. $carts_cnt .'" type="checkbox" value="1" style="margin-right: 8px">';
 	$html .= $wspsc_tnc_text;
 	$html .= '</label>';
 	$html .= '<br />';
