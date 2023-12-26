@@ -215,7 +215,6 @@ function print_wp_shopping_cart( $args = array() ) {
 		// Check if terms and conditions are enabled or not.
 		$is_tnc_enabled = get_option('wp_shopping_cart_enable_tnc') != '';
 		if ($is_tnc_enabled) {
-			wp_add_inline_script("wspsc-checkout-cart-script", "var wspscTncStatus = $is_tnc_enabled;" , 'before');
 			$output .= wspsc_generate_tnc_section($carts_cnt);
 		}
 		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . ' class="wspsc_checkout_form_standard">';
@@ -358,6 +357,8 @@ function print_wp_shopping_cart( $args = array() ) {
 							}else{
 								actions.disable();
 							}
+						}else{
+							actions.enable();
 						}
 					});
 				});
@@ -552,7 +553,7 @@ function wspsc_generate_tnc_section($carts_cnt){
 	$html .= '<div class="wp-shopping-cart-tnc-container pure-u-1" style="margin-top: 10px;">';
 	$html .= '<p>';
 	$html .= '<label for="wp_shopping_cart_tnc_input_'. $carts_cnt .'" class="pure-checkbox">';
-	$html .= '<input class="wp_shopping_cart_tnc_input" id="wp_shopping_cart_tnc_input_'. $carts_cnt .'" type="checkbox" value="1" style="margin-right: 6px">';
+	$html .= '<input class="wp_shopping_cart_tnc_input" id="wp_shopping_cart_tnc_input_'. $carts_cnt .'" type="checkbox" value="1" style="margin-right: 8px">';
 	$html .= $wspsc_tnc_text;
 	$html .= '</label>';
 	$html .= '<br />';
