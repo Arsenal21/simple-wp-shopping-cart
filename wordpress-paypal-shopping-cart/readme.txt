@@ -220,6 +220,7 @@ None
 == Changelog ==
 = WIP =
 - Terms and conditions settings added for checkout forms.
+- New utility function added for logging debug array.
 
 = 4.7.2 =
 - Output escaping & sanitization added to checkout page redirection url.
