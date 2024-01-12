@@ -1,5 +1,17 @@
 <?php
 
+function wpsc_is_txn_already_processed( $order_id, $ipn_data ){
+    $txn_id = $ipn_data['txn_id'];
+    $transaction_id = get_post_meta( $order_id, 'wpsc_txn_id', true );
+    if (! empty( $transaction_id )) {
+        if ($transaction_id == $txn_id) { 
+            //this transaction has been already processed once
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  * @deprecated This method has been deprecated. Use get_total_cart_qty() from WSPSC_Cart instead.
  * @return int Returns the total number of items in the cart.

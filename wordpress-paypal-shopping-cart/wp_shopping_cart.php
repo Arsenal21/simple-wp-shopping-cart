@@ -52,6 +52,7 @@ include_once( 'includes/admin/wp_shopping_cart_tinymce.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_discounts.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php' );
 include_once( WP_CART_PATH . 'includes/classes/class.wspsc_blocks.php' );
+include_once( WP_CART_PATH . 'lib/paypal/class-tthq-paypal-main.php' );
 
 wspsc_check_and_start_session();
 
