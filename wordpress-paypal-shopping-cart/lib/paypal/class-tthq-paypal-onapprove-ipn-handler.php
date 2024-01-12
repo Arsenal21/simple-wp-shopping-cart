@@ -84,7 +84,7 @@ class PayPal_OnApprove_IPN_Handler {
 		}
 
 		//Process the IPN data array
-		PayPal_Utility_Functions::log( 'Validation passed. Going to create/update member account and save transaction data.', true );
+		PayPal_Utility_Functions::log( 'Validation passed. Going to create/update record and save transaction data.', true );
 		
 		/**
 		 * TODO: This is a plugin specific method,
@@ -96,7 +96,7 @@ class PayPal_OnApprove_IPN_Handler {
 		/**
 		 * Trigger the IPN processed action hook (so other plugins can can listen for this event).
 		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
-		 * * i. e. 'paypal_subscription_checkout_ipn_processed' is actually 'swpm_paypal_subscription_checkout_ipn_processed' for simple membership plugin.
+		 * * i. e. 'paypal_subscription_checkout_ipn_processed' is actually '<prefix>_paypal_subscription_checkout_ipn_processed'
 		 */ 
 		do_action( PayPal_Utility_Functions::hook('paypal_subscription_checkout_ipn_processed'), $this->ipn_data );
 		do_action( PayPal_Utility_Functions::hook('payment_ipn_processed'), $this->ipn_data );

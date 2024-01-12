@@ -97,7 +97,7 @@ class PayPal_Webhook {
 	 * @return string
 	 */
 	public function get_url() {
-		//Example Webhook URL - https://www.example.com/?action=swpm_paypal_webhook_event&mode=production
+		//Example Webhook URL - https://www.example.com/?action=<prefix>_paypal_webhook_event&mode=production
 		$webhook_url = add_query_arg(
 			array(
 				'action' => PayPal_Main::$paypal_webhook_event_query_arg,

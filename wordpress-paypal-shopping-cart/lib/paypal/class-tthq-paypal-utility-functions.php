@@ -174,10 +174,8 @@ class PayPal_Utility_Functions{
                 //Plan creation failed. Show an error message.
                 $last_error = $paypal_req_api->get_last_error();
                 $error_message = isset($last_error['error_message']) ? $last_error['error_message'] : '';
-				/**
-				* REPLACE: plugin prefix across different plugins.
-				*/
-                $output .= '<div class="swpm-paypal-api-error-msg">';
+
+                $output .= '<div class="paypal-ppcp-api-error-msg">';
                 $output .= '<p>Error! Failed to create a subscription billing plan in your PayPal account. The following error message was returned from the PayPal API.</p>';
                 $output .= '<p>Error Message: ' . esc_attr($error_message) . '</p>';
                 $output .= '</div>';
@@ -227,7 +225,7 @@ class PayPal_Utility_Functions{
         //If not, show a notice to the admin user by using the admin_notice hook.
 
         //TODO - need to finilaize this.
-        //update_option( "swpm_show_{$mode}_webhook_notice", 'no' === $ret[ $mode ]['status'] );
+        //update_option( "<prefix>_show_webhook_notice_{$mode}", 'no' === $ret[ $mode ]['status'] );
         //Check the following code for example:
         //add_action( 'admin_notices', array( $this, 'show_webhooks_admin_notice' ) );
     }

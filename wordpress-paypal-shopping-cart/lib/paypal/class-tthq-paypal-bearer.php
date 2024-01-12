@@ -7,7 +7,7 @@ class PayPal_Bearer {
 	/**
 	* REPLACE: plugin prefix across different plugins.
 	*/
-	const BEARER_CACHE_KEY = 'swpm-ppcp-bearer-cache-key';
+	const BEARER_CACHE_KEY = 'wpsc-ppcp-bearer-cache-key';
 	const BEARER_CACHE_EXPIRATION = (8 * HOUR_IN_SECONDS);//Cache for 8 hours.
 	protected static $instance;
 

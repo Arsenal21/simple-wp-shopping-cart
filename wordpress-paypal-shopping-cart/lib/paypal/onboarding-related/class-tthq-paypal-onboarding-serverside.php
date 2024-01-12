@@ -22,7 +22,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 
 	public function handle_onboarded_callback_data(){
 		//Handle the data sent by PayPal after the onboarding process.
-		//The get_option('swpm_ppcp_connect_query_args_'.$environment_mode) will give you the query args that you sent to the PayPal onboarding page
+		//The get_option('<prefix>_ppcp_connect_query_args_'.$environment_mode) will give you the query args that you sent to the PayPal onboarding page
 
 		PayPal_Utility_Functions::log( 'Onboarding step: handle_onboarded_callback_data.', true );
 

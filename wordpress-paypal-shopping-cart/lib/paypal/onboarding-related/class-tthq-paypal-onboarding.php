@@ -13,7 +13,7 @@ class PayPal_PPCP_Onboarding {
 	/**
 	* REPLACE: plugin prefix across different plugins.
 	*/
-	public static $account_connect_string = 'swpm_ppcp_account_connect';
+	public static $account_connect_string = 'wpsc_ppcp_account_connect';
 
 	public function __construct() {
 		//NOP
@@ -51,7 +51,7 @@ class PayPal_PPCP_Onboarding {
 		/**
 		* REPLACE: plugin prefix across different plugins.
 		*/
-		$query_args['swpm_ppcp_after_onboarding'] = '1';
+		$query_args['wpsc_ppcp_after_onboarding'] = '1';
 		$query_args['environment_mode'] = $environment_mode;
 		$return_url = add_query_arg( $query_args, $base_url );
 
@@ -94,8 +94,8 @@ class PayPal_PPCP_Onboarding {
 		$ajax_post_url = admin_url('admin-ajax.php');
 		?>
 		<script>
-			function swpm_ppcp_onboarded_callback_sandbox(authCode, sharedId) {
-				console.log('SWPM PayPal Sandbox Onboarded-Callback');
+			function wpsc_ppcp_onboarded_callback_sandbox(authCode, sharedId) {
+				console.log('WPSC PayPal Sandbox Onboarded-Callback');
 				//Send the authCode and sharedId to your server and do the next steps.
 				//You can use the sellerNonce to identify the user.
 
@@ -106,7 +106,7 @@ class PayPal_PPCP_Onboarding {
 				});
 
 				const formData = new FormData();
-				formData.append('action', 'swpm_handle_onboarded_callback_data');
+				formData.append('action', 'wpsc_handle_onboarded_callback_data');
 				formData.append('data', data);
 				formData.append('_wpnonce', '<?php echo $wp_nonce; ?>');
 
@@ -133,7 +133,7 @@ class PayPal_PPCP_Onboarding {
 			}
 		</script>
 		<a class="button button-primary direct" target="_blank"
-			data-paypal-onboard-complete="swpm_ppcp_onboarded_callback_sandbox"
+			data-paypal-onboard-complete="wpsc_ppcp_onboarded_callback_sandbox"
 			href="<?php echo ($sandbox_singup_link); ?>"
 			data-paypal-button="true">Activate PayPal Sandbox</a>
 		<script id="paypal-js" src="https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
@@ -146,9 +146,9 @@ class PayPal_PPCP_Onboarding {
 	* REPLACE: plugin prefix across different plugins.
 	*/
 	public function output_sandbox_ac_disconnect_link(){
-		$disonnect_link_path = PayPal_Main::$pp_api_connection_settings_menu_page . '&swpm_ppcp_disconnect_sandbox=1';
+		$disonnect_link_path = PayPal_Main::$pp_api_connection_settings_menu_page . '&wpsc_ppcp_disconnect_sandbox=1';
 		$sandbox_disconnect_url = admin_url($disonnect_link_path);
-		$ac_disconnect_nonce = wp_create_nonce('swpm_ac_disconnect_nonce_sandbox');
+		$ac_disconnect_nonce = wp_create_nonce('wpsc_ac_disconnect_nonce_sandbox');
 		$sandbox_disconnect_url_nonced = add_query_arg('_wpnonce', $ac_disconnect_nonce, $sandbox_disconnect_url);
 		echo '<a class="button" href="' . $sandbox_disconnect_url_nonced . '" onclick="return confirm(\'Are you sure you want to disconnect the PayPal sandbox account?\')">Disconnect Sandbox Account</a>';	
 	}
@@ -163,8 +163,8 @@ class PayPal_PPCP_Onboarding {
 		$ajax_post_url = admin_url('admin-ajax.php');
 		?>
 		<script>
-			function swpm_ppcp_onboarded_callback_production(authCode, sharedId) {
-				console.log('SWPM PayPal Production Onboarded-Callback');
+			function wpsc_ppcp_onboarded_callback_production(authCode, sharedId) {
+				console.log('WPSC PayPal Production Onboarded-Callback');
 				//Send the authCode and sharedId to your server and do the next steps.
 				//You can use the sellerNonce to identify the user.				
 
@@ -175,7 +175,7 @@ class PayPal_PPCP_Onboarding {
 				});
 
 				const formData = new FormData();
-				formData.append('action', 'swpm_handle_onboarded_callback_data');
+				formData.append('action', 'wpsc_handle_onboarded_callback_data');
 				formData.append('data', data);
 				formData.append('_wpnonce', '<?php echo $wp_nonce; ?>');
 
@@ -202,7 +202,7 @@ class PayPal_PPCP_Onboarding {
 			}
 		</script>
 		<a class="button button-primary direct" target="_blank"
-			data-paypal-onboard-complete="swpm_ppcp_onboarded_callback_production"
+			data-paypal-onboard-complete="wpsc_ppcp_onboarded_callback_production"
 			href="<?php echo ($singup_link); ?>"
 			data-paypal-button="true">Activate PayPal</a>
 		<script id="paypal-js" src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
@@ -213,9 +213,9 @@ class PayPal_PPCP_Onboarding {
 	* REPLACE: plugin prefix across different plugins.
 	*/
 	public function output_production_ac_disconnect_link(){
-		$disonnect_link_path = PayPal_Main::$pp_api_connection_settings_menu_page . '&swpm_ppcp_disconnect_production=1';
+		$disonnect_link_path = PayPal_Main::$pp_api_connection_settings_menu_page . '&wpsc_ppcp_disconnect_production=1';
 		$disconnect_url = admin_url($disonnect_link_path);
-		$ac_disconnect_nonce = wp_create_nonce('swpm_ac_disconnect_nonce_production');
+		$ac_disconnect_nonce = wp_create_nonce('wpsc_ac_disconnect_nonce_production');
 		$disconnect_url_nonced = add_query_arg('_wpnonce', $ac_disconnect_nonce, $disconnect_url);
 		echo '<a class="button" href="' . $disconnect_url_nonced . '" onclick="return confirm(\'Are you sure you want to disconnect the PayPal account?\')">Disconnect PayPal Account</a>';	
 	}

@@ -213,7 +213,7 @@ class PayPal_Button_Ajax_Hander {
 		}
 		
 		//Process the IPN data array
-		PayPal_Utility_Functions::log( 'Validation passed. Going to create/update member account and save transaction data.', true );
+		PayPal_Utility_Functions::log( 'Validation passed. Going to create/update record and save transaction data.', true );
 		
 		/**
 		 * TODO: This is a plugin specific method,
@@ -225,7 +225,6 @@ class PayPal_Button_Ajax_Hander {
 		/**
 		 * Trigger the IPN processed action hook (so other plugins can can listen for this event).
 		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
-		 * * i. e. 'paypal_buy_now_checkout_ipn_processed' is actually 'swpm_paypal_buy_now_checkout_ipn_processed' for simple membership plugin.
 		 */ 
 		do_action( PayPal_Utility_Functions::hook('paypal_buy_now_checkout_ipn_processed'), $ipn_data );
 		do_action( PayPal_Utility_Functions::hook('payment_ipn_processed'), $ipn_data );

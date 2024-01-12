@@ -180,7 +180,7 @@ class PayPal_Utility_IPN_Related {
 			return true;
 		}
 		
-		$button_id = $data['button_id'];
+		//$button_id = $data['button_id'];
 		$txn_id = isset($ipn_data['txn_id']) ? $ipn_data['txn_id'] : '';
 		$txn_type = isset($ipn_data['txn_type']) ? $ipn_data['txn_type'] : '';
 		PayPal_Utility_Functions::log( 'Transaction type: ' . $txn_type . ', Transaction ID: ' . $txn_id, true );
@@ -189,25 +189,14 @@ class PayPal_Utility_IPN_Related {
 		$custom = isset($ipn_data['custom']) ? $ipn_data['custom'] : '';
 		$customvariables = PayPal_Utility_Functions::parse_custom_var( $custom );
 		
-		// Membership level ID.
-		$membership_level_id = get_post_meta($button_id, 'membership_level_id', true);
-		PayPal_Utility_Functions::log( 'Membership payment paid for membership level ID: ' . $membership_level_id, true );
-		if ( ! empty( $membership_level_id ) ) {
-			$swpm_id = '';
-			if ( isset( $customvariables['swpm_id'] ) ) {
-				$swpm_id = $customvariables['swpm_id'];
-			}
-
-			// Process the user profile creation/update.
-			swpm_handle_subsc_signup_stand_alone( $ipn_data, $membership_level_id, $txn_id, $swpm_id );
-			
-		} else {
-			PayPal_Utility_Functions::log( 'Membership level ID is missing in the button configuration! Cannot process this notification.', false );
+		$order_id = '';
+		if ( isset( $customvariables['order_id'] ) ) {
+			$order_id = $customvariables['order_id'];
 		}
 
 		// Save the transaction data.
-		PayPal_Utility_Functions::log( 'Saving transaction data to the database table.', true );
-		\SwpmTransactions::save_txn_record( $ipn_data, array() );
+		PayPal_Utility_Functions::log( 'Saving transaction data to the database.', true );
+		//Transactions::save_txn_record( $ipn_data, array() );
 		PayPal_Utility_Functions::log( 'Transaction data saved.', true );
 
 		return true;

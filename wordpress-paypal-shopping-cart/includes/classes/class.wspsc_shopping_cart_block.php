@@ -50,19 +50,19 @@ class WSPSC_SHOPPING_CART {
 			'description' => __( 'Select the template of the cart', 'wordpress-simple-paypal-shopping-cart' ),
 			'options'     => array(
 				array(
-					'label' => __( 'Display cart if not empty', 'simple-membership' ),
+					'label' => __( 'Display cart if not empty', 'wordpress-simple-paypal-shopping-cart' ),
 					'value' => 'show_wp_shopping_cart',
 				),
 				array(
-					'label' => __( 'Display cart always', 'simple-membership' ),
+					'label' => __( 'Display cart always', 'wordpress-simple-paypal-shopping-cart' ),
 					'value' => 'always_show_wp_shopping_cart',
 				),
 				array(
-					'label' => __( 'Display compact cart 1', 'simple-membership' ),
+					'label' => __( 'Display compact cart 1', 'wordpress-simple-paypal-shopping-cart' ),
 					'value' => 'wp_compact_cart',
 				),
 				array(
-					'label' => __( 'Display compact cart 2', 'simple-membership' ),
+					'label' => __( 'Display compact cart 2', 'wordpress-simple-paypal-shopping-cart' ),
 					'value' => 'wp_compact_cart2',
 				),
 			),

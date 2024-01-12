@@ -90,7 +90,7 @@ class PayPal_Webhook_Event_Handler {
 		 * @see https://developer.paypal.com/docs/api-basics/notifications/webhooks/notification-messages/
 		 * 
 		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
-		 * * i. e. 'paypal_subscription_webhook_event' is actually 'swpm_paypal_subscription_webhook_event' for simple membership plugin.
+		 * * Example: 'paypal_subscription_webhook_event' is actually '<prefix>_paypal_subscription_webhook_event'
 		 */
 		do_action( PayPal_Utility_Functions::hook('paypal_subscription_webhook_event'), $event );
 
@@ -180,28 +180,20 @@ class PayPal_Webhook_Event_Handler {
 			$ipn_data = self::create_ipn_data_from_paypal_api_subscription_details_data( $sub_details, $event );
 			//PayPal_Utility_Functions::log_array( $ipn_data, true );//Debugging only.
 
-			//Update the "Access starts date" of the member account to the current date.
-			/**
-			 * TODO: This is a plugin specific method,
-			 * 
-			 * FIXME: This need to rework or remove if needed.
-			 */
-			// swpm_update_member_subscription_start_date_if_applicable( $ipn_data );
-
 			//Save the payment transaction details to the DB.
 			/**
 			 * TODO: This is a plugin specific method,
 			 * 
 			 * FIXME: This need to rework or remove if needed.
 			 */
-			// \SwpmTransactions::save_txn_record( $ipn_data, array() );
+			//Transactions::save_txn_record( $ipn_data, array() );
 
-			PayPal_Utility_Functions::log( 'Executed save_txn_record() function.', true );
+			PayPal_Utility_Functions::log( 'Transaction data saved.', true );
 	
 			/**
 			 * Trigger the webhook processed action hook (so other plugins can can listen for this event).
 			 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
-			 * * i. e. 'paypal_subscription_sale_completed_webhook_processed' is actually 'swpm_paypal_subscription_sale_completed_webhook_processed' for simple membership plugin.
+			 * * Example: 'paypal_subscription_sale_completed_webhook_processed' is actually '<prefix>_paypal_subscription_sale_completed_webhook_processed'
 			 */ 
 			do_action( PayPal_Utility_Functions::hook('paypal_subscription_sale_completed_webhook_processed'), $ipn_data );		
 
@@ -255,7 +247,7 @@ class PayPal_Webhook_Event_Handler {
 		 * 
 		 * FIXME: This need to rework or remove if needed.
 		 */
-		// swpm_handle_refund_using_parent_txn_id( $ipn_data );
+		// <prefix>_handle_refund_using_parent_txn_id( $ipn_data );
 	}
 
 	public static function create_ipn_data_from_paypal_api_subscription_details_data( $sub_details, $event ){

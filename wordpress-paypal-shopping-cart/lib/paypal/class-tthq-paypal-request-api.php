@@ -20,8 +20,8 @@ class PayPal_Request_API {
 	public $last_error;
 
 	public $app_info = array(
-		'name' => 'Simple Membership',
-		'url' => 'https://wordpress.org/plugins/simple-membership/',
+		'name' => 'Simple Shopping Cart',
+		'url' => 'https://wordpress.org/plugins/wordpress-simple-paypal-shopping-cart/',
 	);
 
 	public static function get_instance() {
@@ -377,7 +377,7 @@ class PayPal_Request_API {
 
 		/**
 		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
-		 * * i. e. 'paypal_api_request_by_url_args' is actually 'swpm_paypal_api_request_by_url_args' for simple membership plugin.
+		 * * Example: 'paypal_api_request_by_url_args' is actually '<prefix>_paypal_api_request_by_url_args'.
 		 */ 
 		$args = apply_filters( PayPal_Utility_Functions::hook('paypal_api_request_by_url_args'), $args, $url );
 		if ( ! isset( $args['headers']['PayPal-Partner-Attribution-Id'] ) ) {

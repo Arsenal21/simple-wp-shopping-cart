@@ -8,7 +8,7 @@ class PayPal_JS_Button_Embed {
 	/**
 	* REPLACE: plugin prefix across different plugins.
 	*/
-    public $button_id_prefix = 'swpm_paypal_button_';
+    public $button_id_prefix = 'wpsc_paypal_button_';
 	public $settings_args = array();
 	public $settings_args_subscription = array();
 
@@ -18,7 +18,6 @@ class PayPal_JS_Button_Embed {
 
 	/*
 	 * This needs to be a Singleton class. To make sure that for the full page, the JS loaded events in the footer are triggering one time only.
-	 * @return SWPM_PayPal_JS_Button_Embed
 	 */
 	public static function get_instance() {
 		if (null === self::$instance) {
@@ -97,7 +96,7 @@ class PayPal_JS_Button_Embed {
 		/**
 		 * Trigger filter hook so the PayPal SDK arguments can be modified.
 		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
-		 * * i. e. 'generate_paypal_js_sdk_args' is actually 'swpm_generate_paypal_js_sdk_args' for simple membership plugin.
+		 * * For example 'generate_paypal_js_sdk_args' is actually 'wpsc_generate_paypal_js_sdk_args' for simple cart plugin.
 		 */ 
 		$sdk_args = apply_filters( PayPal_Utility_Functions::hook('generate_paypal_js_sdk_args'), $sdk_args );
 		return $sdk_args;
@@ -107,7 +106,7 @@ class PayPal_JS_Button_Embed {
 	 * Load the PayPal JS SDK Script in the footer. This one loads the SDK with standard parameters (useful for one-time payments).
 	 * 
 	 * It will be called from the button's shortcode (using a hook) if at least one button is present on the page.
-	 * The button's JS code needs to be executed after the SDK is loaded. Check for 'swpm_paypal_sdk_loaded' event.
+	 * The button's JS code needs to be executed after the SDK is loaded. Check for '<prefix>_paypal_sdk_loaded' event.
 	 */
 	public function load_paypal_sdk() {
 		$args = $this->settings_args;
@@ -125,7 +124,7 @@ class PayPal_JS_Button_Embed {
 				/**
 				* REPLACE: plugin prefix across different plugins.
 				*/
-				jQuery( function( $ ) { $( document ).trigger( 'swpm_paypal_sdk_loaded' ) } );
+				jQuery( function( $ ) { $( document ).trigger( 'wpsc_paypal_sdk_loaded' ) } );
 			};
 			document.getElementsByTagName( 'head' )[0].appendChild( script );
 		</script>
@@ -136,7 +135,7 @@ class PayPal_JS_Button_Embed {
 	 * Load the PayPal JS SDK Script for Subscription buttons in the footer. Loads the SDK with parameters useful for subscription buttons.
 	 * 
 	 * It will be called from the button's shortcode (using a hook) if at least one button is present on the page.
-	 * The button's JS code needs to be executed after the SDK is loaded. Check for 'swpm_paypal_sdk_loaded' event.
+	 * The button's JS code needs to be executed after the SDK is loaded. Check for '<prefix>_paypal_sdk_subscriptions_loaded' event.
 	 */
 	public function load_paypal_sdk_for_subscriptions() {
 		$args = $this->settings_args_subscription;
@@ -151,14 +150,14 @@ class PayPal_JS_Button_Embed {
 			/**
 			* REPLACE: plugin prefix across different plugins.
 			*/
-			script_sub.setAttribute( 'data-namespace', 'swpm_paypal_subscriptions' );//Use a different namespace for the subscription buttons.
+			script_sub.setAttribute( 'data-namespace', 'wpsc_paypal_subscriptions' );//Use a different namespace for the subscription buttons.
 			script_sub.async = true;
 			script_sub.src = '<?php echo esc_url_raw( $script_url ); ?>';
 			script_sub.onload = function() {
 				/**
 				* REPLACE: plugin prefix across different plugins.
 				*/
-				jQuery( function( $ ) { $( document ).trigger( 'swpm_paypal_sdk_subscriptions_loaded' ) } );
+				jQuery( function( $ ) { $( document ).trigger( 'wpsc_paypal_sdk_subscriptions_loaded' ) } );
 			};
 			document.getElementsByTagName( 'head' )[0].appendChild( script_sub );
 		</script>
