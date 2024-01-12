@@ -81,6 +81,29 @@ function wspsc_log_payment_debug( $message, $success, $end = false ) {
 	fclose( $fp );
 }
 
+function wspsc_log_debug_array( $array_to_write, $success, $end = false ) {
+	$logfile = wspsc_get_log_file();
+	$debug   = get_option( 'wp_shopping_cart_enable_debug' );
+	if ( ! $debug ) {
+		//Debug is not enabled.
+		return;
+	}
+	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . "\n";
+	ob_start();
+	print_r( $array_to_write );
+	$var = ob_get_contents();
+	ob_end_clean();
+	$text .= $var;
+
+	if ($end) {
+		$text .= "\n------------------------------------------------------------------\n\n";
+	}
+	// Write to log
+	$fp = fopen( $logfile, 'a' );
+	fwrite( $fp, $text );
+	fclose( $fp ); // close filee
+}
+
 /**
  * Resets debug log file. Create log file if not present.
  *
