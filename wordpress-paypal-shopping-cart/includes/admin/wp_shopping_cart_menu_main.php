@@ -40,6 +40,7 @@ function wspsc_settings_interface() {
         'wspsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=adv-settings' => __('Advanced Settings', 'wordpress-simple-paypal-shopping-cart'),
+        'wspsc-menu-main&action=ppcp-settings' => __('PayPal PPCP (New API)', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
     );
     echo '<div class="wrap">';
@@ -74,6 +75,11 @@ function wspsc_settings_interface() {
 	    case 'adv-settings':
                 include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_adv_settings.php');
                 show_wp_cart_adv_settings_page();
+                break;
+            case 'ppcp-settings':
+                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_ppcp_settings.php');
+                // show_wp_cart_adv_settings_page();
+                new WPSC_PPCP_settings_page();
                 break;
         case 'stripe-settings':
                 include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_stripe_settings.php');
