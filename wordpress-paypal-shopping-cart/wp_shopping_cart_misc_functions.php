@@ -200,7 +200,7 @@ function wpspc_run_activation()
 		add_option( 'wspsc_plugin_activated_time', time() );
 	}
 
-    $enable_sandbox_settings = sanitize_text_field(get_option( 'wp_shopping_cart_enable_sandbox', '' ));
+    $enable_sandbox_settings = sanitize_text_field(get_option( 'wp_shopping_cart_enable_sandbox' ));
     // Set plugin paypal ppcp settings.
     add_option( 'wpsc_paypal_ppcp_settings', array(
         'ppcp_btn_type' => 'checkout',
@@ -210,9 +210,7 @@ function wpspc_run_activation()
         'ppcp_btn_width' => 300,
         'ppcp_btn_color' => 'blue',
         'ppcp_disable_funding_credit' => '1',
-
-        // For: PayPal ppcp lib. Use sandbox enable settings from core plugin to use in the library.
-        'enable-sandbox-testing' =>  $enable_sandbox_settings, 
+        'enable-sandbox-testing' =>  $enable_sandbox_settings, /* Use sandbox settings from core plugin to use in the PPCP library.*/
     ) );
 }
 
