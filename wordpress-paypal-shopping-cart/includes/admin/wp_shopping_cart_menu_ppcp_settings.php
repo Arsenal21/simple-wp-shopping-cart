@@ -142,7 +142,7 @@ class WPSC_PPCP_settings_page
 					<table class="form-table" role="presentation">
 						<tbody>
 							<tr>
-								<th scope="row"><?php _e('Enable PayPal PPCP Checkout', WP_CART_TEXT_DOMAIN); ?></th>
+								<th scope="row"><?php _e('Enable PayPal Checkout (New API)', WP_CART_TEXT_DOMAIN); ?></th>
 								<td>
 									<p>
 										<label>
