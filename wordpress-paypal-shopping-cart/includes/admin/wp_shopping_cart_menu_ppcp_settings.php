@@ -34,6 +34,15 @@ class WPSC_PPCP_settings_page
 
 		do_action('wpsc_ppcp_settings_menu_tab_start');
 
+		//Documentation link
+		$ppcp_documentation_link = "https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023";
+		echo '<div class="wspsc_yellow_box">';
+		echo '<p>';
+		_e('Configure the PayPal API credentials and checkout button appearance for the new PayPal checkout.', WP_CART_TEXT_DOMAIN);
+		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', WP_CART_TEXT_DOMAIN) . '</a> ' . __('to learn how to setup and configure it.', WP_CART_TEXT_DOMAIN);
+		echo '</p>';
+		echo '</div>';
+		
 		//Sub nav tabs related code.
 		$subtab = isset($_GET['subtab']) ? sanitize_text_field($_GET['subtab']) : '';
 		$selected_subtab = $subtab;
@@ -128,12 +137,6 @@ class WPSC_PPCP_settings_page
 		<div class="postbox">
 			<h2><?php _e("PayPal PPCP API Credentials", WP_CART_TEXT_DOMAIN); ?></h3>
 				<div class="inside">
-					<p>
-						<?php
-						_e('Configure the PayPal PPCP API credentials for the new PayPal checkout.', WP_CART_TEXT_DOMAIN);
-						echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', WP_CART_TEXT_DOMAIN) . '</a> ' . __('to learn how to get your PayPal PPCP API credentials.', WP_CART_TEXT_DOMAIN);
-						?>
-					</p>
 					<form action="" method="POST">
 						<table class="form-table">
 							<tr valign="top">
