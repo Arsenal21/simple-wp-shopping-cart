@@ -182,12 +182,10 @@ function wspsc_show_general_settings_page ()
     if (get_option('wp_shopping_cart_tnc_text')){
         $wp_shopping_cart_tnc_text = wp_kses_post(get_option('wp_shopping_cart_tnc_text'));
     }
-    ?>
 
-    <div class="wspsc_yellow_box">
-    <p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
-    <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php _e("WP Simple Cart Homepage", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
-    </div>
+    //Show the documentation message
+    wpspsc_settings_menu_documentation_msg();
+    ?>
 
     <div class="postbox">
     <h3 class="hndle"><label for="title"><?php _e("Quick Usage Guide", "wordpress-simple-paypal-shopping-cart"); ?></label></h3>

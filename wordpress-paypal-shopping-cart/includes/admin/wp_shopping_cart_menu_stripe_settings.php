@@ -38,17 +38,16 @@ function show_wp_cart_stripe_settings_page()
         echo 'Stripe Settings Updated!';
         echo '</strong></p></div>';
     }
-    if (get_option('wpspc_stripe_collect_address'))
+    if (get_option('wpspc_stripe_collect_address')){
         $wpspc_stripe_collect_address = 'checked="checked"';
-    else
+    }
+    else{
         $wpspc_stripe_collect_address = '';
-?>
+    }
 
-    <div class="wspsc_yellow_box">
-        <p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
-            <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php _e("WP Simple Cart Homepage", "wordpress-simple-paypal-shopping-cart"); ?></a>
-        </p>
-    </div>
+    //Show the documentation message
+    wpspsc_settings_menu_documentation_msg();    
+    ?>
 
     <form method="post" action="">
         <?php wp_nonce_field('wpspc_stripe_settings_update'); ?>

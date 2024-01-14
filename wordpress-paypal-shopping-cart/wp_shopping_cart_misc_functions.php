@@ -201,6 +201,19 @@ function wpspc_run_activation()
 	}
 }
 
+function wpspsc_settings_menu_documentation_msg()
+{
+    ?>
+    <div class="wspsc_yellow_box">
+        <p>
+            <?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?>
+            <?php echo ' '; ?>
+            <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php _e("WP Simple Cart Documentation", "wordpress-simple-paypal-shopping-cart"); ?></a>
+        </p>
+    </div>
+    <?php
+}
+
 function wpspsc_settings_menu_footer()
 {
     ?>
@@ -210,7 +223,7 @@ function wpspsc_settings_menu_footer()
         <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a>
     </p>
     <p>
-        You can also try our free <a href="https://wordpress.org/plugins/wp-express-checkout/" target="_blank">WP Express Checkout</a> plugin to sell your products using PayPal's Checkout API.
+        You can also try our free <a href="https://wordpress.org/plugins/wp-express-checkout/" target="_blank">WP Express Checkout</a> or <a href="https://wordpress.org/plugins/stripe-payments/" target="_blank">Accept Stripe Payments</a> plugins to sell your products.
     </p>
     </div>
     <?php

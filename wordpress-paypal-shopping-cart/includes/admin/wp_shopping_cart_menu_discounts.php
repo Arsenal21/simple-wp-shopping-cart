@@ -55,12 +55,10 @@ function wspsc_show_coupon_discount_settings_page()
     if (get_option('wpspsc_enable_coupon') == '1'){
         $wpspsc_enable_coupon = 'checked="checked"';
     }
+
+    //Show the documentation message
+    wpspsc_settings_menu_documentation_msg();    
     ?>
-    
-    <div class="wspsc_yellow_box">	
-    <p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
-    <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php _e("WP Simple Cart Homepage", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
-    </div>
     
     <form method="post" action="">
     <?php wp_nonce_field('wpspsc_coupon_settings'); ?>

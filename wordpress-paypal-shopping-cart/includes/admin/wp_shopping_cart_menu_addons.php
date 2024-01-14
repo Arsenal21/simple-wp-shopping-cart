@@ -10,12 +10,10 @@ function wspsc_show_addons_menu_page() {
     echo '<h1>' . (__("Simple Cart Add-ons", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
 
     echo '<div id="poststuff"><div id="post-body">';
-    ?>
 
-    <div class="wspsc_yellow_box">
-        <p><?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?><br />
-            <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php _e("WP Simple Cart Documentation", "wordpress-simple-paypal-shopping-cart"); ?></a></p>
-    </div>
+    //Show the documentation message
+    wpspsc_settings_menu_documentation_msg();    
+    ?>
 
     <?php
     $addons_data = array();
