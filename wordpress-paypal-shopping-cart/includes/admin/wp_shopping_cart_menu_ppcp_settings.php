@@ -56,7 +56,14 @@ class WPSC_PPCP_settings_page
 		<?php
 
 		// Handle api credentials form submit
-		if (isset($_POST['wpsc-paypal-settings-submit']) && check_admin_referer('wpsc-paypal-settings-nonce')) {
+		if (isset($_POST['wpsc_ppcp_checkout_settings_submit']) && check_admin_referer('wpsc_ppcp_checkout_settings_submit_nonce')) {
+			$this->settings->set_value('ppcp_checkout_enable', (isset($_POST['ppcp_checkout_enable']) ? sanitize_text_field($_POST['ppcp_checkout_enable']) : ''));
+	
+			$this->settings->save();
+			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP checkout settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
+		}
+		
+		if (isset($_POST['wpsc_ppcp_api_credentials_submit']) && check_admin_referer('wpsc_ppcp_api_credentials_submit_nonce')) {
 			$this->settings->set_value('paypal-live-client-id', (isset($_POST['paypal-live-client-id']) ? sanitize_text_field($_POST['paypal-live-client-id']) : ''));
 			$this->settings->set_value('paypal-live-secret-key', (isset($_POST['paypal-live-secret-key']) ? sanitize_text_field($_POST['paypal-live-secret-key']) : ''));
 			$this->settings->set_value('paypal-sandbox-client-id', (isset($_POST['paypal-sandbox-client-id']) ? sanitize_text_field($_POST['paypal-sandbox-client-id']) : ''));
@@ -126,6 +133,33 @@ class WPSC_PPCP_settings_page
 		$paypal_sandbox_secret_key = $this->settings->get_value('paypal-sandbox-secret-key');
 		?>
 
+		<div class="postbox">
+			<h2 id="paypal-ppcp-checkout-enable-section"><?php _e("Enable PayPal PPCP (New API) Checkout", WP_CART_TEXT_DOMAIN); ?></h2>
+			<div class="inside">
+				<form action="" method="POST">
+					<table class="form-table" role="presentation">
+						<tbody>
+							<tr>
+								<th scope="row"><?php _e('Enable PayPal PPCP Checkout', WP_CART_TEXT_DOMAIN); ?></th>
+								<td>
+									<p>
+										<label>
+											<input type="checkbox" name="ppcp_checkout_enable" value="1" <?php echo (!empty($this->settings->get_value('ppcp_checkout_enable'))) ? ' checked' : ''; ?>>
+										</label>
+									</p>
+									<p class="description">
+										<?php _e("Enable this to use new paypal ppcp api during checkout.", WP_CART_TEXT_DOMAIN); ?>
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="submit" name="wpsc_ppcp_checkout_settings_submit" class="button-primary" value="<?php _e('Save Changes', WP_CART_TEXT_DOMAIN); ?>" />
+					<?php wp_nonce_field('wpsc_ppcp_checkout_settings_submit_nonce'); ?>
+				</form>
+			</div>
+		</div>
+
 		<!-- PayPal PPCP Connection Settings postbox -->
 		<div class="postbox">
 			<h2><?php _e("PayPal PPCP API Credentials", WP_CART_TEXT_DOMAIN); ?></h3>
@@ -185,8 +219,8 @@ class WPSC_PPCP_settings_page
 								</td>
 							</tr>
 						</table>
-						<input type="submit" name="wpsc-paypal-settings-submit" class="button-primary" value="<?php _e('Save Changes', WP_CART_TEXT_DOMAIN); ?>" />
-						<?php wp_nonce_field('wpsc-paypal-settings-nonce'); ?>
+						<input type="submit" name="wpsc_ppcp_api_credentials_submit" class="button-primary" value="<?php _e('Save Changes', WP_CART_TEXT_DOMAIN); ?>" />
+						<?php wp_nonce_field('wpsc_ppcp_api_credentials_submit_nonce'); ?>
 					</form>
 				</div>
 		</div>
