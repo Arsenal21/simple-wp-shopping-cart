@@ -2,6 +2,7 @@
 
 use TTHQ\WPSC\Lib\PayPal\PayPal_Bearer;
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
+use TTHQ\WPSC\Lib\PayPal\Onboarding\PayPal_PPCP_Onboarding;
 
 require_once WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php';
 
@@ -42,7 +43,7 @@ class WPSC_PPCP_settings_page
 		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', WP_CART_TEXT_DOMAIN) . '</a> ' . __('to learn how to setup and configure it.', WP_CART_TEXT_DOMAIN);
 		echo '</p>';
 		echo '</div>';
-		
+
 		//Sub nav tabs related code.
 		$subtab = isset($_GET['subtab']) ? sanitize_text_field($_GET['subtab']) : '';
 		$selected_subtab = $subtab;
@@ -58,11 +59,11 @@ class WPSC_PPCP_settings_page
 		// Handle api credentials form submit
 		if (isset($_POST['wpsc_ppcp_checkout_settings_submit']) && check_admin_referer('wpsc_ppcp_checkout_settings_submit_nonce')) {
 			$this->settings->set_value('ppcp_checkout_enable', (isset($_POST['ppcp_checkout_enable']) ? sanitize_text_field($_POST['ppcp_checkout_enable']) : ''));
-	
+
 			$this->settings->save();
 			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP checkout settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
 		}
-		
+
 		if (isset($_POST['wpsc_ppcp_api_credentials_submit']) && check_admin_referer('wpsc_ppcp_api_credentials_submit_nonce')) {
 			$this->settings->set_value('paypal-live-client-id', (isset($_POST['paypal-live-client-id']) ? sanitize_text_field($_POST['paypal-live-client-id']) : ''));
 			$this->settings->set_value('paypal-live-secret-key', (isset($_POST['paypal-live-secret-key']) ? sanitize_text_field($_POST['paypal-live-secret-key']) : ''));
@@ -132,7 +133,8 @@ class WPSC_PPCP_settings_page
 		$paypal_sandbox_client_id = $this->settings->get_value('paypal-sandbox-client-id');
 		$paypal_sandbox_secret_key = $this->settings->get_value('paypal-sandbox-secret-key');
 		?>
-
+		
+		<!-- PayPal PPCP checkout enable settings postbox -->
 		<div class="postbox">
 			<h2 id="paypal-ppcp-checkout-enable-section"><?php _e("Enable PayPal PPCP (New API) Checkout", WP_CART_TEXT_DOMAIN); ?></h2>
 			<div class="inside">
@@ -157,6 +159,16 @@ class WPSC_PPCP_settings_page
 					<input type="submit" name="wpsc_ppcp_checkout_settings_submit" class="button-primary" value="<?php _e('Save Changes', WP_CART_TEXT_DOMAIN); ?>" />
 					<?php wp_nonce_field('wpsc_ppcp_checkout_settings_submit_nonce'); ?>
 				</form>
+			</div>
+		</div>
+
+		<!-- PayPal PPCP Connection postbox -->
+		<div class="postbox">
+			<h2 id="paypal-ppcp-connection-section"><?php _e("PayPal Account Connection", 'simple-membership'); ?></h2>
+			<div class="inside">
+				<?php
+				$this->handle_paypal_ppcp_connection_settings();
+				?>
 			</div>
 		</div>
 
@@ -225,6 +237,7 @@ class WPSC_PPCP_settings_page
 				</div>
 		</div>
 
+		<!-- PayPal PPCP API Access Token deletion checkbox -->
 		<div class="postbox">
 			<h2 id="paypal-delete-token-cache-section"><?php _e("Delete PayPal PPCP API Access Token Cache", WP_CART_TEXT_DOMAIN); ?></h2>
 			<div class="inside">
@@ -315,18 +328,18 @@ class WPSC_PPCP_settings_page
 							</td>
 						</tr>
 						<tr valign="top">
-                        <th scope="row"><?php _e("Button Color", WP_CART_TEXT_DOMAIN); ?></th>
-                        <td>
-                            <select name="ppcp_btn_color" style="min-width: 150px;">
-                                <option value="gold"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'gold') ? ' selected' : ''; ?>><?php _e("Gold", WP_CART_TEXT_DOMAIN); ?></option>
-                                <option value="blue"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'blue') ? ' selected' : ''; ?>><?php _e("Blue", WP_CART_TEXT_DOMAIN); ?></option>
-                                <option value="silver"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'silver') ? ' selected' : ''; ?>><?php _e("Silver", WP_CART_TEXT_DOMAIN); ?></option>
-                                <option value="white"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'white') ? ' selected' : ''; ?>><?php _e("White", WP_CART_TEXT_DOMAIN); ?></option>
-                                <option value="black"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'black') ? ' selected' : ''; ?>><?php _e("Black", WP_CART_TEXT_DOMAIN); ?></option>
-                            </select>
-                            <p class="description"><?php _e("Select button color.", WP_CART_TEXT_DOMAIN); ?></p>
-                        </td>
-                    </tr>
+							<th scope="row"><?php _e("Button Color", WP_CART_TEXT_DOMAIN); ?></th>
+							<td>
+								<select name="ppcp_btn_color" style="min-width: 150px;">
+									<option value="gold"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'gold') ? ' selected' : ''; ?>><?php _e("Gold", WP_CART_TEXT_DOMAIN); ?></option>
+									<option value="blue"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'blue') ? ' selected' : ''; ?>><?php _e("Blue", WP_CART_TEXT_DOMAIN); ?></option>
+									<option value="silver"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'silver') ? ' selected' : ''; ?>><?php _e("Silver", WP_CART_TEXT_DOMAIN); ?></option>
+									<option value="white"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'white') ? ' selected' : ''; ?>><?php _e("White", WP_CART_TEXT_DOMAIN); ?></option>
+									<option value="black"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'black') ? ' selected' : ''; ?>><?php _e("Black", WP_CART_TEXT_DOMAIN); ?></option>
+								</select>
+								<p class="description"><?php _e("Select button color.", WP_CART_TEXT_DOMAIN); ?></p>
+							</td>
+						</tr>
 						<tr valign="top">
 							<th scope="row"><?php _e("Disable Funding", WP_CART_TEXT_DOMAIN); ?></th>
 							<td>
@@ -343,6 +356,94 @@ class WPSC_PPCP_settings_page
 				</form>
 			</div>
 		</div>
+	<?php
+	}
+
+	/**
+	 * TODO:
+	 *
+	 * FIXME: Need to handle unused variables.
+	 * 
+	 * @return void
+	 */
+	public function handle_paypal_ppcp_connection_settings()
+	{
+		$ppcp_onboarding_instance = PayPal_PPCP_Onboarding::get_instance();
+
+		//If all API credentials are missing, show a message.
+		$all_api_creds_missing = false;
+		if ( empty($this->settings->get_value('paypal-sandbox-client-id')) && 
+			empty($this->settings->get_value('paypal-sandbox-secret-key')) && 
+			empty($this->settings->get_value('paypal-live-client-id')) && 
+			empty($this->settings->get_value('paypal-live-secret-key')) ) {
+			$all_api_creds_missing = true;
+		}
+	?>
+		<table class="form-table" role="presentation">
+			<tbody>
+				<tr>
+					<th scope="row"><?php _e('Live Account Connnection Status', 'simple-membership'); ?></th>
+					<td>
+						<?php
+						// Check if the live account is connected
+						$live_account_connection_status = 'connected';
+						if (empty($this->settings->get_value('paypal-live-client-id')) || empty($this->settings->get_value('paypal-live-secret-key'))) {
+							//Sandbox API keys are missing. Account is not connected.
+							$live_account_connection_status = 'not-connected';
+						}
+
+						if ($live_account_connection_status == 'connected') {
+							//Production account connected
+							echo '<div class="swpm-paypal-live-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+							_e('Live account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
+							echo '</div>';
+							// Show disconnect option for live account.
+							$ppcp_onboarding_instance->output_production_ac_disconnect_link();
+						} else {
+							//Production account is NOT connected.
+							echo '<div class="swpm-paypal-live-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
+							_e('Live PayPal account is not connected.', 'simple-membership');
+							echo '</div>';
+
+							// Show the onboarding link
+							$ppcp_onboarding_instance->output_production_onboarding_link_code();
+						}
+						?>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php _e('Sandbox Account Connnection Status', 'simple-membership'); ?></th>
+					<td>
+						<?php
+						//Check if the sandbox account is connected
+						$sandbox_account_connection_status = 'connected';
+						if (empty($this->settings->get_value('paypal-sandbox-client-id')) || empty($this->settings->get_value('paypal-sandbox-secret-key'))) {
+							//Sandbox API keys are missing. Account is not connected.
+							$sandbox_account_connection_status = 'not-connected';
+						}
+
+						if ($sandbox_account_connection_status == 'connected') {
+							//Test account connected
+							echo '<div class="swpm-paypal-test-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+							_e('Sandbox account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
+							echo '</div>';
+							//Show disconnect option for sandbox account.
+							$ppcp_onboarding_instance->output_sandbox_ac_disconnect_link();
+						} else {
+							//Sandbox account is NOT connected.
+							echo '<div class="swpm-paypal-sandbox-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
+							_e('Sandbox PayPal account is not connected.', 'simple-membership');
+							echo '</div>';
+
+							//Show the onboarding link for sandbox account.
+							$ppcp_onboarding_instance->output_sandbox_onboarding_link_code();
+						}
+						?>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
 <?php
 	}
 }
