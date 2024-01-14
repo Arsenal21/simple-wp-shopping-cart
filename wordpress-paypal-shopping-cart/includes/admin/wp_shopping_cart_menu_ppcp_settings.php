@@ -64,6 +64,12 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('ppcp_btn_layout', (isset($_POST['ppcp_btn_layout']) ? sanitize_text_field($_POST['ppcp_btn_layout']) : ''));
 			$this->settings->set_value('ppcp_btn_height', (isset($_POST['ppcp_btn_height']) ? sanitize_text_field($_POST['ppcp_btn_height']) : ''));
 			$this->settings->set_value('ppcp_btn_width', (isset($_POST['ppcp_btn_width']) ? sanitize_text_field($_POST['ppcp_btn_width']) : 300));
+			$this->settings->set_value('ppcp_btn_color', (isset($_POST['ppcp_btn_color']) ? sanitize_text_field($_POST['ppcp_btn_color']) : ''));
+
+			// Funding disable related
+			$this->settings->set_value('ppcp_disable_funding_card', (isset($_POST['ppcp_disable_funding_card']) ? sanitize_text_field($_POST['ppcp_disable_funding_card']) : ''));
+			$this->settings->set_value('ppcp_disable_funding_credit', (isset($_POST['ppcp_disable_funding_credit']) ? sanitize_text_field($_POST['ppcp_disable_funding_credit']) : ''));
+			$this->settings->set_value('ppcp_disable_funding_venmo', (isset($_POST['ppcp_disable_funding_venmo']) ? sanitize_text_field($_POST['ppcp_disable_funding_venmo']) : ''));
 
 			$this->settings->save();
 			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP button appearance settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
@@ -276,6 +282,28 @@ class WPSC_PPCP_settings_page
 							<td>
 								<input type="number" step="1" min="0" size="10" name="ppcp_btn_width" value="<?php echo ($this->settings->get_value('ppcp_btn_width') !== '') ? esc_attr($this->settings->get_value('ppcp_btn_width')) : 300; ?>" style="min-width: 150px;" />
 								<p class="description"><?php _e("Select button width.", WP_CART_TEXT_DOMAIN); ?></p>
+							</td>
+						</tr>
+						<tr valign="top">
+                        <th scope="row"><?php _e("Button Color", WP_CART_TEXT_DOMAIN); ?></th>
+                        <td>
+                            <select name="ppcp_btn_color" style="min-width: 150px;">
+                                <option value="gold"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'gold') ? ' selected' : ''; ?>><?php _e("Gold", WP_CART_TEXT_DOMAIN); ?></option>
+                                <option value="blue"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'blue') ? ' selected' : ''; ?>><?php _e("Blue", WP_CART_TEXT_DOMAIN); ?></option>
+                                <option value="silver"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'silver') ? ' selected' : ''; ?>><?php _e("Silver", WP_CART_TEXT_DOMAIN); ?></option>
+                                <option value="white"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'white') ? ' selected' : ''; ?>><?php _e("White", WP_CART_TEXT_DOMAIN); ?></option>
+                                <option value="black"<?php echo ($this->settings->get_value('ppcp_btn_color') === 'black') ? ' selected' : ''; ?>><?php _e("Black", WP_CART_TEXT_DOMAIN); ?></option>
+                            </select>
+                            <p class="description"><?php _e("Select button color.", WP_CART_TEXT_DOMAIN); ?></p>
+                        </td>
+                    </tr>
+						<tr valign="top">
+							<th scope="row"><?php _e("Disable Funding", WP_CART_TEXT_DOMAIN); ?></th>
+							<td>
+								<p><label><input type="checkbox" name="ppcp_disable_funding_card" value="1" <?php echo (!empty($this->settings->get_value('ppcp_disable_funding_card'))) ? ' checked' : ''; ?>> <?php _e("Credit or debit cards", WP_CART_TEXT_DOMAIN); ?></label></p>
+								<p><label><input type="checkbox" name="ppcp_disable_funding_credit" value="1" <?php echo (!empty($this->settings->get_value('ppcp_disable_funding_credit'))) ? ' checked' : ''; ?>> <?php _e("PayPal Credit", WP_CART_TEXT_DOMAIN); ?></label></p>
+								<p><label><input type="checkbox" name="ppcp_disable_funding_venmo" value="1" <?php echo (!empty($this->settings->get_value('ppcp_disable_funding_venmo'))) ? ' checked' : ''; ?>> <?php _e("Venmo", WP_CART_TEXT_DOMAIN); ?></label></p>
+								<p class="description"><?php _e("By default, funding source eligibility is smartly decided based on a variety of factors. You can force disable funding options by selecting them here.", WP_CART_TEXT_DOMAIN); ?></p>
 							</td>
 						</tr>
 					</table>
