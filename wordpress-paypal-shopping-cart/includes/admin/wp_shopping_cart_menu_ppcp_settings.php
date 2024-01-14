@@ -124,13 +124,6 @@ class WPSC_PPCP_settings_page
 		$paypal_live_secret_key = $this->settings->get_value('paypal-live-secret-key');
 		$paypal_sandbox_client_id = $this->settings->get_value('paypal-sandbox-client-id');
 		$paypal_sandbox_secret_key = $this->settings->get_value('paypal-sandbox-secret-key');
-
-		/**
-		 * TODO:
-		 *
-		 * FIXME: Specify proper documentation link
-		 */
-		$ppcp_documentation_link = "https://simple-membership-plugin.com/getting-paypal-api-credentials";
 		?>
 
 		<!-- PayPal PPCP Connection Settings postbox -->

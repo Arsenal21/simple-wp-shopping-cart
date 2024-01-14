@@ -55,14 +55,6 @@ class PayPal_Main {
 
 		$config->load_settings_from_db();
 
-		//Plugin specific (whatever the sandbox toggle option is used in the plugin, we will use that.
-		if ( get_option( $conf['enable_sandbox_settings_key'] ) ) {
-			$config->set_value('enable-sandbox-testing', 'checked="checked"');
-		} else {
-			$config->set_value('enable-sandbox-testing', '');
-		}
-		$config->save();
-
 		self::$pp_api_connection_settings_menu_page = $conf['api_connection_settings_page'];
 		self::$paypal_webhook_event_query_arg = PayPal_Utility_Functions::auto_prefix('paypal_webhook_event', '_');
 		
@@ -101,6 +93,5 @@ new PayPal_Main(
         'log_text_method' => 'wspsc_log_payment_debug',
         'log_array_method' => 'wspsc_log_debug_array',
         'ppcp_settings_key' => 'wpsc_paypal_ppcp_settings',
-		'enable_sandbox_settings_key' => 'wp_shopping_cart_enable_sandbox',
     )
 );
