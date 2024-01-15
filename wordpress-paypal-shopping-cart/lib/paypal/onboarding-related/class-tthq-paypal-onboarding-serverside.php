@@ -32,7 +32,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 			wp_send_json(
 				array(
 					'success' => false,
-					'msg'  => __( 'Empty data received.', PayPal_PPCP_Config::$text_domain ),
+					'msg'  => __( 'Empty data received.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 		}
@@ -47,7 +47,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 			wp_send_json(
 				array(
 					'success' => false,
-					'msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', PayPal_PPCP_Config::$text_domain ),
+					'msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 			exit;
@@ -63,7 +63,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 			wp_send_json(
 				array(
 					'success' => false,
-					'msg'  => __( 'Failed to generate access token. check debug log file for any error message.', PayPal_PPCP_Config::$text_domain ),
+					'msg'  => __( 'Failed to generate access token. check debug log file for any error message.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 			exit;
@@ -77,7 +77,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 			wp_send_json(
 				array(
 					'success' => false,
-					'msg'  => __( 'Failed to get seller API credentials. check debug log file for any error message.', PayPal_PPCP_Config::$text_domain ),
+					'msg'  => __( 'Failed to get seller API credentials. check debug log file for any error message.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 		}
@@ -98,7 +98,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 			wp_send_json(
 				array(
 					'success' => false,
-					'msg'  => __( 'Failed to get seller account status. check debug log file for any error message.', PayPal_PPCP_Config::$text_domain ),
+					'msg'  => __( 'Failed to get seller account status. check debug log file for any error message.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);			
 		}
@@ -114,7 +114,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 			wp_send_json(
 				array(
 					'success' => false,
-					'msg'  => __( 'Your PayPal account is limited so you cannot accept payment. Contact PaPal support or check your PayPal account inbox for an email from PayPal for the next steps to remove the account limit.', PayPal_PPCP_Config::$text_domain ),
+					'msg'  => __( 'Your PayPal account is limited so you cannot accept payment. Contact PaPal support or check your PayPal account inbox for an email from PayPal for the next steps to remove the account limit.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);			
 		}
@@ -123,7 +123,7 @@ class PayPal_PPCP_Onboarding_Serverside {
 			wp_send_json(
 				array(
 					'success' => false,
-					'msg'  => __( 'Your PayPal account email is not confirmed. Check your PayPal account inbox for an email from PayPal to confirm your PayPal email address.', PayPal_PPCP_Config::$text_domain ),
+					'msg'  => __( 'Your PayPal account email is not confirmed. Check your PayPal account inbox for an email from PayPal to confirm your PayPal email address.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);			
 		}

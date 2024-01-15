@@ -7,7 +7,6 @@ class PayPal_PPCP_Config {
 	private static $instance;
 	
 	public static $plugin_shortname = '';
-	public static $text_domain = '';
 
 	public static $log_text_method;
 	public static $log_array_method;
@@ -38,10 +37,6 @@ class PayPal_PPCP_Config {
 
 	public static function set_plugin_shortname($str){
 		self::$plugin_shortname = $str;
-	}
-	
-	public static function set_text_domain($text_domain){
-		self::$text_domain = $text_domain;
 	}
 	
 	public static function set_log_text_method(callable $method){

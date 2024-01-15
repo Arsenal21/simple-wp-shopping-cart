@@ -47,7 +47,6 @@ class PayPal_Main {
 		// Do plugin specific config
 		$config = PayPal_PPCP_Config::get_instance();
 		$config->set_plugin_shortname($conf['plugin_shortname']);
-		$config->set_text_domain($conf['text_domain']);
 		$config->set_log_text_method($conf['log_text_method']);
 		$config->set_log_array_method($conf['log_array_method']);
 		$config->set_ppcp_settings_key($conf['ppcp_settings_key']);
@@ -112,7 +111,6 @@ class PayPal_Main {
  */
 new PayPal_Main(
     array(
-        'text_domain' => 'wordpress-simple-paypal-shopping-cart',
         'plugin_shortname' => 'wpsc',
         'api_connection_settings_page' => 'admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection', // REPACE: Need to change this across different plugins.
         'log_text_method' => 'wspsc_log_payment_debug',

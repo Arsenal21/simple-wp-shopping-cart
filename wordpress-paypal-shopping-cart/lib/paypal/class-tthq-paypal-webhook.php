@@ -307,13 +307,13 @@ class PayPal_Webhook {
 			);
 			$error_code = $response->get_error_code();
 			if ( $error_code === 'INVALID_RESOURCE_ID' ) {
-				$ret['msg'] = __( 'No webhook found. Use the following Create Webhook button to create a new webhook automatically in your PayPal account.', PayPal_PPCP_Config::$text_domain);
+				$ret['msg'] = __( 'No webhook found. Use the following Create Webhook button to create a new webhook automatically in your PayPal account.', 'wordpress-simple-paypal-shopping-cart');
 				//No webhook exists in PayPal. Delete the webhook ID (if any) from our DB to clean it up (so it can be created again).
 				PayPal_Utility_Functions::delete_option( 'paypal_webhook_id_' . $this->mode );
 			} elseif ( $error_code === 'UNAUTHORIZED' ) {
-				$ret['msg'] = $response->get_error_message() . '. ' . sprintf( __( 'PayPal API Credential information is missing in settings. Please enter valid PayPal API Credentials in the General Settings tab for %s mode.', PayPal_PPCP_Config::$text_domain ), $this->mode );
+				$ret['msg'] = $response->get_error_message() . '. ' . sprintf( __( 'PayPal API Credential information is missing in settings. Please enter valid PayPal API Credentials in the General Settings tab for %s mode.', 'wordpress-simple-paypal-shopping-cart' ), $this->mode );
 			} elseif ( $error_code === 'invalid_client' ) {
-				$ret['msg'] = sprintf( __( 'Invalid or Missing API Credentials! Check the plugin settings and enter valid API credentials in the PayPal Credentials section for %s mode.', PayPal_PPCP_Config::$text_domain ), $this->mode );
+				$ret['msg'] = sprintf( __( 'Invalid or Missing API Credentials! Check the plugin settings and enter valid API credentials in the PayPal Credentials section for %s mode.', 'wordpress-simple-paypal-shopping-cart' ), $this->mode );
 			} else {
 				$ret['msg'] = $response->get_error_message();
 			}
@@ -323,7 +323,7 @@ class PayPal_Webhook {
 		//Successfull response
 		$ret = array();
 		$ret['status']  = 'yes'; //Webhook exists.
-		$ret['msg']     = __( 'Webhook exists. If you still have issues with webhooks, you can delete it and create again.', PayPal_PPCP_Config::$text_domain );
+		$ret['msg']     = __( 'Webhook exists. If you still have issues with webhooks, you can delete it and create again.', 'wordpress-simple-paypal-shopping-cart' );
 		$ret['hidebtn'] = true;
 		return $ret;
 	}
@@ -350,7 +350,7 @@ class PayPal_Webhook {
 		$protocol = wp_parse_url( $webhook_url, PHP_URL_SCHEME );
 		if ( $protocol !== 'https' ) {
 			$ret['status'] = 'no';
-			$ret['msg']    = __( 'Invalid webhook URL.', PayPal_PPCP_Config::$text_domain )  . ': ' . __( 'Note that the PayPal subscription API requires your site to use HTTPS URLs. You must use an SSL certificate with HTTPS URLs to complete the setup of the subscription addon and use it.', PayPal_PPCP_Config::$text_domain );
+			$ret['msg']    = __( 'Invalid webhook URL.', 'wordpress-simple-paypal-shopping-cart' )  . ': ' . __( 'Note that the PayPal subscription API requires your site to use HTTPS URLs. You must use an SSL certificate with HTTPS URLs to complete the setup of the subscription addon and use it.', 'wordpress-simple-paypal-shopping-cart' );
 			return $ret;
 		}
 
@@ -359,7 +359,7 @@ class PayPal_Webhook {
 			// webhook created.
 			$ret['status']  = 'yes';
 			$ret['hidebtn'] = true;
-			$ret['msg'] = __( 'Webhook has been created.', PayPal_PPCP_Config::$text_domain );
+			$ret['msg'] = __( 'Webhook has been created.', 'wordpress-simple-paypal-shopping-cart' );
 		} else {
 			// Error occurred during webhook creation.
 			$ret['status'] = 'no';
@@ -383,7 +383,7 @@ class PayPal_Webhook {
 			if ( !is_wp_error( $response )){
 				//Webhook deleted.
 				$ret['success'] = true;
-				$ret['msg'] = __( 'Webhook has been deleted.', PayPal_PPCP_Config::$text_domain );
+				$ret['msg'] = __( 'Webhook has been deleted.', 'wordpress-simple-paypal-shopping-cart' );
 				return $ret;
 			} else {
 				//Error occurred during webhook deletion.
@@ -396,7 +396,7 @@ class PayPal_Webhook {
 		// Webhook does not exist. Nothing to delete.
 		$ret = array();
 		$ret['success'] = false;
-		$ret['msg'] = __( 'No webhook found. Nothing to delete.', PayPal_PPCP_Config::$text_domain );
+		$ret['msg'] = __( 'No webhook found. Nothing to delete.', 'wordpress-simple-paypal-shopping-cart' );
 		//No webhook exists in PayPal. Delete the webhook ID (if any) from our DB to clean it up (so it can be created again).
 		PayPal_Utility_Functions::delete_option( 'paypal_webhook_id_' . $this->mode );
 
@@ -413,7 +413,7 @@ class PayPal_Webhook {
 			PayPal_Utility_Functions::log( 'Live mode API credentials are not set.', true );
 			$ret = array();
 			$ret['success'] = false;
-			$ret['msg'] = __( 'Live mode credentials are not set. Cannot create webhook.', PayPal_PPCP_Config::$text_domain );
+			$ret['msg'] = __( 'Live mode credentials are not set. Cannot create webhook.', 'wordpress-simple-paypal-shopping-cart' );
 			return $ret;
 		}
 	}
@@ -428,7 +428,7 @@ class PayPal_Webhook {
 			PayPal_Utility_Functions::log( 'Sandbox mode API credentials are not set.', true );
 			$ret = array();
 			$ret['success'] = false;
-			$ret['msg'] = __( 'Sandbox mode credentials are not set. Cannot create webhook.', PayPal_PPCP_Config::$text_domain );
+			$ret['msg'] = __( 'Sandbox mode credentials are not set. Cannot create webhook.', 'wordpress-simple-paypal-shopping-cart' );
 			return $ret;			
 		}
 	}
