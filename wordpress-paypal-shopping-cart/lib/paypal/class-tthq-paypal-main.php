@@ -39,8 +39,7 @@ class PayPal_Main {
 	public static $partner_client_id_production = 'AWo6ovbrHzKZ3hHFJ7APISP4MDTjes-rJPrIgyFyKmbH-i8iaWQpmmaV5hyR21m-I6f_APG6n2rkZbmR'; //Platform app's client id.
 	public static $partner_client_id_sandbox = 'AeO65uHbDsjjFBdx3DO6wffuH2wIHHRDNiF5jmNgXOC8o3rRKkmCJnpmuGzvURwqpyIv-CUYH9cwiuhX';
 
-	// public static $pp_api_connection_settings_menu_page = 'admin.php?page=wspsc-menu-main&tab=ppcp_settings&subtab=ps_pp_api';
-	public static $pp_api_connection_settings_menu_page = 'admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection';
+	public static $pp_api_connection_settings_menu_page = '';//This is saved in the constructor (as a config item)
 	public static $paypal_webhook_event_query_arg = '';
 	
     public function __construct( $conf ) {
@@ -97,7 +96,7 @@ new PayPal_Main(
     array(
         'text_domain' => 'wordpress-simple-paypal-shopping-cart',
         'plugin_shortname' => 'wpsc',
-        'api_connection_settings_page' => 'admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=ps_pp_api', // TODO: Need to change for WPSC
+        'api_connection_settings_page' => 'admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection', // REPACE: Need to change this across different plugins.
         'log_text_method' => 'wspsc_log_payment_debug',
         'log_array_method' => 'wspsc_log_debug_array',
         'ppcp_settings_key' => 'wpsc_paypal_ppcp_settings',
