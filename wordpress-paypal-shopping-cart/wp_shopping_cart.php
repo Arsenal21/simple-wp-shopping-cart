@@ -38,17 +38,17 @@ load_textdomain( 'wordpress-simple-paypal-shopping-cart', WP_LANG_DIR . "/wordpr
 load_plugin_textdomain( 'wordpress-simple-paypal-shopping-cart', false, WP_CART_FOLDER . '/languages' );
 
 include_once( WP_CART_PATH . 'includes/wspsc_debug_logging_functions.php' );
-include_once( 'wp_shopping_cart_utility_functions.php' );
-include_once( 'wp_shopping_cart_shortcodes.php' );
-include_once( 'wp_shopping_cart_misc_functions.php' );
-include_once( 'wp_shopping_cart_orders.php' );
-include_once( 'includes/WSPSC_Cart.php' );
-include_once( 'includes/WSPSC_Cart_Item.php' );
-include_once( 'class-coupon.php' );
-include_once( 'class-coupon.php' );
-include_once( 'includes/wspsc-cart-functions.php' );
-include_once( 'includes/admin/wp_shopping_cart_menu_main.php' );
-include_once( 'includes/admin/wp_shopping_cart_tinymce.php' );
+include_once( WP_CART_PATH . 'wp_shopping_cart_utility_functions.php' );
+include_once( WP_CART_PATH . 'wp_shopping_cart_shortcodes.php' );
+include_once( WP_CART_PATH . 'wp_shopping_cart_misc_functions.php' );
+include_once( WP_CART_PATH . 'wp_shopping_cart_orders.php' );
+include_once( WP_CART_PATH . 'class-coupon.php' );
+include_once( WP_CART_PATH . 'includes/WSPSC_Cart.php' );
+include_once( WP_CART_PATH . 'includes/WSPSC_Cart_Item.php' );
+include_once( WP_CART_PATH . 'includes/wpsc-paypal-ppcp-checkout-form-related.php' );
+include_once( WP_CART_PATH . 'includes/wspsc-cart-functions.php' );
+include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_main.php' );
+include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_tinymce.php' );
 require_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php');
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_discounts.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php' );

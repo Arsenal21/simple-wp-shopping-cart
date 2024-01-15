@@ -249,11 +249,23 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</form>';
 		//END of standard PayPal checkout form
 
+		//The args array that we will use to pass any data to the functions that render the checkout forms. 
+		//The cart object can be retrieved from the global scope (if additional details from cart is needed).
+		$args = array( 
+			'carts_cnt' => $carts_cnt, 
+			'total' => $total, 
+			'postage_cost' => $postage_cost, 
+			'currency' => $paypal_currency, 
+			'return_url' => $return_url, 
+			'items_list' => $items_list, 
+			'is_tnc_enabled' => $is_tnc_enabled 
+		);
+		
 		//--- Start PayPal (New API) Checkout ---
 		$paypal_ppcp_configs = PayPal_PPCP_Config::get_instance();
 		if( !empty($paypal_ppcp_configs->get_value('ppcp_checkout_enable')) ){
 			//PayPal (New API) option is enabled.
-			
+			wpsc_render_paypal_ppcp_checkout_form($args);
 		}
 		//End of PayPal (New API) Checkout.
 
