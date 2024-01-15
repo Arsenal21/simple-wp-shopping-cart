@@ -43,5 +43,21 @@ function wpsc_render_paypal_ppcp_checkout_form( $output, $args ){
     // $return_url = get_post_meta($button_id, 'return_url', true);
     // $txn_success_message = __('Transaction completed successfully!', 'simple-membership');
 
+
+    /**********************
+     * PayPal SDK related settings
+     **********************/
+    //Configure the paypal SDK settings
+    $settings_args = array(
+        'is_live_mode' => $is_live_mode,
+        'live_client_id' => $live_client_id,
+        'sandbox_client_id' => $sandbox_client_id,
+        'currency' => $currency,
+        'disable-funding' => $disable_funding, /*array('card', 'credit', 'venmo'),*/
+        'intent' => 'capture', /* It is used to set the "intent" parameter in the JS SDK */
+        'is_subscription' => 0, /* It is used to set the "vault" parameter in the JS SDK */
+    );
+
+
     return $output;
 }
