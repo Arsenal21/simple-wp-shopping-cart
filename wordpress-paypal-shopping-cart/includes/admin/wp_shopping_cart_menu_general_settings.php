@@ -68,6 +68,7 @@ function wspsc_show_general_settings_page ()
         echo '<div id="message" class="updated fade">';
         echo '<p><strong>'.(__("Options Updated!", "wordpress-simple-paypal-shopping-cart")).'</strong></p></div>';
 
+        //Check if live/sandbox mode option has changed. If so, delete the cached PayPal access token so a new one is generated.
         $new_sandbox_enable_status =  sanitize_text_field(get_option('wp_shopping_cart_enable_sandbox'));
         if ( $new_sandbox_enable_status  !== $saved_sandbox_enable_status) {
             PayPal_Bearer::delete_cached_token();
