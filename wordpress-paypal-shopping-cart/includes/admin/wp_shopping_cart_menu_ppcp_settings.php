@@ -180,6 +180,10 @@ class WPSC_PPCP_settings_page
 							</tr>
 						</tbody>
 					</table>
+					<?php
+					//show a message if sandbox mode is enabled.
+					wpsc_settings_output_sandbox_mode_msg();
+					?>
 					<input type="submit" name="wpsc_ppcp_checkout_settings_submit" class="button-primary" value="<?php _e('Save Changes', WP_CART_TEXT_DOMAIN); ?>" />
 					<?php wp_nonce_field('wpsc_ppcp_checkout_settings_submit_nonce'); ?>
 				</form>

@@ -229,6 +229,13 @@ function wpspsc_settings_menu_footer()
     <?php
 }
 
+function wpsc_settings_output_sandbox_mode_msg(){
+    if( get_option ('wp_shopping_cart_enable_sandbox') ) {
+        // Sandbox mode is enabled.
+        echo '<p class="wpsc-blue-box">' . __('Note: the sandbox/test mode is enabled. You can turn off the sandbox mode (from the general settings menu) when you want to do live transactions.', 'wordpress-simple-paypal-shopping-cart') . '</p>';
+    }    
+}
+
 function wpspsc_amount_in_cents($amountFormatted) {
     $centsAmount = $amountFormatted;
 

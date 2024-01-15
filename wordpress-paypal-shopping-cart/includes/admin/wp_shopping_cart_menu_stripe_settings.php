@@ -116,11 +116,17 @@ function show_wp_cart_stripe_settings_page()
                         </td>
                     </tr>
                 </table>
-            </div>
-        </div>
 
-        <div class="submit">
-            <input type="submit" class="button-primary" name="wpspc_stripe_settings_update" value="<?php echo (__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />
+                <?php
+                //show a message if sandbox mode is enabled.
+                wpsc_settings_output_sandbox_mode_msg();
+                ?>
+
+                <div class="submit">
+                    <input type="submit" class="button-primary" name="wpspc_stripe_settings_update" value="<?php echo (__("Save Changes", "wordpress-simple-paypal-shopping-cart")) ?>" />
+                </div>
+
+            </div>
         </div>
     </form>
 
