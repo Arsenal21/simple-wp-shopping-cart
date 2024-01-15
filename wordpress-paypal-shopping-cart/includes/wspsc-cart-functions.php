@@ -263,14 +263,17 @@ function print_wp_shopping_cart( $args = array() ) {
 		
 		//--- Start PayPal (New API) Checkout ---
 		$paypal_ppcp_configs = PayPal_PPCP_Config::get_instance();
-		if( !empty($paypal_ppcp_configs->get_value('ppcp_checkout_enable')) ){
+		$paypal_ppcp_checkout_enabled = $paypal_ppcp_configs->get_value('ppcp_checkout_enable');	
+		if( !empty($paypal_ppcp_checkout_enabled) ){
 			//PayPal (New API) option is enabled.
-			wpsc_render_paypal_ppcp_checkout_form($args);
+			$ppcp_checkout_output = wpsc_render_paypal_ppcp_checkout_form($output, $args);
+			$output .= $ppcp_checkout_output;
 		}
 		//End of PayPal (New API) Checkout.
 
-		//--- Start PayPal Smart Checkout --- 
-		if ( get_option( 'wpspc_enable_pp_smart_checkout' ) ) {
+		//--- Start PayPal Smart Checkout ---
+		//Smart checkout option is only displayed if PayPal (New API) option is disabled. 
+		if ( empty($paypal_ppcp_checkout_enabled) && get_option( 'wpspc_enable_pp_smart_checkout' ) ) {
 			//Show PayPal Smart Payment Button
 
 			//adding form in smart checkout button, so simple cart collect customer input adon works
