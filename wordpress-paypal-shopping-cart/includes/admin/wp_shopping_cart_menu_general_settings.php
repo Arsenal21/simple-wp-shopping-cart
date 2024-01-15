@@ -1,5 +1,7 @@
 <?php
 
+use TTHQ\WPSC\Lib\PayPal\PayPal_Bearer;
+
 /*
  * General settings menu page
  */
@@ -24,7 +26,7 @@ function wspsc_show_general_settings_page ()
         if ( !wp_verify_nonce($nonce, 'wp_simple_cart_settings_update')){
                 wp_die('Error! Nonce Security Check Failed! Go back to settings menu and save the settings again.');
         }
-
+        $saved_sandbox_enable_status = sanitize_text_field(get_option('wp_shopping_cart_enable_sandbox'));
         $currency_code = sanitize_text_field($_POST["cart_payment_currency"]);
         $currency_code = trim(strtoupper($currency_code));//Currency code must be uppercase.
         $disable_standard_checkout	 = filter_input( INPUT_POST, 'wpspc_disable_standard_checkout', FILTER_SANITIZE_NUMBER_INT );
@@ -65,6 +67,12 @@ function wspsc_show_general_settings_page ()
         
         echo '<div id="message" class="updated fade">';
         echo '<p><strong>'.(__("Options Updated!", "wordpress-simple-paypal-shopping-cart")).'</strong></p></div>';
+
+        $new_sandbox_enable_status =  sanitize_text_field(get_option('wp_shopping_cart_enable_sandbox'));
+        if ( $new_sandbox_enable_status  !== $saved_sandbox_enable_status) {
+            PayPal_Bearer::delete_cached_token();
+            wspsc_log_payment_debug('Live/Test mode settings updated. Deleted the PayPal access token cache so a new one is generated.', true);
+        }
     }
 
     $defaultCurrency = get_option('cart_payment_currency');
