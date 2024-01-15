@@ -204,7 +204,7 @@ function wpspc_run_activation()
 function wpspsc_settings_menu_documentation_msg()
 {
     ?>
-    <div class="wspsc_yellow_box">
+    <div class="wpsc-grey-box">
         <p>
             <?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?>
             <?php echo ' '; ?>
@@ -217,7 +217,7 @@ function wpspsc_settings_menu_documentation_msg()
 function wpspsc_settings_menu_footer()
 {
     ?>
-    <div class="wspsc_yellow_box">
+    <div class="wpsc-yellow-box">
     <p>
         <?php _e("Need a shopping cart plugin with a lot of features and support? Check out our ", "wordpress-simple-paypal-shopping-cart"); ?>
         <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a>

@@ -38,7 +38,7 @@ class WPSC_PPCP_settings_page
 
 		//Documentation link
 		$ppcp_documentation_link = "https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023";
-		echo '<div class="wspsc_yellow_box">';
+		echo '<div class="wpsc-grey-box">';
 		echo '<p>';
 		_e('Configure the PayPal API credentials and checkout button appearance for the new PayPal checkout.', WP_CART_TEXT_DOMAIN);
 		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', WP_CART_TEXT_DOMAIN) . '</a> ' . __('to learn how to setup and configure it.', WP_CART_TEXT_DOMAIN);
@@ -65,13 +65,19 @@ class WPSC_PPCP_settings_page
 			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP checkout settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
 		}
 
+        if (isset($_GET['wpsc_ppcp_after_onboarding'])){
+            $environment_mode = isset($_GET['environment_mode']) ? sanitize_text_field($_GET['environment_mode']) : '';
+            $onboarding_action_result = '<p>PayPal merchant account connection setup completed for environment mode: '. esc_attr($environment_mode) .'</p>';
+            echo '<div class="notice notice-success"><p>' . $onboarding_action_result . '</p></div>';
+        }
+
 		if (isset($_GET['wpsc_ppcp_disconnect_production'])){
             //Verify nonce
             check_admin_referer( 'wpsc_ac_disconnect_nonce_production' );
 
             PayPal_PPCP_Onboarding_Serverside::reset_seller_api_credentials('production');
             $disconnect_action_result = __('PayPal account disconnected.', 'wordpress-simple-paypal-shopping-cart');
-            echo '<div class="wspsc_yellow_box"><p>' . $disconnect_action_result . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . $disconnect_action_result . '</p></div>';
         }
 
         if (isset($_GET['wpsc_ppcp_disconnect_sandbox'])){
@@ -80,7 +86,7 @@ class WPSC_PPCP_settings_page
 
             PayPal_PPCP_Onboarding_Serverside::reset_seller_api_credentials('sandbox');
             $disconnect_action_result = __('PayPal sandbox account disconnected.', 'wordpress-simple-paypal-shopping-cart');
-            echo '<div class="wspsc_yellow_box"><p>' . $disconnect_action_result . '</p></div>';
+            echo '<div class="notice notice-success"><p>' . $disconnect_action_result . '</p></div>';
         }
 
 		if (isset($_POST['wpsc_ppcp_api_credentials_submit']) && check_admin_referer('wpsc_ppcp_api_credentials_submit_nonce')) {
