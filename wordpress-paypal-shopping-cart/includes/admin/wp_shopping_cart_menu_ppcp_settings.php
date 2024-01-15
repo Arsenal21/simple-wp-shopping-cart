@@ -3,6 +3,7 @@
 use TTHQ\WPSC\Lib\PayPal\PayPal_Bearer;
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 use TTHQ\WPSC\Lib\PayPal\Onboarding\PayPal_PPCP_Onboarding;
+use TTHQ\WPSC\Lib\PayPal\Onboarding\PayPal_PPCP_Onboarding_Serverside;
 
 require_once WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php';
 
@@ -63,6 +64,24 @@ class WPSC_PPCP_settings_page
 			$this->settings->save();
 			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP checkout settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
 		}
+
+		if (isset($_GET['wpsc_ppcp_disconnect_production'])){
+            //Verify nonce
+            check_admin_referer( 'wpsc_ac_disconnect_nonce_production' );
+
+            PayPal_PPCP_Onboarding_Serverside::reset_seller_api_credentials('production');
+            $disconnect_action_result = __('PayPal account disconnected.', 'simple-membership');
+            echo '<div class="wspsc_yellow_box"><p>' . $disconnect_action_result . '</p></div>';
+        }
+
+        if (isset($_GET['wpsc_ppcp_disconnect_sandbox'])){
+            //Verify nonce
+            check_admin_referer( 'wpsc_ac_disconnect_nonce_sandbox' );
+
+            PayPal_PPCP_Onboarding_Serverside::reset_seller_api_credentials('sandbox');
+            $disconnect_action_result = __('PayPal sandbox account disconnected.', 'simple-membership');
+            echo '<div class="wspsc_yellow_box"><p>' . $disconnect_action_result . '</p></div>';
+        }
 
 		if (isset($_POST['wpsc_ppcp_api_credentials_submit']) && check_admin_referer('wpsc_ppcp_api_credentials_submit_nonce')) {
 			$this->settings->set_value('paypal-live-client-id', (isset($_POST['paypal-live-client-id']) ? sanitize_text_field($_POST['paypal-live-client-id']) : ''));
