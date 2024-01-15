@@ -84,9 +84,9 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('ppcp_btn_color', (isset($_POST['ppcp_btn_color']) ? sanitize_text_field($_POST['ppcp_btn_color']) : ''));
 
 			// Funding disable related
-			$this->settings->set_value('ppcp_disable_funding_card', (isset($_POST['ppcp_disable_funding_card']) ? sanitize_text_field($_POST['ppcp_disable_funding_card']) : ''));
-			$this->settings->set_value('ppcp_disable_funding_credit', (isset($_POST['ppcp_disable_funding_credit']) ? sanitize_text_field($_POST['ppcp_disable_funding_credit']) : ''));
-			$this->settings->set_value('ppcp_disable_funding_venmo', (isset($_POST['ppcp_disable_funding_venmo']) ? sanitize_text_field($_POST['ppcp_disable_funding_venmo']) : ''));
+			$this->settings->set_value('ppcp_disable_funding_card', (isset($_POST['ppcp_disable_funding_card']) ? sanitize_text_field($_POST['ppcp_disable_funding_card']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_credit', (isset($_POST['ppcp_disable_funding_credit']) ? sanitize_text_field($_POST['ppcp_disable_funding_credit']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_venmo', (isset($_POST['ppcp_disable_funding_venmo']) ? sanitize_text_field($_POST['ppcp_disable_funding_venmo']) : '0'));
 
 			$this->settings->save();
 			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP button appearance settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
