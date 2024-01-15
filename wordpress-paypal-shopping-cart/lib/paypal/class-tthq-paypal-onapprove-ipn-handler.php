@@ -35,7 +35,7 @@ class PayPal_OnApprove_IPN_Handler {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Empty data received.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Empty data received.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 		}
@@ -49,7 +49,7 @@ class PayPal_OnApprove_IPN_Handler {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 			exit;
@@ -61,7 +61,7 @@ class PayPal_OnApprove_IPN_Handler {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Empty transaction data received.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Empty transaction data received.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 		}
@@ -141,8 +141,8 @@ class PayPal_OnApprove_IPN_Handler {
 		$ipn['plan_id'] = isset($txn_data['plan_id']) ? $txn_data['plan_id'] : '';
 		$ipn['create_time'] = isset($txn_data['create_time']) ? $txn_data['create_time'] : '';
 
-		$ipn['status'] = __('subscription created', PayPal_PPCP_Config::$text_domain);
-		$ipn['payment_status'] = __('subscription created', PayPal_PPCP_Config::$text_domain);
+		$ipn['status'] = __('subscription created', 'wordpress-simple-paypal-shopping-cart');
+		$ipn['payment_status'] = __('subscription created', 'wordpress-simple-paypal-shopping-cart');
 		$ipn['subscription_status'] = isset($txn_data['status']) ? $txn_data['status'] : '';//Can be used to check if the subscription is active or not (in the webhook handler)
 
 		//Amount and currency.

@@ -36,7 +36,7 @@ class PayPal_Button_Ajax_Hander {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Empty data received.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Empty data received.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 		}
@@ -55,7 +55,7 @@ class PayPal_Button_Ajax_Hander {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 			exit;
@@ -99,7 +99,7 @@ class PayPal_Button_Ajax_Hander {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Failed to create the order using PayPal API. Enable the debug logging feature to get more details.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Failed to create the order using PayPal API. Enable the debug logging feature to get more details.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 			exit;
@@ -124,7 +124,7 @@ class PayPal_Button_Ajax_Hander {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Empty data received.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Empty data received.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 		}
@@ -141,7 +141,7 @@ class PayPal_Button_Ajax_Hander {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Empty order ID received.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Empty order ID received.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 		}
@@ -155,7 +155,7 @@ class PayPal_Button_Ajax_Hander {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Nonce check failed. The page was most likely cached. Please reload the page and try again.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 			exit;
@@ -179,7 +179,7 @@ class PayPal_Button_Ajax_Hander {
 			wp_send_json(
 				array(
 					'success' => false,
-					'err_msg'  => __( 'Failed to capture the order. Enable the debug logging feature to get more details.', PayPal_PPCP_Config::$text_domain ),
+					'err_msg'  => __( 'Failed to capture the order. Enable the debug logging feature to get more details.', 'wordpress-simple-paypal-shopping-cart' ),
 				)
 			);
 			exit;
