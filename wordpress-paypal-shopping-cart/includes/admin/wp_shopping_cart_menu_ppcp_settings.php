@@ -41,7 +41,7 @@ class WPSC_PPCP_settings_page
 		echo '<div class="wpsc-grey-box">';
 		echo '<p>';
 		_e('Configure the PayPal API credentials and checkout button appearance for the new PayPal checkout.', WP_CART_TEXT_DOMAIN);
-		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', WP_CART_TEXT_DOMAIN) . '</a> ' . __('to learn how to setup and configure it.', WP_CART_TEXT_DOMAIN);
+		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', WP_CART_TEXT_DOMAIN) . '</a> ' . __('to learn how to set up and configure it.', WP_CART_TEXT_DOMAIN);
 		echo '</p>';
 		echo '</div>';
 

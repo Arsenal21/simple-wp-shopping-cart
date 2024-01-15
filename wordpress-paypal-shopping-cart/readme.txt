@@ -82,7 +82,7 @@ or
 
 = Shopping Cart Setup Video Tutorials =
 
-There is a series of video tutorials to show you how to setup the shopping cart plugin on your site. 
+There is a series of video tutorials to show you how to set up the shopping cart plugin on your site. 
 
 Check the [video tutorials here](https://www.tipsandtricks-hq.com/ecommerce/wordpress-simple-shopping-cart-video-tutorial-969).
 
