@@ -72,7 +72,7 @@ class PayPal_Main {
 			$config->set_value('ppcp_btn_color', 'blue');
 		}
 		$disable_funding_credit = $config->get_value('ppcp_disable_funding_credit');
-		if ( empty( $disable_funding_credit ) ) {
+		if ( $disable_funding_credit === '' ) {
 			$config->set_value('ppcp_disable_funding_credit', '1');
 		}
 
