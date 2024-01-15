@@ -11,8 +11,8 @@ class WPSC_PPCP_settings_page
 
 	private $settings;
 
-	private $ppcp_connection_subtab_url = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=ppcp-connection";
-	private $ppcp_button_subtab_link = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=ppcp-button";
+	private $ppcp_connection_subtab_url = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection";
+	private $ppcp_button_subtab_link = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=button-appreance";
 
 	public function __construct()
 	{
@@ -50,8 +50,8 @@ class WPSC_PPCP_settings_page
 ?>
 		<!-- ppcp settings menu's sub nav tabs -->
 		<h3 class="nav-tab-wrapper">
-			<a class="nav-tab <?php echo ($subtab == '' || $subtab == 'ppcp-connection') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_connection_subtab_url; ?>"><?php _e('PayPal API Connection', WP_CART_TEXT_DOMAIN); ?></a>
-			<a class="nav-tab <?php echo ($subtab == 'ppcp-button') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_button_subtab_link; ?>"><?php _e('Button Appearance', WP_CART_TEXT_DOMAIN); ?></a>
+			<a class="nav-tab <?php echo ($subtab == '' || $subtab == 'api-connection') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_connection_subtab_url; ?>"><?php _e('PayPal API Connection', WP_CART_TEXT_DOMAIN); ?></a>
+			<a class="nav-tab <?php echo ($subtab == 'button-appreance') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_button_subtab_link; ?>"><?php _e('Button Appearance', WP_CART_TEXT_DOMAIN); ?></a>
 		</h3>
 		<br />
 		<?php
@@ -106,10 +106,11 @@ class WPSC_PPCP_settings_page
 
 		//Switch case for the various different sub-tabs.
 		switch ($selected_subtab) {
-			case 'ppcp-button':
+			case 'button-appreance':
 				$this->handle_ppcp_button_appearance_subtab();
 				break;
-			default: // 'ppcp-connection'
+			default: 
+				// 'api-connection'
 				$this->handle_ppcp_connection_settings_subtab();
 				break;
 		}

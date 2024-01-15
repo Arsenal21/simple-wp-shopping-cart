@@ -40,7 +40,7 @@ class PayPal_Main {
 	public static $partner_client_id_sandbox = 'AeO65uHbDsjjFBdx3DO6wffuH2wIHHRDNiF5jmNgXOC8o3rRKkmCJnpmuGzvURwqpyIv-CUYH9cwiuhX';
 
 	// public static $pp_api_connection_settings_menu_page = 'admin.php?page=wspsc-menu-main&tab=ppcp_settings&subtab=ps_pp_api';
-	public static $pp_api_connection_settings_menu_page = '';
+	public static $pp_api_connection_settings_menu_page = 'admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection';
 	public static $paypal_webhook_event_query_arg = '';
 	
     public function __construct( $conf ) {
