@@ -1,4 +1,7 @@
 <?php
+
+use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
+
 global $carts_cnt;
 $carts_cnt = 0;
 
@@ -244,6 +247,17 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= $extra_pp_fields;
 
 		$output .= '</form>';
+		//END of standard PayPal checkout form
+
+		//--- Start PayPal (New API) Checkout ---
+		$paypal_ppcp_configs = PayPal_PPCP_Config::get_instance();
+		if( !empty($paypal_ppcp_configs->get_value('ppcp_checkout_enable')) ){
+			//PayPal (New API) option is enabled.
+			
+		}
+		//End of PayPal (New API) Checkout.
+
+		//--- Start PayPal Smart Checkout --- 
 		if ( get_option( 'wpspc_enable_pp_smart_checkout' ) ) {
 			//Show PayPal Smart Payment Button
 
@@ -491,7 +505,8 @@ function print_wp_shopping_cart( $args = array() ) {
 				$output .= ob_get_clean();
 			}
 		}
-		//Stripe checkout.
+
+		//---  Start of Stripe checkout --- 
 		if ( get_option( 'wpspc_enable_stripe_checkout' ) ) {
 			$wspsc_Cart = WSPSC_Cart::get_instance();
 

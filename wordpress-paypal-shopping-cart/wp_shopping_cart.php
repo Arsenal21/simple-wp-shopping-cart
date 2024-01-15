@@ -49,6 +49,7 @@ include_once( 'class-coupon.php' );
 include_once( 'includes/wspsc-cart-functions.php' );
 include_once( 'includes/admin/wp_shopping_cart_menu_main.php' );
 include_once( 'includes/admin/wp_shopping_cart_tinymce.php' );
+require_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php');
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_discounts.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php' );
 include_once( WP_CART_PATH . 'includes/classes/class.wspsc_blocks.php' );

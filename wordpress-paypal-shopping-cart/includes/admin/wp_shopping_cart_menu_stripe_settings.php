@@ -3,8 +3,6 @@
 function show_wp_cart_stripe_settings_page()
 {
 
-    require_once(WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php');
-
     if (!current_user_can('manage_options')) {
         wp_die('You do not have permission to access the settings page.');
     }

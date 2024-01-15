@@ -5,8 +5,6 @@ use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 use TTHQ\WPSC\Lib\PayPal\Onboarding\PayPal_PPCP_Onboarding;
 use TTHQ\WPSC\Lib\PayPal\Onboarding\PayPal_PPCP_Onboarding_Serverside;
 
-require_once WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php';
-
 class WPSC_PPCP_settings_page
 {
 
@@ -57,7 +55,7 @@ class WPSC_PPCP_settings_page
 		<br />
 		<?php
 
-		// Handle api credentials form submit
+		// Handle PayPal ppcp checkout settings form submit
 		if (isset($_POST['wpsc_ppcp_checkout_settings_submit']) && check_admin_referer('wpsc_ppcp_checkout_settings_submit_nonce')) {
 			$this->settings->set_value('ppcp_checkout_enable', (isset($_POST['ppcp_checkout_enable']) ? sanitize_text_field($_POST['ppcp_checkout_enable']) : ''));
 
