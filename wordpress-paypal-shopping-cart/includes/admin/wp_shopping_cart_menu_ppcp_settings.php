@@ -62,7 +62,7 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('ppcp_checkout_enable', (isset($_POST['ppcp_checkout_enable']) ? sanitize_text_field($_POST['ppcp_checkout_enable']) : ''));
 
 			$this->settings->save();
-			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP checkout settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
+			echo '<div class="notice notice-success"><p>' . __('PayPal checkout settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
 		}
 
         if (isset($_GET['wpsc_ppcp_after_onboarding'])){
@@ -96,10 +96,10 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('paypal-sandbox-secret-key', (isset($_POST['paypal-sandbox-secret-key']) ? sanitize_text_field($_POST['paypal-sandbox-secret-key']) : ''));
 
 			$this->settings->save();
-			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP API settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
+			echo '<div class="notice notice-success"><p>' . __('PayPal API settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
 		}
 
-		// Handle PayPal PPCP button appearance.
+		// Handle PayPal button appearance.
 		if (isset($_POST['wpsc_button_appearance_submit']) && check_admin_referer('wpsc_button_appearance_submit_nonce', 'wpsc_button_appearance_submit_nonce')) {
 			$this->settings->set_value('ppcp_btn_type', (isset($_POST['ppcp_btn_type']) ? sanitize_text_field($_POST['ppcp_btn_type']) : ''));
 			$this->settings->set_value('ppcp_btn_shape', (isset($_POST['ppcp_btn_shape']) ? sanitize_text_field($_POST['ppcp_btn_shape']) : ''));
@@ -114,7 +114,7 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('ppcp_disable_funding_venmo', (isset($_POST['ppcp_disable_funding_venmo']) ? sanitize_text_field($_POST['ppcp_disable_funding_venmo']) : '0'));
 
 			$this->settings->save();
-			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP button appearance settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
+			echo '<div class="notice notice-success"><p>' . __('PayPal button appearance settings updated successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
 		}
 
 		// Handle delete token cache form submit
@@ -126,7 +126,7 @@ class WPSC_PPCP_settings_page
 			 * FIXME: if needed
 			 */
 			PayPal_Bearer::delete_cached_token();
-			echo '<div class="notice notice-success"><p>' . __('PayPal PPCP access token cache deleted successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
+			echo '<div class="notice notice-success"><p>' . __('PayPal API access token cache deleted successfully.', WP_CART_TEXT_DOMAIN) . '</p></div>';
 		}
 
 		//Switch case for the various different sub-tabs.
@@ -147,9 +147,7 @@ class WPSC_PPCP_settings_page
 	}
 
 	/**
-	 * Render paypal ppcp settings subtab view
-	 *
-	 * @return void
+	 * Render the paypal api settings subtab
 	 */
 	public function handle_ppcp_connection_settings_subtab()
 	{
@@ -162,7 +160,7 @@ class WPSC_PPCP_settings_page
 		
 		<!-- PayPal PPCP checkout enable settings postbox -->
 		<div class="postbox">
-			<h2 id="paypal-ppcp-checkout-enable-section"><?php _e("Enable PayPal PPCP (New API) Checkout", WP_CART_TEXT_DOMAIN); ?></h2>
+			<h2 id="paypal-ppcp-checkout-enable-section"><?php _e("Enable PayPal (New API) Checkout", WP_CART_TEXT_DOMAIN); ?></h2>
 			<div class="inside">
 				<form action="" method="POST">
 					<table class="form-table" role="presentation">
@@ -176,7 +174,7 @@ class WPSC_PPCP_settings_page
 										</label>
 									</p>
 									<p class="description">
-										<?php _e("Enable this to use new paypal ppcp api during checkout.", WP_CART_TEXT_DOMAIN); ?>
+										<?php _e("Enable this to offer the new paypal api checkout buttons as an option in the shopping cart.", WP_CART_TEXT_DOMAIN); ?>
 									</p>
 								</td>
 							</tr>
@@ -200,7 +198,7 @@ class WPSC_PPCP_settings_page
 
 		<!-- PayPal PPCP Connection Settings postbox -->
 		<div class="postbox">
-			<h2><?php _e("PayPal PPCP API Credentials", WP_CART_TEXT_DOMAIN); ?></h3>
+			<h2><?php _e("PayPal API Credentials (New API)", WP_CART_TEXT_DOMAIN); ?></h3>
 				<div class="inside">
 					<form action="" method="POST">
 						<table class="form-table">
@@ -265,12 +263,12 @@ class WPSC_PPCP_settings_page
 
 		<!-- PayPal PPCP API Access Token deletion checkbox -->
 		<div class="postbox">
-			<h2 id="paypal-delete-token-cache-section"><?php _e("Delete PayPal PPCP API Access Token Cache", WP_CART_TEXT_DOMAIN); ?></h2>
+			<h2 id="paypal-delete-token-cache-section"><?php _e("Delete PayPal API Access Token Cache", WP_CART_TEXT_DOMAIN); ?></h2>
 			<div class="inside">
 				<table class="form-table" role="presentation">
 					<tbody>
 						<tr>
-							<th scope="row"><?php _e('Delete PPCP Token Cache', WP_CART_TEXT_DOMAIN); ?></th>
+							<th scope="row"><?php _e('Delete Access Token Cache', WP_CART_TEXT_DOMAIN); ?></th>
 							<td>
 								<?php
 								$delete_cache_url = admin_url($this->ppcp_connection_subtab_url);
@@ -289,18 +287,16 @@ class WPSC_PPCP_settings_page
 	}
 
 	/**
-	 * Render paypal ppcp button appearance subtab view
-	 *
-	 * @return void
+	 * Render the new paypal checkout button appearance subtab
 	 */
 	public function handle_ppcp_button_appearance_subtab()
 	{
 	?>
 		<div class="postbox">
-			<h3 class="hndle"><label for="title"><?php _e('PayPal PPCP button appearance settings', WP_CART_TEXT_DOMAIN); ?></label></h3>
+			<h3 class="hndle"><label for="title"><?php _e('PayPal Button Appearance Settings', WP_CART_TEXT_DOMAIN); ?></label></h3>
 			<div class="inside">
 				<p>
-					<?php _e('Configure the button appearance for the PayPal PPCP checkout.', WP_CART_TEXT_DOMAIN); ?>
+					<?php _e('Configure the button appearance for the new PayPal checkout option.', WP_CART_TEXT_DOMAIN); ?>
 				</p>
 
 				<form id="ppcp_button_config_form" method="post">
