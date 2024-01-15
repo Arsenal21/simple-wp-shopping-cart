@@ -199,19 +199,6 @@ function wpspc_run_activation()
 	if ( empty( get_option( 'wspsc_plugin_activated_time' ) ) ) {
 		add_option( 'wspsc_plugin_activated_time', time() );
 	}
-
-    $enable_sandbox_settings = sanitize_text_field(get_option( 'wp_shopping_cart_enable_sandbox' ));
-    // Set plugin paypal ppcp settings.
-    add_option( 'wpsc_paypal_ppcp_settings', array(
-        'ppcp_btn_type' => 'checkout',
-        'ppcp_btn_shape' => 'rect',
-        'ppcp_btn_layout' => 'vertical',
-        'ppcp_btn_height' => 'medium',
-        'ppcp_btn_width' => 300,
-        'ppcp_btn_color' => 'blue',
-        'ppcp_disable_funding_credit' => '1',
-        'enable-sandbox-testing' =>  $enable_sandbox_settings, /* Use sandbox settings from core plugin to use in the PPCP library.*/
-    ) );
 }
 
 function wpspsc_settings_menu_documentation_msg()

@@ -56,12 +56,30 @@ class PayPal_Main {
 
 		//Plugin specific (whatever the sandbox toggle option is used in the plugin, we will use that.
 		if ( get_option( $conf['enable_sandbox_settings_key'] ) ) {
+			//The sandbox mode is enabled in the main plugin settings. Set it in our ppcp settings as well.
 			$config->set_value('enable-sandbox-testing', 'checked="checked"');
 		} else {
 			$config->set_value('enable-sandbox-testing', '');
 		}
+
+		//Set some default values for the button appearance (only if they are not set already).
+		$button_height = $config->get_value('ppcp_btn_height');
+		if ( empty( $button_height ) ) {
+			$config->set_value('ppcp_btn_height', 'medium');
+		}
+		$button_color = $config->get_value('ppcp_btn_color');
+		if ( empty( $button_color ) ) {
+			$config->set_value('ppcp_btn_color', 'blue');
+		}
+		$disable_funding_credit = $config->get_value('ppcp_disable_funding_credit');
+		if ( empty( $disable_funding_credit ) ) {
+			$config->set_value('ppcp_disable_funding_credit', '1');
+		}
+
+		//Save the config object.
 		$config->save();
 
+		//Set the menu page for the API connection settings.
 		self::$pp_api_connection_settings_menu_page = $conf['api_connection_settings_page'];
 		self::$paypal_webhook_event_query_arg = PayPal_Utility_Functions::auto_prefix('paypal_webhook_event', '_');
 		
