@@ -103,7 +103,7 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('ppcp_btn_shape', (isset($_POST['ppcp_btn_shape']) ? sanitize_text_field($_POST['ppcp_btn_shape']) : ''));
 			$this->settings->set_value('ppcp_btn_layout', (isset($_POST['ppcp_btn_layout']) ? sanitize_text_field($_POST['ppcp_btn_layout']) : ''));
 			$this->settings->set_value('ppcp_btn_height', (isset($_POST['ppcp_btn_height']) ? sanitize_text_field($_POST['ppcp_btn_height']) : ''));
-			$this->settings->set_value('ppcp_btn_width', (isset($_POST['ppcp_btn_width']) ? sanitize_text_field($_POST['ppcp_btn_width']) : 300));
+			$this->settings->set_value('ppcp_btn_width', (isset($_POST['ppcp_btn_width']) ? sanitize_text_field($_POST['ppcp_btn_width']) : 250));
 			$this->settings->set_value('ppcp_btn_color', (isset($_POST['ppcp_btn_color']) ? sanitize_text_field($_POST['ppcp_btn_color']) : ''));
 
 			// Funding disable related
@@ -347,7 +347,7 @@ class WPSC_PPCP_settings_page
 						<tr valign="top">
 							<th scope="row"><?php _e('Button Width', 'wordpress-simple-paypal-shopping-cart'); ?></th>
 							<td>
-								<input type="number" step="1" min="0" size="10" name="ppcp_btn_width" value="<?php echo ($this->settings->get_value('ppcp_btn_width') !== '') ? esc_attr($this->settings->get_value('ppcp_btn_width')) : 300; ?>" style="min-width: 150px;" />
+								<input type="number" step="1" min="0" size="10" name="ppcp_btn_width" value="<?php echo ($this->settings->get_value('ppcp_btn_width') !== '') ? esc_attr($this->settings->get_value('ppcp_btn_width')) : 250; ?>" style="min-width: 150px;" />
 								<p class="description"><?php _e("Select button width.", 'wordpress-simple-paypal-shopping-cart'); ?></p>
 							</td>
 						</tr>

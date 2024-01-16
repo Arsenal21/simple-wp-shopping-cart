@@ -3,7 +3,7 @@
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 use TTHQ\WPSC\Lib\PayPal\PayPal_JS_Button_Embed;
 
-function wpsc_render_paypal_ppcp_checkout_form( $output, $args ){
+function wpsc_render_paypal_ppcp_checkout_form( $args ){
     //FIXME - implement this function
 
     /***********************************************
@@ -29,12 +29,12 @@ function wpsc_render_paypal_ppcp_checkout_form( $output, $args ){
         $disable_funding[] = 'venmo';
     }
 
-	$btn_type = $ppcp_configs->get_value('ppcp_btn_type');
-    $btn_shape = $ppcp_configs->get_value('ppcp_btn_shape');
-    $btn_layout = $ppcp_configs->get_value('ppcp_btn_layout');
-    $btn_color = $ppcp_configs->get_value('ppcp_btn_color');
+	$btn_type = !empty($ppcp_configs->get_value('ppcp_btn_type')) ? $ppcp_configs->get_value('ppcp_btn_type') : 'checkout';
+    $btn_shape = !empty($ppcp_configs->get_value('ppcp_btn_shape')) ? $ppcp_configs->get_value('ppcp_btn_shape') : 'rect';
+    $btn_layout = !empty($ppcp_configs->get_value('ppcp_btn_layout')) ? $ppcp_configs->get_value('ppcp_btn_layout') : 'vertical';
+    $btn_color = !empty($ppcp_configs->get_value('ppcp_btn_color')) ? $ppcp_configs->get_value('ppcp_btn_color') : 'blue';
 
-    $btn_width = $ppcp_configs->get_value('ppcp_btn_width');
+    $btn_width = !empty($ppcp_configs->get_value('ppcp_btn_width')) ? $ppcp_configs->get_value('ppcp_btn_width') : 250;
     $btn_height = $ppcp_configs->get_value('ppcp_btn_height');
     $btn_sizes = array( 'small' => 25, 'medium' => 35, 'large' => 45, 'xlarge' => 55 );
     $btn_height = isset( $btn_sizes[ $btn_height ] ) ? $btn_sizes[ $btn_height ] : 35;
@@ -105,10 +105,6 @@ function wpsc_render_paypal_ppcp_checkout_form( $output, $args ){
         $( document ).on( "wpsc_paypal_sdk_loaded", function() { 
             //Anything that goes here will only be executed after the PayPal SDK is loaded.
             console.log('PayPal JS SDK is loaded.');
-
-            var js_currency_code = '<?php echo esc_js($currency); ?>';
-            var js_payment_amount = <?php echo esc_js($payment_amount); ?>;
-            var js_quantity = 1;
 
             const paypalButtonsComponent = paypal.Buttons({
                 // optional styling for buttons
@@ -299,8 +295,6 @@ function wpsc_render_paypal_ppcp_checkout_form( $output, $args ){
     //Get the output from the buffer and clean the buffer.
     $ppcp_output = ob_get_clean();
 
-    //Append the output to the existing output.
-    $output .= $ppcp_output;
-
-    return $output;
+    //The caller function will echo or append this output.
+    return $ppcp_output;
 }

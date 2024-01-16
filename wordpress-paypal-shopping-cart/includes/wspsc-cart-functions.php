@@ -266,7 +266,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$paypal_ppcp_checkout_enabled = $paypal_ppcp_configs->get_value('ppcp_checkout_enable');	
 		if( !empty($paypal_ppcp_checkout_enabled) ){
 			//PayPal (New API) option is enabled.
-			$ppcp_checkout_output = wpsc_render_paypal_ppcp_checkout_form($output, $args);
+			$ppcp_checkout_output = wpsc_render_paypal_ppcp_checkout_form($args);
 			$output .= $ppcp_checkout_output;
 		}
 		//End of PayPal (New API) Checkout.
