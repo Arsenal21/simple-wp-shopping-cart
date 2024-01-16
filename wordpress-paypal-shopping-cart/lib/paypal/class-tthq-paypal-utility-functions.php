@@ -603,6 +603,10 @@ class PayPal_Utility_Functions{
 		return $custom_variables;
 	}
 
+	/**
+	 * Creates an array of objecgts from the cart_items. This is useful for passing as the purchase units items
+	 * @param array $cart_items
+	 */
 	public static function create_purchase_units_items_list( $cart_items ){
 		if ( !is_array($cart_items) ) {
 			//Cart is empty
@@ -612,14 +616,16 @@ class PayPal_Utility_Functions{
 		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
 		$purchase_unit_items_list = array();
 		foreach ( $cart_items as $item ) {
-			$pu_item = array(
+			//Create an item object
+			$pu_item = [
 				"name" => $item->get_name(),
 				"quantity" => $item->get_quantity(),
-				"unit_amount" => array(
-					"value" => $item->get_price(),
+				"unit_amount" => [
+					"value" => wpspsc_number_format_price($item->get_price()),
 					"currency_code" => $currency,
-				)
-			);
+				]
+			];
+			//Add the item object to the list to create an array of objects.
 			$purchase_unit_items_list[] = $pu_item;
 		}
 		
