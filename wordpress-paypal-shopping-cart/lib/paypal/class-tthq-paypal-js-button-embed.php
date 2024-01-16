@@ -58,6 +58,10 @@ class PayPal_JS_Button_Embed {
 		return $next_button_id;
 	}
 
+	public function get_button_id_prefix() {
+		return $this->button_id_prefix;
+	}
+
 	/*
 	 * Generate the arguments for the PayPal JS SDK. It will be used to load the SDK script.
 	 */

@@ -141,8 +141,6 @@ function wspsc_compact_cart2_handler($args)
     $wspsc_cart = WSPSC_Cart::get_instance();
     $num_items = $wspsc_cart->get_total_cart_qty();
     $checkout_url = get_option('cart_checkout_page_url');
-    //$curSymbol = WP_CART_CURRENCY_SYMBOL;
-    //$cart_total = wpspc_get_total_cart_sub_total();
 
     $output = "";
     $output .= '<div class="wspsc_compact_cart2 wpsps-cart-wrapper">';

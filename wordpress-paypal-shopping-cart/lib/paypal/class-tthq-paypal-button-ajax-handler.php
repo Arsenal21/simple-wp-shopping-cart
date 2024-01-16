@@ -46,6 +46,10 @@ class PayPal_Button_Ajax_Hander {
 			$data = json_decode( $data, true);		
 		}
 
+		//***************************** */
+		//FIXME - Get the cart details such as payment amount, currency, item name, etc from the cart object.
+		//***************************** */
+
 		$button_id = isset( $data['button_id'] ) ? sanitize_text_field( $data['button_id'] ) : '';
 		$on_page_button_id = isset( $data['on_page_button_id'] ) ? sanitize_text_field( $data['on_page_button_id'] ) : '';
 		PayPal_Utility_Functions::log( 'pp_create_order ajax request received for createOrder. Button ID: '.$button_id.', On Page Button ID: ' . $on_page_button_id, true );

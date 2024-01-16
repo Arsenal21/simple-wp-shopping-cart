@@ -7,6 +7,11 @@ class WSPSC_Cart {
     protected static $instance = null;
     protected $cart_custom_values = "";
 
+    public $sub_total = 0;
+    public $postage_cost = 0;
+    public $tax = 0;
+    public $grand_total = 0;
+
     public function __construct() {
         $this->cart_id = isset($_COOKIE['simple_cart_id']) ? $_COOKIE['simple_cart_id'] : 0;
         $this->post_type = "wpsc_cart_orders";
@@ -148,15 +153,80 @@ class WSPSC_Cart {
         return $sub_total;
     }
 
+    public function get_sub_total_formatted() {
+        //This function will return the sub total of the cart items after calculate_cart_totals_and_postage() is called.
+        $sub_total = $this->sub_total;
+        return wpspsc_number_format_price($sub_total);
+    }
+
+    public function get_postage_cost_formatted() {
+        //This function will return the postage cost of the cart items after calculate_cart_totals_and_postage() is called.
+        $postage_cost = $this->postage_cost;
+        return wpspsc_number_format_price($postage_cost);
+    }
+
+    public function get_grand_total_formatted() {
+        //This function will return the grand total of the cart items after calculate_cart_totals_and_postage() is called.
+        $grand_total = $this->grand_total;
+        return wpspsc_number_format_price($grand_total);
+    }
+
+    /**
+     * Calculates various cart totals and postage cost then sets the values in respective variables. 
+     * You can then use getters to get the values.
+     * 
+     * @return mixed Returns the grand total of the cart.
+     */
+    public function calculate_cart_totals_and_postage() {
+        if (!$this->get_items()) {
+            return 0;
+        }
+
+        $grand_total = 0;
+        $sub_total = 0;
+        $postage_cost = 0;
+        $item_total_shipping = 0;
+        $total_items = 0;
+
+        foreach ( $this->get_items() as $item ) {
+			$sub_total += $item->get_price() * $item->get_quantity();
+			$item_total_shipping += $item->get_shipping() * $item->get_quantity();
+			$total_items += $item->get_quantity();
+		}
+		if ( ! empty( $item_total_shipping ) ) {
+			$baseShipping = get_option( 'cart_base_shipping_cost' );
+			$postage_cost = (float) $item_total_shipping + (float) $baseShipping;
+		}
+
+		$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
+		if ( ! empty( $cart_free_shipping_threshold ) && $sub_total > $cart_free_shipping_threshold ) {
+			$postage_cost = 0;
+		}
+
+        $tax = 0;//At the moment we don't have tax calculation. So set it to 0.
+
+        //Calculate the grand total
+        $grand_total = $sub_total + $postage_cost + $tax;
+
+        //Set the values in the class variables
+        $this->sub_total = $sub_total;
+        $this->postage_cost = $postage_cost;
+        $this->tax = $tax;
+        $this->grand_total = $grand_total;
+
+        return $grand_total;
+    }
+
     public function simple_cart_total() {
+        //Use calculate_cart_totals_and_postage instead of this function.
         $grand_total = 0;
         $total = 0;
         $item_total_shipping = 0;
 
         if ($this->get_items()) {
             foreach ($this->get_items() as $item) {
-                $total             += $item->get_price() * $item->get_quantity();
-                $item_total_shipping     += $item->get_shipping() * $item->get_quantity();
+                $total += $item->get_price() * $item->get_quantity();
+                $item_total_shipping += $item->get_shipping() * $item->get_quantity();
             }
             $grand_total = $total + $item_total_shipping;
         }
