@@ -91,7 +91,7 @@ class PayPal_OnApprove_IPN_Handler {
 		 * 
 		 * FIXME: This need to rework or remove if needed.
 		 */
-		// PayPal_Utility_IPN_Related::handle_save_txn_data( $data, $txn_data, $this->ipn_data );
+		// PayPal_Utility_IPN_Related::complete_post_payment_processing( $data, $txn_data, $this->ipn_data );
 
 		/**
 		 * Trigger the IPN processed action hook (so other plugins can can listen for this event).

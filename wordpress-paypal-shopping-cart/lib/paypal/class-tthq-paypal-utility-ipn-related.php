@@ -170,8 +170,7 @@ class PayPal_Utility_IPN_Related {
 	 * 
 	 * This also includes some plugin specific variables.
 	 */
-	/* 
-	public static function handle_save_txn_data( $data, $txn_data, $ipn_data){
+	public static function complete_post_payment_processing( $data, $txn_data, $ipn_data){
 		//Check if this is a duplicate notification.
 		if( PayPal_Utility_IPN_Related::is_txn_already_processed($ipn_data)){
 			//This transaction notification has already been processed. So we don't need to process it again.
@@ -192,14 +191,21 @@ class PayPal_Utility_IPN_Related {
 			$order_id = $customvariables['order_id'];
 		}
 
+		//FIXME - complete implementation of this method.
 		// Save the transaction data.
 		PayPal_Utility_Functions::log( 'Saving transaction data to the database.', true );
 		//Transactions::save_txn_record( $ipn_data, array() );
 		PayPal_Utility_Functions::log( 'Transaction data saved.', true );
 
+		//FIXME - dispatch sale notification email.
+		//PayPal_Utility_Functions::dispatch_sale_notification_email( $ipn_data );
+
+		//Empty any incomplete old cart orders.
+		wspsc_clean_incomplete_old_cart_orders();
+
 		return true;
 	}
- */
+
 	public static function is_txn_already_processed( $ipn_data ){
 		// Query the DB to check if we have already processed this transaction or not.
 		global $wpdb;

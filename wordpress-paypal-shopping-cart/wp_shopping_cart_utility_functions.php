@@ -33,9 +33,9 @@ function wpspc_get_total_cart_sub_total() {
 }
 
 function wspsc_clean_incomplete_old_cart_orders() {
-    //Empty any incomplete old cart orders (that are more than 12 hours old)
+    //Empty any incomplete old cart orders (that are more than 48 hours old)
     global $wpdb;
-    $specific_time = date('Y-m-d H:i:s', strtotime('-12 hours'));
+    $specific_time = date('Y-m-d H:i:s', strtotime('-48 hours'));
     $wpdb->query(
             $wpdb->prepare("DELETE FROM $wpdb->posts
                  WHERE post_type = %s
