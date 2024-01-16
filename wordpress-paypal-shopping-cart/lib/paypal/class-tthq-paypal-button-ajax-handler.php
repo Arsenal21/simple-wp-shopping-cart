@@ -46,13 +46,9 @@ class PayPal_Button_Ajax_Hander {
 			$data = json_decode( $data, true);		
 		}
 
-		//***************************** */
-		//FIXME - Get the cart details such as payment amount, currency, item name, etc from the cart object.
-		//***************************** */
-
-		$button_id = isset( $data['button_id'] ) ? sanitize_text_field( $data['button_id'] ) : '';
+		$cart_id = isset( $data['cart_id'] ) ? sanitize_text_field( $data['cart_id'] ) : '';
 		$on_page_button_id = isset( $data['on_page_button_id'] ) ? sanitize_text_field( $data['on_page_button_id'] ) : '';
-		PayPal_Utility_Functions::log( 'pp_create_order ajax request received for createOrder. Button ID: '.$button_id.', On Page Button ID: ' . $on_page_button_id, true );
+		PayPal_Utility_Functions::log( 'pp_create_order ajax request received for createOrder. Cart ID: '.$cart_id.', On Page Button ID: ' . $on_page_button_id, true );
 
 		// Check nonce.
 		if ( ! check_ajax_referer( $on_page_button_id, '_wpnonce', false ) ) {
@@ -65,14 +61,29 @@ class PayPal_Button_Ajax_Hander {
 			exit;
 		}
 		
-		//Get the Item name for this button. This will be used as the item name in the IPN.
-		$button_cpt = get_post($button_id); //Retrieve the CPT for this button
-		$item_name = htmlspecialchars($button_cpt->post_title);
-		$item_name = substr($item_name, 0, 127);//Limit the item name to 127 characters (PayPal limit)
-		//Get the payment amount for this button.
-		$payment_amount = get_post_meta($button_id, 'payment_amount', true);
-		//Get the currency for this button.
-		$currency = get_post_meta( $button_id, 'payment_currency', true );
+		//***************************** */
+		//FIXME - Get the cart details such as payment amount, currency, item name, etc from the cart object.
+		//Some of the details can be saved in the cart order CPT and then we can use it here.
+		//***************************** */
+
+		//FIXME - Check if we can specify all the cart items in the PayPal API data array.
+
+		//Get the Item details.
+		$button_cpt = get_post($cart_id); //Retrieve the CPT for this.
+		// $item_name = htmlspecialchars($button_cpt->post_title);
+		// $item_name = substr($item_name, 0, 127);//Limit the item name to 127 characters (PayPal limit)
+		
+		//Get the payment amount
+		// $wspsc_cart = WSPSC_Cart::get_instance();
+		// $wspsc_cart->calculate_cart_totals_and_postage();
+		// $formatted_sub_total = $wspsc_cart->get_sub_total_formatted();
+		// $formatted_postage_cost = $wspsc_cart->get_postage_cost_formatted();
+		// $formatted_grand_total = $wspsc_cart->get_grand_total_formatted();
+		// $payment_amount = $formatted_grand_total;
+
+		//$payment_amount = get_post_meta($button_id, 'payment_amount', true);
+		//Get the currency
+		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
 		$quantity = 1;
 		$digital_goods_enabled = 1;
 
