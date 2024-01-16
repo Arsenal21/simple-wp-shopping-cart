@@ -216,11 +216,15 @@ class PayPal_Request_API_Injector {
         * Creates a PayPal order. Returns the order ID if successful.
         * The $additional_args array can be used to pass additional arguments to the function to return the raw response or response body.
         */
-        public function create_paypal_order_by_url_and_args( $data, $additional_args = array()){
-            $payment_amount = isset($data['payment_amount']) ? $data['payment_amount'] : '';
-            $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
+        public function create_paypal_order_by_url_and_args( $data, $additional_args = array(), $items = array() ){
+            
+            $payment_amount = isset($data['payment_amount']) ? $data['payment_amount'] : 0;
+            $postage_cost = isset($data['postage_cost']) ? $data['postage_cost'] : 0;
             $currency = isset($data['currency']) ? $data['currency'] : 'USD';
+            $description = isset($data['description']) ? $data['description'] : '';
+
             $item_name = isset($data['item_name']) ? $data['item_name'] : '';
+            $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
             $digital_goods_enabled = isset($data['digital_goods_enabled']) ? $data['digital_goods_enabled'] : 1;
             
             //https://developer.paypal.com/docs/api/orders/v2/#orders_create
@@ -234,35 +238,43 @@ class PayPal_Request_API_Injector {
                            "breakdown" => [
                                "item_total" => [
                                    "currency_code" => $currency,
-                                   "value" => $payment_amount * $quantity,
-                               ]
+                                   "value" => $payment_amount,
+                               ],
+                               "shipping" => [
+                                    "currency_code" => $currency,
+                                    "value" => $postage_cost,
+                                ]                               
                            ]
                        ],
-                       "items" => [
-                           [
-                               "name" => $item_name,
-                               "quantity" => $quantity,
-                               "category" => $digital_goods_enabled ? "DIGITAL_GOODS" : "PHYSICAL_GOODS",
-                               "unit_amount" => [
-                                   "value" => $payment_amount,
-                                   "currency_code" => $currency,
-                               ]
-                           ]
-                        ],
-                        "description" => $item_name,
+                    //    "items" => [
+                    //        [
+                    //            "name" => $description,
+                    //            "quantity" => $quantity,
+                    //            "category" => $digital_goods_enabled ? "DIGITAL_GOODS" : "PHYSICAL_GOODS",
+                    //            "unit_amount" => [
+                    //                "value" => $payment_amount,
+                    //                "currency_code" => $currency,
+                    //            ]
+                    //        ]
+                    //     ],
+                        "description" => $description,
                    ]
                ]
            ];
 
-            //A simple order data for testing            
+           PayPal_Utility_Functions::log('Order-create request data 1.', true);
+           PayPal_Utility_Functions::log_array( $order_data, true );//Debugging purpose.
+
+            //A simple order data (useful for simple payments)
             // $order_data = [
             //     "intent" => "CAPTURE",
             //     "purchase_units" => [
             //         [
-            //             amount => [
-            //             currency_code => "USD",
-            //             value => "100.00",
+            //             "amount" => [
+            //                 "currency_code" => $currency,
+            //                 "value" => $payment_amount,
             //             ],
+            //             "description" => $description,
             //         ],
             //     ],
             // ];

@@ -14,8 +14,6 @@ class PayPal_Utility_IPN_Related {
 		//Add the PayPal API order_id value to the reference parameter. So it gets saved with custom field data. This will be used to also save it to the reference DB column field when saving the transaction.
 		if(isset($data['order_id'])){
 			$data['custom_field'] = $custom . '&reference=' . $data['order_id'];
-		} else if(isset($data['orderID'])){
-			$data['custom_field'] = $custom . '&reference=' . $data['orderID'];
 		}
 
 		//Parse the custom field to read the IP address.
@@ -23,7 +21,7 @@ class PayPal_Utility_IPN_Related {
 
 		$purchase_units = isset($txn_data['purchase_units']) ? $txn_data['purchase_units'] : array();
 
-		//The $data['orderID'] is the ID for the order created using createOrder API call. The Transaction ID is the ID for the captured payment.
+		//The $data['order_id'] is the ID for the order created using createOrder API call. The Transaction ID is the ID for the captured payment.
 		$txn_id = isset($txn_data['purchase_units'][0]['payments']['captures'][0]['id']) ? $txn_data['purchase_units'][0]['payments']['captures'][0]['id'] : '';
 		
 		$address_street = isset($txn_data['purchase_units'][0]['shipping']['address']['address_line_1']) ? $txn_data['purchase_units'][0]['shipping']['address']['address_line_1'] : '';
@@ -33,7 +31,7 @@ class PayPal_Utility_IPN_Related {
 		}
 
 		$ipn_data['gateway'] = 'paypal_buy_now_checkout';
-		$ipn_data['txn_type'] = 'pp_buy_now_new';
+		$ipn_data['txn_type'] = 'paypal_checkout_new';
 		$ipn_data['custom'] = isset($data['custom_field']) ? $data['custom_field'] : '';
 		$ipn_data['txn_id'] = $txn_id;
 		$ipn_data['subscr_id'] = $txn_id;//Same as txn_id for one-time payments.
@@ -94,7 +92,7 @@ class PayPal_Utility_IPN_Related {
 	public static function validate_buy_now_checkout_txn_data( $data, $txn_data ) {
 		//Get the transaction/order details from PayPal API endpoint - /v2/checkout/orders/{$order_id}
 		$pp_orderID = isset($data['order_id']) ? $data['order_id'] : $data['orderID'];//backward compatibility.
-		$button_id = $data['button_id'];
+		$cart_id = $data['cart_id'];
 
 		$validation_error_msg = '';
 
@@ -127,7 +125,7 @@ class PayPal_Utility_IPN_Related {
 			}
 			if ( strtolower($status) != strtolower('COMPLETED') ) {
 				//The order is not completed yet.
-				$validation_error_msg = 'Validation Error! The transaction status is not completed yet. Button ID: ' . $button_id . ', PayPal Capture ID: ' . $capture_id . ', Capture Status: ' . $status;
+				$validation_error_msg = 'Validation Error! The transaction status is not completed yet. Cart ID: ' . $cart_id . ', PayPal Capture ID: ' . $capture_id . ', Capture Status: ' . $status;
 				PayPal_Utility_Functions::log( $validation_error_msg, false );
 				return $validation_error_msg;
 			}
@@ -135,20 +133,20 @@ class PayPal_Utility_IPN_Related {
 			//Check that the amount matches with what we expect.
 			$amount = isset($order_details['purchase_units'][0]['amount']['value']) ? $order_details['purchase_units'][0]['amount']['value'] : 0;
 
-			$payment_amount_expected = get_post_meta( $button_id, 'payment_amount', true );
+			$payment_amount_expected = get_post_meta( $cart_id, 'expected_payment_amount', true );
 			if( floatval($amount) < floatval($payment_amount_expected) ){
 				//The amount does not match.
-				$validation_error_msg = 'Validation Error! The payment amount does not match. Button ID: ' . $button_id . ', PayPal Order ID: ' . $pp_orderID . ', Amount Received: ' . $amount . ', Amount Expected: ' . $payment_amount_expected;
+				$validation_error_msg = 'Validation Error! The payment amount does not match. Cart ID: ' . $cart_id . ', PayPal Order ID: ' . $pp_orderID . ', Amount Received: ' . $amount . ', Amount Expected: ' . $payment_amount_expected;
 				PayPal_Utility_Functions::log( $validation_error_msg, false );
 				return $validation_error_msg;
 			}
 
 			//Check that the currency matches with what we expect.
 			$currency = isset($order_details['purchase_units'][0]['amount']['currency_code']) ? $order_details['purchase_units'][0]['amount']['currency_code'] : '';
-			$currency_expected = get_post_meta( $button_id, 'payment_currency', true );
+			$currency_expected = get_post_meta( $cart_id, 'expected_currency', true );
 			if( $currency != $currency_expected ){
 				//The currency does not match.
-				$validation_error_msg = 'Validation Error! The payment currency does not match. Button ID: ' . $button_id . ', PayPal Order ID: ' . $pp_orderID . ', Currency Received: ' . $currency . ', Currency Expected: ' . $currency_expected;
+				$validation_error_msg = 'Validation Error! The payment currency does not match. Cart ID: ' . $cart_id . ', PayPal Order ID: ' . $pp_orderID . ', Currency Received: ' . $currency . ', Currency Expected: ' . $currency_expected;
 				PayPal_Utility_Functions::log( $validation_error_msg, false );
 				return $validation_error_msg;
 			}
@@ -180,7 +178,7 @@ class PayPal_Utility_IPN_Related {
 			return true;
 		}
 		
-		//$button_id = $data['button_id'];
+		//$cart_id = $data['cart_id'];
 		$txn_id = isset($ipn_data['txn_id']) ? $ipn_data['txn_id'] : '';
 		$txn_type = isset($ipn_data['txn_type']) ? $ipn_data['txn_type'] : '';
 		PayPal_Utility_Functions::log( 'Transaction type: ' . $txn_type . ', Transaction ID: ' . $txn_id, true );

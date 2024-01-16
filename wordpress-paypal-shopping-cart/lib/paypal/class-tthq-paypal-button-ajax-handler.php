@@ -68,35 +68,47 @@ class PayPal_Button_Ajax_Hander {
 
 		//FIXME - Check if we can specify all the cart items in the PayPal API data array.
 
-		//Get the Item details.
-		$button_cpt = get_post($cart_id); //Retrieve the CPT for this.
-		// $item_name = htmlspecialchars($button_cpt->post_title);
-		// $item_name = substr($item_name, 0, 127);//Limit the item name to 127 characters (PayPal limit)
-		
-		//Get the payment amount
-		// $wspsc_cart = WSPSC_Cart::get_instance();
-		// $wspsc_cart->calculate_cart_totals_and_postage();
-		// $formatted_sub_total = $wspsc_cart->get_sub_total_formatted();
-		// $formatted_postage_cost = $wspsc_cart->get_postage_cost_formatted();
-		// $formatted_grand_total = $wspsc_cart->get_grand_total_formatted();
-		// $payment_amount = $formatted_grand_total;
+		//Get the cart and item details.
+		$order_cpt = get_post($cart_id); //Retrieve the CPT for this.
+		$description = 'Simple Cart Order ID: ' . $cart_id;//Default description.
+		$description = htmlspecialchars($description);
+		$description = substr($description, 0, 127);//Limit the item name to 127 characters (PayPal limit)
 
-		//$payment_amount = get_post_meta($button_id, 'payment_amount', true);
+		//Get the payment amount
+		$wspsc_cart = \WSPSC_Cart::get_instance();
+		$wspsc_cart->calculate_cart_totals_and_postage();
+		$formatted_sub_total = $wspsc_cart->get_sub_total_formatted();
+		$formatted_postage_cost = $wspsc_cart->get_postage_cost_formatted();
+		$formatted_grand_total = $wspsc_cart->get_grand_total_formatted();
+		//$payment_amount = $formatted_grand_total;
+
+		//Get the cart items
+		$cart_items = $wspsc_cart->get_items();
+		//FIXME - we should make the items array in a way that can be simply added to the PayPal API data's purchase_units array straight away.
+
 		//Get the currency
 		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
 		$quantity = 1;
-		$digital_goods_enabled = 1;
+		$digital_goods_enabled = 0;
+
+		//Save the grand total and currency in the order CPT (we will match it with the PayPal response later in verification stage).
+		update_post_meta( $cart_id, 'expected_payment_amount', $formatted_grand_total );
+		update_post_meta( $cart_id, 'expected_currency', $currency );
 
 		// Create the order using the PayPal API.
 		// https://developer.paypal.com/docs/api/orders/v2/#orders_create
 		$data = array(
-			'item_name' => $item_name,
-			'payment_amount' => $payment_amount,
+			'description' => $description,
+			'payment_amount' => $formatted_grand_total,
+			'postage_cost' => $formatted_postage_cost,
 			'currency' => $currency,
 			'quantity' => $quantity,
 			'digital_goods_enabled' => $digital_goods_enabled,
 		);
 		
+		//FIXME - Debugging purpose.
+		//PayPal_Utility_Functions::log_array( $data, true );
+
 		//Set the additional args for the API call.
 		$additional_args = array();
 		$additional_args['return_response_body'] = true;
@@ -161,9 +173,9 @@ class PayPal_Button_Ajax_Hander {
 			);
 		}
 
-		$button_id = isset( $data['button_id'] ) ? sanitize_text_field( $data['button_id'] ) : '';
+		$cart_id = isset( $data['cart_id'] ) ? sanitize_text_field( $data['cart_id'] ) : '';
 		$on_page_button_id = isset( $data['on_page_button_id'] ) ? sanitize_text_field( $data['on_page_button_id'] ) : '';
-		PayPal_Utility_Functions::log( 'Received request - pp_capture_order. Order ID: ' . $order_id . ', Button ID: '.$button_id.', On Page Button ID: ' . $on_page_button_id, true );
+		PayPal_Utility_Functions::log( 'Received request - pp_capture_order. PayPal Order ID: ' . $order_id . ', Cart ID: '.$cart_id.', On Page Button ID: ' . $on_page_button_id, true );
 
 		// Check nonce.
 		if ( ! check_ajax_referer( $on_page_button_id, '_wpnonce', false ) ) {
@@ -188,7 +200,6 @@ class PayPal_Button_Ajax_Hander {
 		//We requested the response body to be returned, so we need to JSON decode it.
 		if($response !== false){
 			$txn_data = json_decode( $response, true );//JSON decode the response body that we received.
-			$paypal_capture_id = isset( $txn_data['id'] ) ? $txn_data['id'] : '';
 		} else {
 			//Failed to capture the order.
 			wp_send_json(
@@ -200,8 +211,6 @@ class PayPal_Button_Ajax_Hander {
 			exit;
 		}
 
-		PayPal_Utility_Functions::log( 'PayPal Capture ID (Transaction ID): ' . $paypal_capture_id, true );
-
 		//--
 		// PayPal_Utility_Functions::log_array($data, true);//Debugging purpose.
 		// PayPal_Utility_Functions::log_array($txn_data, true);//Debugging purpose.
@@ -211,6 +220,8 @@ class PayPal_Button_Ajax_Hander {
 		//Need to have the following values in the $data array.
 		//['order_id']['button_id']['on_page_button_id']['item_name']['custom_field']		
 		$ipn_data = PayPal_Utility_IPN_Related::create_ipn_data_array_from_capture_order_txn_data( $data, $txn_data );
+		$paypal_capture_id = isset( $ipn_data['txn_id'] ) ? $ipn_data['txn_id'] : '';
+		PayPal_Utility_Functions::log( 'PayPal Capture ID (Transaction ID): ' . $paypal_capture_id, true );
 		PayPal_Utility_Functions::log_array( $ipn_data, true );//Debugging purpose.
 		
 		/* Since this capture is done from server side, the validation is not required but we are doing it anyway. */
