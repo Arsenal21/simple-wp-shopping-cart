@@ -585,7 +585,7 @@ class PayPal_Utility_Functions{
 	}
 
     public static function parse_custom_var( $custom ) {
-		$delimiter       = '&';
+		$delimiter = '&';
 		$custom_variables = array();
 
 		$name_value_combos = explode( $delimiter, $custom );
@@ -601,6 +601,29 @@ class PayPal_Utility_Functions{
 		}
 
 		return $custom_variables;
+	}
+
+	public static function create_purchase_units_items_list( $cart_items ){
+		if ( !is_array($cart_items) ) {
+			//Cart is empty
+			return '';
+		}
+	
+		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
+		$purchase_unit_items_list = array();
+		foreach ( $cart_items as $item ) {
+			$pu_item = array(
+				"name" => $item->get_name(),
+				"quantity" => $item->get_quantity(),
+				"unit_amount" => array(
+					"value" => $item->get_price(),
+					"currency_code" => $currency,
+				)
+			);
+			$purchase_unit_items_list[] = $pu_item;
+		}
+		
+		return $purchase_unit_items_list;
 	}
 
 }

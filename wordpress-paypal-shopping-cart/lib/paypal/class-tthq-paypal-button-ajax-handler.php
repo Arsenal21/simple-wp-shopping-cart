@@ -82,14 +82,15 @@ class PayPal_Button_Ajax_Hander {
 		$formatted_grand_total = $wspsc_cart->get_grand_total_formatted();
 		//$payment_amount = $formatted_grand_total;
 
-		//Get the cart items
-		$cart_items = $wspsc_cart->get_items();
-		//FIXME - we should make the items array in a way that can be simply added to the PayPal API data's purchase_units array straight away.
-
 		//Get the currency
 		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
 		$quantity = 1;
 		$digital_goods_enabled = 0;
+
+		//Get the cart items to create the purchase units items array.
+		$cart_items = $wspsc_cart->get_items();
+		//FIXME- Make the items array in a way that can be simply added to the PayPal API data's purchase_units array straight away.
+		$pu_items = PayPal_Utility_Functions::create_purchase_units_items_list( $cart_items );
 
 		//Save the grand total and currency in the order CPT (we will match it with the PayPal response later in verification stage).
 		update_post_meta( $cart_id, 'expected_payment_amount', $formatted_grand_total );
@@ -115,7 +116,7 @@ class PayPal_Button_Ajax_Hander {
 
 		//Create the order using the PayPal API.
 		$api_injector = new PayPal_Request_API_Injector();
-		$response = $api_injector->create_paypal_order_by_url_and_args( $data, $additional_args );
+		$response = $api_injector->create_paypal_order_by_url_and_args( $data, $additional_args, $pu_items );
             
 		//We requested the response body to be returned, so we need to JSON decode it.
 		if( $response !== false ){

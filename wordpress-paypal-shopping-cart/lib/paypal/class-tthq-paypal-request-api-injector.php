@@ -216,7 +216,7 @@ class PayPal_Request_API_Injector {
         * Creates a PayPal order. Returns the order ID if successful.
         * The $additional_args array can be used to pass additional arguments to the function to return the raw response or response body.
         */
-        public function create_paypal_order_by_url_and_args( $data, $additional_args = array(), $items = array() ){
+        public function create_paypal_order_by_url_and_args( $data, $additional_args = array(), $pu_items = array() ){
             
             $payment_amount = isset($data['payment_amount']) ? $data['payment_amount'] : 0;
             $postage_cost = isset($data['postage_cost']) ? $data['postage_cost'] : 0;
@@ -246,23 +246,13 @@ class PayPal_Request_API_Injector {
                                 ]                               
                            ]
                        ],
-                    //    "items" => [
-                    //        [
-                    //            "name" => $description,
-                    //            "quantity" => $quantity,
-                    //            "category" => $digital_goods_enabled ? "DIGITAL_GOODS" : "PHYSICAL_GOODS",
-                    //            "unit_amount" => [
-                    //                "value" => $payment_amount,
-                    //                "currency_code" => $currency,
-                    //            ]
-                    //        ]
-                    //     ],
-                        "description" => $description,
+                       /*"items" => $pu_items,*/
+                       "description" => $description,
                    ]
                ]
            ];
 
-           PayPal_Utility_Functions::log('Order-create request data 1.', true);
+           PayPal_Utility_Functions::log('Order-create request data below.', true);
            PayPal_Utility_Functions::log_array( $order_data, true );//Debugging purpose.
 
             //A simple order data (useful for simple payments)
