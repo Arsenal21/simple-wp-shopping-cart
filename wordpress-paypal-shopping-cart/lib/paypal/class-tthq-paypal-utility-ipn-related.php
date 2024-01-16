@@ -13,7 +13,7 @@ class PayPal_Utility_IPN_Related {
 
 		//Add the PayPal API order_id value to the reference parameter. So it gets saved with custom field data. This will be used to also save it to the reference DB column field when saving the transaction.
 		if(isset($data['order_id'])){
-			$data['custom_field'] = $custom . '&reference=' . $data['order_id'];
+			$data['custom_field'] = $custom . '&txn_reference=' . $data['order_id'];
 		}
 
 		//Parse the custom field to read the IP address.

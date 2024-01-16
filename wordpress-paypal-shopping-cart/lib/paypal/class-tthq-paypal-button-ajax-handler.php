@@ -217,8 +217,9 @@ class PayPal_Button_Ajax_Hander {
 		//--
 
 		//Create the IPN data array from the transaction data.
-		//Need to have the following values in the $data array.
-		//['order_id']['button_id']['on_page_button_id']['item_name']['custom_field']		
+		//Need to include the following values in the $data array.
+		$data['custom_field'] = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );//We saved the custom field in the cart CPT.
+		
 		$ipn_data = PayPal_Utility_IPN_Related::create_ipn_data_array_from_capture_order_txn_data( $data, $txn_data );
 		$paypal_capture_id = isset( $ipn_data['txn_id'] ) ? $ipn_data['txn_id'] : '';
 		PayPal_Utility_Functions::log( 'PayPal Capture ID (Transaction ID): ' . $paypal_capture_id, true );
@@ -246,7 +247,7 @@ class PayPal_Button_Ajax_Hander {
 		 * 
 		 * FIXME: This need to rework or remove if needed.
 		 */
-		// PayPal_Utility_IPN_Related::handle_save_txn_data( $data, $txn_data, $ipn_data );
+		//PayPal_Utility_IPN_Related::handle_save_txn_data( $data, $txn_data, $ipn_data );
 
 		/**
 		 * Trigger the IPN processed action hook (so other plugins can can listen for this event).
