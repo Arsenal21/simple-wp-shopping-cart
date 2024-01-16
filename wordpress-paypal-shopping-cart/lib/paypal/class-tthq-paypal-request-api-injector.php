@@ -215,6 +215,7 @@ class PayPal_Request_API_Injector {
         /*
         * Creates a PayPal order. Returns the order ID if successful.
         * The $additional_args array can be used to pass additional arguments to the function to return the raw response or response body.
+        # The $pu_item array can be used to pass the array of objects in the purchase unit.
         */
         public function create_paypal_order_by_url_and_args( $data, $additional_args = array(), $pu_items = array() ){
             
