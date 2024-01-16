@@ -43,6 +43,8 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     $return_url = get_option('cart_return_from_paypal_url');
     $txn_success_message = __('Transaction completed successfully!', 'wordpress-simple-paypal-shopping-cart');
 
+    $is_tnc_enabled = get_option( 'wp_shopping_cart_enable_tnc' ) != '';
+
     /****************************
      * PayPal SDK related settings
      ****************************/
@@ -101,6 +103,8 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     <!-- Any additional hidden input fields (if needed) -->
 
     <script type="text/javascript">
+        var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
+
     jQuery( function( $ ) {
         $( document ).on( "wpsc_paypal_sdk_loaded", function() { 
             //Anything that goes here will only be executed after the PayPal SDK is loaded.
@@ -115,6 +119,80 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                     height: <?php echo esc_js($btn_height); ?>,
                     label: '<?php echo esc_js($btn_type); ?>',
                     layout: '<?php echo esc_js($btn_layout); ?>',
+                },
+
+                /**
+                 * OnInit is called when the button first renders.
+                 * 
+                 * See documentation: https://developer.paypal.com/sdk/js/reference/#oninitonclick
+                 */
+                onInit(data, actions)  {
+
+                    jQuery(document).ready(function ($) {
+                        actions.enable();
+
+                        /**
+                         * The codes below will run only if the customer input addon is installed and there are fields added.
+                         */
+
+                        // Checks if there is any required input field with empty value.                        
+                        if (jQuery('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                            actions.disable();
+                        }
+                                            
+                        // Disable paypal smart checkout form submission if terms and condition validation error.
+                        const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
+                        if (!wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
+                            actions.disable();
+                        }
+
+                        // Listen for changes to the required fields.
+                        jQuery('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').on('change', function () {
+                            if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                                actions.disable();
+                                return;
+                            }
+
+                            // Also check if terms and condition has checked.
+                            if (wpspscTncEnabled) {
+                                if (wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
+                                    actions.enable();
+                                } else {
+                                    actions.disable();
+                                }
+                            } else {
+                                actions.enable();
+                            }
+                        });
+                    });
+                },
+
+                /**
+                 * OnClick is called when the button is clicked
+                 * 
+                 * See documentation: https://developer.paypal.com/sdk/js/reference/#oninitonclick
+                 */
+                onClick()  {
+                    // alert('Clicked');
+                    const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
+                    if (wpspscTncEnabled) {
+                        const tncContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wspscTncContainerSelector)
+                        wspsc_handleTncErrorMsg(tncContainer);
+                    }
+
+                    /**
+                     * CCI addon related. Previously for old paypal api, it used to listen to the 'wp_cart_checkout_button' css class which is not available in this new ppcp api.
+                     * See code: simple-cart-collect-customer-input/wp-shopping-cart-cci-form_handler.class.php:59
+                     * 
+                     * Show alert message and focus unfilled require inputs if any.
+                     */
+                    $(currentPPCPButtonWrapper).parents('table').find('input.wpspsc_cci_input').each(function () {
+                        if ($(this).prop('required') && $(this).val() === '') {
+                            alert("Please fill in " + $(this).siblings('div.wpspsc_cci_input_' + $(this).attr('data-wpspsc-cci-id') + '_label').html());
+                            $(this).focus();
+                        }
+                    });
+
                 },
 
                 // Setup the transaction.
@@ -262,6 +340,25 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
             });
         });
+
+        /**
+         * Checks if any input element has required attribute with empty value
+         * @param cart_no Target cart no.
+         * @returns {boolean}
+         */
+        function has_empty_required_input(cart_no) {
+            let has_any = false;
+            let target_input = '.wpspsc_cci_input';
+            let target_form = jQuery('#wpsc_paypal_button_' + cart_no).closest('.shopping_cart');
+
+            jQuery(target_form).find(target_input).each(function () {
+                if (jQuery(this).prop("required") && !jQuery(this).val().trim()) {
+                    has_any = true;
+                }
+            });
+
+            return has_any;
+        }
     </script>
     <style>
         @keyframes swpm-pp-button-spinner {
