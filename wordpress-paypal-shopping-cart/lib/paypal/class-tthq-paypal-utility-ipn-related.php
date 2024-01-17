@@ -19,7 +19,7 @@ class PayPal_Utility_IPN_Related {
 		//Parse the custom field to read the IP address.
 		$customvariables = PayPal_Utility_Functions::parse_custom_var( $custom );
 
-		$purchase_units = isset($txn_data['purchase_units']) ? $txn_data['purchase_units'] : array();
+		//$purchase_units = isset($txn_data['purchase_units']) ? $txn_data['purchase_units'] : array();
 
 		//The $data['order_id'] is the ID for the order created using createOrder API call. The Transaction ID is the ID for the captured payment.
 		$txn_id = isset($txn_data['purchase_units'][0]['payments']['captures'][0]['id']) ? $txn_data['purchase_units'][0]['payments']['captures'][0]['id'] : '';
@@ -61,8 +61,8 @@ class PayPal_Utility_IPN_Related {
 		//Default to 1 for quantity.
 		$ipn_data['quantity'] = 1;
 
-		// customer info.
-		$ipn_data['ip'] = isset($customvariables['ip']) ? $customvariables['ip'] : '';
+		// Customer info.
+		$ipn_data['ip_address'] = isset($customvariables['ip']) ? $customvariables['ip'] : '';
 		$ipn_data['first_name'] = isset($txn_data['payer']['name']['given_name']) ? $txn_data['payer']['name']['given_name'] : '';
 		$ipn_data['last_name'] = isset($txn_data['payer']['name']['surname']) ? $txn_data['payer']['name']['surname'] : '';
 		$ipn_data['payer_email'] = isset($txn_data['payer']['email_address']) ? $txn_data['payer']['email_address'] : '';
@@ -85,8 +85,8 @@ class PayPal_Utility_IPN_Related {
 	 */
 	public static function validate_buy_now_checkout_txn_data( $data, $txn_data ) {
 		//Get the transaction/order details from PayPal API endpoint - /v2/checkout/orders/{$order_id}
-		$pp_orderID = isset($data['order_id']) ? $data['order_id'] : $data['orderID'];//backward compatibility.
-		$cart_id = $data['cart_id'];
+		$pp_orderID = isset($data['order_id']) ? $data['order_id'] : '';
+		$cart_id = isset($data['cart_id']) ? $data['cart_id'] : '';
 
 		$validation_error_msg = '';
 
@@ -158,11 +158,7 @@ class PayPal_Utility_IPN_Related {
 	}
 
 	/**
-	 * TODO: This is a plugin specific method,
-	 * 
-	 * FIXME: This need to rework or remove if needed.
-	 * 
-	 * This also includes some plugin specific variables.
+	 * TODO: This is a plugin specific method.
 	 */
 	public static function complete_post_payment_processing( $data, $txn_data, $ipn_data){
 		//Check if this is a duplicate notification.
@@ -171,13 +167,6 @@ class PayPal_Utility_IPN_Related {
 			return true;
 		}
 
-		$txn_id = isset($ipn_data['txn_id']) ? $ipn_data['txn_id'] : '';
-		$txn_type = isset($ipn_data['txn_type']) ? $ipn_data['txn_type'] : '';
-		PayPal_Utility_Functions::log( 'Transaction type: ' . $txn_type . ', Transaction ID: ' . $txn_id, true );
-
-		// Save the transaction data.
-		PayPal_Utility_Functions::log( 'Saving transaction data to the database.', true );
-
 		\WPSC_Post_Payment_Related::add_additional_data_to_ipn_data( $ipn_data );
 
 		\WPSC_Post_Payment_Related::save_txn_record( $ipn_data );
@@ -185,9 +174,6 @@ class PayPal_Utility_IPN_Related {
 		\WPSC_Post_Payment_Related::send_notification_email( $ipn_data );
 
 		\WPSC_Post_Payment_Related::affiliate_plugin_integration( $ipn_data );
-
-		//FIXME - dispatch sale notification email.
-		//PayPal_Utility_Functions::dispatch_sale_notification_email( $ipn_data );
 
 		//Empty any incomplete old cart orders.
 		wspsc_clean_incomplete_old_cart_orders();

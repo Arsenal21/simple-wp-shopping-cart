@@ -240,17 +240,15 @@ class PayPal_Button_Ajax_Hander {
 		PayPal_Utility_Functions::log( 'Validation passed. Going to create/update record and save transaction data.', true );
 		
 		/**
-		 * TODO: This is a plugin specific method,
-		 * 
-		 * FIXME: This need to rework or remove if needed.
+		 * TODO: This is a plugin specific method.
 		 */
 		PayPal_Utility_IPN_Related::complete_post_payment_processing( $data, $txn_data, $ipn_data );
 
 		/**
 		 * Trigger the IPN processed action hook (so other plugins can can listen for this event).
-		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
+		 * Remember to use plugin shortname as prefix when searching for this hook.
 		 */ 
-		do_action( PayPal_Utility_Functions::hook('paypal_buy_now_checkout_ipn_processed'), $ipn_data );
+		do_action( PayPal_Utility_Functions::hook('paypal_checkout_ipn_processed'), $ipn_data );
 		do_action( PayPal_Utility_Functions::hook('payment_ipn_processed'), $ipn_data );
 
 		//Everything is processed successfully, send the success response.

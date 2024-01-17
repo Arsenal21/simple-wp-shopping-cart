@@ -33,7 +33,6 @@ class WPSC_Post_Payment_Related
 		$custom_values = wp_cart_get_custom_var_array($custom_value_str);
 
 		$ipn_data['post_id'] = $custom_values['wp_cart_id'];
-		$ipn_data['ip_address'] = isset($custom_values['ip']) ? $custom_values['ip'] : '';
 		$ipn_data['applied_coupon_code'] = isset($custom_values['coupon_code']) ? $custom_values['coupon_code'] : '';
 		$ipn_data['ap_id'] = isset($custom_values['ap_id']) ? $custom_values['ap_id'] : '';
 
@@ -94,14 +93,20 @@ class WPSC_Post_Payment_Related
 	{
 		wspsc_log_payment_debug('Executing WPSC_Post_Payment_Related::save_txn_record()', true);
 
-		$post_id = $ipn_data['post_id'];
+		// Publish/Update the order post.
+		$post_id = isset($ipn_data['post_id']) ? $ipn_data['post_id'] : '';
+		if(empty($post_id)){
+			wspsc_log_payment_debug('Error: Order post id value is empty. Cannot save transaction record.', false);
+			return false;
+		}
 		$updated_wpsc_order = array(
 			'ID' => $post_id,
 			'post_status' => 'publish',
 			'post_type' => 'wpsc_cart_orders',
 		);
-		wp_update_post($updated_wpsc_order); // TODO: Maybe need to check if successful.
+		wp_update_post($updated_wpsc_order);
 
+		// Save transaction data to the order post meta.
 		update_post_meta($post_id, 'wpsc_first_name', $ipn_data['first_name']);
 		update_post_meta($post_id, 'wpsc_last_name', $ipn_data['last_name']);
 		update_post_meta($post_id, 'wpsc_email_address', $ipn_data['payer_email']);
@@ -154,7 +159,7 @@ class WPSC_Post_Payment_Related
 		if (!empty($buyer_email)) {
 			if (get_option('wpspc_send_buyer_email')) {
 				wp_mail($buyer_email, $subject, $body, $headers);
-				wspsc_log_payment_debug('Product Email successfully sent to ' . $buyer_email, true);
+				wspsc_log_payment_debug('Buyer notification email successfully sent to: ' . $buyer_email, true);
 				update_post_meta($ipn_data['post_id'], 'wpsc_buyer_email_sent', 'Email sent to: ' . $buyer_email);
 			}
 		}
@@ -172,7 +177,7 @@ class WPSC_Post_Payment_Related
 		if (!empty($notify_email)) {
 			if (get_option('wpspc_send_seller_email')) {
 				wp_mail($notify_email, $seller_email_subject, $seller_email_body, $headers);
-				wspsc_log_payment_debug('Notify Email successfully sent to ' . $notify_email, true);
+				wspsc_log_payment_debug('Seller notification email successfully sent to: ' . $notify_email, true);
 			}
 		}
 	}
@@ -185,7 +190,7 @@ class WPSC_Post_Payment_Related
 	 */
 	public static function affiliate_plugin_integration(&$ipn_data)
 	{
-		wspsc_log_payment_debug('Updating Affiliate Database Table with Sales Data if Using the WP Affiliate Platform Plugin.', true);
+		wspsc_log_payment_debug('Updating affiliate database table with sales data (if the WP Affiliate Platform Plugin is used).', true);
 		
 		if (function_exists('wp_aff_platform_install')) {
 			wspsc_log_payment_debug('WP Affiliate Platform is installed, registering sale...', true);
