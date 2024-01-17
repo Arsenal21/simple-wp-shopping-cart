@@ -219,7 +219,8 @@ class PayPal_Request_API_Injector {
         */
         public function create_paypal_order_by_url_and_args( $data, $additional_args = array(), $pu_items = array() ){
             
-            $payment_amount = isset($data['payment_amount']) ? $data['payment_amount'] : 0;
+            $grand_total = isset($data['grand_total']) ? $data['grand_total'] : 0;
+            $sub_total = isset($data['sub_total']) ? $data['sub_total'] : 0;
             $postage_cost = isset($data['postage_cost']) ? $data['postage_cost'] : 0;
             $currency = isset($data['currency']) ? $data['currency'] : 'USD';
             $description = isset($data['description']) ? $data['description'] : '';
@@ -231,18 +232,19 @@ class PayPal_Request_API_Injector {
             //Create order_data for the API call.
             //https://developer.paypal.com/docs/api/orders/v2/#orders_create
             if( is_array($pu_items) && !empty($pu_items)) {
-                //Use the pu_items array passed to the function to sumit the purchase unit in the order_data.
+                // Use the pu_items array passed to the function to sumit the purchase unit in the order_data.
+                // If the 'breakdown' is provided then it needs to contain the sub_total, postage cost and tax (if any).
                 $order_data = [
                     "intent" => "CAPTURE",
                     "purchase_units" => [
                         [
                             "amount" => [
-                                "value" => $payment_amount,
+                                "value" => $grand_total,/* The grand total that will be charged for the transaction */
                                 "currency_code" => $currency,
                                 "breakdown" => [
                                     "item_total" => [
                                         "currency_code" => $currency,
-                                        "value" => $payment_amount,
+                                        "value" => $sub_total,
                                     ],
                                     "shipping" => [
                                          "currency_code" => $currency,
@@ -264,7 +266,7 @@ class PayPal_Request_API_Injector {
                         [
                             "amount" => [
                                 "currency_code" => $currency,
-                                "value" => $payment_amount,
+                                "value" => $grand_total,
                             ],
                             "description" => $description,
                         ],

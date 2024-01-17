@@ -89,9 +89,7 @@ class PayPal_Button_Ajax_Hander {
 
 		//Get the cart items to create the purchase units items array.
 		$cart_items = $wspsc_cart->get_items();
-		//FIXME- Currently using empty array for the purchase units items array until we can sort out the shipping amount issue with purchase units.
-		//$pu_items = PayPal_Utility_Functions::create_purchase_units_items_list( $cart_items );
-		$pu_items = array();
+		$pu_items = PayPal_Utility_Functions::create_purchase_units_items_list( $cart_items );
 
 		//Save the grand total and currency in the order CPT (we will match it with the PayPal response later in verification stage).
 		update_post_meta( $cart_id, 'expected_payment_amount', $formatted_grand_total );
@@ -101,15 +99,12 @@ class PayPal_Button_Ajax_Hander {
 		// https://developer.paypal.com/docs/api/orders/v2/#orders_create
 		$data = array(
 			'description' => $description,
-			'payment_amount' => $formatted_grand_total,
+			'grand_total' => $formatted_grand_total,
+			'sub_total' => $formatted_sub_total,
 			'postage_cost' => $formatted_postage_cost,
+			'tax' => '0.00', //Currently we are not using tax.
 			'currency' => $currency,
-			'quantity' => $quantity,
-			'digital_goods_enabled' => $digital_goods_enabled,
 		);
-		
-		//FIXME - Debugging purpose.
-		//PayPal_Utility_Functions::log_array( $data, true );
 
 		//Set the additional args for the API call.
 		$additional_args = array();
