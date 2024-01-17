@@ -1,0 +1,193 @@
+<?php
+
+class WPSC_Post_Payment_Related
+{
+
+	/**
+	 * Save ipn data to the database.
+	 *
+	 * @param array $ipn_data Processed ipn data
+	 * 
+	 * @return bool
+	 */
+    public static function save_txn_record($ipn_data)
+    {
+        wspsc_log_payment_debug('Executing WPSC_Post_Payment_Related::save_txn_record()', true);
+
+		/**
+		 * Process, decode and sanitize ipn related data.
+		 */
+        $array_temp = $ipn_data;
+        $ipn_data = array_map('sanitize_text_field', $array_temp);
+        $txn_id = $ipn_data[ 'txn_id' ];
+        $transaction_type = $ipn_data[ 'txn_type' ];
+        $payment_status = $ipn_data[ 'payment_status' ];
+        $transaction_subject = $ipn_data[ 'transaction_subject' ];
+        $first_name = $ipn_data[ 'first_name' ];
+        $last_name = $ipn_data[ 'last_name' ];
+        $buyer_email = $ipn_data[ 'payer_email' ];
+        $street_address = isset($ipn_data[ 'address_street' ]) ? $ipn_data[ 'address_street' ] : '';
+        $city = isset($ipn_data[ 'address_city' ]) ? $ipn_data[ 'address_city' ] : '';
+        $state = isset($ipn_data[ 'address_state' ]) ? $ipn_data[ 'address_state' ] : '';
+        $zip = isset($ipn_data[ 'address_zip' ]) ? $ipn_data[ 'address_zip' ] : '';
+        $country = isset($ipn_data[ 'address_country' ]) ? $ipn_data[ 'address_country' ] : '';
+        $phone = isset($ipn_data[ 'contact_phone' ]) ? $ipn_data[ 'contact_phone' ] : '';
+        $mc_gross = $ipn_data[ 'mc_gross' ];
+
+		/**
+		 * Process address data.
+		 */
+        if (empty($street_address) && empty($city)) {
+            // No address value present.
+            $address = "";
+        } else {
+            // An address value is present.
+            $address = $street_address . ", " . $city . ", " . $state . ", " . $zip . ", " . $country;
+        }
+
+		/**
+		 * Get custom values from string.
+		 */
+        $custom_value_str = urldecode($ipn_data[ 'custom' ]); // urldecode is harmless.
+        wspsc_log_payment_debug('Custom field value in the IPN: ' . $custom_value_str, true);
+        $custom_values = wp_cart_get_custom_var_array($custom_value_str);
+        $post_id = $custom_values[ 'wp_cart_id' ];
+        $ip_address = isset($custom_values[ 'ip' ]) ? $custom_values[ 'ip' ] : '';
+        $applied_coupon_code = isset($custom_values[ 'coupon_code' ]) ? $custom_values[ 'coupon_code' ] : '';
+
+        wspsc_log_payment_debug('Custom values', true);
+        wspsc_log_debug_array($custom_values, true);
+        wspsc_log_payment_debug('Order post id: ' . $post_id, true);
+
+
+		/**
+		 * Process product details data.
+		 */
+        $product_details = "";
+        $item_counter = 1;
+        $shipping = 0;
+		$currency_symbol = get_option('cart_currency_symbol');
+		$orig_cart_items = get_post_meta($post_id, 'wpsc_cart_items', true);
+        //wspsc_log_payment_debug( 'Original cart items from the order post below.', true );
+        //wspsc_log_payment_debug_array( $orig_cart_items, true );
+        if ($orig_cart_items) {
+            foreach ($orig_cart_items as $item) {
+                if ($item_counter != 1) {
+                    $product_details .= "\n";
+                }
+                $item_total = $item->get_price() * $item->get_quantity();
+                $product_details .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpspsc_number_format_price($item_total) . "\n";
+                if ($item->get_file_url()) {
+                    $file_url = base64_decode($item->get_file_url());
+                    $product_details .= "Download Link: " . $file_url . "\n";
+                }
+                if (!empty($item->get_shipping())) {
+                    $shipping += floatval($item->get_shipping()) * $item->get_quantity();
+                }
+                $item_counter++;
+            }
+        }
+
+		/**
+		 * Process shipping costs data.
+		 */
+        if (empty($shipping)) {
+            $shipping = "0.00";
+        } else {
+            $baseShipping = get_option('cart_base_shipping_cost');
+            $shipping = floatval($shipping) + floatval($baseShipping);
+            $shipping = wpspsc_number_format_price($shipping);
+        }
+
+		/**
+		 * Update and save final transaction record.
+		 */
+		$updated_wpsc_order = array(
+            'ID' => $post_id,
+            'post_status' => 'publish',
+            'post_type' => 'wpsc_cart_orders',
+        );
+        wp_update_post($updated_wpsc_order);
+		update_post_meta($post_id, 'wpsc_first_name', $first_name);
+        update_post_meta($post_id, 'wpsc_last_name', $last_name);
+        update_post_meta($post_id, 'wpsc_email_address', $buyer_email);
+        update_post_meta($post_id, 'wpsc_txn_id', $txn_id);
+        update_post_meta($post_id, 'wpsc_total_amount', $mc_gross);
+        update_post_meta($post_id, 'wpsc_ipaddress', $ip_address);
+        update_post_meta($post_id, 'wpsc_address', $address);
+        update_post_meta($post_id, 'wpspsc_phone', $phone);
+        update_post_meta($post_id, 'wpsc_applied_coupon', $applied_coupon_code);
+        update_post_meta($post_id, 'wpsc_shipping_amount', $shipping);
+        update_post_meta($post_id, 'wpspsc_items_ordered', $product_details);
+        update_post_meta($post_id, 'wpsc_order_status', "Paid");
+
+		wspsc_log_payment_debug( 'Transaction data saved.', true );
+
+        return true;
+    }
+
+	// public static function send_notification_email(){
+	// 	$args = array();
+    //     $args[ 'product_details' ] = $product_details;
+    //     $args[ 'order_id' ] = $post_id;
+    //     $args[ 'coupon_code' ] = $applied_coupon_code;
+    //     $args[ 'address' ] = $address;
+    //     $args[ 'payer_email' ] = $buyer_email;
+		
+    //     $from_email = get_option('wpspc_buyer_from_email');
+    //     $subject = get_option('wpspc_buyer_email_subj');
+    //     $subject = wpspc_apply_dynamic_tags_on_email($subject, $ipn_data, $args);
+		
+    //     $body = get_option('wpspc_buyer_email_body');
+    //     $args[ 'email_body' ] = $body;
+    //     $body = wpspc_apply_dynamic_tags_on_email($body, $ipn_data, $args);
+		
+    //     wspsc_log_payment_debug('Applying filter - wspsc_buyer_notification_email_body', true);
+    //     $body = apply_filters('wspsc_buyer_notification_email_body', $body, $ipn_data, $cart_items);
+		
+    //     $headers = 'From: ' . $from_email . "\r\n";
+    //     if (!empty($buyer_email)) {
+	// 		if (get_option('wpspc_send_buyer_email')) {
+	// 			wp_mail($buyer_email, $subject, $body, $headers);
+    //             wspsc_log_payment_debug('Product Email successfully sent to ' . $buyer_email, true);
+    //             update_post_meta($post_id, 'wpsc_buyer_email_sent', 'Email sent to: ' . $buyer_email);
+    //         }
+    //     }
+    //     $notify_email = get_option('wpspc_notify_email_address');
+    //     $seller_email_subject = get_option('wpspc_seller_email_subj');
+    //     $seller_email_subject = wpspc_apply_dynamic_tags_on_email($seller_email_subject, $ipn_data, $args);
+		
+    //     $seller_email_body = get_option('wpspc_seller_email_body');
+    //     $args[ 'email_body' ] = $seller_email_body;
+    //     $seller_email_body = wpspc_apply_dynamic_tags_on_email($seller_email_body, $ipn_data, $args);
+		
+    //     wspsc_log_payment_debug('Applying filter - wspsc_seller_notification_email_body', true);
+    //     $seller_email_body = apply_filters('wspsc_seller_notification_email_body', $seller_email_body, $ipn_data, $cart_items);
+		
+    //     if (!empty($notify_email)) {
+	// 		if (get_option('wpspc_send_seller_email')) {
+	// 			wp_mail($notify_email, $seller_email_subject, $seller_email_body, $headers);
+    //             wspsc_log_payment_debug('Notify Email successfully sent to ' . $notify_email, true);
+    //         }
+    //     }
+	// }
+
+	// public static function affiliate_plugin_integration(){
+    //     wspsc_log_payment_debug('Updating Affiliate Database Table with Sales Data if Using the WP Affiliate Platform Plugin.', true);
+    //     if (function_exists('wp_aff_platform_install')) {
+    //         wspsc_log_payment_debug('WP Affiliate Platform is installed, registering sale...', true);
+    //         $referrer = $custom_values[ 'ap_id' ];
+    //         $sale_amount = $ipn_data[ 'mc_gross' ];
+    //         if (!empty($referrer)) {
+    //             do_action('wp_affiliate_process_cart_commission', array("referrer" => $referrer, "sale_amt" => $sale_amount, "txn_id" => $txn_id, "buyer_email" => $buyer_email));
+
+    //             $message = 'The sale has been registered in the WP Affiliates Platform Database for referrer: ' . $referrer . ' for sale amount: ' . $sale_amount;
+    //             wspsc_log_payment_debug($message, true);
+    //         } else {
+    //             wspsc_log_payment_debug('No Referrer Found. This is not an affiliate sale', true);
+    //         }
+    //     } else {
+    //         wspsc_log_payment_debug('Not Using the WP Affiliate Platform Plugin.', true);
+    //     }
+	// }
+}

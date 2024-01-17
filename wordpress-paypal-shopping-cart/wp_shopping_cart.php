@@ -46,6 +46,7 @@ include_once( WP_CART_PATH . 'class-coupon.php' );
 include_once( WP_CART_PATH . 'includes/WSPSC_Cart.php' );
 include_once( WP_CART_PATH . 'includes/WSPSC_Cart_Item.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-paypal-ppcp-checkout-form-related.php' );
+include_once( WP_CART_PATH . 'includes/wpsc-post-payment-related.php' );
 include_once( WP_CART_PATH . 'includes/wspsc-cart-functions.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_main.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_tinymce.php' );
