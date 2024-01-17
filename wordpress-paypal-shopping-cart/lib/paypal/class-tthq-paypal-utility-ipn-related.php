@@ -170,8 +170,8 @@ class PayPal_Utility_IPN_Related {
 			//This transaction notification has already been processed. So we don't need to process it again.
 			return true;
 		}
-		
-		//$cart_id = $data['cart_id'];
+
+				//$cart_id = $data['cart_id'];
 		$txn_id = isset($ipn_data['txn_id']) ? $ipn_data['txn_id'] : '';
 		$txn_type = isset($ipn_data['txn_type']) ? $ipn_data['txn_type'] : '';
 		PayPal_Utility_Functions::log( 'Transaction type: ' . $txn_type . ', Transaction ID: ' . $txn_id, true );
@@ -188,8 +188,14 @@ class PayPal_Utility_IPN_Related {
 		//FIXME - complete implementation of this method.
 		// Save the transaction data.
 		PayPal_Utility_Functions::log( 'Saving transaction data to the database.', true );
-		//Transactions::save_txn_record( $ipn_data, array() );
-		PayPal_Utility_Functions::log( 'Transaction data saved.', true );
+
+		$processed_ipn_data = \WPSC_Post_Payment_Related::process_ipn_data( $ipn_data );
+
+		\WPSC_Post_Payment_Related::save_txn_record( $processed_ipn_data );
+
+		\WPSC_Post_Payment_Related::send_notification_email($processed_ipn_data);
+
+		\WPSC_Post_Payment_Related::affiliate_plugin_integration($processed_ipn_data);
 
 		//FIXME - dispatch sale notification email.
 		//PayPal_Utility_Functions::dispatch_sale_notification_email( $ipn_data );
