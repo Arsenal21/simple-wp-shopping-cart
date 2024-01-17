@@ -59,16 +59,14 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
     $applied_coupon = get_post_meta($wpsc_cart_orders->ID, 'wpsc_applied_coupon', true);
     ?>
     <table>
-        <p><?php
-            _e("Order ID: #", "wordpress-simple-paypal-shopping-cart");
-            echo esc_attr($order_id);
-            ?></p>
-        <?php if ($txn_id) { ?>
-            <p><?php
-                _e("Transaction ID: #", "wordpress-simple-paypal-shopping-cart");
-                echo esc_attr($txn_id);
-                ?></p>
-        <?php } ?>
+        <tr>
+            <td><?php _e("Order ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php echo esc_attr($order_id); ?></td>
+        </tr>
+        <tr>
+            <td><?php _e("Transaction ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php echo esc_attr($txn_id); ?></td>
+        </tr>
         <tr>
             <td><?php _e("First Name", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="40" name="wpsc_first_name" value="<?php echo esc_attr($first_name); ?>" /></td>
@@ -117,11 +115,11 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td><input type="text" size="80" name="wpsc_buyer_email_sent" value="<?php echo esc_attr($email_sent_field_msg); ?>" readonly /></td>
         </tr>  
         <tr>
-            <td><?php _e("Item(s) Ordered:", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php _e("Item(s) Ordered", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><textarea name="wpspsc_items_ordered" cols="83" rows="5"><?php echo esc_attr($items_ordered); ?></textarea></td>
         </tr>
         <tr>
-            <td><?php _e("Applied Coupon Code:", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php _e("Applied Coupon Code", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_applied_coupon" value="<?php echo esc_attr($applied_coupon); ?>" readonly /></td>
         </tr>
         <?php
