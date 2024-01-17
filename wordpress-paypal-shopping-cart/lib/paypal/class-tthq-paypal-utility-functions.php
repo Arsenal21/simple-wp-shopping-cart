@@ -616,14 +616,15 @@ class PayPal_Utility_Functions{
 		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
 		$purchase_unit_items_list = array();
 		foreach ( $cart_items as $item ) {
-			//Create an item object
+			//Create an item object. It is very important to use the correct format.
+			//Even if one comma is missed, it will not work.
 			$pu_item = [
 				"name" => $item->get_name(),
 				"quantity" => $item->get_quantity(),
 				"unit_amount" => [
 					"value" => wpspsc_number_format_price($item->get_price()),
 					"currency_code" => $currency,
-				]
+				],
 			];
 			//Add the item object to the list to create an array of objects.
 			$purchase_unit_items_list[] = $pu_item;

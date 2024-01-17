@@ -224,51 +224,57 @@ class PayPal_Request_API_Injector {
             $currency = isset($data['currency']) ? $data['currency'] : 'USD';
             $description = isset($data['description']) ? $data['description'] : '';
 
-            $item_name = isset($data['item_name']) ? $data['item_name'] : '';
-            $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
-            $digital_goods_enabled = isset($data['digital_goods_enabled']) ? $data['digital_goods_enabled'] : 1;
-            
+            //$item_name = isset($data['item_name']) ? $data['item_name'] : '';
+            //$quantity = isset($data['quantity']) ? $data['quantity'] : 1;
+            //$digital_goods_enabled = isset($data['digital_goods_enabled']) ? $data['digital_goods_enabled'] : 1;
+
+            //Create order_data for the API call.
             //https://developer.paypal.com/docs/api/orders/v2/#orders_create
-            $order_data = [
-               "intent" => "CAPTURE",
-               "purchase_units" => [
-                   [
-                       "amount" => [
-                           "value" => $payment_amount,
-                           "currency_code" => $currency,
-                           "breakdown" => [
-                               "item_total" => [
-                                   "currency_code" => $currency,
-                                   "value" => $payment_amount,
-                               ],
-                               "shipping" => [
-                                    "currency_code" => $currency,
-                                    "value" => $postage_cost,
-                                ]                               
-                           ]
-                       ],
-                       /*"items" => $pu_items,*/
-                       "description" => $description,
-                   ]
-               ]
-           ];
-
-           PayPal_Utility_Functions::log('Order-create request data below.', true);
-           PayPal_Utility_Functions::log_array( $order_data, true );//Debugging purpose.
-
-            //A simple order data (useful for simple payments)
-            // $order_data = [
-            //     "intent" => "CAPTURE",
-            //     "purchase_units" => [
-            //         [
-            //             "amount" => [
-            //                 "currency_code" => $currency,
-            //                 "value" => $payment_amount,
-            //             ],
-            //             "description" => $description,
-            //         ],
-            //     ],
-            // ];
+            if( is_array($pu_items) && !empty($pu_items)) {
+                //Use the pu_items array passed to the function to sumit the purchase unit in the order_data.
+                $order_data = [
+                    "intent" => "CAPTURE",
+                    "purchase_units" => [
+                        [
+                            "amount" => [
+                                "value" => $payment_amount,
+                                "currency_code" => $currency,
+                                "breakdown" => [
+                                    "item_total" => [
+                                        "currency_code" => $currency,
+                                        "value" => $payment_amount,
+                                    ],
+                                    "shipping" => [
+                                         "currency_code" => $currency,
+                                         "value" => $postage_cost,
+                                     ]                               
+                                ]
+                            ],
+                            "items" => $pu_items,
+                            "description" => $description,
+                        ]
+                    ]
+                ];
+            } else {
+                //Use the simple order_data. It uses purchase unit without the items array.
+                //A simple order_data (useful for simple payments)
+                $order_data = [
+                    "intent" => "CAPTURE",
+                    "purchase_units" => [
+                        [
+                            "amount" => [
+                                "currency_code" => $currency,
+                                "value" => $payment_amount,
+                            ],
+                            "description" => $description,
+                        ],
+                    ],
+                ];
+            }
+            
+            //Debugging purpose.
+            //PayPal_Utility_Functions::log('Order-create request data below.', true);
+            //PayPal_Utility_Functions::log_array( $order_data, true );
 
             //Get the environment mode.
             $environment_mode = PayPal_Utility_Functions::get_api_environment_mode_from_settings();

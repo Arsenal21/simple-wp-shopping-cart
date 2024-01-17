@@ -46,9 +46,6 @@ class PayPal_Utility_IPN_Related {
 		if ( isset($txn_data['purchase_units'][0]['payments']['captures'][0]['amount']['value']) ){
 			//This is for PayPal checkout serverside capture.
 			$ipn_data['mc_gross'] = $txn_data['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
-		} else if ( isset($txn_data['purchase_units'][0]['amount']['value']) ){
-			//This is for PayPal Checkout client-side capture (deprecated)
-			$ipn_data['mc_gross'] = $txn_data['purchase_units'][0]['amount']['value'];
 		} else {
 			$ipn_data['mc_gross'] = 0;
 		}
@@ -57,9 +54,6 @@ class PayPal_Utility_IPN_Related {
 		if ( isset($txn_data['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code']) ){
 			//This is for PayPal checkout serverside capture.
 			$ipn_data['mc_currency'] = $txn_data['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'];
-		} else if ( isset( $txn_data['purchase_units'][0]['amount']['currency_code']) ){
-			//This is for PayPal Checkout client-side capture (deprecated)
-			$ipn_data['mc_currency'] = $txn_data['purchase_units'][0]['amount']['currency_code'];
 		} else {
 			$ipn_data['mc_currency'] = 0;
 		}
@@ -68,7 +62,7 @@ class PayPal_Utility_IPN_Related {
 		$ipn_data['quantity'] = 1;
 
 		// customer info.
-		$ipn_data['ip'] = isset($customvariables['user_ip']) ? $customvariables['user_ip'] : '';
+		$ipn_data['ip'] = isset($customvariables['ip']) ? $customvariables['ip'] : '';
 		$ipn_data['first_name'] = isset($txn_data['payer']['name']['given_name']) ? $txn_data['payer']['name']['given_name'] : '';
 		$ipn_data['last_name'] = isset($txn_data['payer']['name']['surname']) ? $txn_data['payer']['name']['surname'] : '';
 		$ipn_data['payer_email'] = isset($txn_data['payer']['email_address']) ? $txn_data['payer']['email_address'] : '';

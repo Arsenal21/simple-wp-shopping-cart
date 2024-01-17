@@ -89,8 +89,9 @@ class PayPal_Button_Ajax_Hander {
 
 		//Get the cart items to create the purchase units items array.
 		$cart_items = $wspsc_cart->get_items();
-		//FIXME- Make the items array in a way that can be simply added to the PayPal API data's purchase_units array straight away.
-		$pu_items = PayPal_Utility_Functions::create_purchase_units_items_list( $cart_items );
+		//FIXME- Currently using empty array for the purchase units items array until we can sort out the shipping amount issue with purchase units.
+		//$pu_items = PayPal_Utility_Functions::create_purchase_units_items_list( $cart_items );
+		$pu_items = array();
 
 		//Save the grand total and currency in the order CPT (we will match it with the PayPal response later in verification stage).
 		update_post_meta( $cart_id, 'expected_payment_amount', $formatted_grand_total );

@@ -155,7 +155,7 @@ class PayPal_OnApprove_IPN_Handler {
 		$ipn['quantity'] = 1;
 
 		// customer info.
-		$ipn['ip'] = isset($customvariables['user_ip']) ? $customvariables['user_ip'] : '';
+		$ipn['ip'] = isset($customvariables['ip']) ? $customvariables['ip'] : '';
 		$ipn['first_name'] = isset($txn_data['subscriber']['name']['given_name']) ? $txn_data['subscriber']['name']['given_name'] : '';
 		$ipn['last_name'] = isset($txn_data['subscriber']['name']['surname']) ? $txn_data['subscriber']['name']['surname'] : '';
 		$ipn['payer_email'] = isset($txn_data['subscriber']['email_address']) ? $txn_data['subscriber']['email_address'] : '';
