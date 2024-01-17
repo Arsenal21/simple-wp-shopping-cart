@@ -171,21 +171,10 @@ class PayPal_Utility_IPN_Related {
 			return true;
 		}
 
-				//$cart_id = $data['cart_id'];
 		$txn_id = isset($ipn_data['txn_id']) ? $ipn_data['txn_id'] : '';
 		$txn_type = isset($ipn_data['txn_type']) ? $ipn_data['txn_type'] : '';
 		PayPal_Utility_Functions::log( 'Transaction type: ' . $txn_type . ', Transaction ID: ' . $txn_id, true );
 
-		// Custom variables
-		$custom = isset($ipn_data['custom']) ? $ipn_data['custom'] : '';
-		$customvariables = PayPal_Utility_Functions::parse_custom_var( $custom );
-		
-		$order_id = '';
-		if ( isset( $customvariables['order_id'] ) ) {
-			$order_id = $customvariables['order_id'];
-		}
-
-		//FIXME - complete implementation of this method.
 		// Save the transaction data.
 		PayPal_Utility_Functions::log( 'Saving transaction data to the database.', true );
 
