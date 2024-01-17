@@ -189,11 +189,13 @@ class PayPal_Utility_IPN_Related {
 		// Save the transaction data.
 		PayPal_Utility_Functions::log( 'Saving transaction data to the database.', true );
 
-		\WPSC_Post_Payment_Related::save_txn_record( $ipn_data );
+		$processed_ipn_data = \WPSC_Post_Payment_Related::process_ipn_data( $ipn_data );
 
-		// \WPSC_Post_Payment_Related::send_notification_email();
+		\WPSC_Post_Payment_Related::save_txn_record( $processed_ipn_data );
 
-		// \WPSC_Post_Payment_Related::affiliate_plugin_integration();
+		\WPSC_Post_Payment_Related::send_notification_email($processed_ipn_data);
+
+		\WPSC_Post_Payment_Related::affiliate_plugin_integration($processed_ipn_data);
 
 		//FIXME - dispatch sale notification email.
 		//PayPal_Utility_Functions::dispatch_sale_notification_email( $ipn_data );
