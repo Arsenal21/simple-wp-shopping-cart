@@ -432,7 +432,7 @@ class WPSC_PPCP_settings_page
 						} else {
 							//Production account is NOT connected.
 							echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
-							_e('Live PayPal account is not connected.', 'simple-membership');
+							_e('Live PayPal account is not connected. Click the button below to authorize the app and acquire API credentials from your PayPal account.', 'simple-membership');
 							echo '</div>';
 
 							// Show the onboarding link

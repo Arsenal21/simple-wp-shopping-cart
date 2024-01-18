@@ -135,7 +135,7 @@ class PayPal_PPCP_Onboarding {
 		<a class="button button-primary direct" target="_blank"
 			data-paypal-onboard-complete="wpsc_ppcp_onboarded_callback_sandbox"
 			href="<?php echo ($sandbox_singup_link); ?>"
-			data-paypal-button="true">Activate PayPal Sandbox</a>
+			data-paypal-button="true">Get PayPal Sandbox Credentials</a>
 		<script id="paypal-js" src="https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
 
 		<?php
@@ -204,7 +204,7 @@ class PayPal_PPCP_Onboarding {
 		<a class="button button-primary direct" target="_blank"
 			data-paypal-onboard-complete="wpsc_ppcp_onboarded_callback_production"
 			href="<?php echo ($singup_link); ?>"
-			data-paypal-button="true">Activate PayPal</a>
+			data-paypal-button="true">Get PayPal Live Credentials</a>
 		<script id="paypal-js" src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
 		<?php
 	}
