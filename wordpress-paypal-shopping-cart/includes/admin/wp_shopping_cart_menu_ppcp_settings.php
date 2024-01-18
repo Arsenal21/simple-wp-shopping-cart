@@ -11,6 +11,7 @@ class WPSC_PPCP_settings_page
 	private $settings;
 
 	private $ppcp_connection_subtab_url = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection";
+	private $ppcp_api_creds_subtab_url = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-credentials";
 	private $ppcp_button_subtab_link = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=button-appreance";
 
 	public function __construct()
@@ -51,6 +52,7 @@ class WPSC_PPCP_settings_page
 		<h3 class="nav-tab-wrapper">
 			<a class="nav-tab <?php echo ($subtab == '' || $subtab == 'api-connection') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_connection_subtab_url; ?>"><?php _e('PayPal API Connection', 'wordpress-simple-paypal-shopping-cart'); ?></a>
 			<a class="nav-tab <?php echo ($subtab == 'button-appreance') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_button_subtab_link; ?>"><?php _e('Button Appearance', 'wordpress-simple-paypal-shopping-cart'); ?></a>
+			<a class="nav-tab <?php echo ($subtab == 'api-credentials') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_api_creds_subtab_url; ?>"><?php _e('API Credentials', 'wordpress-simple-paypal-shopping-cart'); ?></a>
 		</h3>
 		<br />
 		<?php
@@ -132,6 +134,9 @@ class WPSC_PPCP_settings_page
 			case 'button-appreance':
 				$this->handle_ppcp_button_appearance_subtab();
 				break;
+			case 'api-credentials':
+				$this->handle_ppcp_api_creds_subtab();
+				break;
 			default: 
 				// 'api-connection'
 				$this->handle_ppcp_connection_settings_subtab();
@@ -145,17 +150,11 @@ class WPSC_PPCP_settings_page
 	}
 
 	/**
-	 * Render the paypal api settings subtab
+	 * Render the paypal connection settings subtab
 	 */
 	public function handle_ppcp_connection_settings_subtab()
 	{
-		// Paypal PPCP settings
-		$paypal_live_client_id = $this->settings->get_value('paypal-live-client-id');
-		$paypal_live_secret_key = $this->settings->get_value('paypal-live-secret-key');
-		$paypal_sandbox_client_id = $this->settings->get_value('paypal-sandbox-client-id');
-		$paypal_sandbox_secret_key = $this->settings->get_value('paypal-sandbox-secret-key');
 		?>
-		
 		<!-- PayPal PPCP checkout enable settings postbox -->
 		<div class="postbox">
 			<h2 id="paypal-ppcp-checkout-enable-section"><?php _e("Enable PayPal Commerce Platform Checkout (New API)", 'wordpress-simple-paypal-shopping-cart'); ?></h2>
@@ -198,7 +197,43 @@ class WPSC_PPCP_settings_page
 			</div>
 		</div>
 
-		<!-- PayPal PPCP Connection Settings postbox -->
+		<!-- PayPal PPCP API Access Token deletion checkbox -->
+		<div class="postbox">
+			<h2 id="paypal-delete-token-cache-section"><?php _e("Delete PayPal API Access Token Cache", 'wordpress-simple-paypal-shopping-cart'); ?></h2>
+			<div class="inside">
+				<table class="form-table" role="presentation">
+					<tbody>
+						<tr>
+							<th scope="row"><?php _e('Delete Access Token Cache', 'wordpress-simple-paypal-shopping-cart'); ?></th>
+							<td>
+								<?php
+								$delete_cache_url = admin_url($this->ppcp_connection_subtab_url);
+								$delete_cache_url = add_query_arg('wpsc_ppcp_delete_cache', 1, $delete_cache_url);
+								$delete_cache_url_nonced = add_query_arg('_wpnonce', wp_create_nonce('wpsc_ppcp_delete_cache'), $delete_cache_url);
+								echo '<p><a class="button wpsc-paypal-delete-cache-btn" href="' . esc_url_raw($delete_cache_url_nonced) . '">' . __('Delete Token Cache', 'wordpress-simple-paypal-shopping-cart') . '</a></p>';
+								echo '<p class="description">' . __('This will delete the PayPal API access token cache. This is useful if you are having issues with the PayPal API after changing/updating the API credentials.', 'wordpress-simple-paypal-shopping-cart') . '</p>';
+								?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	<?php
+	}
+
+	/**
+	 * Render the paypal api credentials settings subtab
+	 */
+	public function handle_ppcp_api_creds_subtab() {
+		// Paypal PPCP API credentials settings
+		$paypal_live_client_id = $this->settings->get_value('paypal-live-client-id');
+		$paypal_live_secret_key = $this->settings->get_value('paypal-live-secret-key');
+		$paypal_sandbox_client_id = $this->settings->get_value('paypal-sandbox-client-id');
+		$paypal_sandbox_secret_key = $this->settings->get_value('paypal-sandbox-secret-key');
+
+		?>
+		<!-- PayPal PPCP API credentials settings postbox -->
 		<div class="postbox">
 			<h2><?php _e("PayPal API Credentials for PPCP", 'wordpress-simple-paypal-shopping-cart'); ?></h3>
 				<div class="inside">
@@ -262,30 +297,7 @@ class WPSC_PPCP_settings_page
 					</form>
 				</div>
 		</div>
-
-		<!-- PayPal PPCP API Access Token deletion checkbox -->
-		<div class="postbox">
-			<h2 id="paypal-delete-token-cache-section"><?php _e("Delete PayPal API Access Token Cache", 'wordpress-simple-paypal-shopping-cart'); ?></h2>
-			<div class="inside">
-				<table class="form-table" role="presentation">
-					<tbody>
-						<tr>
-							<th scope="row"><?php _e('Delete Access Token Cache', 'wordpress-simple-paypal-shopping-cart'); ?></th>
-							<td>
-								<?php
-								$delete_cache_url = admin_url($this->ppcp_connection_subtab_url);
-								$delete_cache_url = add_query_arg('wpsc_ppcp_delete_cache', 1, $delete_cache_url);
-								$delete_cache_url_nonced = add_query_arg('_wpnonce', wp_create_nonce('wpsc_ppcp_delete_cache'), $delete_cache_url);
-								echo '<p><a class="button wpsc-paypal-delete-cache-btn" href="' . esc_url_raw($delete_cache_url_nonced) . '">' . __('Delete Token Cache', 'wordpress-simple-paypal-shopping-cart') . '</a></p>';
-								echo '<p class="description">' . __('This will delete the PayPal API access token cache. This is useful if you are having issues with the PayPal API after changing/updating the API credentials.', 'wordpress-simple-paypal-shopping-cart') . '</p>';
-								?>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	<?php
+		<?php
 	}
 
 	/**
