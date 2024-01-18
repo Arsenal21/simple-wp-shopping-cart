@@ -157,45 +157,43 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
              * See documentation: https://developer.paypal.com/sdk/js/reference/#link-oninitonclick
              */
             function onInitHandler(data, actions)  {
-                jQuery(document).ready(function ($) {
-                    actions.enable();
+                actions.enable();
 
-                    /**
-                     * The codes below will run only if the customer input addon is installed and there are fields added.
-                     */
+                /**
+                 * The codes below will run only if the customer input addon is installed and there are fields added.
+                 */
 
-                    // Checks if there is any required input field with empty value.                        
-                    if (document.querySelectorAll('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
-                        actions.disable();
-                    }
-                                        
-                    // Disable paypal smart checkout form submission if terms and condition validation error.
-                    const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
-                    if (!wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
-                        actions.disable();
-                    }
+                // Checks if there is any required input field with empty value.                        
+                if (document.querySelectorAll('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                    actions.disable();
+                }
+                                    
+                // Disable paypal smart checkout form submission if terms and condition validation error.
+                const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
+                if (!wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
+                    actions.disable();
+                }
 
-                    // Listen for changes to the required fields.
-                    document.querySelectorAll('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').forEach( function(element) {
-                        element.addEventListener('change', function () {
-                            if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
-                                actions.disable();
-                                return;
-                            }
+                // Listen for changes to the required fields.
+                document.querySelectorAll('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').forEach( function(element) {
+                    element.addEventListener('change', function () {
+                        if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                            actions.disable();
+                            return;
+                        }
 
-                            // Also check if terms and condition has checked.
-                            if (wpspscTncEnabled) {
-                                if (wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
-                                    actions.enable();
-                                } else {
-                                    actions.disable();
-                                }
-                            } else {
+                        // Also check if terms and condition has checked.
+                        if (wpspscTncEnabled) {
+                            if (wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
                                 actions.enable();
+                            } else {
+                                actions.disable();
                             }
-                        });
-                    })
-                });
+                        } else {
+                            actions.enable();
+                        }
+                    });
+                })
             }
 
             /**
@@ -281,10 +279,10 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 console.log('Successfully created a transaction.');
 
                 //Show the spinner while we process this transaction.
-                var pp_button_container = jQuery('#<?php echo esc_js($on_page_embed_button_id); ?>');
-                var pp_button_spinner_conainer = pp_button_container.siblings('.wpsc-pp-button-spinner-container');
-                pp_button_container.hide();//Hide the buttons
-                pp_button_spinner_conainer.css('display', 'inline-block');//Show the spinner.
+                var pp_button_container = document.getElementById('<?php echo esc_js($on_page_embed_button_id); ?>');
+                var pp_button_spinner_conainer = pp_button_container.nextElementSibling;
+                pp_button_container.style.display = 'none'; //Hide the buttons
+                pp_button_spinner_conainer.style.display = 'inline-block'; //Show the spinner.
 
                 // Capture the order in PayPal using the PayPal API.
                 // https://developer.paypal.com/docs/checkout/standard/integrate/
@@ -352,8 +350,9 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                     }
 
                     //Return the button and the spinner back to their orignal display state.
-                    pp_button_container.show();//Show the buttons
-                    pp_button_spinner_conainer.hide();//Hide the spinner.
+                    pp_button_container.style.display = 'block'; // Show the buttons
+                    pp_button_spinner_conainer.style.display = 'none'; // Hide the spinner
+
 
                 } catch (error) {
                     console.error(error);
