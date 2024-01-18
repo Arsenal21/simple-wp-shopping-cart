@@ -123,16 +123,9 @@ class PayPal_JS_Button_Embed {
 			script.type = 'text/javascript';
 			script.setAttribute( 'data-partner-attribution-id', 'TipsandTricks_SP_PPCP' );
 			script.async = true;
-			script.src = '<?php echo esc_url_raw( $script_url ); ?>';
-			script.onload = function() {
-				/**
-				* REPLACE: plugin prefix across different plugins.
-				*/
-				document.addEventListener('DOMContentLoaded', function() {
-					// Trigger the custom event.
-					const event = new CustomEvent('wpsc_paypal_sdk_loaded'); // CustomEvent constructor can be used to pass additional data to the event object if needed.
-					document.dispatchEvent(event);
-				});
+			script.src = '<?php echo esc_url_raw( $script_url ); ?>';	
+			script.onload = function () {
+				document.dispatchEvent(new Event('wpsc_paypal_sdk_loaded'));//REPLACE: plugin prefix across different plugins.
 			};
 			document.getElementsByTagName( 'head' )[0].appendChild( script );
 		</script>
@@ -162,10 +155,7 @@ class PayPal_JS_Button_Embed {
 			script_sub.async = true;
 			script_sub.src = '<?php echo esc_url_raw( $script_url ); ?>';
 			script_sub.onload = function() {
-				/**
-				* REPLACE: plugin prefix across different plugins.
-				*/
-				jQuery( function( $ ) { $( document ).trigger( 'wpsc_paypal_sdk_subscriptions_loaded' ) } );
+				document.dispatchEvent(new Event('wpsc_paypal_sdk_subscriptions_loaded'));//REPLACE: plugin prefix across different plugins.
 			};
 			document.getElementsByTagName( 'head' )[0].appendChild( script_sub );
 		</script>
