@@ -128,7 +128,11 @@ class PayPal_JS_Button_Embed {
 				/**
 				* REPLACE: plugin prefix across different plugins.
 				*/
-				jQuery( function( $ ) { $( document ).trigger( 'wpsc_paypal_sdk_loaded' ) } );
+				document.addEventListener('DOMContentLoaded', function() {
+					// Trigger the custom event.
+					const event = new CustomEvent('wpsc_paypal_sdk_loaded'); // CustomEvent constructor can be used to pass additional data to the event object if needed.
+					document.dispatchEvent(event);
+				});
 			};
 			document.getElementsByTagName( 'head' )[0].appendChild( script );
 		</script>
