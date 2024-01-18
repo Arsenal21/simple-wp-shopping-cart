@@ -165,7 +165,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                      */
 
                     // Checks if there is any required input field with empty value.                        
-                    if (jQuery('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                    if (document.querySelectorAll('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
                         actions.disable();
                     }
                                         
@@ -176,23 +176,25 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                     }
 
                     // Listen for changes to the required fields.
-                    jQuery('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').on('change', function () {
-                        if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
-                            actions.disable();
-                            return;
-                        }
-
-                        // Also check if terms and condition has checked.
-                        if (wpspscTncEnabled) {
-                            if (wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
-                                actions.enable();
-                            } else {
+                    document.querySelectorAll('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').forEach( function(element) {
+                        element.addEventListener('change', function () {
+                            if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
                                 actions.disable();
+                                return;
                             }
-                        } else {
-                            actions.enable();
-                        }
-                    });
+
+                            // Also check if terms and condition has checked.
+                            if (wpspscTncEnabled) {
+                                if (wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
+                                    actions.enable();
+                                } else {
+                                    actions.disable();
+                                }
+                            } else {
+                                actions.enable();
+                            }
+                        });
+                    })
                 });
             }
 
@@ -214,13 +216,15 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                  * 
                  * Show alert message and focus unfilled require inputs if any.
                  */
-                jQuery(currentPPCPButtonWrapper).parents('table').find('input.wpspsc_cci_input').each(function () {
-                    if (jQuery(this).prop('required') && jQuery(this).val() === '') {
-                        alert("Please fill in " + jQuery(this).siblings('div.wpspsc_cci_input_' + jQuery(this).attr('data-wpspsc-cci-id') + '_label').html());
-                        jQuery(this).focus();
+                const cciInputElements = wspsc_getClosestElement(currentPPCPButtonWrapper, 'table', '.shopping_cart').querySelectorAll('input.wpspsc_cci_input');
+                for (const inputElement of cciInputElements) {
+                    if (inputElement.required && inputElement.value.trim() === '') {
+                        const message = "Please fill in " + inputElement.parentElement.querySelector('div.wpspsc_cci_input_' + inputElement.getAttribute('data-wpspsc-cci-id') + '_label').innerHTML;
+                        alert(message);
+                        inputElement.focus();
+                        break;
                     }
-                });
-
+                }
             }
 
             /**
@@ -379,24 +383,26 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
         });
     });
 
-        /**
-         * Checks if any input element has required attribute with empty value
-         * @param cart_no Target cart no.
-         * @returns {boolean}
-         */
-        function has_empty_required_input(cart_no) {
-            let has_any = false;
-            let target_input = '.wpspsc_cci_input';
-            let target_form = jQuery('#wpsc_paypal_button_' + cart_no).closest('.shopping_cart');
-
-            jQuery(target_form).find(target_input).each(function () {
-                if (jQuery(this).prop("required") && !jQuery(this).val().trim()) {
-                    has_any = true;
-                }
-            });
-
-            return has_any;
-        }
+    /**
+     * Checks if any input element has required attribute with empty value
+     * @param cart_no Target cart no.
+     * @returns {boolean} TRUE if empty required field found, FALSE otherwise.
+     */
+    function has_empty_required_input(cart_no) {
+        let has_any = false;
+        const target_input = '.wpspsc_cci_input';
+        const currentPPCPButtonWrapper = '#wpsc_paypal_button_'+cart_no;
+        const target_form = wspsc_getClosestElement(currentPPCPButtonWrapper, 'table', '.shopping_cart');
+        const cciInputElements = target_form.querySelectorAll(target_input);
+        cciInputElements.forEach(function (inputElement) {
+            if (inputElement.required && !inputElement.value.trim()) {
+                // Empty required field found!
+                has_any = true;
+            }
+        });
+        
+        return has_any;
+    }
     </script>
     <style>
         @keyframes wpsc-pp-button-spinner {
