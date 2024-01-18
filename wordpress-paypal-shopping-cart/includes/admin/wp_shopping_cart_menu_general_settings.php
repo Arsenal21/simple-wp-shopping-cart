@@ -350,18 +350,18 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Return URL", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_return_from_paypal_url" value="'.esc_attr($return_url).'" size="100" /><br />'.(__("This is the URL the customer will be redirected to after a successful payment", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(__("Return URL (Thank You Page)", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="text" name="cart_return_from_paypal_url" value="'.esc_attr($return_url).'" size="100" /><br />'.(__("This is the URL the customers will be redirected to after a successful payment", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
 <th scope="row">'.(__("Cancel URL", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_cancel_from_paypal_url" value="'.esc_attr($cancel_url).'" size="100" /><br />'.(__("The customer will be sent to the above page if the cancel link is clicked on the PayPal checkout page.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<td><input type="text" name="cart_cancel_from_paypal_url" value="'.esc_attr($cancel_url).'" size="100" /><br />'.(__("The customers will be sent to the above page if the cancel link is clicked on the PayPal checkout page.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
 <th scope="row">'.(__("Products Page URL", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_products_page_url" value="'.esc_attr($cart_products_page_url).'" size="100" /><br />'.(__("This is the URL of your products page if you have any. If used, the shopping cart widget will display a link to this page when cart is empty", "wordpress-simple-paypal-shopping-cart")).'</td>
+<td><input type="text" name="cart_products_page_url" value="'.esc_attr($cart_products_page_url).'" size="100" /><br />'.(__("This is the URL of your products page if you have any. If used, the shopping cart widget will display a link to this page when the cart is empty", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">

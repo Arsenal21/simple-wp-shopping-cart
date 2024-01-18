@@ -38,7 +38,7 @@ class WPSC_PPCP_settings_page
 		$ppcp_documentation_link = "https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023";
 		echo '<div class="wpsc-grey-box">';
 		echo '<p>';
-		_e('Configure the PayPal API credentials and checkout button appearance for the new PayPal checkout.', 'wordpress-simple-paypal-shopping-cart');
+		_e('Configure the PayPal API credentials and checkout button appearance for the PayPal Commerce Platform (PPCP).', 'wordpress-simple-paypal-shopping-cart');
 		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', 'wordpress-simple-paypal-shopping-cart') . '</a> ' . __('to learn how to set up and configure it.', 'wordpress-simple-paypal-shopping-cart');
 		echo '</p>';
 		echo '</div>';
@@ -158,13 +158,13 @@ class WPSC_PPCP_settings_page
 		
 		<!-- PayPal PPCP checkout enable settings postbox -->
 		<div class="postbox">
-			<h2 id="paypal-ppcp-checkout-enable-section"><?php _e("Enable PayPal (New API) Checkout", 'wordpress-simple-paypal-shopping-cart'); ?></h2>
+			<h2 id="paypal-ppcp-checkout-enable-section"><?php _e("Enable PayPal Commerce Platform Checkout (New API)", 'wordpress-simple-paypal-shopping-cart'); ?></h2>
 			<div class="inside">
 				<form action="" method="POST">
 					<table class="form-table" role="presentation">
 						<tbody>
 							<tr>
-								<th scope="row"><?php _e('Enable PayPal Checkout (New API)', 'wordpress-simple-paypal-shopping-cart'); ?></th>
+								<th scope="row"><?php _e('Enable PayPal Commerce Platform Checkout', 'wordpress-simple-paypal-shopping-cart'); ?></th>
 								<td>
 									<p>
 										<label>
@@ -172,7 +172,7 @@ class WPSC_PPCP_settings_page
 										</label>
 									</p>
 									<p class="description">
-										<?php _e("Enable this to offer the new paypal api checkout buttons as an option in the shopping cart.", 'wordpress-simple-paypal-shopping-cart'); ?>
+										<?php _e("Enable this to offer the PayPal commerce platform (PPCP) checkout buttons as an option in the shopping cart.", 'wordpress-simple-paypal-shopping-cart'); ?>
 									</p>
 								</td>
 							</tr>
@@ -200,7 +200,7 @@ class WPSC_PPCP_settings_page
 
 		<!-- PayPal PPCP Connection Settings postbox -->
 		<div class="postbox">
-			<h2><?php _e("PayPal API Credentials (New API)", 'wordpress-simple-paypal-shopping-cart'); ?></h3>
+			<h2><?php _e("PayPal API Credentials for PPCP", 'wordpress-simple-paypal-shopping-cart'); ?></h3>
 				<div class="inside">
 					<form action="" method="POST">
 						<table class="form-table">
@@ -402,7 +402,13 @@ class WPSC_PPCP_settings_page
 			empty($this->settings->get_value('paypal-live-secret-key')) ) {
 			$all_api_creds_missing = true;
 		}
-	?>
+
+		echo '<p class="description">';
+		$ppcp_documentation_link = "https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023";
+		_e("Use the buttons below to connect and obtain the necessary PayPal API credentials for offering the PayPal Commerce Platform checkout option.", "wordpress-simple-paypal-shopping-cart");
+		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', 'wordpress-simple-paypal-shopping-cart') . '</a> ' . __('to learn how to set up and configure it.', 'wordpress-simple-paypal-shopping-cart');
+		echo '</p>';
+		?>
 		<table class="form-table" role="presentation">
 			<tbody>
 				<tr>
