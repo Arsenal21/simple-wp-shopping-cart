@@ -50,6 +50,14 @@ i.mce-i-wp-cart-tinymce::before {
     border-width: 1px;
 }
 
+.wpsc-paypal-live-account-status{
+    padding: 10px 0px;
+}
+
+.wpsc-paypal-test-account-connection-status{
+    padding: 10px 0px;
+}
+
 /*----- Addons Listing ----- */
 .wspsc_addon_item_canvas{
     background-color: white;

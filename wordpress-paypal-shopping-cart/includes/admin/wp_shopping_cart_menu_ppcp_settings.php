@@ -276,7 +276,7 @@ class WPSC_PPCP_settings_page
 								$delete_cache_url = admin_url($this->ppcp_connection_subtab_url);
 								$delete_cache_url = add_query_arg('wpsc_ppcp_delete_cache', 1, $delete_cache_url);
 								$delete_cache_url_nonced = add_query_arg('_wpnonce', wp_create_nonce('wpsc_ppcp_delete_cache'), $delete_cache_url);
-								echo '<p><a class="button swpm-paypal-delete-cache-btn" href="' . esc_url_raw($delete_cache_url_nonced) . '">' . __('Delete Token Cache', 'wordpress-simple-paypal-shopping-cart') . '</a></p>';
+								echo '<p><a class="button wpsc-paypal-delete-cache-btn" href="' . esc_url_raw($delete_cache_url_nonced) . '">' . __('Delete Token Cache', 'wordpress-simple-paypal-shopping-cart') . '</a></p>';
 								echo '<p class="description">' . __('This will delete the PayPal API access token cache. This is useful if you are having issues with the PayPal API after changing/updating the API credentials.', 'wordpress-simple-paypal-shopping-cart') . '</p>';
 								?>
 							</td>
@@ -424,14 +424,14 @@ class WPSC_PPCP_settings_page
 
 						if ($live_account_connection_status == 'connected') {
 							//Production account connected
-							echo '<div class="swpm-paypal-live-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+							echo '<div class="wpsc-paypal-live-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
 							_e('Live account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
 							echo '</div>';
 							// Show disconnect option for live account.
 							$ppcp_onboarding_instance->output_production_ac_disconnect_link();
 						} else {
 							//Production account is NOT connected.
-							echo '<div class="swpm-paypal-live-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
+							echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
 							_e('Live PayPal account is not connected.', 'simple-membership');
 							echo '</div>';
 
@@ -454,14 +454,14 @@ class WPSC_PPCP_settings_page
 
 						if ($sandbox_account_connection_status == 'connected') {
 							//Test account connected
-							echo '<div class="swpm-paypal-test-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+							echo '<div class="wpsc-paypal-test-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
 							_e('Sandbox account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
 							echo '</div>';
 							//Show disconnect option for sandbox account.
 							$ppcp_onboarding_instance->output_sandbox_ac_disconnect_link();
 						} else {
 							//Sandbox account is NOT connected.
-							echo '<div class="swpm-paypal-sandbox-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
+							echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
 							_e('Sandbox PayPal account is not connected.', 'simple-membership');
 							echo '</div>';
 

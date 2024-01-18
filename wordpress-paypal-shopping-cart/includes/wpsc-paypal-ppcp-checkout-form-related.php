@@ -278,7 +278,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
                 //Show the spinner while we process this transaction.
                 var pp_button_container = jQuery('#<?php echo esc_js($on_page_embed_button_id); ?>');
-                var pp_button_spinner_conainer = pp_button_container.siblings('.swpm-pp-button-spinner-container');
+                var pp_button_spinner_conainer = pp_button_container.siblings('.wpsc-pp-button-spinner-container');
                 pp_button_container.hide();//Hide the buttons
                 pp_button_spinner_conainer.css('display', 'inline-block');//Show the spinner.
 
@@ -399,10 +399,10 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
         }
     </script>
     <style>
-        @keyframes swpm-pp-button-spinner {
+        @keyframes wpsc-pp-button-spinner {
             to {transform: rotate(360deg);}
         }
-        .swpm-pp-button-spinner {
+        .wpsc-pp-button-spinner {
             margin: 0 auto;
             text-indent: -9999px;
             vertical-align: middle;
@@ -413,19 +413,19 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
             border-radius: 50%;
             border: 5px solid #ccc;
             border-top-color: #0070ba;
-            animation: swpm-pp-button-spinner .6s linear infinite;
+            animation: wpsc-pp-button-spinner .6s linear infinite;
         }
-        .swpm-pp-button-spinner-container {
+        .wpsc-pp-button-spinner-container {
             width: 100%;
             text-align: center;
             margin-top:10px;
             display: none;
         }
     </style>
-    <div class="swpm-pp-button-spinner-container">
-        <div class="swpm-pp-button-spinner"></div>
+    <div class="wpsc-pp-button-spinner-container">
+        <div class="wpsc-pp-button-spinner"></div>
     </div>
-    </div><!-- end of .swpm-button-wrapper -->
+    </div><!-- end of button-wrapper -->
     <?php
     //Get the output from the buffer and clean the buffer.
     $ppcp_output = ob_get_clean();
