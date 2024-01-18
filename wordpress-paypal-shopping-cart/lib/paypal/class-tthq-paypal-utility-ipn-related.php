@@ -11,10 +11,17 @@ class PayPal_Utility_IPN_Related {
 		$custom = isset($data['custom_field']) ? $data['custom_field'] : '';
 		$custom = urldecode( $custom );//Decode it just in case it was encoded.
 
-		//Add the PayPal API order_id value to the reference parameter. So it gets saved with custom field data. This will be used to also save it to the reference DB column field when saving the transaction.
+		//Get the PayPal Order ID and add to the IPN data array.
 		if(isset($data['order_id'])){
-			$data['custom_field'] = $custom . '&txn_reference=' . $data['order_id'];
+			$ipn_data['paypal_order_id'] = $data['order_id'];
+		} else {
+			//We can read the order_id from the txn_data response from PayPal API (if available)
+			$ipn_data['paypal_order_id'] = isset($txn_data['id']) ? $txn_data['id'] : '';
 		}
+
+		//Add the PayPal API order_id value to the custom field. So it gets saved with custom field data. 
+		//This can be used to also save it to the reference DB column field when saving the transaction.		
+		$data['custom_field'] = $custom . '&paypal_order_id=' . $ipn_data['paypal_order_id'];
 
 		//Parse the custom field to read the IP address.
 		$customvariables = PayPal_Utility_Functions::parse_custom_var( $custom );

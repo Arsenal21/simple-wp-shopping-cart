@@ -47,10 +47,16 @@ class WPSC_Post_Payment_Related
 		$ipn_data['shipping'] = 0;
 		$item_counter = 1;
 		$currency_symbol = get_option('cart_currency_symbol');
-		$orig_cart_items = get_post_meta($ipn_data['post_id'], 'wpsc_cart_items', true);
-		//wspsc_log_payment_debug( 'Original cart items from the order post below.', true );
-		//wspsc_log_payment_debug_array( $orig_cart_items, true );
-		if ($orig_cart_items) {
+
+		// Get the original cart items from the order post meta (that we saved after the paypal order was created)
+		$paypal_order_id = $ipn_data['paypal_order_id'];
+		$wpsc_cart_items_pp_order_id_key = 'wpsc_cart_items_' . $paypal_order_id;
+		$orig_cart_items = get_post_meta($ipn_data['post_id'], $wpsc_cart_items_pp_order_id_key, true);
+		//$orig_cart_items = get_post_meta($ipn_data['post_id'], 'wpsc_cart_items', true);
+		wspsc_log_payment_debug( 'Original cart items from the order post below.', true );
+		wspsc_log_debug_array( $orig_cart_items, true );
+
+		if (is_array($orig_cart_items) && !empty($orig_cart_items)) {
 			foreach ($orig_cart_items as $item) {
 				if ($item_counter != 1) {
 					$ipn_data['product_details'] .= "\n";
@@ -66,6 +72,9 @@ class WPSC_Post_Payment_Related
 				}
 				$item_counter++;
 			}
+		} else {
+			wspsc_log_payment_debug('Error: Original cart items array is empty. Cannot process this transaction.', false);
+			return;
 		}
 
 		$ipn_data['cart_items'] = $orig_cart_items;
@@ -80,7 +89,6 @@ class WPSC_Post_Payment_Related
 			$ipn_data['shipping'] = floatval($ipn_data['shipping']) + floatval($baseShipping);
 			$ipn_data['shipping'] = wpspsc_number_format_price($ipn_data['shipping']);
 		}
-
 	}
 
 	/**

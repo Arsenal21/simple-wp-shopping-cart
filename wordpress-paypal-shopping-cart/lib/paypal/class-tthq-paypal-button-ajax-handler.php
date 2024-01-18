@@ -91,10 +91,6 @@ class PayPal_Button_Ajax_Hander {
 		$cart_items = $wspsc_cart->get_items();
 		$pu_items = PayPal_Utility_Functions::create_purchase_units_items_list( $cart_items );
 
-		//Save the grand total and currency in the order CPT (we will match it with the PayPal response later in verification stage).
-		update_post_meta( $cart_id, 'expected_payment_amount', $formatted_grand_total );
-		update_post_meta( $cart_id, 'expected_currency', $currency );
-
 		// Create the order using the PayPal API.
 		// https://developer.paypal.com/docs/api/orders/v2/#orders_create
 		$data = array(
@@ -130,6 +126,15 @@ class PayPal_Button_Ajax_Hander {
 		}
 
         PayPal_Utility_Functions::log( 'PayPal Order ID: ' . $paypal_order_id, true );
+
+		//Save the grand total and currency in the order CPT (we will match it with the PayPal response later in verification stage).
+		update_post_meta( $cart_id, 'expected_payment_amount', $formatted_grand_total );
+		update_post_meta( $cart_id, 'expected_currency', $currency );
+
+		//Save the current cart items with the PayPal order ID in the order CPT (we will use this one to process in the IPN processing stage).
+		$cart_items = get_post_meta($cart_id, 'wpsc_cart_items', true);
+		$wpsc_cart_items_pp_order_id_key = 'wpsc_cart_items_' . $paypal_order_id;
+		update_post_meta( $cart_id, $wpsc_cart_items_pp_order_id_key, $cart_items );
 
 		//If everything is processed successfully, send the success response.
 		wp_send_json( array( 'success' => true, 'order_id' => $paypal_order_id, 'order_data' => $order_data ) );
