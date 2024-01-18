@@ -87,7 +87,7 @@ class stripe_ipn_handler {
 		$currency_symbol = get_option( 'cart_currency_symbol' );
 		$currency_code_settings = get_option( 'cart_payment_currency' );
 
-		$this->debug_log( 'Custom values', true );
+		$this->debug_log( 'Custom values: ', true );
 		$this->debug_log_array( $custom_values, true );
 		$this->debug_log( 'Order post id: ' . $post_id, true );
 

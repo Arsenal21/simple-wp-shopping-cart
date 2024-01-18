@@ -36,7 +36,7 @@ class WPSC_Post_Payment_Related
 		$ipn_data['applied_coupon_code'] = isset($custom_values['coupon_code']) ? $custom_values['coupon_code'] : '';
 		$ipn_data['ap_id'] = isset($custom_values['ap_id']) ? $custom_values['ap_id'] : '';
 
-		wspsc_log_payment_debug('Custom values', true);
+		wspsc_log_payment_debug('Custom values: ', true);
 		wspsc_log_debug_array($custom_values, true);
 		wspsc_log_payment_debug('Order post id: ' . $ipn_data['post_id'], true);
 

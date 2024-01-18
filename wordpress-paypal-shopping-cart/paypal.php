@@ -155,7 +155,7 @@ class paypal_ipn_handler {
 		$ip_address = isset( $custom_values['ip'] ) ? $custom_values['ip'] : '';
 		$applied_coupon_code = isset( $custom_values['coupon_code'] ) ? $custom_values['coupon_code'] : '';
 		$currency_symbol = get_option( 'cart_currency_symbol' );
-		$this->debug_log( 'Custom values', true );
+		$this->debug_log( 'Custom values: ', true );
 		$this->debug_log_array( $custom_values, true );
 		$this->debug_log( 'Order post id: ' . $post_id, true );
 
