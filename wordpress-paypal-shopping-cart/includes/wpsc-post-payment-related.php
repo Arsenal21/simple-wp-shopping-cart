@@ -213,4 +213,16 @@ class WPSC_Post_Payment_Related
 			wspsc_log_payment_debug('Not Using the WP Affiliate Platform Plugin.', true);
 		}
 	}
+
+	public static function do_cleanup_after_txn(&$ipn_data)	{
+		wspsc_log_payment_debug('Executing WPSC_Post_Payment_Related::do_cleanup_after_txn()', true);
+
+		//Empty any incomplete old cart orders.
+		wspsc_clean_incomplete_old_cart_orders();
+
+		//Full reset the cart to clean it up.
+		$wpsc_cart = WSPSC_Cart::get_instance();
+		$wpsc_cart->reset_cart_after_txn();
+	}
+
 }

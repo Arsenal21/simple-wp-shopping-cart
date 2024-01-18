@@ -175,8 +175,7 @@ class PayPal_Utility_IPN_Related {
 
 		\WPSC_Post_Payment_Related::affiliate_plugin_integration( $ipn_data );
 
-		//Empty any incomplete old cart orders.
-		wspsc_clean_incomplete_old_cart_orders();
+		\WPSC_Post_Payment_Related::do_cleanup_after_txn( $ipn_data);
 
 		return true;
 	}
