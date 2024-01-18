@@ -105,8 +105,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     <script type="text/javascript">
         var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
 
-    jQuery( function( $ ) {
-        $( document ).on( "wpsc_paypal_sdk_loaded", function() { 
+        document.addEventListener( "wpsc_paypal_sdk_loaded", function() { 
             //Anything that goes here will only be executed after the PayPal SDK is loaded.
             console.log('PayPal JS SDK is loaded.');
 
@@ -135,10 +134,10 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
                 // Setup the transaction.
                 createOrder: createOrderHandler,
-    
+
                 // Handle the onApprove event.
                 onApprove: onApproveHandler,
-    
+
                 // Handle unrecoverable errors.
                 onError: onErrorHandler,
 
@@ -380,28 +379,27 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
             }
 
         });
-    });
 
-    /**
-     * Checks if any input element has required attribute with empty value
-     * @param cart_no Target cart no.
-     * @returns {boolean} TRUE if empty required field found, FALSE otherwise.
-     */
-    function has_empty_required_input(cart_no) {
-        let has_any = false;
-        const target_input = '.wpspsc_cci_input';
-        const currentPPCPButtonWrapper = '#wpsc_paypal_button_'+cart_no;
-        const target_form = wspsc_getClosestElement(currentPPCPButtonWrapper, 'table', '.shopping_cart');
-        const cciInputElements = target_form.querySelectorAll(target_input);
-        cciInputElements.forEach(function (inputElement) {
-            if (inputElement.required && !inputElement.value.trim()) {
-                // Empty required field found!
-                has_any = true;
-            }
-        });
-        
-        return has_any;
-    }
+        /**
+         * Checks if any input element has required attribute with empty value
+         * @param cart_no Target cart no.
+         * @returns {boolean} TRUE if empty required field found, FALSE otherwise.
+         */
+        function has_empty_required_input(cart_no) {
+            let has_any = false;
+            const target_input = '.wpspsc_cci_input';
+            const currentPPCPButtonWrapper = '#wpsc_paypal_button_'+cart_no;
+            const target_form = wspsc_getClosestElement(currentPPCPButtonWrapper, 'table', '.shopping_cart');
+            const cciInputElements = target_form.querySelectorAll(target_input);
+            cciInputElements.forEach(function (inputElement) {
+                if (inputElement.required && !inputElement.value.trim()) {
+                    // Empty required field found!
+                    has_any = true;
+                }
+            });
+            
+            return has_any;
+        }
     </script>
     <style>
         @keyframes wpsc-pp-button-spinner {
