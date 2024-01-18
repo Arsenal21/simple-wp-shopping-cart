@@ -7,9 +7,10 @@ class PayPal_Utility_IPN_Related {
 	public static function create_ipn_data_array_from_capture_order_txn_data( $data, $txn_data ) {
 		$ipn_data = array();
 
-		//Get the custom field value from the request
-		$custom = isset($data['custom_field']) ? $data['custom_field'] : '';
-		$custom = urldecode( $custom );//Decode it just in case it was encoded.
+		//$purchase_units = isset($txn_data['purchase_units']) ? $txn_data['purchase_units'] : array();
+		//The $data['order_id'] is the ID for the order created using createOrder API call. The Transaction ID is the ID for the captured payment.
+		$txn_id = isset($txn_data['purchase_units'][0]['payments']['captures'][0]['id']) ? $txn_data['purchase_units'][0]['payments']['captures'][0]['id'] : '';
+		$ipn_data['txn_id'] = $txn_id;
 
 		//Get the PayPal Order ID and add to the IPN data array.
 		if(isset($data['order_id'])){
@@ -19,6 +20,10 @@ class PayPal_Utility_IPN_Related {
 			$ipn_data['paypal_order_id'] = isset($txn_data['id']) ? $txn_data['id'] : '';
 		}
 
+		//Get the custom field value from the request
+		$custom = isset($data['custom_field']) ? $data['custom_field'] : '';
+		$custom = urldecode( $custom );//Decode it just in case it was encoded.
+				
 		//Add the PayPal API order_id value to the custom field. So it gets saved with custom field data. 
 		//This can be used to also save it to the reference DB column field when saving the transaction.		
 		$data['custom_field'] = $custom . '&paypal_order_id=' . $ipn_data['paypal_order_id'];
@@ -26,11 +31,6 @@ class PayPal_Utility_IPN_Related {
 		//Parse the custom field to read the IP address.
 		$customvariables = PayPal_Utility_Functions::parse_custom_var( $custom );
 
-		//$purchase_units = isset($txn_data['purchase_units']) ? $txn_data['purchase_units'] : array();
-
-		//The $data['order_id'] is the ID for the order created using createOrder API call. The Transaction ID is the ID for the captured payment.
-		$txn_id = isset($txn_data['purchase_units'][0]['payments']['captures'][0]['id']) ? $txn_data['purchase_units'][0]['payments']['captures'][0]['id'] : '';
-		
 		$address_street = isset($txn_data['purchase_units'][0]['shipping']['address']['address_line_1']) ? $txn_data['purchase_units'][0]['shipping']['address']['address_line_1'] : '';
 		if ( isset ( $txn_data['purchase_units'][0]['shipping']['address']['address_line_2'] )){
 			//If address line 2 is present, add it to the address.
@@ -40,7 +40,6 @@ class PayPal_Utility_IPN_Related {
 		$ipn_data['gateway'] = 'paypal_buy_now_checkout';
 		$ipn_data['txn_type'] = 'paypal_checkout_new';
 		$ipn_data['custom'] = isset($data['custom_field']) ? $data['custom_field'] : '';
-		$ipn_data['txn_id'] = $txn_id;
 		$ipn_data['subscr_id'] = $txn_id;//Same as txn_id for one-time payments.
 
 		$ipn_data['item_number'] = isset($data['button_id']) ? $data['button_id'] : '';

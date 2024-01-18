@@ -53,8 +53,8 @@ class WPSC_Post_Payment_Related
 		$wpsc_cart_items_pp_order_id_key = 'wpsc_cart_items_' . $paypal_order_id;
 		$orig_cart_items = get_post_meta($ipn_data['post_id'], $wpsc_cart_items_pp_order_id_key, true);
 		//$orig_cart_items = get_post_meta($ipn_data['post_id'], 'wpsc_cart_items', true);
-		wspsc_log_payment_debug( 'Original cart items from the order post below.', true );
-		wspsc_log_debug_array( $orig_cart_items, true );
+		//wspsc_log_payment_debug( 'Original cart items from the order post below.', true );
+		//wspsc_log_debug_array( $orig_cart_items, true );
 
 		if (is_array($orig_cart_items) && !empty($orig_cart_items)) {
 			foreach ($orig_cart_items as $item) {
