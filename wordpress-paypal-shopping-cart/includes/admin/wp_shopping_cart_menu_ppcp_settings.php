@@ -51,8 +51,8 @@ class WPSC_PPCP_settings_page
 		<!-- ppcp settings menu's sub nav tabs -->
 		<h3 class="nav-tab-wrapper">
 			<a class="nav-tab <?php echo ($subtab == '' || $subtab == 'api-connection') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_connection_subtab_url; ?>"><?php _e('PayPal API Connection', 'wordpress-simple-paypal-shopping-cart'); ?></a>
+			<a class="nav-tab <?php echo ($subtab == 'api-credentials') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_api_creds_subtab_url; ?>"><?php _e('API Credentials', 'wordpress-simple-paypal-shopping-cart'); ?></a>			
 			<a class="nav-tab <?php echo ($subtab == 'button-appreance') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_button_subtab_link; ?>"><?php _e('Button Appearance', 'wordpress-simple-paypal-shopping-cart'); ?></a>
-			<a class="nav-tab <?php echo ($subtab == 'api-credentials') ? 'nav-tab-active' : ''; ?>" href="<?php echo $this->ppcp_api_creds_subtab_url; ?>"><?php _e('API Credentials', 'wordpress-simple-paypal-shopping-cart'); ?></a>
 		</h3>
 		<br />
 		<?php
@@ -131,12 +131,12 @@ class WPSC_PPCP_settings_page
 
 		//Switch case for the various different sub-tabs.
 		switch ($selected_subtab) {
-			case 'button-appreance':
-				$this->handle_ppcp_button_appearance_subtab();
-				break;
 			case 'api-credentials':
 				$this->handle_ppcp_api_creds_subtab();
 				break;
+			case 'button-appreance':
+					$this->handle_ppcp_button_appearance_subtab();
+					break;				
 			default: 
 				// 'api-connection'
 				$this->handle_ppcp_connection_settings_subtab();
@@ -237,6 +237,15 @@ class WPSC_PPCP_settings_page
 		<div class="postbox">
 			<h2><?php _e("PayPal API Credentials for PPCP", 'wordpress-simple-paypal-shopping-cart'); ?></h3>
 				<div class="inside">
+
+					<?php
+					echo '<p class="description">';
+					$ppcp_documentation_link = "https://www.tipsandtricks-hq.com/ecommerce/getting-paypal-api-credentials-for-paypal-commerce-platform-5027";
+					_e("If you have used the automatic option to connect and get your PayPal API credentials from the 'PayPal API Connection' tab, they will be displayed below. The following section also allows for manual entry of your PayPal API credentials in case the automatic option is non-functional for your PayPal account.", "wordpress-simple-paypal-shopping-cart");
+					echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', 'wordpress-simple-paypal-shopping-cart') . '</a> ' . __('to learn how to manually set up the API credentials.', 'wordpress-simple-paypal-shopping-cart');
+					echo '</p>';
+					?>
+
 					<form action="" method="POST">
 						<table class="form-table">
 							<tr valign="top">
@@ -310,7 +319,7 @@ class WPSC_PPCP_settings_page
 			<h3 class="hndle"><label for="title"><?php _e('PayPal Button Appearance Settings', 'wordpress-simple-paypal-shopping-cart'); ?></label></h3>
 			<div class="inside">
 				<p>
-					<?php _e('Configure the button appearance for the new PayPal checkout option.', 'wordpress-simple-paypal-shopping-cart'); ?>
+					<?php _e('Configure the button appearance for the PayPal Commerce Platform checkout option. The default options are optimized for a quick start.', 'wordpress-simple-paypal-shopping-cart'); ?>
 				</p>
 
 				<form id="ppcp_button_config_form" method="post">
@@ -417,7 +426,7 @@ class WPSC_PPCP_settings_page
 
 		echo '<p class="description">';
 		$ppcp_documentation_link = "https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023";
-		_e("Use the buttons below to connect and obtain the necessary PayPal API credentials for offering the PayPal Commerce Platform checkout option.", "wordpress-simple-paypal-shopping-cart");
+		_e("Use the buttons below to connect and obtain the necessary PayPal API credentials automatically to offer the PayPal Commerce Platform checkout option.", "wordpress-simple-paypal-shopping-cart");
 		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', 'wordpress-simple-paypal-shopping-cart') . '</a> ' . __('to learn how to set up and configure it.', 'wordpress-simple-paypal-shopping-cart');
 		echo '</p>';
 		?>
@@ -436,7 +445,7 @@ class WPSC_PPCP_settings_page
 
 						if ($live_account_connection_status == 'connected') {
 							//Production account connected
-							echo '<div class="wpsc-paypal-live-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+							echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
 							_e('Live account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
 							echo '</div>';
 							// Show disconnect option for live account.
@@ -466,7 +475,7 @@ class WPSC_PPCP_settings_page
 
 						if ($sandbox_account_connection_status == 'connected') {
 							//Test account connected
-							echo '<div class="wpsc-paypal-test-account-connection-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+							echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
 							_e('Sandbox account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
 							echo '</div>';
 							//Show disconnect option for sandbox account.
