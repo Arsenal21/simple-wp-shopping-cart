@@ -42,6 +42,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     $currency = isset($args['currency']) ? $args['currency'] : 'USD';
     $return_url = get_option('cart_return_from_paypal_url');
     $txn_success_message = __('Transaction completed successfully!', 'wordpress-simple-paypal-shopping-cart');
+    $txn_success_extra_msg = __('Feel free to add more items to your shopping cart for another checkout.', 'wordpress-simple-paypal-shopping-cart');
 
     $is_tnc_enabled = get_option( 'wp_shopping_cart_enable_tnc' ) != '';
 
@@ -328,8 +329,18 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                             return;
                         } else {
                             //No return URL is set. Just show a success message.
-                            txn_success_msg = '<?php echo esc_attr($txn_success_message); ?>';
-                            alert(txn_success_msg);
+                            console.log('No return URL is set in the settings. Showing a success message.');
+
+                            //We are going to show the success message in the shopping_cart's container.
+                            txn_success_msg = '<?php echo esc_attr($txn_success_message).' '.esc_attr($txn_success_extra_msg); ?>';
+                            // Select all elements with the class 'shopping_cart'
+                            var shoppingCartDivs = document.querySelectorAll('.shopping_cart');
+
+                            // Loop through the NodeList and update each element
+                            shoppingCartDivs.forEach(function(div) {
+                                div.innerHTML = '<div class="wpsc-cart-txn-success-msg">' + txn_success_msg + '</div>';
+                            });
+                            return;
                         }
 
                     } else if (error_detail?.issue === "INSTRUMENT_DECLINED") {
