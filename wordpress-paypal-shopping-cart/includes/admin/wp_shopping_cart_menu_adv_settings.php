@@ -37,7 +37,7 @@ function show_wp_cart_adv_settings_page() {
 	update_option( 'wpspc_pp_smart_checkout_payment_method_elv', $pm_elv );
 
 	echo '<div id="message" class="updated fade"><p><strong>';
-	echo 'Advanced Settings Updated!';
+	echo 'PayPal Smart Checkout Settings Updated!';
 	echo '</strong></p></div>';
     }
     $wpspc_send_buyer_email = '';
@@ -82,6 +82,15 @@ function show_wp_cart_adv_settings_page() {
     	</h3>
     	<div class="inside">
 
+			<div class="wpsc-yellow-box">
+			<p>
+				<?php _e("<strong>Note:</strong> PayPal has deprecated the Smart Checkout API and replaced it with the PayPal Commerce Platform. Configure this new PayPal API from the", "wordpress-simple-paypal-shopping-cart"); ?>
+				<?php echo ' '; ?>
+				<a href="admin.php?page=wspsc-menu-main&action=ppcp-settings" target="_blank"><?php _e("PayPal PPCP Settings", "wordpress-simple-paypal-shopping-cart"); ?></a>
+				<?php echo ' ' . __("tab of our plugin.", "wordpress-simple-paypal-shopping-cart"); ?>
+			</p>
+			</div>
+			
     	    <table class="form-table">
 
     		<tr valign="top">

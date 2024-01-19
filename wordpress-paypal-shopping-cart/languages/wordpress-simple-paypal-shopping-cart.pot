@@ -858,7 +858,7 @@ msgid "Email Settings"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_main.php:42
-msgid "Advanced Settings"
+msgid "PayPal Smart Checkout"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_main.php:43
@@ -1254,7 +1254,7 @@ msgid "Make payments with PayPal - it\\'s fast, free and secure!"
 msgstr ""
 
 #: includes/wspsc-cart-functions.php:254
-msgid "PayPal Smart Checkout error: %s client ID is not set. Please set it on the Advanced Settings tab."
+msgid "PayPal Smart Checkout error: %s client ID is not set. Please set it on the PayPal Smart Checkout Settings tab."
 msgstr ""
 
 #: includes/wspsc-cart-functions.php:366

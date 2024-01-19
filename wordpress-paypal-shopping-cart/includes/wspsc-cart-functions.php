@@ -286,7 +286,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			$client_id = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_pp_test_client_id' ) : get_option( 'wpspc_pp_live_client_id' );
 			if ( empty( $client_id ) ) {
 				//client ID is not set
-				$output .= '<div style="color: red;">' . sprintf( __( 'PayPal Smart Checkout error: %s client ID is not set. Please set it on the Advanced Settings tab.', 'wordpress-simple-paypal-shopping-cart' ), get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'Sandbox' : 'Live' ) . '</div>';
+				$output .= '<div style="color: red;">' . sprintf( __( 'PayPal Smart Checkout error: %s client ID is not set. Please set it on the PayPal Smart Checkout Settings tab.', 'wordpress-simple-paypal-shopping-cart' ), get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'Sandbox' : 'Live' ) . '</div>';
 			} else {
 				//checkout script should be inserted only once, otherwise it would produce JS error
 				//Load the JS SDK on footer so it only loads once per page (if the cart is present)

@@ -39,8 +39,8 @@ function wspsc_settings_interface() {
     $wpspc_plugin_tabs = array(
         'wspsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=adv-settings' => __('Advanced Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=ppcp-settings' => __('PayPal PPCP (New API)', 'wordpress-simple-paypal-shopping-cart'),
+        'wspsc-menu-main&action=adv-settings' => __('PayPal Smart Checkout', 'wordpress-simple-paypal-shopping-cart'),        
         'wspsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
     );
     echo '<div class="wrap">';

@@ -341,14 +341,14 @@ None
 - Added more filter hooks so the customer Input addon fields are now exported to CSV as well.
 
 = 4.4.3 =
-- Added button customization options (in the advanced settings) for the smart paypal checkout button.
+- Added button customization options (in the PayPal Smart Checkout Settings) for the smart paypal checkout button.
 
 = 4.4.2 =
 - Added PayPal smart button configuration documentation
   https://www.tipsandtricks-hq.com/ecommerce/enabling-smart-button-checkout-setup-and-configuration-4568
 
 = 4.4.1 =
-- Added a new checkout option that uses the smart PayPal payment button. You can enable it from the advanced settings menu.
+- Added a new checkout option that uses the smart PayPal payment button. You can enable it from the PayPal Smart Checkout Settings menu.
 - Added Breton language files. Thanks to Florian for submitting the language files.
 
 = 4.4.0 =
