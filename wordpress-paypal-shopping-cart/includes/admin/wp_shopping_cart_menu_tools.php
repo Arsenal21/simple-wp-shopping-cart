@@ -6,7 +6,7 @@ function wspsc_show_tools_menu_page() {
     }
 
     echo '<div class="wrap">';
-    echo '<h1>' . (__("Simple Cart Tools", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
+    echo '<h1>' . (__("Simple Shopping Cart Tools", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
     
     echo '<div id="poststuff"><div id="post-body">';
     

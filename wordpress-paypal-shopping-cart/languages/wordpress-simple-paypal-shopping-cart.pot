@@ -115,7 +115,7 @@ msgid "I already did"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_addons.php:10
-msgid "Simple Cart Add-ons"
+msgid "Simple Shopping Cart Add-ons"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_addons.php:16
@@ -326,7 +326,7 @@ msgid "Update Options &raquo;"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_discounts.php:10
-msgid "Simple Cart Coupons/Discounts"
+msgid "Simple Shopping Cart Coupons/Discounts"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_discounts.php:70
@@ -866,7 +866,7 @@ msgid "Stripe Settings"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_main.php:46
-msgid "WP Simple Shopping Cart Options"
+msgid "WP Simple Shopping Cart Settings"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_stripe_settings.php:59
@@ -934,7 +934,7 @@ msgid "If you want to customize the look of the button using an image then enter
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_tools.php:9
-msgid "Simple Cart Tools"
+msgid "Simple Shopping Cart Tools"
 msgstr ""
 
 #: includes/admin/wp_shopping_cart_menu_tools.php:20

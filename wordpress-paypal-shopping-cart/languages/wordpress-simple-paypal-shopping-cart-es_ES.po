@@ -576,7 +576,7 @@ msgid "Update Options &raquo;"
 msgstr "Actualización de opciones &raquo;"
 
 #: includes/admin/wp_shopping_cart_menu_discounts.php:10
-msgid "Simple Cart Coupons/Discounts"
+msgid "Simple Shopping Cart Coupons/Discounts"
 msgstr "Cupones / descuentos de carrito simple"
 
 #: includes/admin/wp_shopping_cart_menu_discounts.php:70
@@ -1217,7 +1217,7 @@ msgid "WP Paypal Shopping Cart Options"
 msgstr "Opciones de WP Paypal Shopping Cart"
 
 #: includes/admin/wp_shopping_cart_menu_tools.php:9
-msgid "Simple Cart Tools"
+msgid "Simple Shopping Cart Tools"
 msgstr "Herramientas simples de carrito"
 
 #: includes/admin/wp_shopping_cart_menu_tools.php:33
@@ -1353,7 +1353,7 @@ msgstr "Artículos"
 #~ msgid "Collect Customer Input"
 #~ msgstr "Recopilar información del cliente"
 
-#~ msgid "Simple Cart Add-ons"
+#~ msgid "Simple Shopping Cart Add-ons"
 #~ msgstr "Extensiones de Simple Cart"
 
 #~ msgid " Example: Short, Full"

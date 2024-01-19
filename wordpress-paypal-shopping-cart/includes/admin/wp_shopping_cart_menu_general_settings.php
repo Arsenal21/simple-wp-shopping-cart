@@ -327,13 +327,15 @@ echo '
 
 echo '<tr valign="top">
 <th scope="row">'.(__("Currency Symbol", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_currency_symbol" value="'.esc_attr($defaultSymbol).'" size="3" style="width: 2em;" /> ('.(__("e.g.", "wordpress-simple-paypal-shopping-cart")).' $, &#163;, &#8364;)
+<td><input type="text" name="cart_currency_symbol" value="'.esc_attr($defaultSymbol).'" size="5" /> ('.(__("Example:", "wordpress-simple-paypal-shopping-cart")).' $, &#163;, &#8364;)
 </td>
 </tr>
 
 <tr valign="top">
 <th scope="row">'.(__("Base Shipping Cost", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_base_shipping_cost" value="'.esc_attr($baseShipping).'" size="5" /> <br />'.(__("This is the base shipping cost that will be added to the total of individual products shipping cost. Put 0 if you do not want to charge shipping cost or use base shipping cost.", "wordpress-simple-paypal-shopping-cart")).' <a href="http://www.tipsandtricks-hq.com/ecommerce/?p=297" target="_blank">'.(__("Learn More on Shipping Calculation", "wordpress-simple-paypal-shopping-cart")).'</a></td>
+<td><input type="text" name="cart_base_shipping_cost" value="'.esc_attr($baseShipping).'" size="5" /> <br />'.(__("This is the base shipping cost that will be added to the total of individual products shipping cost. Put 0 if you do not want to charge shipping cost or use base shipping cost.", "wordpress-simple-paypal-shopping-cart")).
+' <a href="https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-how-the-shipping-cost-calculation-works-297" target="_blank">'.(__("Learn More on Shipping Calculation", "wordpress-simple-paypal-shopping-cart")).'</a>'.
+'</td>
 </tr>
 
 <tr valign="top">
@@ -342,9 +344,9 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Add to Cart button text or Image", "wordpress-simple-paypal-shopping-cart")).'</th>
+<th scope="row">'.(__("Add to Cart button Text or Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="addToCartButtonName" value="'.esc_attr($addcart).'" size="100" />
-<br />'.(__("To use a customized image as the button simply enter the URL of the image file.", "wordpress-simple-paypal-shopping-cart")).' '.(__("e.g.", "wordpress-simple-paypal-shopping-cart")).' http://www.your-domain.com/wp-content/plugins/wordpress-paypal-shopping-cart/images/buy_now_button.png
+<br />'.(__("To use a customized image as the button simply enter the URL of the image file.", "wordpress-simple-paypal-shopping-cart")).' '.(__("Example:", "wordpress-simple-paypal-shopping-cart")).' https://www.your-domain.com/images/buy_now_button.png
 <br />You can download nice add to cart button images from <a href="https://www.tipsandtricks-hq.com/ecommerce/add-to-cart-button-images-for-shopping-cart-631" target="_blank">this page</a>.
 </td>
 </tr>
@@ -365,7 +367,7 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Automatic redirection to checkout page", "wordpress-simple-paypal-shopping-cart")).'</th>
+<th scope="row">'.(__("Automatic Redirection to Checkout Page", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_auto_redirect_to_checkout_page" value="1" '.$wp_shopping_cart_auto_redirect_to_checkout_page.' />
  '.(__("Checkout Page URL", "wordpress-simple-paypal-shopping-cart")).': <input type="text" name="cart_checkout_page_url" value="'.esc_url_raw($cart_checkout_page_url).'" size="60" />
 <br />'.(__("If checked the visitor will be redirected to the Checkout page after a product is added to the cart. You must enter a URL in the Checkout Page URL field for this to work.", "wordpress-simple-paypal-shopping-cart")).'</td>

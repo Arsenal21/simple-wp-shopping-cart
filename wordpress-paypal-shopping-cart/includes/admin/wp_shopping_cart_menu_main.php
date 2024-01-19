@@ -44,7 +44,7 @@ function wspsc_settings_interface() {
         'wspsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
     );
     echo '<div class="wrap">';
-    echo '<h1>' . (__("WP Simple Shopping Cart Options", "wordpress-simple-paypal-shopping-cart")) . ' v'.WP_CART_VERSION . '</h1>';
+    echo '<h1>' . (__("WP Simple Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")) . ' (v'.WP_CART_VERSION .')' . '</h1>';
 
     $current = "";
     if (isset($_GET['page'])) {

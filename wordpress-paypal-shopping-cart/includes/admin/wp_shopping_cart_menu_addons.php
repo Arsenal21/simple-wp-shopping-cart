@@ -7,7 +7,7 @@ function wspsc_show_addons_menu_page() {
     $output = "";
 
     echo '<div class="wrap">';
-    echo '<h1>' . (__("Simple Cart Add-ons", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
+    echo '<h1>' . (__("Simple Shopping Cart Add-ons", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
 
     echo '<div id="poststuff"><div id="post-body">';
 

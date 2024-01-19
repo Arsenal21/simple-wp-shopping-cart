@@ -29,11 +29,11 @@ https://www.youtube.com/watch?v=gPvXac_j_lI
 
 Designed as a lightweight solution with minimal lines of code and a streamlined set of options, this plugin ensures optimal site performance. Moreover, it is designed to be a low maintenance solution, minimizing the likelihood of frequent site disruptions caused by upgrades. With this plugin, you can enjoy a stable and hassle-free shopping cart functionality while maintaining the overall stability of your website.
 
-The plugin also has an option to use the smart PayPal payment buttons. You can enable the PayPal smart button option in the settings menu of the plugin. The following video shows a checkout demo using PayPal smart button.
+It offers the newest/latest PayPal Commerce Platform (PPCP) checkout option. You can enable it in the settings menu of the plugin.
+
+The plugin also has an option to use the smart PayPal payment buttons. The following video shows a checkout demo using PayPal smart button.
 
 https://www.youtube.com/watch?v=m0yDWDmtpKI
-
-It can be integrated with the NextGen Photo Gallery plugin to accommodate the selling of photographs from your gallery.
 
 WP Simple Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to allow for testing.
 
@@ -53,8 +53,10 @@ or
 * Sell any type of media file that you upload to your WordPress site. For example: you can sell ebooks (PDF), music files (MP3), audio files, videos, photos, images etc.
 * Your customers will automatically get an email with the media file that they paid for.
 * Show a nicely formatted product display box on the fly using a simple shortcode.
-* Option to use the smart payment buttons of PayPal. Allows the customers to checkout in a popup window (using a credit card, paypal or paypal credit).
+* Option to enable terms and conditions for your customers to agree to before they checkout.
 * Uses the newest/latest PayPal checkout option.
+* Option to use the PayPal Commerce Platform Checkout option. You can enable it from the settings menu of the plugin.
+* Option to use the smart payment buttons of PayPal. Allows the customers to checkout in a popup window (using a credit card, paypal or paypal credit).
 * Your customers will be able to use the PayPal' Pay in 4 payment option (Buy Now Pay Later).
 * Collect special instructions from your customers on the PayPal checkout page.
 * You can use PayPal sandbox to do testing if needed (before you go live).
@@ -187,6 +189,8 @@ Yes
 Yes
 = Does this plugin have the option to use the new PayPal checkout option =
 Yes. you can enable the new PayPal checkout option in the settings menu of the plugin.
+= Can I enable terms and conditions for my customers to agree to before they checkout? =
+Yes. you can enable terms and conditions in the settings menu of the plugin.
 = Can the shopping cart be added to a checkout page? =
 Yes
 = Is the 'Add to Cart' button customizable? =
@@ -218,8 +222,12 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
 = WIP =
-- Terms and conditions settings added for checkout forms.
+- Added the New PayPal Commerce Platform Checkout option. You can enable it from the settings menu of the plugin.
+- Added a feature to enable Terms and conditions.
+- Renamed the 'Advanced Settings' tab to 'PayPal Smart Checkout'.
+- PayPal has deprecated the Smart Checkout option and replaced it with the new PayPal Commerce Platform Checkout option. The new checkout option is now available in the plugin.
 - New utility function added for logging debug array.
 
 = 4.7.2 =
