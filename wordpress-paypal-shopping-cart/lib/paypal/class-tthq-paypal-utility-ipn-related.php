@@ -79,8 +79,10 @@ class PayPal_Utility_IPN_Related {
 		$ipn_data['address_zip']     = isset($txn_data['purchase_units'][0]['shipping']['address']['postal_code']) ? $txn_data['purchase_units'][0]['shipping']['address']['postal_code'] : '';
 		$country_code = isset($txn_data['purchase_units'][0]['shipping']['address']['country_code']) ? $txn_data['purchase_units'][0]['shipping']['address']['country_code'] : '';
 		$ipn_data['address_country'] = PayPal_Utility_Functions::get_country_name_by_country_code($country_code);
+		
 		//Additional variables
-		//$ipn_data['reason_code'] = $txn_data['reason_code'];
+		//Phone can be retrieved (if available) from the payer object by making a separate API call to /v2/customer
+		$ipn_data['contact_phone'] = isset($txn_data['contact_phone']) ? $txn_data['contact_phone'] : '';
 
 		return $ipn_data;
 	}
