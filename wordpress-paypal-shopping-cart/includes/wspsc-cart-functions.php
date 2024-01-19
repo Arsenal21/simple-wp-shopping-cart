@@ -28,7 +28,6 @@ function print_wp_shopping_cart( $args = array() ) {
 		return $output;
 	}
 	$email = get_bloginfo( 'admin_email' );
-	$use_affiliate_platform = get_option( 'wp_use_aff_platform' );
 	$defaultCurrency = get_option( 'cart_payment_currency' );
 	$defaultSymbol = get_option( 'cart_currency_symbol' );
 	$defaultEmail = get_option( 'cart_paypal_email' );
@@ -68,9 +67,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	$urls .= '<input type="hidden" name="notify_url" value="' . $notify . '" />';
 
 	$title = get_option( 'wp_cart_title' );
-	//if (empty($title)) $title = __("Your Shopping Cart", "wordpress-simple-paypal-shopping-cart");
 
-	global $plugin_dir_name;
 	$output .= '<div class="shopping_cart">';
 	$output .= '<a name="wpsc_cart_anchor"></a>';
 	if ( ! get_option( 'wp_shopping_cart_image_hide' ) ) {
