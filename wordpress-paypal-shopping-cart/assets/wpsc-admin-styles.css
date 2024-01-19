@@ -1,0 +1,98 @@
+
+/* Cart button TinyMCE icon */
+i.mce-i-wp-cart-tinymce::before {
+    content: "\f174";
+    font: 400 20px/1 dashicons;
+    vertical-align: top;
+}
+
+/* Use the new one below */
+.wspsc_yellow_box {
+    background: #FFF6D5; 
+    border: 1px solid #D1B655;
+    color: #3F2502;
+    margin: 10px 0;
+    padding: 5px 5px 5px 10px;
+    text-shadow: 1px 1px #FFFFFF;
+}
+
+/* New yellow one with the prefix and without shadow */
+.wpsc-yellow-box{
+    margin: 10px 0px;
+    padding: 10px;
+    background-color: #FFFFE0;
+    border-color: #E6DB55;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/* Wrap directly with this class (not to be used with a paragraph tag) */
+.wpsc-grey-box{
+    margin: 10px 0px;
+    padding: 15px 10px;
+    background-color: #DDDDDD;
+    border-color: #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/* Wrap directly with this class (not to be used with a paragraph tag) */
+.wpsc-blue-box {
+    margin: 10px 0px;
+    padding: 15px 10px;
+    background-color: #E7F4FE;
+    border-color: #AACEE6;
+    color: #1D263B;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.wpsc-paypal-live-account-status{
+    padding: 10px 0px;
+}
+
+.wpsc-paypal-sandbox-account-status{
+    padding: 10px 0px;
+}
+
+/*----- Addons Listing ----- */
+.wspsc_addon_item_canvas{
+    background-color: white;
+    font-family:sans-serif,arial;
+    font-size:12px;
+    border:1px solid #ddd;
+    box-sizing: border-box;
+    display:block;
+    float:left;
+    margin:3px 12px 12px 0;
+    padding:15px;
+    position:relative;
+    width:300px;
+    height:400px;
+}
+.wspsc_addon_item_canvas:hover{border-color:#d6d6d6;}
+.wspsc_addon_item_thumb {position: relative}
+.wspsc_addon_item_thumb img {padding:5px; border: 1px solid #c7d2b4;}
+.wspsc_addon_item_thumb a img {border: 1px solid #ccc;}
+.wspsc_addon_item_body{line-height:22px;height:170px;overflow:hidden;}
+.wspsc_addon_item_name{font-size:16px;font-weight:bold;text-align: center;margin:10px 10px 10px 0px;}
+.wspsc_addon_item_description{margin:10px 10px 5px 0px;text-align:justify;overflow:hidden;height:70px;}
+.wspsc_addon_clear{clear:both;}
+.wspsc_addon_item_details_link{
+    text-align: center;
+}
+.wspsc_addon_item_details_link a{
+    border: 3px solid #2d3140;
+    color: #2d3140;
+    display: inline-block;
+    padding: 5px 15px;
+    text-decoration: none !important;
+}
+.wspsc_addon_item_details_link a:hover{
+    background-color: #2d3140;
+    color: #FFF;
+}
+/*----- END Addons Listing ----- */

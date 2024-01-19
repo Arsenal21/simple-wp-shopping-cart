@@ -1011,25 +1011,29 @@ function wspsc_admin_side_enqueue_scripts() {
 }
 
 function wspsc_admin_side_styles() {
-	wp_enqueue_style( 'wspsc-admin-style', WP_CART_URL . '/assets/wspsc-admin-styles.css', array(), WP_CART_VERSION );
+	wp_enqueue_style( 'wpsc-admin-style', WP_CART_URL . '/assets/wpsc-admin-styles.css', array(), WP_CART_VERSION );
 }
 
 function wspsc_front_side_enqueue_scripts() {
+	//jQuery
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_style( 'wspsc-style', WP_CART_URL . '/wp_shopping_cart_style.css', array(), WP_CART_VERSION );
+	
+	//Front end styles
+	wp_enqueue_style( 'wpsc-style', WP_CART_URL . '/assets/wpsc-front-end-styles.css', array(), WP_CART_VERSION );
 
-	//Stripe library
+	//Stripe checkout/library Related
 	wp_register_script( "wspsc.stripe", "https://js.stripe.com/v3/", array( "jquery" ), WP_CART_VERSION );
 
 	$publishable_key = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_stripe_test_publishable_key' ) : get_option( 'wpspc_stripe_live_publishable_key' );
 	$stripe_js_obj = "wspsc_stripe_js_obj";
 	wp_add_inline_script( "wspsc.stripe", "var " . $stripe_js_obj . " = Stripe('" . esc_js( $publishable_key ) . "'); var wspsc_ajax_url='" . esc_js( admin_url( 'admin-ajax.php' ) ) . "';" );
 
+	wp_register_script( "wspsc-checkout-stripe", WP_CART_URL . "/assets/js/wspsc-checkout-stripe.js", array( "jquery", "wspsc.stripe"), WP_CART_VERSION);
+
+	//General scripts
 	wp_register_script( "wspsc-checkout-cart-script", WP_CART_URL . "/assets/js/wspsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
 	$is_tnc_enabled = get_option('wp_shopping_cart_enable_tnc') !== '' ? 'true' : 'false';
 	wp_add_inline_script("wspsc-checkout-cart-script", "const wspscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
-
-	wp_register_script( "wspsc-checkout-stripe", WP_CART_URL . "/assets/js/wspsc-checkout-stripe.js", array( "jquery", "wspsc.stripe"), WP_CART_VERSION);
 }
 
 function wpspc_plugin_install() {

@@ -35,7 +35,7 @@ class WSPSC_PRODUCT_BOX {
 		//block styles for cart button
 		wp_register_style(
 			'wspsc_cart_block_styles',
-			WP_CART_URL . '/wp_shopping_cart_style.css',
+			WP_CART_URL . '/assets/wpsc-front-end-styles.css',
 			null,
 			WP_CART_VERSION
 		);
