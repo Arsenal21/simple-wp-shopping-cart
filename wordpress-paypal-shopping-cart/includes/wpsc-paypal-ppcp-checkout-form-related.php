@@ -203,26 +203,18 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
              */
             function onClickHandler(){
                 const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
+                // Emitting custom event for addons.
+                document.dispatchEvent(new CustomEvent('wpsc_ppcp_checkout_button_clicked', { 
+                    detail: {
+                        cartNo: <?php echo $carts_cnt; ?>,
+                    }
+                }));
+
                 if (wpspscTncEnabled) {
                     const tncContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wspscTncContainerSelector)
                     wspsc_handleTncErrorMsg(tncContainer);
                 }
 
-                /**
-                 * CCI addon related. Previously for old paypal api, it used to listen to the 'wp_cart_checkout_button' css class which is not available in this new ppcp api.
-                 * See code: simple-cart-collect-customer-input/wp-shopping-cart-cci-form_handler.class.php:59
-                 * 
-                 * Show alert message and focus unfilled require inputs if any.
-                 */
-                const cciInputElements = wspsc_getClosestElement(currentPPCPButtonWrapper, 'table', '.shopping_cart').querySelectorAll('input.wpspsc_cci_input');
-                for (const inputElement of cciInputElements) {
-                    if (inputElement.required && inputElement.value.trim() === '') {
-                        const message = "Please fill in " + inputElement.parentElement.querySelector('div.wpspsc_cci_input_' + inputElement.getAttribute('data-wpspsc-cci-id') + '_label').innerHTML;
-                        alert(message);
-                        inputElement.focus();
-                        break;
-                    }
-                }
             }
 
             /**
