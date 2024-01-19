@@ -189,7 +189,7 @@ class WPSC_PPCP_settings_page
 
 		<!-- PayPal PPCP Connection postbox -->
 		<div class="postbox">
-			<h2 id="paypal-ppcp-connection-section"><?php _e("PayPal Account Connection", 'simple-membership'); ?></h2>
+			<h2 id="paypal-ppcp-connection-section"><?php _e("PayPal Account Connection", "wordpress-simple-paypal-shopping-cart"); ?></h2>
 			<div class="inside">
 				<?php
 				$this->handle_paypal_ppcp_connection_settings();
@@ -433,7 +433,7 @@ class WPSC_PPCP_settings_page
 		<table class="form-table" role="presentation">
 			<tbody>
 				<tr>
-					<th scope="row"><?php _e('Live Account Connnection Status', 'simple-membership'); ?></th>
+					<th scope="row"><?php _e("Live Account Connnection Status", "wordpress-simple-paypal-shopping-cart"); ?></th>
 					<td>
 						<?php
 						// Check if the live account is connected
@@ -446,14 +446,14 @@ class WPSC_PPCP_settings_page
 						if ($live_account_connection_status == 'connected') {
 							//Production account connected
 							echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
-							_e('Live account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
+							_e("Live account is connected. If you experience any issues, please disconnect and reconnect.", "wordpress-simple-paypal-shopping-cart");
 							echo '</div>';
 							// Show disconnect option for live account.
 							$ppcp_onboarding_instance->output_production_ac_disconnect_link();
 						} else {
 							//Production account is NOT connected.
 							echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
-							_e('Live PayPal account is not connected. Click the button below to authorize the app and acquire API credentials from your PayPal account.', 'simple-membership');
+							_e("Live PayPal account is not connected. Click the button below to authorize the app and acquire API credentials from your PayPal account.", "wordpress-simple-paypal-shopping-cart");
 							echo '</div>';
 
 							// Show the onboarding link
@@ -463,7 +463,7 @@ class WPSC_PPCP_settings_page
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php _e('Sandbox Account Connnection Status', 'simple-membership'); ?></th>
+					<th scope="row"><?php _e("Sandbox Account Connnection Status", "wordpress-simple-paypal-shopping-cart"); ?></th>
 					<td>
 						<?php
 						//Check if the sandbox account is connected
@@ -476,14 +476,14 @@ class WPSC_PPCP_settings_page
 						if ($sandbox_account_connection_status == 'connected') {
 							//Test account connected
 							echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
-							_e('Sandbox account is connected. If you experience any issues, please disconnect and reconnect.', 'simple-membership');
+							_e("Sandbox account is connected. If you experience any issues, please disconnect and reconnect.", "wordpress-simple-paypal-shopping-cart");
 							echo '</div>';
 							//Show disconnect option for sandbox account.
 							$ppcp_onboarding_instance->output_sandbox_ac_disconnect_link();
 						} else {
 							//Sandbox account is NOT connected.
 							echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
-							_e('Sandbox PayPal account is not connected.', 'simple-membership');
+							_e("Sandbox PayPal account is not connected.", "wordpress-simple-paypal-shopping-cart");
 							echo '</div>';
 
 							//Show the onboarding link for sandbox account.

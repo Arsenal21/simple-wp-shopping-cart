@@ -366,7 +366,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
              */
             function onErrorHandler(err) {
                 console.error('An error prevented the user from checking out with PayPal. ' + JSON.stringify(err));
-                alert( '<?php echo esc_js(__("Error occurred during PayPal checkout process.", "simple-membership")); ?>\n\n' + JSON.stringify(err) );
+                alert( '<?php echo esc_js(__("Error occurred during PayPal checkout process.", "wordpress-simple-paypal-shopping-cart")); ?>\n\n' + JSON.stringify(err) );
             }
             
             /**
