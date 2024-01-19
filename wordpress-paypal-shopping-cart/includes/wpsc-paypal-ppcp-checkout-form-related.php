@@ -271,8 +271,8 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 console.log('Successfully created a transaction.');
 
                 //Show the spinner while we process this transaction.
-                var pp_button_container = document.getElementById('<?php echo esc_js($on_page_embed_button_id); ?>');
-                var pp_button_spinner_conainer = pp_button_container.nextElementSibling;
+                const pp_button_container = document.getElementById('<?php echo esc_js($on_page_embed_button_id); ?>');
+                const pp_button_spinner_conainer = wspsc_getClosestElement(pp_button_container, '.wpsc-pp-button-spinner-container', '.shopping_cart');
                 pp_button_container.style.display = 'none'; //Hide the buttons
                 pp_button_spinner_conainer.style.display = 'inline-block'; //Show the spinner.
 
