@@ -1273,7 +1273,7 @@ msgstr ""
 msgid "Make payments with Stripe - it\\'s fast, free and secure!"
 msgstr ""
 
-#: includes/wspsc_debug_logging_functions.php:49
+#: includes/wpsc-debug-logging-functions.php:49
 msgid "Log file dosen't exists."
 msgstr ""
 
