@@ -230,7 +230,9 @@ class WPSC_Post_Payment_Related
 
 		//Full reset the cart to clean it up.
 		$wpsc_cart = WSPSC_Cart::get_instance();
-		$wpsc_cart->reset_cart_after_txn();
+		//Pass the cart id to so that it can reset the cart without calling the get_cart_id() function again.
+		$cart_id = isset($ipn_data['cart_id']) ? $ipn_data['cart_id'] : '';
+		$wpsc_cart->reset_cart_after_txn( $cart_id );
 	}
 
 }

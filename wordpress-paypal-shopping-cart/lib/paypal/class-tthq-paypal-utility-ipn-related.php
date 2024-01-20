@@ -31,11 +31,8 @@ class PayPal_Utility_IPN_Related {
 		//Parse the custom field to read the IP address.
 		$customvariables = PayPal_Utility_Functions::parse_custom_var( $custom );
 
-		$address_street = isset($txn_data['purchase_units'][0]['shipping']['address']['address_line_1']) ? $txn_data['purchase_units'][0]['shipping']['address']['address_line_1'] : '';
-		if ( isset ( $txn_data['purchase_units'][0]['shipping']['address']['address_line_2'] )){
-			//If address line 2 is present, add it to the address.
-			$address_street .= ", " . $txn_data['purchase_units'][0]['shipping']['address']['address_line_2'];
-		}
+		//Save cart ID to the IPN data array (useful so we don't have to call get_cart_id function again).
+		$ipn_data['cart_id'] = isset($customvariables['wp_cart_id']) ? $customvariables['wp_cart_id'] : '';
 
 		$ipn_data['gateway'] = 'paypal_buy_now_checkout';
 		$ipn_data['txn_type'] = 'paypal_checkout_new';
@@ -73,10 +70,17 @@ class PayPal_Utility_IPN_Related {
 		$ipn_data['last_name'] = isset($txn_data['payer']['name']['surname']) ? $txn_data['payer']['name']['surname'] : '';
 		$ipn_data['payer_email'] = isset($txn_data['payer']['email_address']) ? $txn_data['payer']['email_address'] : '';
 		$ipn_data['payer_id'] = isset($txn_data['payer']['payer_id']) ? $txn_data['payer']['payer_id'] : '';
+
+		//Address
+		$address_street = isset($txn_data['purchase_units'][0]['shipping']['address']['address_line_1']) ? $txn_data['purchase_units'][0]['shipping']['address']['address_line_1'] : '';
+		if ( isset ( $txn_data['purchase_units'][0]['shipping']['address']['address_line_2'] )){
+			//If address line 2 is present, add it to the address.
+			$address_street .= ", " . $txn_data['purchase_units'][0]['shipping']['address']['address_line_2'];
+		}		
 		$ipn_data['address_street'] = $address_street;
-		$ipn_data['address_city']    = isset($txn_data['purchase_units'][0]['shipping']['address']['admin_area_2']) ? $txn_data['purchase_units'][0]['shipping']['address']['admin_area_2'] : '';
-		$ipn_data['address_state']   = isset($txn_data['purchase_units'][0]['shipping']['address']['admin_area_1']) ? $txn_data['purchase_units'][0]['shipping']['address']['admin_area_1'] : '';
-		$ipn_data['address_zip']     = isset($txn_data['purchase_units'][0]['shipping']['address']['postal_code']) ? $txn_data['purchase_units'][0]['shipping']['address']['postal_code'] : '';
+		$ipn_data['address_city'] = isset($txn_data['purchase_units'][0]['shipping']['address']['admin_area_2']) ? $txn_data['purchase_units'][0]['shipping']['address']['admin_area_2'] : '';
+		$ipn_data['address_state'] = isset($txn_data['purchase_units'][0]['shipping']['address']['admin_area_1']) ? $txn_data['purchase_units'][0]['shipping']['address']['admin_area_1'] : '';
+		$ipn_data['address_zip'] = isset($txn_data['purchase_units'][0]['shipping']['address']['postal_code']) ? $txn_data['purchase_units'][0]['shipping']['address']['postal_code'] : '';
 		$country_code = isset($txn_data['purchase_units'][0]['shipping']['address']['country_code']) ? $txn_data['purchase_units'][0]['shipping']['address']['country_code'] : '';
 		$ipn_data['address_country'] = PayPal_Utility_Functions::get_country_name_by_country_code($country_code);
 		

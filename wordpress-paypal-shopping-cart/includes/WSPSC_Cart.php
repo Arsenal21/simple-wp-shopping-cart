@@ -114,17 +114,24 @@ class WSPSC_Cart {
 
     /**
      * It does a full reset by removing the cart id from cookie.
+     * Recommended to call this function with the $cart_id parameter.
      */
-    public function reset_cart_after_txn() {
-        //This function will get called after the transaction (from the thank you page).
+    public function reset_cart_after_txn( $cart_id = 0 ) {
+        //This function will get called after the transaction (from the thank you page or post payment processing handler).
         //This function doesn't empty the items array in the order post (so that the admin can see the order details).
         $this->items = array();//Set the items to empty array but don't update the order post.
 
-        $this->clear_cart_action_msg();
+        if ( !empty( $cart_id ) ) {
+            //After the transaction is completed, the order status will be paid. So we don't want to call the get_cart_id() function.
+            //Do these only if a cart ID is passed.
+            $collection_obj = WPSPSC_Coupons_Collection::get_instance();
+            $collection_obj->clear_discount_applied_once($cart_id);        
+            $collection_obj->clear_applied_coupon_code($cart_id);
 
-        $collection_obj = WPSPSC_Coupons_Collection::get_instance();
-        $collection_obj->clear_discount_applied_once($this->get_cart_id());        
-        $collection_obj->clear_applied_coupon_code($this->get_cart_id());
+            //Delete the cart action msg transient
+            $transient_key = 'wpspsc_cart_action_msg' . $cart_id;
+            delete_transient($transient_key);
+        }
 
         //Set cookie in the past to expire it
         setcookie('simple_cart_id', '', time() - 3600, '/');
