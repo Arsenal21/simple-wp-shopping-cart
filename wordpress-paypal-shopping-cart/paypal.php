@@ -586,7 +586,7 @@ function wpc_handle_paypal_ipn() {
 	}
 
 	if ($debug_enabled) {
-		echo 'Debug is enabled. Check the ' . $debug_log . ' file for debug output.';
+		echo 'Debug is enabled. Check the log file for debug output.';
 		$ipn_handler_instance->ipn_log = true;
 		//Alternatively, can use the wspsc_log_payment_debug() function.
 	}
