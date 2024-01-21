@@ -330,13 +330,16 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
                             // Loop through the NodeList and update each element
                             shoppingCartDivs.forEach(function(div, index) {
-                                div.innerHTML = '<div id="wpsc-cart-txn-success-msg-'+index+'" class="wpsc-cart-txn-success-msg">' + txn_success_msg + '</div>';
+                                div.innerHTML = '<div id="wpsc-cart-txn-success-msg-' + index + '" class="wpsc-cart-txn-success-msg">' + txn_success_msg + '</div>';
                             });
 
-                            // Scroll to the success message container.
-                            const firstCartSuccessMsgElement = document.getElementById("wpsc-cart-txn-success-msg-0");
-                            if (firstCartSuccessMsgElement) {
-                                firstCartSuccessMsgElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            //Note: We need to use on_page_cart_div_ids for compact carts. 
+                            //Then we will be able to use the on_page_cart_div_ids array to get the cart div ids of the page (including the compact carts)
+
+                            // Scroll to the success message container of the cart we are interacting with.
+                            const interacted_cart_element = document.getElementById('wpsc_shopping_cart_' + <?php echo esc_attr($carts_cnt); ?>);
+                            if (interacted_cart_element) {
+                                interacted_cart_element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                             return;
                         }
