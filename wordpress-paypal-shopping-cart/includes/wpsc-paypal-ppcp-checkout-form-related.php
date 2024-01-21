@@ -329,9 +329,15 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                             var shoppingCartDivs = document.querySelectorAll('.shopping_cart');
 
                             // Loop through the NodeList and update each element
-                            shoppingCartDivs.forEach(function(div) {
-                                div.innerHTML = '<div class="wpsc-cart-txn-success-msg">' + txn_success_msg + '</div>';
+                            shoppingCartDivs.forEach(function(div, index) {
+                                div.innerHTML = '<div id="wpsc-cart-txn-success-msg-'+index+'" class="wpsc-cart-txn-success-msg">' + txn_success_msg + '</div>';
                             });
+
+                            // Scroll to the success message container.
+                            const firstCartSuccessMsgElement = document.getElementById("wpsc-cart-txn-success-msg-0");
+                            if (firstCartSuccessMsgElement) {
+                                firstCartSuccessMsgElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
                             return;
                         }
 
