@@ -6,7 +6,8 @@ class WSPSC_Cart {
     private $post_type = "";
     protected static $instance = null;
     protected $cart_custom_values = "";
-
+    
+    public $on_page_carts_div_count = 0;
     public $sub_total = 0;
     public $postage_cost = 0;
     public $tax = 0;
@@ -313,6 +314,17 @@ class WSPSC_Cart {
 
     public function get_cart_custom_values() {
         return $this->cart_custom_values;
+    }
+
+    public function increment_on_page_carts_div_count() {
+        $this->on_page_carts_div_count++;
+    }
+
+    /* 
+     * This is used to keep track of the number of carts divs on the page. Used to generate unique IDs for the cart divs.
+     */
+    public function get_on_page_carts_div_count() {
+        return $this->on_page_carts_div_count;
     }
 
     public function get_cart_action_msg() {

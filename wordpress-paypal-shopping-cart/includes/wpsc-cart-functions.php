@@ -68,7 +68,11 @@ function print_wp_shopping_cart( $args = array() ) {
 
 	$title = get_option( 'wp_cart_title' );
 
-	$output .= '<div class="shopping_cart">';
+	//Use the carts count to make the div id unique
+	$on_page_cart_div_id = 'wpsc_shopping_cart_' . $carts_cnt;
+
+	//Start outputting the main cart div and contents.
+	$output .= '<div id="'.$on_page_cart_div_id.'" class="shopping_cart">';
 	$output .= '<a name="wpsc_cart_anchor"></a>';
 	if ( ! get_option( 'wp_shopping_cart_image_hide' ) ) {
 		$cart_icon_img_src = WP_CART_URL . '/images/shopping_cart_icon.png';
