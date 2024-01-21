@@ -66,7 +66,7 @@ class PayPal_PPCP_Onboarding {
 
 		$query_args = array();
 		$query_args['partnerId'] = PayPal_Utility_Functions::get_partner_id_by_environment_mode( $environment_mode );
-		$query_args['product'] = 'PPCP';// 'EXPRESS_CHECKOUT';
+		$query_args['product'] = 'EXPRESS_CHECKOUT';// 'PPCP' or 'EXPRESS_CHECKOUT';
 		$query_args['integrationType'] = 'FO';
 		$query_args['features'] = 'PAYMENT,REFUND'; //BILLING_AGREEMENT
 		$query_args['partnerClientId'] = PayPal_Utility_Functions::get_partner_client_id_by_environment_mode( $environment_mode );

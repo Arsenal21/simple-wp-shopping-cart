@@ -333,6 +333,9 @@ class stripe_ipn_handler {
 		$data = json_decode(json_encode($data),TRUE) ;
 		$ipn = $data;
 
+		//wspsc_log_payment_debug( 'Stripe IPN Data: ', true );
+		//wspsc_log_debug_array( $data, true );
+
 		$bd_addr = $data['charges']['data'][0]['billing_details']['address'];;
 		$city = isset($bd_addr['city']) ? $bd_addr['city'] : '';
 		$state = isset($bd_addr['state']) ? $bd_addr['state'] : '';
