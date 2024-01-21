@@ -4,8 +4,10 @@ use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 
 function print_wp_shopping_cart( $args = array() ) {
 	$wspsc_cart = WSPSC_Cart::get_instance();
-	//Increment the on page cart div count so we start from 1.
-	$wspsc_cart->increment_on_page_carts_div_count();
+
+	//Get the on page cart div ID. This will increment the count so we start from 1.
+	$on_page_cart_div_id = $wspsc_cart->get_next_on_page_cart_div_id();
+	//Get the current count of on page cart divs (used in various places of HTML and JS code).
 	$carts_cnt = $wspsc_cart->get_on_page_carts_div_count();
 
 	$output = '';
@@ -70,9 +72,6 @@ function print_wp_shopping_cart( $args = array() ) {
 	$urls .= '<input type="hidden" name="notify_url" value="' . $notify . '" />';
 
 	$title = get_option( 'wp_cart_title' );
-
-	//Use the carts count to make the div id unique
-	$on_page_cart_div_id = 'wpsc_shopping_cart_' . $carts_cnt;
 
 	//Start outputting the main cart div and contents.
 	$output .= '<div id="'.$on_page_cart_div_id.'" class="shopping_cart">';

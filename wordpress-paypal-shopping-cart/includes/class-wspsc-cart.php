@@ -6,8 +6,9 @@ class WSPSC_Cart {
     private $post_type = "";
     protected static $instance = null;
     protected $cart_custom_values = "";
-    
+
     public $on_page_carts_div_count = 0;
+    public static $on_page_cart_div_ids = array();
     public $sub_total = 0;
     public $postage_cost = 0;
     public $tax = 0;
@@ -316,15 +317,31 @@ class WSPSC_Cart {
         return $this->cart_custom_values;
     }
 
-    public function increment_on_page_carts_div_count() {
-        $this->on_page_carts_div_count++;
-    }
 
     /* 
      * This is used to keep track of the number of carts divs on the page. Used to generate unique IDs for the cart divs.
      */
+    public function increment_on_page_carts_div_count() {
+        $this->on_page_carts_div_count++;
+    }
+        
     public function get_on_page_carts_div_count() {
         return $this->on_page_carts_div_count;
+    }
+
+    /* 
+     * This function will return the next cart div ID to be used in the page.
+     * It will also store all the cart div IDs (used on the page) in a static variable.
+     * Usefule when there are multiple carts on the same page.
+     */
+    public function get_next_on_page_cart_div_id() {
+        //Increment the on_page_carts_div_count and return the next cart div ID
+        $this->increment_on_page_carts_div_count();
+        $next_cart_div_id = 'wpsc_shopping_cart_' . $this->get_on_page_carts_div_count();
+        //Store the cart div ID in a static variable
+        self::$on_page_cart_div_ids[] = $next_cart_div_id;
+        //Return the cart div ID that can be used in the page.
+        return $next_cart_div_id;
     }
 
     public function get_cart_action_msg() {
