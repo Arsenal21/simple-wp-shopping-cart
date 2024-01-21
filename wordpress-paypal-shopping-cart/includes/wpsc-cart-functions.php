@@ -2,14 +2,15 @@
 
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 
-global $carts_cnt;
-$carts_cnt = 0;
-
 function print_wp_shopping_cart( $args = array() ) {
 	$wspsc_cart = WSPSC_Cart::get_instance();
+	//Increment the on page cart div count so we start from 1.
+	$wspsc_cart->increment_on_page_carts_div_count();
+	$carts_cnt = $wspsc_cart->get_on_page_carts_div_count();
+
 	$output = '';
-	global $carts_cnt;
-	$carts_cnt++;
+
+	//Check and handle the cart empty case
 	if ( ! $wspsc_cart->cart_not_empty() ) {
 		$empty_cart_text = get_option( 'wp_cart_empty_text' );
 		if ( ! empty( $empty_cart_text ) ) {
@@ -27,6 +28,8 @@ function print_wp_shopping_cart( $args = array() ) {
 		}
 		return $output;
 	}
+
+	//Get the default currency and other settings.
 	$email = get_bloginfo( 'admin_email' );
 	$defaultCurrency = get_option( 'cart_payment_currency' );
 	$defaultSymbol = get_option( 'cart_currency_symbol' );
