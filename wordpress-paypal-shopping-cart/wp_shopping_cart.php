@@ -261,7 +261,7 @@ function wpspsc_process_pp_smart_checkout() {
 		session_start();
 	}
 
-	include_once( 'paypal.php' );
+	include_once( WP_CART_PATH . 'paypal.php');
 
 	$ipn_handler_instance = new paypal_ipn_handler();
 

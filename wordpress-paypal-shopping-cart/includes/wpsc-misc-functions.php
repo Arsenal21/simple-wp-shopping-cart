@@ -15,13 +15,13 @@ function wp_cart_init_handler()
         add_filter('ngg_render_template','wp_cart_ngg_template_handler',10,2);
         if(isset($_REQUEST['simple_cart_ipn']))
         {
-            include_once('paypal.php');
+            include_once( WP_CART_PATH . 'paypal.php');
             wpc_handle_paypal_ipn();
             exit;
         }
         else if(isset($_REQUEST["simple_cart_stripe_ipn"]))
         {
-            include_once('stripe.php');
+            include_once( WP_CART_PATH . 'stripe.php');
             wpc_handle_stripe_ipn();
             exit;
         }
