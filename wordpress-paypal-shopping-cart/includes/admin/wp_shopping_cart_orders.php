@@ -39,6 +39,7 @@ function wpspc_add_meta_boxes() {
 
 function wpspc_order_review_meta_box($wpsc_cart_orders) {
     $order_id = $wpsc_cart_orders->ID;
+    $payment_gateway =  get_post_meta($wpsc_cart_orders->ID, 'wpsc_payment_gateway', true);
     $first_name = get_post_meta($wpsc_cart_orders->ID, 'wpsc_first_name', true);
     $last_name = get_post_meta($wpsc_cart_orders->ID, 'wpsc_last_name', true);
     $email = get_post_meta($wpsc_cart_orders->ID, 'wpsc_email_address', true);
@@ -122,6 +123,12 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td><?php _e("Applied Coupon Code", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_applied_coupon" value="<?php echo esc_attr($applied_coupon); ?>" readonly /></td>
         </tr>
+        <?php if (isset($payment_gateway) && !empty($payment_gateway)) : ?>
+            <tr>
+                <td><?php _e("Payment Gateway", "wordpress-simple-paypal-shopping-cart"); ?></td>
+                <td><?php echo ucfirst(esc_attr(wpsc_get_formatted_payment_gateway_name($payment_gateway))); ?></td>
+            </tr>
+        <?php endif; ?>
         <?php
         do_action('wpspsc_edit_order_pre_table_end', $order_id);
         ?>
@@ -275,4 +282,19 @@ function wp_cart_save_title($post_title) {
         $post_title = $_POST['post_ID'];
     }
     return $post_title;
+}
+
+function wpsc_get_formatted_payment_gateway_name($payment_gateway){
+    $payment_gateway = strtolower($payment_gateway);
+    $gateways = array(
+        'stripe' => 'Stripe',
+        'paypal_ppcp' => 'PayPal PPCP',
+        'paypal_standard' => 'PayPal Standard',
+    );
+
+    if (array_key_exists($payment_gateway, $gateways)) {
+        return $gateways[$payment_gateway];
+    }
+
+    return $payment_gateway;
 }
