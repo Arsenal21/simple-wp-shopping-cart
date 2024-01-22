@@ -366,7 +366,7 @@ class stripe_ipn_handler {
 		$city = isset($bd_addr['city']) ? $bd_addr['city'] : '';
 		$state = isset($bd_addr['state']) ? $bd_addr['state'] : '';
 		$zip = isset($bd_addr['postal_code']) ? $bd_addr['postal_code'] : '';
-		$country = isset($bd_addr['country']) ? get_country_name_by_country_code($bd_addr['country']) : '';
+		$country = isset($bd_addr['country']) ? wpsc_get_country_name_by_country_code($bd_addr['country']) : '';
 		$line1 = isset($bd_addr['line1']) ? $bd_addr['line1'] : '';
 		$line2 = isset($bd_addr['line2']) ? $bd_addr['line2'] : '';
 		// Get full address.
