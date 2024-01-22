@@ -299,12 +299,12 @@ class stripe_ipn_handler {
 
             if ( false === $sess ) {
 				// Can't find session.
-				$error_msg = sprintf( "Fatal error! Payment with ref_id %s can't be found", $this->order_id );
+				$error_msg = sprintf( "Error! Payment with ref_id %s (Order ID) can't be found. This script should be accessed by Stripe's webhook only.", $this->order_id );
 				$this->debug_log( $error_msg, false );
 				wp_die(esc_html($error_msg));				
 			}
 
-            //ref id matched
+            //ref_id matched
             $pi_id = $sess->payment_intent;
             $pi = \Stripe\PaymentIntent::retrieve( $pi_id );
             
@@ -327,14 +327,46 @@ class stripe_ipn_handler {
 		return true;
 	}
 
-	function create_ipn_from_stripe( $data ) {
+	function create_ipn_from_stripe( $pi_object ) {
 
-		//converting data to array
-		$data = json_decode(json_encode($data),TRUE) ;
+		//converting the payment intent object to array
+		$data = json_decode(json_encode($pi_object),TRUE) ;
 		$ipn = $data;
 
-		//wspsc_log_payment_debug( 'Stripe IPN Data: ', true );
+		//wspsc_log_payment_debug( 'Stripe Payment Intent Data: ', true );
 		//wspsc_log_debug_array( $data, true );
+
+		//Get the charge object based on the Stripe API version used in the payment intents object.
+		if( isset ( $pi_object->latest_charge ) ){
+			//Using the new Stripe API version 2022-11-15 or later
+			wspsc_log_payment_debug( 'Using the Stripe API version 2022-11-15 or later for Payment Intents object. Need to retrieve the charge object.', true );
+			$charge_id = $pi_object->latest_charge;
+			//For Stripe API version 2022-11-15 or later, the charge object is not included in the payment intents object. It needs to be retrieved using the charge ID.
+			try {
+				//Retrieve the charge object using the charge ID
+				$charge = \Stripe\Charge::retrieve($charge_id);
+			} catch (\Stripe\Exception\ApiErrorException $e) {
+				// Handle the error
+				wspsc_log_payment_debug( 'Stripe error occurred trying to retrieve the charge object using the charge ID. ' . $e->getMessage(), false );
+				exit;
+			}
+		} else {
+			//Using OLD Stripe API version. Log an error and exit.
+			$error_msg = 'Error! You are using the OLD Stripe API version. This version is not supported. Please update the Stripe API version to 2022-11-15 or later from your Stripe account.';
+			wspsc_log_payment_debug( $error_msg, false );
+			wp_die($error_msg);
+		}
+
+		//Conver the charge object to array
+		$charge_array = json_decode(json_encode($charge),TRUE) ;
+		//wspsc_log_payment_debug( 'Stripe Charge Data: ', true );
+		//wspsc_log_debug_array( $charge_array, true );
+
+		//Get the email, name and address from the charge object.
+		$stripe_email = $charge->billing_details->email;
+		$name = trim( $charge->billing_details->name );
+		$bd_addr = $charge->billing_details->address;
+
 
 		$bd_addr = $data['charges']['data'][0]['billing_details']['address'];;
 		$city = isset($bd_addr['city']) ? $bd_addr['city'] : '';
@@ -345,7 +377,7 @@ class stripe_ipn_handler {
 		$price_in_cents = floatval($data['amount_received']);
 		$currency_code_payment = strtoupper($data['currency']);
 
-		$payment_amount=0;
+		$payment_amount = 0;
 		
 		if (wpspsc_is_zero_cents_currency($currency_code_payment)) {
 			$payment_amount = $price_in_cents;
@@ -371,7 +403,7 @@ class stripe_ipn_handler {
 		$ipn['custom'] = $custom_field_values;
 		$ipn['pay_id'] = $data['id'];
 		$ipn['create_time'] = $data['created'];
-		$ipn['txn_id'] = $data['charges']['data'][0]['id'];
+		$ipn['txn_id'] = $charge_id;
 		$ipn['txn_type'] = 'cart';
 		$ipn['payment_status'] = ucfirst($data['status']);
 		$ipn['transaction_subject'] = '';
@@ -385,7 +417,7 @@ class stripe_ipn_handler {
 
 		$ipn['first_name'] = $first_name;
 		$ipn['last_name'] = $last_name;
-		$ipn['payer_email'] = $data['charges']['data'][0]['billing_details']['email'];
+		$ipn['payer_email'] = $stripe_email;
 		$ipn['address_street'] = $address_street;
 		$ipn['address_city'] = $city;
 		$ipn['address_state'] = $state;
@@ -403,6 +435,11 @@ class stripe_ipn_handler {
 			$i++;
 		}
 		$ipn['num_cart_items'] = $i - 1;
+
+		//Debug purpose.
+		//wspsc_log_debug_array( $ipn, true );
+
+		//Save the IPN data in the class variable
 		$this->ipn_data = $ipn;
 		return true;
 	}
