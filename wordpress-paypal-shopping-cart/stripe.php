@@ -37,19 +37,8 @@ class stripe_ipn_handler {
 		$first_name  = $this->ipn_data["first_name"];
 		$last_name = $this->ipn_data["last_name"];
 		$buyer_email = $this->ipn_data["payer_email"];
-		$street_address = $this->ipn_data["address_street"];
-		$city = $this->ipn_data["address_city"];
-		$state = $this->ipn_data["address_state"];
-		$zip = $this->ipn_data["address_zip"];
-		$country = $this->ipn_data["address_country"];
-		
-		if (empty( $street_address ) && empty( $city )) {
-			//No address value present
-			$address = "";
-		} else {
-			//An address value is present
-			$address = $street_address . ", " . $city . ", " . $state . ", " . $zip . ", " . $country;
-		}
+		$phone = $this->ipn_data["phone"];
+		$address = $this->ipn_data["address"];
 
         //$custom_values = json_decode(json_encode($this->ipn_data["custom"]), true);
 		$custom_value_str = $this->ipn_data["custom"];
@@ -149,6 +138,7 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_total_amount', $payment_amount );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $address );
+		update_post_meta($post_id, 'wpspsc_phone', $phone);
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
         update_post_meta( $post_id, 'wpsc_payment_gateway', "stripe" );
 
@@ -362,17 +352,34 @@ class stripe_ipn_handler {
 		//wspsc_log_payment_debug( 'Stripe Charge Data: ', true );
 		//wspsc_log_debug_array( $charge_array, true );
 
-		//Get the email, name and address from the charge object.
-		$stripe_email = $charge->billing_details->email;
-		$name = trim( $charge->billing_details->name );
-		$bd_addr = $charge->billing_details->address;
-
-
-		$bd_addr = $data['charges']['data'][0]['billing_details']['address'];;
+		/**
+		 * Retrieve Customer info from the charge object.
+		 */
+		$stripe_email = isset($charge_array['billing_details']['email']) ? $charge_array['billing_details']['email'] : '';
+		$phone = isset($charge_array['billing_details']['phone']) ? $charge_array['billing_details']['phone'] : '';
+		// Get name.
+		$name = isset($charge_array['billing_details']['name']) ? trim($charge_array['billing_details']['name']) : '';
+		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
+		$first_name = trim( preg_replace( '#' . $last_name . '#', '', $name ) );
+		// Get address
+		$bd_addr = isset($charge_array['billing_details']['address']) ? $charge_array['billing_details']['address'] : array();
 		$city = isset($bd_addr['city']) ? $bd_addr['city'] : '';
 		$state = isset($bd_addr['state']) ? $bd_addr['state'] : '';
 		$zip = isset($bd_addr['postal_code']) ? $bd_addr['postal_code'] : '';
-		$country = isset($bd_addr['country']) ? $bd_addr['country'] : '';
+		$country = isset($bd_addr['country']) ? get_country_name_by_country_code($bd_addr['country']) : '';
+		$line1 = isset($bd_addr['line1']) ? $bd_addr['line1'] : '';
+		$line2 = isset($bd_addr['line2']) ? $bd_addr['line2'] : '';
+		// Get full address.
+		$address_array = array(
+			$line1, $line2 , $city , $state , $zip , $country
+		);
+		$address = '';
+		foreach ($address_array as $value) {
+			if (!empty($value)) {
+				$address .= $value . ',';
+			}
+		}
+		$address = rtrim($address, ',');
 
 		$price_in_cents = floatval($data['amount_received']);
 		$currency_code_payment = strtoupper($data['currency']);
@@ -385,11 +392,6 @@ class stripe_ipn_handler {
 			$payment_amount = $price_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
 		}
 
-		$address_street = isset($bd_addr['line1']) ? $bd_addr['line1'] : '';
-		if (isset($bd_addr['line2'])) {
-			// If address line 2 is present, add it to the address.
-			$address_street .= ", " . $bd_addr['line2'];
-		}
 
 		$wspsc_cart =  WSPSC_Cart::get_instance();
 
@@ -409,22 +411,13 @@ class stripe_ipn_handler {
 		$ipn['transaction_subject'] = '';
 		$ipn['mc_currency'] = $data['currency'];
 		$ipn['mc_gross'] = $payment_amount;
-		
-		//customer info
-		$name = trim($data['charges']['data'][0]['billing_details']['name']);
-		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
-		$first_name = trim( preg_replace( '#' . $last_name . '#', '', $name ) );
-
 		$ipn['first_name'] = $first_name;
 		$ipn['last_name'] = $last_name;
+		$ipn['phone'] = $phone;
 		$ipn['payer_email'] = $stripe_email;
-		$ipn['address_street'] = $address_street;
-		$ipn['address_city'] = $city;
-		$ipn['address_state'] = $state;
-		$ipn['address_zip'] = $zip;
-		$ipn['address_country'] = $country;
+		$ipn['address'] = $address;
 
-		//items data
+		// Items data.
 		$cart_items = $wspsc_cart->get_items();
 		$i = 1;
 		foreach ( $cart_items as $item ) {
