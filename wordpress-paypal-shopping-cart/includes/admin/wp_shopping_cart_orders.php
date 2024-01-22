@@ -126,7 +126,7 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
         <?php if (isset($payment_gateway) && !empty($payment_gateway)) : ?>
             <tr>
                 <td><?php _e("Payment Gateway", "wordpress-simple-paypal-shopping-cart"); ?></td>
-                <td><?php echo esc_attr(wpsc_get_formatted_payment_gateway_name($payment_gateway)); ?></td>
+                <td><?php echo wpsc_get_formatted_payment_gateway_name(esc_attr($payment_gateway)); ?></td>
             </tr>
         <?php endif; ?>
         <?php
