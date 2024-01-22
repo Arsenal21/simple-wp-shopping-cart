@@ -76,7 +76,7 @@ function wspsc_check_and_start_session() {
     return true;
 }
 
-function get_country_name_by_country_code( $country_code ) {
+function wpsc_get_country_name_by_country_code( $country_code ) {
     $countries = array (
         'AW' => 'Aruba',
         'AF' => 'Afghanistan',
