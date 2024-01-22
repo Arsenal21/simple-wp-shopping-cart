@@ -123,6 +123,7 @@ class stripe_ipn_handler {
 		}
 		//*** End of security check ***
 
+		//Update the post to publish status
 		$updated_wpsc_order = array(
 			'ID' => $post_id,
 			'post_status' => 'publish',
@@ -131,11 +132,13 @@ class stripe_ipn_handler {
 		);
 		wp_update_post( $updated_wpsc_order );
 
+		//Update the post meta
 		update_post_meta( $post_id, 'wpsc_first_name', $first_name );
 		update_post_meta( $post_id, 'wpsc_last_name', $last_name );
 		update_post_meta( $post_id, 'wpsc_email_address', $buyer_email );
-		update_post_meta( $post_id, 'wpsc_txn_id', $txn_id );		
-		update_post_meta( $post_id, 'wpsc_total_amount', $payment_amount );
+		update_post_meta( $post_id, 'wpsc_txn_id', $txn_id );
+		$formatted_payment_amount = wpspsc_number_format_price( $payment_amount );
+		update_post_meta( $post_id, 'wpsc_total_amount', $formatted_payment_amount );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $address );
 		update_post_meta( $post_id, 'wpspsc_phone', $phone);

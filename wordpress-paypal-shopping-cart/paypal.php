@@ -306,7 +306,7 @@ class paypal_ipn_handler {
 		$this->debug_log( 'Updating Affiliate Database Table with Sales Data if Using the WP Affiliate Platform Plugin.', true );
 		if (function_exists( 'wp_aff_platform_install' )) {
 			$this->debug_log( 'WP Affiliate Platform is installed, registering sale...', true );
-			$referrer = $custom_values['ap_id'];
+			$referrer = isset($custom_values['ap_id']) ? $custom_values['ap_id'] : '';
 			$sale_amount = $this->ipn_data['mc_gross'];
 			if (! empty( $referrer )) {
 				do_action( 'wp_affiliate_process_cart_commission', array( "referrer" => $referrer, "sale_amt" => $sale_amount, "txn_id" => $txn_id, "buyer_email" => $buyer_email ) );
