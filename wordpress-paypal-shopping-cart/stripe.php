@@ -28,10 +28,10 @@ class stripe_ipn_handler {
 		$this->debug_log( 'Executing validate_and_dispatch_product()', true );
 		
         $wspsc_cart = WSPSC_Cart::get_instance();
-        		
+        
 		$txn_id = $this->ipn_data["txn_id"];
         $transaction_type='cart';
-		$payment_status = $this->ipn_data["status"];		
+		$payment_status = $this->ipn_data["payment_status"];		
 
         // Let's try to get first_name and last_name from full name.
 		$first_name  = $this->ipn_data["first_name"];
@@ -46,7 +46,7 @@ class stripe_ipn_handler {
 		$custom_values = wp_cart_get_custom_var_array( $custom_value_str );	
 
 		$this->debug_log( 'Payment Status: ' . $payment_status, true );
-		if ($payment_status == "succeeded" || $payment_status == "processing") {
+		if (strtolower($payment_status) == "succeeded" || strtolower($payment_status) == "processing") {
 			//We will process this notification
 		} else {
 			$error_msg='This is not a payment complete notification. This IPN will not be processed.';
@@ -321,7 +321,7 @@ class stripe_ipn_handler {
 
 		//converting the payment intent object to array
 		$data = json_decode(json_encode($pi_object),TRUE) ;
-		$ipn = $data;
+		$ipn = array();
 
 		//wspsc_log_payment_debug( 'Stripe Payment Intent Data: ', true );
 		//wspsc_log_debug_array( $data, true );
