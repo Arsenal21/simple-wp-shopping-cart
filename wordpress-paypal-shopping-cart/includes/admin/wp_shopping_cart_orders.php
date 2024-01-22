@@ -59,7 +59,7 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
     $items_ordered = get_post_meta($wpsc_cart_orders->ID, 'wpspsc_items_ordered', true);
     $applied_coupon = get_post_meta($wpsc_cart_orders->ID, 'wpsc_applied_coupon', true);
     ?>
-    <table>
+    <table class="widefat" style="border: none;">
         <tr>
             <td><?php _e("Order ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><?php echo esc_attr($order_id); ?></td>
@@ -68,10 +68,16 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td><?php _e("Transaction ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><?php echo esc_attr($txn_id); ?></td>
         </tr>
+        <?php if (isset($payment_gateway) && !empty($payment_gateway)) { ?>
+            <tr>
+                <td><?php _e("Payment Gateway", "wordpress-simple-paypal-shopping-cart"); ?></td>
+                <td><?php echo wpsc_get_formatted_payment_gateway_name(esc_attr($payment_gateway)); ?></td>
+            </tr>
+        <?php } ?>
         <tr>
             <td><?php _e("First Name", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="40" name="wpsc_first_name" value="<?php echo esc_attr($first_name); ?>" /></td>
-        </tr>
+        </tr>        
         <tr>
             <td><?php _e("Last Name", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="40" name="wpsc_last_name" value="<?php echo esc_attr($last_name); ?>" /></td>
@@ -123,12 +129,6 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td><?php _e("Applied Coupon Code", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_applied_coupon" value="<?php echo esc_attr($applied_coupon); ?>" readonly /></td>
         </tr>
-        <?php if (isset($payment_gateway) && !empty($payment_gateway)) : ?>
-            <tr>
-                <td><?php _e("Payment Gateway", "wordpress-simple-paypal-shopping-cart"); ?></td>
-                <td><?php echo wpsc_get_formatted_payment_gateway_name(esc_attr($payment_gateway)); ?></td>
-            </tr>
-        <?php endif; ?>
         <?php
         do_action('wpspsc_edit_order_pre_table_end', $order_id);
         ?>
@@ -290,6 +290,7 @@ function wpsc_get_formatted_payment_gateway_name($payment_gateway){
         'stripe' => 'Stripe',
         'paypal_ppcp' => 'PayPal PPCP',
         'paypal_standard' => 'PayPal Standard',
+        'paypal_smart_checkout' => 'PayPal Smart Checkout',
     );
 
     if (array_key_exists($payment_gateway, $gateways)) {
