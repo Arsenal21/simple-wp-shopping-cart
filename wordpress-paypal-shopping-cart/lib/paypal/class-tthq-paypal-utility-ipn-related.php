@@ -34,8 +34,8 @@ class PayPal_Utility_IPN_Related {
 		//Save cart ID to the IPN data array (useful so we don't have to call get_cart_id function again).
 		$ipn_data['cart_id'] = isset($customvariables['wp_cart_id']) ? $customvariables['wp_cart_id'] : '';
 
-		$ipn_data['gateway'] = 'paypal_buy_now_checkout';
-		$ipn_data['txn_type'] = 'paypal_checkout_new';
+		$ipn_data['gateway'] = 'paypal_ppcp';
+		$ipn_data['txn_type'] = 'paypal_ppcp_checkout';
 		$ipn_data['custom'] = isset($data['custom_field']) ? $data['custom_field'] : '';
 		$ipn_data['subscr_id'] = $txn_id;//Same as txn_id for one-time payments.
 
