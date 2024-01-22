@@ -128,6 +128,9 @@ class WPSC_Post_Payment_Related
 		update_post_meta($post_id, 'wpspsc_items_ordered', $ipn_data['product_details']);
 		update_post_meta($post_id, 'wpsc_order_status', "Paid");
 
+		$gateway = isset( $ipn_data['gateway'] ) ? $ipn_data['gateway'] : '';
+		update_post_meta( $post_id, 'wpsc_payment_gateway', $gateway );
+
 		wspsc_log_payment_debug('Transaction data saved.', true);
 
 		return true;

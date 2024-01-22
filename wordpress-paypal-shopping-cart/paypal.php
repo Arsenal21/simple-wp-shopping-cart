@@ -224,6 +224,8 @@ class paypal_ipn_handler {
 		$status = "Paid";
 		update_post_meta( $post_id, 'wpsc_order_status', $status );
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
+		$gateway = isset( $this->ipn_data['gateway'] ) ? $this->ipn_data['gateway'] : '';
+		update_post_meta( $post_id, 'wpsc_payment_gateway', $gateway );
 		
 		$product_details = "";
 		$item_counter = 1;
@@ -340,6 +342,10 @@ class paypal_ipn_handler {
 		//IPN validation check
 		if ($this->validate_ipn_using_remote_post()) {
 			//We can also use an alternative validation using the validate_ipn_using_curl() function
+
+			//Add the gateway type to the ipn_data array
+			$this->ipn_data['gateway'] = 'paypal_standard';
+
 			return true;
 		} else {
 			return false;
@@ -475,6 +481,7 @@ class paypal_ipn_handler {
 		$ipn['pay_id'] = $data['id'];
 		$ipn['create_time'] = $data['create_time'];
 		$ipn['txn_id'] = $data['transactions'][0]['related_resources'][0]['sale']['id'];
+		$ipn['gateway'] = 'paypal_smart_checkout';
 		$ipn['txn_type'] = 'cart';
 		$ipn['payment_status'] = ucfirst( $data['transactions'][0]['related_resources'][0]['sale']['state'] );
 		$ipn['transaction_subject'] = '';

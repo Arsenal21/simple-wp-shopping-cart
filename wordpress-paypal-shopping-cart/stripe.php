@@ -138,9 +138,10 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_total_amount', $payment_amount );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $address );
-		update_post_meta($post_id, 'wpspsc_phone', $phone);
+		update_post_meta( $post_id, 'wpspsc_phone', $phone);
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
-        update_post_meta( $post_id, 'wpsc_payment_gateway', "stripe" );
+		$gateway = isset( $this->ipn_data['gateway'] ) ? $this->ipn_data['gateway'] : '';
+        update_post_meta( $post_id, 'wpsc_payment_gateway', $gateway );
 
 		$product_details = "";
 		$item_counter = 1;
@@ -406,6 +407,7 @@ class stripe_ipn_handler {
 		$ipn['pay_id'] = $data['id'];
 		$ipn['create_time'] = $data['created'];
 		$ipn['txn_id'] = $charge_id;
+		$ipn['gateway'] = 'stripe';//Add the gateway type to the ipn_data array
 		$ipn['txn_type'] = 'cart';
 		$ipn['payment_status'] = ucfirst($data['status']);
 		$ipn['transaction_subject'] = '';
