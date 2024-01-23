@@ -343,6 +343,7 @@ function wpspc_cart_actions_handler() {
 		$post_stamp_pdf = isset( $_POST['stamp_pdf'] ) ? sanitize_text_field( $_POST['stamp_pdf'] ) : '';
 		$post_encoded_file_val = isset( $_POST['file_url'] ) ? sanitize_text_field( $_POST['file_url'] ) : '';
 		$post_thumbnail = isset( $_POST['thumbnail'] ) ? esc_url_raw( sanitize_text_field( $_POST['thumbnail'] ) ) : '';
+		$digital_flag = isset( $_POST['digital'] ) ? esc_url_raw( sanitize_text_field( $_POST['digital'] ) ) : '';
 
 		//$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
 		//encode the product name to avoid any special characters in the product name creating hashing issues
@@ -431,6 +432,7 @@ function wpspc_cart_actions_handler() {
 			$wspsc_cart_item->set_shipping( $shipping );
 			$wspsc_cart_item->set_cart_link( $post_cart_link );
 			$wspsc_cart_item->set_item_number( $post_item_number );
+			$wspsc_cart_item->set_digital_flag( $digital_flag );
 			if ( ! empty( $post_encoded_file_val ) ) {
 				$wspsc_cart_item->set_file_url( $post_encoded_file_val );
 			}
@@ -907,6 +909,9 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	}
 	if ( isset( $atts['stamp_pdf'] ) ) {
 		$replacement .= '<input type="hidden" name="stamp_pdf" value="' . $atts['stamp_pdf'] . '" />';
+	}
+	if ( isset( $atts['digital'] ) ) {
+		$replacement .= '<input type="hidden" name="digital" value="' . $atts['digital'] . '" />';
 	}
 
 	$p_key = get_option( 'wspsc_private_key_one' );

@@ -92,6 +92,10 @@ class WSPSC_PRODUCT_BOX {
 						'label'       => __( "Thumbnail Target URL", 'wordpress-simple-paypal-shopping-cart' ),
 						'description' => __( 'This option enables you to add a target URL to the thumbnail, allowing you to send customers to the details page of the product.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
+					'digital' => array(
+						'label'       => __( "It's a digital product", 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Check this if you want to mark it as a digital product.', 'wordpress-simple-paypal-shopping-cart' ),
+					),
 				),
 			),
 
@@ -191,6 +195,10 @@ class WSPSC_PRODUCT_BOX {
 				'default' => '',
 			),
 			'thumb_alt'    => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'digital'    => array(
 				'type'    => 'string',
 				'default' => '',
 			)

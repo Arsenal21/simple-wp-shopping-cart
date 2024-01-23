@@ -21,6 +21,7 @@ function wp_cart_button_handler($atts){
                 'button_image' => '',
                 'file_url' => '',
                 'stamp_pdf' => '',
+        'digital' => '',
 	), $atts));
 
 	if(empty($name)){

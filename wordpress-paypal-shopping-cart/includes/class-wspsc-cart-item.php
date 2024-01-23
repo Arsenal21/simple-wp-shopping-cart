@@ -11,6 +11,7 @@ class WSPSC_Cart_Item {
     protected $file_url;
     protected $thumbnail;
     protected $stamp_pdf;
+    protected $digital_flag;
 
     function __construct() {
         
@@ -95,5 +96,12 @@ class WSPSC_Cart_Item {
     public function get_stamp_pdf() {
         return $this->stamp_pdf;
     }
+    
+    public function set_digital_flag($digital_flag) {
+        $this->digital_flag = $digital_flag;
+    }
 
+    public function get_digital_flag() {
+        return $this->digital_flag;
+    }
 }
