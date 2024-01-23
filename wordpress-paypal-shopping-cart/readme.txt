@@ -230,6 +230,7 @@ None
 - PayPal has deprecated the Smart Checkout option and replaced it with the new PayPal Commerce Platform Checkout option. The new checkout option is now available in the plugin.
 - New utility function added for logging debug array.
 - The 'payment gateway' that is used for a transaction is also displayed in the order details page.
+- Reorganized some of the files in the plugin.
 
 = 4.7.2 =
 - Output escaping & sanitization added to checkout page redirection url.
