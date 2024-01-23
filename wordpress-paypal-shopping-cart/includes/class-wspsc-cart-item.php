@@ -11,7 +11,7 @@ class WSPSC_Cart_Item {
     protected $file_url;
     protected $thumbnail;
     protected $stamp_pdf;
-    protected $digital_flag;
+    protected $digital_flag = ''; // '1' = digital, '' = physical
 
     function __construct() {
         
@@ -97,11 +97,30 @@ class WSPSC_Cart_Item {
         return $this->stamp_pdf;
     }
     
-    public function set_digital_flag($digital_flag) {
+    public function set_digital_flag( $digital_flag ) {
+        // '1' = digital, '' = physical
+        if( !empty($digital_flag) ) {
+            $digital_flag = '1';
+        }
+        else {
+            $digital_flag = '';
+        }
         $this->digital_flag = $digital_flag;
     }
 
     public function get_digital_flag() {
         return $this->digital_flag;
     }
+
+    public function is_digital_item() {
+        if( !empty($this->digital_flag) ) {
+            //Digital item
+            return true;
+        }
+        else {
+            //Physical item
+            return false;
+        }
+    }
+    
 }

@@ -400,17 +400,24 @@ class WSPSC_Cart {
     }
 
     /**
-     * Checks whether each item in the cart is digital or not.
+     * Checks if all the items in the cart are digital.
      *
      * @return boolean TRUE if all items are digital. FALSE otherwise.
      */
     public function all_cart_items_digital() {
-        foreach ($this->get_items() as $item) {
-            if (empty($item->get_digital_flag())) {
+        $cart_items = $this->get_items();
+        if( empty( $cart_items ) ) {
+            return false;
+        }
+        //Check if all the items in the cart are digital
+        foreach ( $cart_items as $item ) {
+            if ( !($item->is_digital_item()) ) {
+                //Found a physical item. So return false.
                 return false;
             }
 		}
 
+        //All items are digital. So return true.
         return true;
     }
 }

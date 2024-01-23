@@ -223,6 +223,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Added a 'digital' parameter in the shortcode to specify a digital product.
+
 = 5.0.0 =
 - Added the New PayPal Commerce Platform Checkout option. You can enable it from the settings menu of the plugin.
 - Added a feature to enable Terms and conditions in the shopping cart.
