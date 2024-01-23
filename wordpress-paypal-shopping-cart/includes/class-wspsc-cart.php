@@ -399,4 +399,18 @@ class WSPSC_Cart {
         return wpspsc_number_format_price($grand_total);
     }
 
+    /**
+     * Checks whether each item in the cart is digital or not.
+     *
+     * @return boolean TRUE if all items are digital. FALSE otherwise.
+     */
+    public function all_cart_items_digital() {
+        foreach ($this->get_items() as $item) {
+            if (empty($item->get_digital_flag())) {
+                return false;
+            }
+		}
+
+        return true;
+    }
 }

@@ -20,7 +20,7 @@ function wspsc_add_to_cart_btn_atts_field_sets(props) {
         for (let field_key in field_sets_fields) {
             fields.push(
                 wspsc_element(
-                    wspsc_test_control,
+                    wspsc_text_control,
                     {
                         key: "wspsc-add-to-cart-block-text-control-"+field_set_key+"-"+field_key+"-key", // unique key.
                         label: field_sets_fields[field_key].label,
