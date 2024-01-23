@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.4
-Stable tag: 4.7.2
+Stable tag: 5.0.0
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -223,12 +223,13 @@ None
 
 == Changelog ==
 
-= WIP =
+= 5.0.0 =
 - Added the New PayPal Commerce Platform Checkout option. You can enable it from the settings menu of the plugin.
-- Added a feature to enable Terms and conditions.
+- Added a feature to enable Terms and conditions in the shopping cart.
 - Renamed the 'Advanced Settings' tab to 'PayPal Smart Checkout'.
 - PayPal has deprecated the Smart Checkout option and replaced it with the new PayPal Commerce Platform Checkout option. The new checkout option is now available in the plugin.
 - New utility function added for logging debug array.
+- The 'payment gateway' that is used for a transaction is also displayed in the order details page.
 
 = 4.7.2 =
 - Output escaping & sanitization added to checkout page redirection url.
