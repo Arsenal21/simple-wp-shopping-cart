@@ -4,72 +4,6 @@
  * @package wordpress-simple-paypal-shopping-cart
  */
 
-/**
- * Renders block attribute configuration fields from an array received from server side.
- */
-function wspsc_product_box_atts_field_sets(props) {
-    let panels = [];
-
-    for (let field_set_key in wspsc_pb_block_attrs_meta) {
-
-        let fields = [];
-
-        let field_sets = wspsc_pb_block_attrs_meta[field_set_key];
-        let field_sets_fields = field_sets['fields'];
-
-        for (let field_key in field_sets_fields) {
-            fields.push(
-                wspsc_element(
-                    wspsc_text_control,
-                    {
-                        key: "wspsc-product-box-block-text-control-"+field_set_key+"-"+field_key+"-key", // unique key.
-                        label: field_sets_fields[field_key].label,
-                        help: field_sets_fields[field_key].description,
-                        value: props.attributes[field_key],
-                        onChange: (value) => {
-                            let prop_attrs = {};
-                            prop_attrs[field_key] = value;
-                            props.setAttributes(prop_attrs);
-                        },
-                    }
-                )
-            )
-        }
-
-        panels.push(
-            wspsc_element(
-                wspsc_panel_body,
-                {
-                    key: "wspsc-product-box-block-panel-"+field_set_key+"-key", // unique key.
-                    title: field_sets.title,
-                    initialOpen: field_sets.initialOpen,
-                    scrollAfterOpen: field_sets.scrollAfterOpen,
-                },
-                [
-                    wspsc_element(
-                        'p',
-                        {
-                            key: "wspsc-product-box-block-p-"+field_set_key+"-key", // unique key.
-                            className: 'wspsc_block_description_text'
-                        },
-                        field_sets.description
-                    ),
-                    wspsc_element(
-                        'div',
-                        {
-                            key: "wspsc-product-box-block-div-"+field_set_key+"-key", // unique key.
-                        },
-                        fields,
-                    )
-                ]
-            )
-        )
-
-    }
-
-    return panels;
-}
-
 wspsc_register_block_type(
     wspsc_pb_block_block_meta.name,
     {
@@ -100,7 +34,289 @@ wspsc_register_block_type(
                         {
                             key: "wspsc-product-box-block-panel-key", // unique key.
                         },
-                        wspsc_product_box_atts_field_sets(props),
+                        [
+                            // * PANELS goes here.
+                            wspsc_element(
+                                wspsc_panel_body,
+                                {
+                                    key: "wspsc-product-box-block-panel-general-key", // unique key.
+                                    title: wspsc_pb_block_attrs_meta['general'].title,
+                                    initialOpen: wspsc_pb_block_attrs_meta['general'].initialOpen,
+                                    scrollAfterOpen: wspsc_pb_block_attrs_meta['general'].scrollAfterOpen,
+                                },
+                                [
+                                    wspsc_element(
+                                        'p',
+                                        {
+                                            key: "wspsc-product-box-block-p-general-key", // unique key.
+                                            className: 'wspsc_block_description_text'
+                                        },
+                                        wspsc_pb_block_attrs_meta['general'].description
+                                    ),
+                                    wspsc_element(
+                                        'div',
+                                        {
+                                            key: "wspsc-product-box-block-div-general-key", // unique key.
+                                        },
+                                        [
+                                            // * Fields goes here.
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-name-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['name'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['name'].description,
+                                                    value: props.attributes['name'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['name'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-price-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['price'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['price'].description,
+                                                    value: props.attributes['price'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['price'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-description-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['description'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['description'].description,
+                                                    value: props.attributes['description'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['description'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-shipping-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['shipping'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['shipping'].description,
+                                                    value: props.attributes['shipping'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['shipping'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-file_url-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['file_url'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['file_url'].description,
+                                                    value: props.attributes['file_url'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['file_url'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-thumbnail-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['thumbnail'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['thumbnail'].description,
+                                                    value: props.attributes['thumbnail'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['thumbnail'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-thumb_alt-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['thumb_alt'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['thumb_alt'].description,
+                                                    value: props.attributes['thumb_alt'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['thumb_alt'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-thumb_target-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['thumb_target'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['thumb_target'].description,
+                                                    value: props.attributes['thumb_target'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['thumb_target'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_checkbox_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-general-digital-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['general']['fields']['digital'].label,
+                                                    help: wspsc_pb_block_attrs_meta['general']['fields']['digital'].description,
+                                                    checked: props.attributes['digital'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['digital'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                        ]
+                                    )
+                                ]
+                            ),
+                            wspsc_element(
+                                wspsc_panel_body,
+                                {
+                                    key: "wspsc-product-box-block-panel-cart-button-key", // unique key.
+                                    title: wspsc_pb_block_attrs_meta['cart-button'].title,
+                                    initialOpen: wspsc_pb_block_attrs_meta['cart-button'].initialOpen,
+                                    scrollAfterOpen: wspsc_pb_block_attrs_meta['cart-button'].scrollAfterOpen,
+                                },
+                                [
+                                    wspsc_element(
+                                        'p',
+                                        {
+                                            key: "wspsc-product-box-block-p-cart-button-key", // unique key.
+                                            className: 'wspsc_block_description_text'
+                                        },
+                                        wspsc_pb_block_attrs_meta['cart-button'].description
+                                    ),
+                                    wspsc_element(
+                                        'div',
+                                        {
+                                            key: "wspsc-product-box-block-div-cart-button-key", // unique key.
+                                        },
+                                        [
+                                            // * Fields goes here.
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-cart-button-button_text-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['cart-button']['fields']['button_text'].label,
+                                                    help: wspsc_pb_block_attrs_meta['cart-button']['fields']['button_text'].description,
+                                                    value: props.attributes['button_text'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['button_text'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-cart-button-button_image-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['cart-button']['fields']['button_image'].label,
+                                                    help: wspsc_pb_block_attrs_meta['cart-button']['fields']['button_image'].description,
+                                                    value: props.attributes['button_image'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['button_image'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            )
+                                        ]
+                                    )
+                                ]
+                            ),
+                            wspsc_element(
+                                wspsc_panel_body,
+                                {
+                                    key: "wspsc-product-box-block-panel-variation-key", // unique key.
+                                    title: wspsc_pb_block_attrs_meta['variation'].title,
+                                    initialOpen: wspsc_pb_block_attrs_meta['variation'].initialOpen,
+                                    scrollAfterOpen: wspsc_pb_block_attrs_meta['variation'].scrollAfterOpen,
+                                },
+                                [
+                                    wspsc_element(
+                                        'p',
+                                        {
+                                            key: "wspsc-product-box-block-p-variation-key", // unique key.
+                                            className: 'wspsc_block_description_text'
+                                        },
+                                        wspsc_pb_block_attrs_meta['variation'].description
+                                    ),
+                                    wspsc_element(
+                                        'div',
+                                        {
+                                            key: "wspsc-product-box-block-div-variation-key", // unique key.
+                                        },
+                                        [
+                                            // * Fields goes here.
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-variation-var1-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['variation']['fields']['var1'].label,
+                                                    help: wspsc_pb_block_attrs_meta['variation']['fields']['var1'].description,
+                                                    value: props.attributes['var1'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['var1'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-variation-var2-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['variation']['fields']['var2'].label,
+                                                    help: wspsc_pb_block_attrs_meta['variation']['fields']['var2'].description,
+                                                    value: props.attributes['var2'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['var2'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wspsc_element(
+                                                wspsc_text_control,
+                                                {
+                                                    key: "wspsc-product-box-block-text-control-variation-var3-key", // unique key.
+                                                    label: wspsc_pb_block_attrs_meta['variation']['fields']['var3'].label,
+                                                    help: wspsc_pb_block_attrs_meta['variation']['fields']['var3'].description,
+                                                    value: props.attributes['var3'],
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['var3'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            )
+                                        ]
+                                    )
+                                ]
+                            )
+                        ]
                     ),
                 ),
             ];
