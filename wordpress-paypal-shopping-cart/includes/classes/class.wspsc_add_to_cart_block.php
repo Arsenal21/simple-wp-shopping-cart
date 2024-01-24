@@ -96,6 +96,10 @@ class WSPSC_ADD_TO_CART {
 //						'label'       => __( "Stamp PDF", 'wordpress-simple-paypal-shopping-cart' ),
 //						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
 //					),
+					'digital' => array(
+						'label'       => __( "It's a digital product", 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => __( 'Check this if you want to mark it as a digital product.', 'wordpress-simple-paypal-shopping-cart' ),
+					),
 				),
 			),
 
@@ -164,7 +168,7 @@ class WSPSC_ADD_TO_CART {
 			'file_url'     => array(
 				'type'    => 'string',
 				'default' => '',
-			)
+			),
 //			'item_number'  => array(
 //				'type'    => 'string',
 //				'default' => '',
@@ -177,6 +181,10 @@ class WSPSC_ADD_TO_CART {
 //				'type'    => 'string',
 //				'default' => '',
 //			),
+			'digital'    => array(
+				'type'    => 'boolean',
+				'default' => false,
+			)
 		);
 
 		register_block_type(

@@ -199,8 +199,8 @@ class WSPSC_PRODUCT_BOX {
 				'default' => '',
 			),
 			'digital'    => array(
-				'type'    => 'string',
-				'default' => '',
+				'type'    => 'boolean',
+				'default' => false,
 			)
 		);
 
