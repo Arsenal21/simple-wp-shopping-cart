@@ -614,8 +614,17 @@ class PayPal_Utility_Functions{
 		}
 	
 		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
+
+		//Create the purchase unit items list.
 		$purchase_unit_items_list = array();
 		foreach ( $cart_items as $item ) {
+			//Category is optional. 
+			//If the 'digital' flag is set, then the category is 'DIGITAL_GOODS'. Otherwise, it is 'PHYSICAL_GOODS'.
+			$category = 'PHYSICAL_GOODS';
+			if( $item->is_digital_item() ){
+				$category = 'DIGITAL_GOODS';
+			}
+
 			//Create an item object. It is very important to use the correct format.
 			//Even if one comma is missed, it will not work.
 			$pu_item = [
@@ -625,11 +634,15 @@ class PayPal_Utility_Functions{
 					"value" => wpspsc_number_format_price($item->get_price()),
 					"currency_code" => $currency,
 				],
+				"category" => $category,
 			];
 			//Add the item object to the list to create an array of objects.
 			$purchase_unit_items_list[] = $pu_item;
 		}
-		
+
+		//Debugging purposes.		
+		//PayPal_Utility_Functions::log_array( $purchase_unit_items_list, true );
+
 		return $purchase_unit_items_list;
 	}
 

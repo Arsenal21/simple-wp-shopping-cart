@@ -223,6 +223,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Added the 'category' parameter in the PPCP API call.
+
 = 5.0.1 =
 - Added a 'digital' parameter in the shortcode to specify a digital product.
 - The shipping preference is set based on the 'digital' parameter in the PayPal Commerce Platform Checkout option.
