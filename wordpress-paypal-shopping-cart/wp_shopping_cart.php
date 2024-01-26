@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Shopping cart
-  Version: 5.0.1
+  Version: 5.0.2
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) { //Exit if accessed directly
 	exit;
 }
 
-define( 'WP_CART_VERSION', '5.0.1' );
+define( 'WP_CART_VERSION', '5.0.2' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -337,7 +337,7 @@ function wpspc_cart_actions_handler() {
 		//$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
 		//The product name is encoded and decoded to avoid any special characters in the product name creating hashing issues
 		$post_wspsc_tmp_name_two = html_entity_decode($_POST['product_tmp_two']);
-		$post_wspsc_tmp_name_two = stripslashes( sanitize_text_field( $post_wspsc_product ) );
+		$post_wspsc_tmp_name_two = stripslashes( sanitize_text_field( $post_wspsc_tmp_name_two ) );
 
 		//Sanitize and validate price
 		if ( isset( $_POST['price'] ) ) {
@@ -353,6 +353,7 @@ function wpspc_cart_actions_handler() {
 				if ( $hash_once_p != $hash_one_cm ) { //Security check failed. Price field has been tampered. Fail validation.
 					$error_msg = '<p>Error! The price field may have been tampered. Security check failed.</p>';
 					$error_msg .= '<p>If this site uses any caching, empty the cache then try again.</p>';
+					$error_msg .= "<p>If the issue persists go to the settings menu of the plugin and select/tick the 'Disable Price Check for Add to Cart' checkbox and save it.</p>";
 					wp_die( $error_msg );
 				}
 			}
