@@ -226,6 +226,7 @@ None
 = WIP =
 - Added a 'digital' parameter in the shortcode to specify a digital product.
 - The product name will support more special characters and foreign characters.
+- Added a utility function to check for special characters in the product name.
 
 = 5.0.0 =
 - Added the New PayPal Commerce Platform Checkout option. You can enable it from the settings menu of the plugin.

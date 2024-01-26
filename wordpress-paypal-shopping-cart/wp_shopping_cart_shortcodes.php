@@ -10,7 +10,7 @@ add_shortcode('wp_compact_cart2', 'wspsc_compact_cart2_handler');
 function wp_cart_button_handler($atts){
 	extract(shortcode_atts(array(
 		'name' => '',
-                'item_number' =>'',
+        'item_number' =>'',
 		'price' => '',
 		'shipping' => '0',
 		'var1' => '',
@@ -24,21 +24,23 @@ function wp_cart_button_handler($atts){
         'stamp_pdf' => '',
 	), $atts));
 
+    // Check if the name is empty
 	if(empty($name)){
-            return '<div style="color:red;">'.(__("Error! You must specify a product name in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
+        return '<div style="color:red;">'.(__("Error! You must specify a product name in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
 	}
 
-	// The 'name' values coming from block inserter is htmlentitied. Se we need to decode it otherwise it may cause problem in the hashing process.
-	$name = html_entity_decode($name);
-	if(preg_match('/[<>\\\\]/', $name) === 1){
-		return '<div style="color:red;">'.(__("Error! Special characters are not allowed in product name", "wordpress-simple-paypal-shopping-cart")).'</div>';
+    // The 'name' parameter value coming from the block inserter is already htmlentitied. So we need to decode it (otherwise it may cause issues in the hashing process).
+	$name = html_entity_decode($name); 
+	if( wpsc_contains_special_char($name) ){
+		return '<div style="color:red;">'.(__("Error! Special characters like [, ], <, > are not supported in the product name.", "wordpress-simple-paypal-shopping-cart")).'</div>';
 	}
 
+    // Check if the price is empty
 	if(empty($price)){
             return '<div style="color:red;">'.(__("Error! You must specify a price for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
 	}
-        $price = wspsc_strip_char_from_price_amount($price);
-        $shipping = wspsc_strip_char_from_price_amount($shipping);
+    $price = wspsc_strip_char_from_price_amount($price);
+    $shipping = wspsc_strip_char_from_price_amount($shipping);
 
 	return print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
 }
@@ -63,16 +65,19 @@ function wp_cart_display_product_handler($atts)
         'digital' => '',
         'stamp_pdf' => '',
     ), $atts));
+
+    // Check if the name is empty
     if(empty($name)){
         return '<div style="color:red;">'.(__("Error! You must specify a product name in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
     }
 
-	// The 'name' values coming from block inserter is htmlentitied. Se we need to decode it otherwise it may cause problem in the hashing process.
+	// The 'name' parameter value coming from the block inserter is already htmlentitied. So we need to decode it (otherwise it may cause issues in the hashing process).
 	$name = html_entity_decode($name);
-	if(preg_match('/[<>\\\\]/', $name) === 1){
-        return '<div style="color:red;">'.(__("Error! Special characters are not allowed in product name", "wordpress-simple-paypal-shopping-cart")).'</div>';
+	if( wpsc_contains_special_char($name) ){
+		return '<div style="color:red;">'.(__("Error! Special characters like [, ], <, > are not supported in the product name.", "wordpress-simple-paypal-shopping-cart")).'</div>';
 	}
 
+    // Check if the price is empty
     if(empty($price)){
         return '<div style="color:red;">'.(__("Error! You must specify a price for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
     }

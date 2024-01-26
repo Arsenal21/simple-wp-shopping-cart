@@ -1,5 +1,19 @@
 <?php
 
+function wpsc_contains_special_char($str) {
+    //This function checks if the input string contains any of the special characters that are not allowed in the product name.
+    // The set of unsupported special characters: [, ], <, >
+    $special_chars = "[]<>";
+
+    // Use strpbrk to check if any of the special characters are in the input string
+    if( strpbrk($str, $special_chars) !== false ) {
+        // One of the special characters is in the input string
+        return true;
+    }
+    // None of the special characters is in the input string
+    return false;
+}
+
 function wpsc_is_txn_already_processed( $order_id, $ipn_data ){
     $txn_id = $ipn_data['txn_id'];
     $transaction_id = get_post_meta( $order_id, 'wpsc_txn_id', true );
