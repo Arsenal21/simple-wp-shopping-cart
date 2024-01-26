@@ -168,8 +168,14 @@ class WSPSC_Cart {
         return wpspsc_number_format_price($sub_total);
     }
 
+    public function get_postage_cost() {
+        //This function will return the postage cost amount of the cart items after calculate_cart_totals_and_postage() is called.
+        $postage_cost = $this->postage_cost;
+        return $postage_cost;
+    }
+
     public function get_postage_cost_formatted() {
-        //This function will return the postage cost of the cart items after calculate_cart_totals_and_postage() is called.
+        //This function will return the formatted postage cost of the cart items after calculate_cart_totals_and_postage() is called.
         $postage_cost = $this->postage_cost;
         return wpspsc_number_format_price($postage_cost);
     }

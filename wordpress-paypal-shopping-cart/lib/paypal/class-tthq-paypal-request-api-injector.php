@@ -224,10 +224,11 @@ class PayPal_Request_API_Injector {
             $postage_cost = isset($data['postage_cost']) ? $data['postage_cost'] : 0;
             $currency = isset($data['currency']) ? $data['currency'] : 'USD';
             $description = isset($data['description']) ? $data['description'] : '';
-
             //$item_name = isset($data['item_name']) ? $data['item_name'] : '';
             //$quantity = isset($data['quantity']) ? $data['quantity'] : 1;
-            //$digital_goods_enabled = isset($data['digital_goods_enabled']) ? $data['digital_goods_enabled'] : 1;
+
+            //Get the shipping preference.
+            $shipping_preference = isset($data['shipping_preference']) ? $data['shipping_preference'] : 'GET_FROM_FILE';
 
             //Create order_data for the API call.
             //https://developer.paypal.com/docs/api/orders/v2/#orders_create
@@ -236,6 +237,15 @@ class PayPal_Request_API_Injector {
                 // If the 'breakdown' is provided then it needs to contain the sub_total, postage cost and tax (if any).
                 $order_data = [
                     "intent" => "CAPTURE",
+                    "payment_source" => [
+                        "paypal" => [
+                            "experience_context" => [
+                                "payment_method_preference" => "IMMEDIATE_PAYMENT_REQUIRED",
+                                "shipping_preference" => $shipping_preference,
+                                "user_action" => "PAY_NOW",
+                            ]
+                        ]
+                    ],                    
                     "purchase_units" => [
                         [
                             "amount" => [

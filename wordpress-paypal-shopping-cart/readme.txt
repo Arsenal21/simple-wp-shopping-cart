@@ -225,6 +225,7 @@ None
 
 = WIP =
 - Added a 'digital' parameter in the shortcode to specify a digital product.
+- The shipping preference is set based on the 'digital' parameter in the PayPal Commerce Platform Checkout option.
 - The product name will support more special characters and foreign characters.
 - Added a utility function to check for special characters in the product name.
 
