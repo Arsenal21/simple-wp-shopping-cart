@@ -253,11 +253,12 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                         return response_data.order_id;
                     } else {
                         const error_message = JSON.stringify(response_data);
+                        console.error('Error occurred during create-order call to PayPal. ' + error_message);
                         throw new Error(error_message);
                     }
                 } catch (error) {
                     console.error(error);
-                    alert('Could not initiate PayPal Checkout...\n\n' + error);
+                    alert('Could not initiate PayPal Checkout...\n\n' + JSON.stringify(error));
                 }
             }
 
@@ -357,7 +358,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                         // Other non-recoverable errors -> Show a failure message
                         console.error('Non-recoverable error occurred during PayPal checkout process.');
                         console.error( error_detail );
-                        //alert('Error occurred with the transaction. Enable debug logging to get more details.\n\n' + JSON.stringify(error_detail));
+                        //alert('Unexpected error occurred with the transaction. Enable debug logging to get more details.\n\n' + JSON.stringify(error_detail));
                     }
 
                     //Return the button and the spinner back to their orignal display state.
@@ -366,7 +367,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
                 } catch (error) {
                     console.error(error);
-                    alert('Sorry, your transaction could not be processed...\n\n' + error);
+                    alert('PayPal returned an error! Transaction could not be processed. Enable the debug logging feature to get more details...\n\n' + JSON.stringify(error));
                 }
             }
 

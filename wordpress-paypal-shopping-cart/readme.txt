@@ -223,6 +223,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Added more error logging messages for the PayPal Commerce Platform Checkout option.
+
 = 5.0.2 =
 - Added the 'category' parameter in the PPCP API call.
 - Fixed an issue with the variations not working with the product name character support enhancement that we added in the previous version.
