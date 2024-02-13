@@ -90,8 +90,8 @@ function wspsc_check_and_start_session() {
     return true;
 }
 
-function wpsc_get_country_name_by_country_code( $country_code ) {
-    $countries = array (
+function wpsc_get_countries(){
+    return array (
         'AW' => 'Aruba',
         'AF' => 'Afghanistan',
         'AO' => 'Angola',
@@ -311,8 +311,32 @@ function wpsc_get_country_name_by_country_code( $country_code ) {
         'ZM' => 'Zambia',
         'ZW' => 'Zimbabwe',
     );
+}
 
+function wpsc_get_country_name_by_country_code( $country_code ) {
+    $countries = wpsc_get_countries();
     $country_code = isset( $country_code ) ? strtoupper( $country_code ) : '';
     $country = isset($countries[$country_code]) ? $countries[$country_code] : $country_code;
     return $country;
+}
+
+function wpsc_get_countries_opts( $selected = false ) {
+    $countries = wpsc_get_countries();
+    $countries[''] = '—';
+
+    asort( $countries );
+    array_unshift( $countries, array_pop( $countries ) );
+
+    $out       = '';
+    $tpl       = '<option value="%s"%s>%s</option>';
+    foreach ( $countries as $c_code => $c_name ) {
+        $selected_str = '';
+        if ( false !== $selected ) {
+            if ( $c_code === $selected ) {
+                $selected_str = ' selected';
+            }
+        }
+        $out .= sprintf( $tpl, esc_attr( $c_code ), $selected_str, esc_html( $c_name ) );
+    }
+    return $out;
 }
