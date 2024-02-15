@@ -4,6 +4,7 @@ use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 
 function print_wp_shopping_cart( $args = array() ) {
 	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart->calculate_cart_totals_and_postage();
 
 	//Get the on page cart div ID. This will increment the count so we start from 1.
 	$on_page_cart_div_id = $wspsc_cart->get_next_on_page_cart_div_id();
@@ -36,7 +37,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	$defaultCurrency = get_option( 'cart_payment_currency' );
 	$defaultSymbol = get_option( 'cart_currency_symbol' );
 	$defaultEmail = get_option( 'cart_paypal_email' );
-	if ( ! empty( $defaultCurrency ) ) {
+		if ( ! empty( $defaultCurrency ) ) {
 		$paypal_currency = $defaultCurrency;
 	} else {
 		$paypal_currency = __( 'USD', 'wordpress-simple-paypal-shopping-cart' );
@@ -91,7 +92,6 @@ function print_wp_shopping_cart( $args = array() ) {
 	$output .= '<table style="width: 100%;">';
 
 	$count = 1;
-	$total_items = 0;
 	$total = 0;
 	$form = '';
 	if ( $wspsc_cart->get_items() ) {
@@ -99,17 +99,9 @@ function print_wp_shopping_cart( $args = array() ) {
         <tr class="wspsc_cart_item_row">
         <th class="wspsc_cart_item_name_th">' . ( __( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_cart_qty_th">' . ( __( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_cart_price_th">' . ( __( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_remove_item_th"></th>
         </tr>';
-		$item_total_shipping = 0;
-		$postage_cost = 0;
-		foreach ( $wspsc_cart->get_items() as $item ) {
-			$total += $item->get_price() * $item->get_quantity();
-			$item_total_shipping += $item->get_shipping() * $item->get_quantity();
-			$total_items += $item->get_quantity();
-		}
-		if ( ! empty( $item_total_shipping ) ) {
-			$baseShipping = get_option( 'cart_base_shipping_cost' );
-			$postage_cost = (float) $item_total_shipping + (float) $baseShipping;
-		}
+
+		$total = $wspsc_cart->get_total_cart_sub_total();
+		$postage_cost = $wspsc_cart->get_postage_cost();
 
 		$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
 		if ( ! empty( $cart_free_shipping_threshold ) && $total > $cart_free_shipping_threshold ) {
@@ -218,6 +210,38 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output = apply_filters( 'wpspsc_before_checkout_form', $output );
 
 		$output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
+
+		$is_shipping_by_region_enabled = get_option('enable_shipping_by_region');
+		$wpsc_shipping_variations_settings_arr  = get_option('wpsc_shipping_region_variations');
+		$selected_shipping_region_variant = $wspsc_cart->get_selected_shipping_region();
+
+		if ( !empty($is_shipping_by_region_enabled) && count($wpsc_shipping_variations_settings_arr)) {
+			$output .= sprintf('<table><tr class="wspsc_cart_coupon_row">
+					<td colspan="4">
+						<div class="wp-shopping-cart-shipping-region-container">
+							<span class="wp-shopping-cart-shipping-region-label">%1$s</span>
+							<form method="post" action="">
+								<select class="wp-shopping-cart-shipping-region-input" name="wpspsc_shipping_region">
+									<option value="-1">%2$s</option>
+									%3$s
+								</select>
+								<span class="wpspsc_select_region_button">
+									<input type="submit" name="wpspsc_shipping_region_submit" class="wpspsc_select_region" value="%4$s" />
+								</span>
+								<div class="wp-shopping-cart-shipping-region-error" style="color: #cc0000; font-size: smaller;" role="alert"></div>
+								%5$s
+							</form>
+						</div>
+					</td>
+				</tr></table>',
+				__( 'Select Shipping Region', 'wordpress-simple-paypal-shopping-cart' ),
+				__( 'Select a Region', 'wordpress-simple-paypal-shopping-cart' ),
+				wpsc_get_shipping_region_opts($wpsc_shipping_variations_settings_arr, $selected_shipping_region_variant),
+				__( 'Apply', 'wordpress-simple-paypal-shopping-cart' ),
+				wp_nonce_field( 'wspsc_shipping_region', '_wpnonce', true, false ),
+			);
+		}
+
 		// Check if terms and conditions are enabled or not.
 		$is_tnc_enabled = get_option( 'wp_shopping_cart_enable_tnc' ) != '';
 		if ( $is_tnc_enabled ) {
@@ -599,4 +623,35 @@ function wspsc_generate_tnc_section( $carts_cnt ) {
 	$html .= '</div>';
 
 	return $html;
+}
+
+/**
+ * Generates options for shipping region select input in the shopping cart.
+ *
+ * @param array $region_options Collection of available options configured in admin side.
+ * @param boolean|string $selected Selected option as string if there is any.
+ * @return string HTML option elements as string.
+ */
+function wpsc_get_shipping_region_opts( $region_options, $selected = false ) {
+	$countries = wpsc_get_countries();
+	$out       = '';
+	$tpl = '<option value="%s" %s> %s </option>';
+	foreach ($region_options as $key => $region) {
+		$selected_str = '';
+		$value = implode(':', array(strtolower($region['loc']), $region['type']));
+		if ($selected) {
+			$selected_str = $value === $selected ? 'selected' : '';
+		}
+		$text = '';
+
+		if ($region['type'] == '0') {
+			$text .= $countries[$region['loc']];
+		}else{
+			$text .= $region['loc'];
+		}
+
+		$out .= sprintf( $tpl, $value, $selected_str, $text );
+	}
+
+    return $out;
 }

@@ -6,9 +6,11 @@ class WSPSC_Cart {
     private $post_type = "";
     protected static $instance = null;
     protected $cart_custom_values = "";
+    protected $selected_shipping_region = '';
 
     public $on_page_carts_div_count = 0;
     public static $on_page_cart_div_ids = array();
+    public $item_shipping_total = 0;
     public $sub_total = 0;
     public $postage_cost = 0;
     public $tax = 0;
@@ -17,6 +19,16 @@ class WSPSC_Cart {
     public function __construct() {
         $this->cart_id = isset($_COOKIE['simple_cart_id']) ? $_COOKIE['simple_cart_id'] : 0;
         $this->post_type = "wpsc_cart_orders";
+
+        // Assign all previously saved properties of WPSC_Cart object.
+        $saved_object = $this->get_cart_from_postmeta();
+        if ($saved_object instanceof self) {
+            foreach ($saved_object as $property => $value) {
+                if (property_exists($this, $property)) {
+                    $this->$property = $value;
+                }
+            }
+        }
     }
 
     public static function get_instance() {
@@ -71,7 +83,45 @@ class WSPSC_Cart {
 
             //Save cart items (if items were added to cart)
             $this->save_items();
+
+            // Save cart post meta.
+            $this->save_cart_to_postmeta();
         }
+    }
+
+    /**
+     * Save the cart object to postmeta for persistency.
+     *
+     * @return int|bool
+     */
+    public function save_cart_to_postmeta(){
+        $serialized_cart_object = serialize($this); 
+        
+        return update_post_meta($this->get_cart_id(), 'wpsc_cart_object', $serialized_cart_object);
+    }
+
+    /**
+     * Retrieve the cart object from postmeta to get the cart related data.
+     * Useful if page reload occurs.
+     *
+     * @return object The WSPSC_Cart class object.
+     */
+    public function get_cart_from_postmeta(){
+        $serialized_cart_object = get_post_meta($this->get_cart_id(), 'wpsc_cart_object', true);
+
+        if ($serialized_cart_object) {
+            return unserialize($serialized_cart_object); // Unserialize data to get the object
+        }
+
+        return false;
+    }
+
+    public function set_selected_shipping_region($region_str){
+        $this->selected_shipping_region = $region_str;
+    }
+
+    public function get_selected_shipping_region(){
+        return $this->selected_shipping_region;
     }
 
     /**
@@ -87,6 +137,8 @@ class WSPSC_Cart {
 
 
     /**
+     * @deprecated This method is deprecated since version 5.0.3. Use 'save_cart_to_postmeta' instead where the entire cart class object is being saved.
+     * 
      * Save the cart items to the database.
      *
      * If the cart ID has been set, update the 'wpsc_cart_items' post meta with
@@ -179,6 +231,16 @@ class WSPSC_Cart {
         $postage_cost = $this->postage_cost;
         return wpspsc_number_format_price($postage_cost);
     }
+    
+    /**
+     * This function will return the total shipping costs of each cart item.
+     * The total cost is calculated when 'calculate_cart_totals_and_postage' method is called.
+     *
+     * @return float Total shipping costs of each cart item.
+     */
+    public function get_item_shipping_total() {
+        return $this->item_shipping_total;
+    }
 
     public function get_grand_total_formatted() {
         //This function will return the grand total of the cart items after calculate_cart_totals_and_postage() is called.
@@ -209,8 +271,19 @@ class WSPSC_Cart {
 			$total_items += $item->get_quantity();
 		}
 		if ( ! empty( $item_total_shipping ) ) {
-			$baseShipping = get_option( 'cart_base_shipping_cost' );
-			$postage_cost = (float) $item_total_shipping + (float) $baseShipping;
+            $baseShipping = get_option( 'cart_base_shipping_cost' );
+            // Check if shipping by region is enabled, override base shipping if enabled.
+            $regional_shipping_amount = 0;
+            $enable_shipping_by_region = get_option('enable_shipping_by_region');
+            if ( $enable_shipping_by_region ) {
+                //Check the selected region and get the shipping amount for that region.
+                $region_str = $this->get_selected_shipping_region();
+                $region = check_shipping_region_str($region_str);
+                if($region){
+                    $regional_shipping_amount = $region['amount'];
+                }
+            }
+			$postage_cost = (float) $item_total_shipping + (float) $baseShipping + (float) $regional_shipping_amount;
 		}
 
 		$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
@@ -225,9 +298,13 @@ class WSPSC_Cart {
 
         //Set the values in the class variables
         $this->sub_total = $sub_total;
+        $this->item_shipping_total = $item_total_shipping;
         $this->postage_cost = $postage_cost;
         $this->tax = $tax;
         $this->grand_total = $grand_total;
+
+        // Save cart post meta.
+        $this->save_cart_to_postmeta();
 
         return $grand_total;
     }
@@ -313,6 +390,9 @@ class WSPSC_Cart {
     public function set_items($items) {
         $this->items = $items;
         $this->save_items();
+
+        // Save cart post meta.
+        $this->save_cart_to_postmeta();
     }
 
     public function set_cart_custom_values($custom_val_string) {

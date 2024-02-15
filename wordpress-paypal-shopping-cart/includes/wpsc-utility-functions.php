@@ -340,3 +340,31 @@ function wpsc_get_countries_opts( $selected = false ) {
     }
     return $out;
 }
+
+/**
+ * Check whether the given string is a proper shipping region lookup string or not.
+ *
+ * @param string $str Shipping regions lookup string.
+ * 
+ * @return array|bool If valid, return the shipping regions array option, FALSE otherwise
+ */
+function check_shipping_region_str($str){
+    // Check if customer have not selected any shipping region option.
+    if (empty($str) || $str == '-1') {
+        return false;
+    }
+    
+    // Get the available shipping region options set in admin end.
+    $available_region_options = get_option('wpsc_shipping_region_variations');
+    
+    $str_to_arr = explode(':', $str);
+
+    foreach ($available_region_options as $region) {
+        if ($str_to_arr[0] === strtolower($region['loc']) && $str_to_arr[1] == $region['type']) {
+            // The shipping region string is valid, return the original array element.
+            return $region;
+        }
+    }
+
+    return false;
+}
