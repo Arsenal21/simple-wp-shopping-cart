@@ -90,8 +90,8 @@ function wspsc_check_and_start_session() {
     return true;
 }
 
-function wpsc_get_country_name_by_country_code( $country_code ) {
-    $countries = array (
+function wpsc_get_countries(){
+    return array (
         'AW' => 'Aruba',
         'AF' => 'Afghanistan',
         'AO' => 'Angola',
@@ -311,8 +311,57 @@ function wpsc_get_country_name_by_country_code( $country_code ) {
         'ZM' => 'Zambia',
         'ZW' => 'Zimbabwe',
     );
+}
 
+function wpsc_get_country_name_by_country_code( $country_code ) {
+    $countries = wpsc_get_countries();
     $country_code = isset( $country_code ) ? strtoupper( $country_code ) : '';
     $country = isset($countries[$country_code]) ? $countries[$country_code] : $country_code;
     return $country;
+}
+
+function wpsc_get_countries_opts( $selected = false ) {
+    $countries = wpsc_get_countries();
+    asort( $countries );
+
+    $out       = '';
+    $tpl       = '<option value="%s"%s>%s</option>';
+    foreach ( $countries as $c_code => $c_name ) {
+        $selected_str = '';
+        if ( false !== $selected ) {
+            if ( $c_code === $selected ) {
+                $selected_str = ' selected';
+            }
+        }
+        $out .= sprintf( $tpl, esc_attr( $c_code ), $selected_str, esc_html( $c_name ) );
+    }
+    return $out;
+}
+
+/**
+ * Check whether the given string is a proper shipping region lookup string or not.
+ *
+ * @param string $str Shipping regions lookup string.
+ * 
+ * @return array|bool If valid, return the shipping regions array option, FALSE otherwise
+ */
+function check_shipping_region_str($str){
+    // Check if customer have not selected any shipping region option.
+    if (empty($str) || $str == '-1') {
+        return false;
+    }
+    
+    // Get the available shipping region options set in admin end.
+    $available_region_options = get_option('wpsc_shipping_region_variations');
+    
+    $str_to_arr = explode(':', $str);
+
+    foreach ($available_region_options as $region) {
+        if ($str_to_arr[0] === strtolower($region['loc']) && $str_to_arr[1] == $region['type']) {
+            // The shipping region string is valid, return the original array element.
+            return $region;
+        }
+    }
+
+    return false;
 }

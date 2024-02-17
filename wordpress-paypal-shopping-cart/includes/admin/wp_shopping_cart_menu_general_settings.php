@@ -32,8 +32,6 @@ function wspsc_show_general_settings_page ()
         $disable_standard_checkout	 = filter_input( INPUT_POST, 'wpspc_disable_standard_checkout', FILTER_SANITIZE_NUMBER_INT );
         update_option('cart_payment_currency', $currency_code);
         update_option('cart_currency_symbol', sanitize_text_field($_POST["cart_currency_symbol"]));
-        update_option('cart_base_shipping_cost', sanitize_text_field($_POST["cart_base_shipping_cost"]));
-        update_option('cart_free_shipping_threshold', sanitize_text_field($_POST["cart_free_shipping_threshold"]));
         update_option('wp_shopping_cart_collect_address', (isset($_POST['wp_shopping_cart_collect_address']) && $_POST['wp_shopping_cart_collect_address']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_use_profile_shipping', (isset($_POST['wp_shopping_cart_use_profile_shipping']) && $_POST['wp_shopping_cart_use_profile_shipping']!='') ? 'checked="checked"':'' );
 
@@ -81,11 +79,6 @@ function wspsc_show_general_settings_page ()
 
     $defaultSymbol = get_option('cart_currency_symbol');
     if (empty($defaultSymbol)) $defaultSymbol = __("$", "wordpress-simple-paypal-shopping-cart");
-
-    $baseShipping = get_option('cart_base_shipping_cost');
-    if (empty($baseShipping)) $baseShipping = 0;
-
-    $cart_free_shipping_threshold = get_option('cart_free_shipping_threshold');
 
     $defaultEmail = get_option('cart_paypal_email');
     if (empty($defaultEmail)) $defaultEmail = get_bloginfo('admin_email');
@@ -329,18 +322,6 @@ echo '<tr valign="top">
 <th scope="row">'.(__("Currency Symbol", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="cart_currency_symbol" value="'.esc_attr($defaultSymbol).'" size="5" /> ('.(__("Example:", "wordpress-simple-paypal-shopping-cart")).' $, &#163;, &#8364;)
 </td>
-</tr>
-
-<tr valign="top">
-<th scope="row">'.(__("Base Shipping Cost", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_base_shipping_cost" value="'.esc_attr($baseShipping).'" size="5" /> <br />'.(__("This is the base shipping cost that will be added to the total of individual products shipping cost. Put 0 if you do not want to charge shipping cost or use base shipping cost.", "wordpress-simple-paypal-shopping-cart")).
-' <a href="https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-how-the-shipping-cost-calculation-works-297" target="_blank">'.(__("Learn More on Shipping Calculation", "wordpress-simple-paypal-shopping-cart")).'</a>'.
-'</td>
-</tr>
-
-<tr valign="top">
-<th scope="row">'.(__("Free Shipping for Orders Over", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_free_shipping_threshold" value="'.esc_attr($cart_free_shipping_threshold).'" size="5" /> <br />'.(__("When a customer orders more than this amount he/she will get free shipping. Leave empty if you do not want to use it.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">

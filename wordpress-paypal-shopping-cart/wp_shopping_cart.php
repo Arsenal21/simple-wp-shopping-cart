@@ -100,6 +100,7 @@ if ( wp_doing_ajax() ) {
 
 function wspsc_stripe_create_checkout_session() {
 	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart->calculate_cart_totals_and_postage();
 
 	$cart_id = $wspsc_cart->get_cart_id();
 	$currency = get_option( 'cart_payment_currency' );
@@ -117,29 +118,13 @@ function wspsc_stripe_create_checkout_session() {
 	$decoded_custom = sanitize_text_field( stripslashes( $decoded_custom ) );
 	//wspsc_log_payment_debug('Stripe custom field input value: ' . $decoded_custom, true);
 
-	$postage_cost = 0;
-	$item_total_shipping = 0;
-	$total = 0;
-	foreach ( $wspsc_cart->get_items() as $item ) {
-		$total += $item->get_price() * $item->get_quantity();
-		$item_total_shipping += $item->get_shipping() * $item->get_quantity();
-	}
-	if ( ! empty( $item_total_shipping ) ) {
-		$baseShipping = get_option( 'cart_base_shipping_cost' );
-		$postage_cost = $item_total_shipping + $baseShipping;
-		//Rounding and formatting to avoid issues with Stripe's zero decimal currencies.
-		//Use round and then number_format to ensure that there is always 2 decimal places (even if the trailing zero is dropped by the round function)
-		$postage_cost = round( $postage_cost, 2 );
-		$postage_cost = number_format( $postage_cost, 2 );
-		//wspsc_log_payment_debug('Postage cost after round and number format: ' . $postage_cost, true);
-	}
+	$postage_cost = $wspsc_cart->get_postage_cost();
 
-	$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
-
-	if ( ! empty( $cart_free_shipping_threshold ) && $total > $cart_free_shipping_threshold ) {
-		$postage_cost = 0;
-	}
-
+	//Rounding and formatting to avoid issues with Stripe's zero decimal currencies.
+	//Use round and then number_format to ensure that there is always 2 decimal places (even if the trailing zero is dropped by the round function)
+	$postage_cost = round( $postage_cost, 2 );
+	$postage_cost = number_format( $postage_cost, 2 );
+	
 	if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
 		$postage_cost = wpspsc_amount_in_cents( $postage_cost );
 	}
@@ -541,6 +526,25 @@ function wpspc_cart_actions_handler() {
 		wpspsc_apply_cart_discount( $coupon_code );
 		//Redirect to the anchor if the anchor option is enabled. This redirect needs to be handled using JS.
 		wpsc_js_redirect_if_using_anchor();
+	} else if ( isset( $_POST['wpsc_shipping_region_submit'] ) ) {
+		$nonce = $_REQUEST['_wpnonce'];
+		if ( ! wp_verify_nonce( $nonce, 'wpsc_shipping_region' ) ) {
+			wp_die( 'Error! Nonce Security Check Failed!' );
+		}
+
+		$selected_shipping_region_str = isset( $_POST['wpsc_shipping_region'] ) ? sanitize_text_field( $_POST['wpsc_shipping_region'] ) : '';
+
+		$wspsc_cart = WSPSC_Cart::get_instance();
+
+		if (!check_shipping_region_str($selected_shipping_region_str)) {
+			$wspsc_cart->set_selected_shipping_region('-1');
+		}else{
+			$wspsc_cart->set_selected_shipping_region($selected_shipping_region_str);
+		}
+	
+		$wspsc_cart->calculate_cart_totals_and_postage();
+
+		wpsc_js_redirect_if_using_anchor();
 	}
 }
 
@@ -805,6 +809,18 @@ function wspsc_front_side_enqueue_scripts() {
 	wp_register_script( "wspsc-checkout-cart-script", WP_CART_URL . "/assets/js/wspsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
 	$is_tnc_enabled = get_option('wp_shopping_cart_enable_tnc') !== '' ? 'true' : 'false';
 	wp_add_inline_script("wspsc-checkout-cart-script", "const wspscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
+	
+	$is_shipping_region_enabled = get_option('enable_shipping_by_region') !== '' ? 'true' : 'false';
+	wp_add_inline_script("wspsc-checkout-cart-script", "const wspscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
+	
+	if ($is_shipping_region_enabled) {
+		$configured_shipping_region_options  = get_option('wpsc_shipping_region_variations', array() );
+		$region_options  = array();
+		foreach ($configured_shipping_region_options as $region) {
+			$region_options[] = implode(':', array(strtolower($region['loc']), $region['type']));
+		}
+		wp_add_inline_script("wspsc-checkout-cart-script", "const wpscShippingRegionOptions = " . json_encode( $region_options ) .";" , 'before');
+	}
 }
 
 function wpspc_plugin_install() {
