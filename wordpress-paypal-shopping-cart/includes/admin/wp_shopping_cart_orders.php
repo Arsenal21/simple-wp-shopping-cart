@@ -47,6 +47,7 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
     $ip_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_ipaddress', true);
     $total_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_total_amount', true);
     $shipping_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_amount', true);
+    $shipping_region = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_region', true);
     $address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_address', true);
     $phone = get_post_meta($wpsc_cart_orders->ID, 'wpspsc_phone', true);
     $email_sent_value = get_post_meta($wpsc_cart_orders->ID, 'wpsc_buyer_email_sent', true);
@@ -98,6 +99,12 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td><?php _e("Shipping", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_shipping_amount" value="<?php echo esc_attr($shipping_amount); ?>" /></td>
         </tr>
+        <?php if ($shipping_region) { ?>
+        <tr>
+            <td><?php _e("Shipping Region", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><input type="text" size="20" name="wpsc_shipping_region" value="<?php echo esc_attr($shipping_region); ?>" /></td>
+        </tr>
+        <?php } ?>
         <tr>
             <td><?php _e("Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>

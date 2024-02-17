@@ -79,6 +79,21 @@ class WPSC_Post_Payment_Related
 
 		$ipn_data['cart_items'] = $orig_cart_items;
 
+		$orig_cart_postmeta = WSPSC_Cart::get_cart_from_postmeta($ipn_data['post_id']);
+		
+		/**
+		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
+		 */
+		$ipn_data['regional_shipping_cost'] = 0;
+		$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
+		if ($selected_shipping_region) {
+			wspsc_log_payment_debug('Selected shipping region option: ', true);
+			wspsc_log_debug_array($selected_shipping_region, true);
+
+			$ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
+			$ipn_data['shipping_region'] = $selected_shipping_region['loc'];
+		}
+
 		/**
 		 * Process shipping costs data.
 		 */
@@ -86,9 +101,10 @@ class WPSC_Post_Payment_Related
 			$ipn_data['shipping'] = "0.00";
 		} else {
 			$baseShipping = get_option('cart_base_shipping_cost');
-			$ipn_data['shipping'] = floatval($ipn_data['shipping']) + floatval($baseShipping);
+			$ipn_data['shipping'] = floatval($ipn_data['shipping']) + floatval($baseShipping) + floatval($ipn_data['regional_shipping_cost']);
 			$ipn_data['shipping'] = wpspsc_number_format_price($ipn_data['shipping']);
 		}
+		wspsc_log_payment_debug('Total shipping cost: '.$ipn_data['shipping'], true);
 	}
 
 	/**
@@ -125,6 +141,7 @@ class WPSC_Post_Payment_Related
 		update_post_meta($post_id, 'wpspsc_phone', $ipn_data['contact_phone']);
 		update_post_meta($post_id, 'wpsc_applied_coupon', $ipn_data['applied_coupon_code']);
 		update_post_meta($post_id, 'wpsc_shipping_amount', $ipn_data['shipping']);
+		update_post_meta($post_id, 'wpsc_shipping_region', $ipn_data['shipping_region']);
 		update_post_meta($post_id, 'wpspsc_items_ordered', $ipn_data['product_details']);
 		update_post_meta($post_id, 'wpsc_order_status', "Paid");
 
