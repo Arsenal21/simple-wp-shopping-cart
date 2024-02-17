@@ -53,16 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		})
 	}
-
-	// Check if regional shipping cost in enabled and validate that when the input changes.
-	// if (wspscIsShippingRegionEnabled) {
-	// 	wpscShippingRegionInputs.forEach(inputField => {
-	// 		inputField.addEventListener('change', function () {
-	// 			const shippingRegionContainer = wspsc_getClosestElement(inputField, wpscShippingRegionContainerSelector);
-	// 			wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
-	// 		});
-	// 	})
-	// }
 })
 
 /**

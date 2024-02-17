@@ -13,7 +13,7 @@ class WSPSC_Cart {
      *
      * @var string A lookup string for calculating regional shipping cost.
      */
-    protected $selected_shipping_region = '';
+    public $selected_shipping_region = '';
 
     public $on_page_carts_div_count = 0;
     public static $on_page_cart_div_ids = array();
@@ -28,7 +28,7 @@ class WSPSC_Cart {
         $this->post_type = "wpsc_cart_orders";
 
         // Assign all previously saved properties of WPSC_Cart object.
-        $saved_object = $this->get_cart_from_postmeta();
+        $saved_object = $this->get_cart_from_postmeta($this->get_cart_id());
         if ($saved_object instanceof self) {
             foreach ($saved_object as $property => $value) {
                 if (property_exists($this, $property)) {
@@ -113,8 +113,8 @@ class WSPSC_Cart {
      *
      * @return object The WSPSC_Cart class object.
      */
-    public function get_cart_from_postmeta(){
-        $serialized_cart_object = get_post_meta($this->get_cart_id(), 'wpsc_cart_object', true);
+    public static function get_cart_from_postmeta($cart_id){
+        $serialized_cart_object = get_post_meta($cart_id, 'wpsc_cart_object', true);
 
         if ($serialized_cart_object) {
             return unserialize($serialized_cart_object); // Unserialize data to get the object
