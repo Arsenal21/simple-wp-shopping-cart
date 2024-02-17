@@ -526,27 +526,24 @@ function wpspc_cart_actions_handler() {
 		wpspsc_apply_cart_discount( $coupon_code );
 		//Redirect to the anchor if the anchor option is enabled. This redirect needs to be handled using JS.
 		wpsc_js_redirect_if_using_anchor();
-	} else if ( isset( $_POST['wpspsc_shipping_region_submit'] ) ) {
+	} else if ( isset( $_POST['wpsc_shipping_region_submit'] ) ) {
 		$nonce = $_REQUEST['_wpnonce'];
-		if ( ! wp_verify_nonce( $nonce, 'wspsc_shipping_region' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'wpsc_shipping_region' ) ) {
 			wp_die( 'Error! Nonce Security Check Failed!' );
 		}
 
-		$selected_shipping_region_str = isset( $_POST['wpspsc_shipping_region'] ) ? sanitize_text_field( $_POST['wpspsc_shipping_region'] ) : '';
+		$selected_shipping_region_str = isset( $_POST['wpsc_shipping_region'] ) ? sanitize_text_field( $_POST['wpsc_shipping_region'] ) : '';
 
 		$wspsc_cart = WSPSC_Cart::get_instance();
 
 		if (!check_shipping_region_str($selected_shipping_region_str)) {
-			$wspsc_cart->set_cart_action_msg('<div class="wpspsc_error_message">'.__("You must select your shipping region!", "wordpress-simple-paypal-shopping-cart").'</div>');
-			return;
+			$wspsc_cart->set_selected_shipping_region('-1');
+		}else{
+			$wspsc_cart->set_selected_shipping_region($selected_shipping_region_str);
 		}
 	
-		$wspsc_cart->set_selected_shipping_region($selected_shipping_region_str);
-
 		$wspsc_cart->calculate_cart_totals_and_postage();
 
-		$wspsc_cart->set_cart_action_msg('<div class="wpspsc_success_message">'.__("Regional shipping cost added!", "wordpress-simple-paypal-shopping-cart").'</div>');
-	
 		wpsc_js_redirect_if_using_anchor();
 	}
 }
@@ -812,8 +809,18 @@ function wspsc_front_side_enqueue_scripts() {
 	wp_register_script( "wspsc-checkout-cart-script", WP_CART_URL . "/assets/js/wspsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
 	$is_tnc_enabled = get_option('wp_shopping_cart_enable_tnc') !== '' ? 'true' : 'false';
 	wp_add_inline_script("wspsc-checkout-cart-script", "const wspscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
+	
 	$is_shipping_region_enabled = get_option('enable_shipping_by_region') !== '' ? 'true' : 'false';
 	wp_add_inline_script("wspsc-checkout-cart-script", "const wspscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
+	
+	if ($is_shipping_region_enabled) {
+		$configured_shipping_region_options  = get_option('wpsc_shipping_region_variations', array() );
+		$region_options  = array();
+		foreach ($configured_shipping_region_options as $region) {
+			$region_options[] = implode(':', array(strtolower($region['loc']), $region['type']));
+		}
+		wp_add_inline_script("wspsc-checkout-cart-script", "const wpscShippingRegionOptions = " . json_encode( $region_options ) .";" , 'before');
+	}
 }
 
 function wpspc_plugin_install() {

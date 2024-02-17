@@ -6,6 +6,13 @@ class WSPSC_Cart {
     private $post_type = "";
     protected static $instance = null;
     protected $cart_custom_values = "";
+
+    /**
+     * Having empty string, means the field was never selected. '-1' means, the field was selected once but not proper value was set.
+     * A proper shipping region string value would be like '<location in string>:<type in number>', i.e. 'london:2'.
+     *
+     * @var string A lookup string for calculating regional shipping cost.
+     */
     protected $selected_shipping_region = '';
 
     public $on_page_carts_div_count = 0;

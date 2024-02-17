@@ -322,10 +322,7 @@ function wpsc_get_country_name_by_country_code( $country_code ) {
 
 function wpsc_get_countries_opts( $selected = false ) {
     $countries = wpsc_get_countries();
-    $countries[''] = '—';
-
     asort( $countries );
-    array_unshift( $countries, array_pop( $countries ) );
 
     $out       = '';
     $tpl       = '<option value="%s"%s>%s</option>';

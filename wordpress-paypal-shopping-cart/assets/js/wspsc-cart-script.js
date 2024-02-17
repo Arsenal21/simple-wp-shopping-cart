@@ -1,9 +1,12 @@
 /**
  * NOTE: The following variables will be added by a wp_add_inline_script when certain conditions are met.
  * 
+ * External variables:
  * @var {boolean} wspscIsTncEnabled If terms and condition is enabled or not.
- * @var {boolean} wspscIsShippingRegionEnabled If terms and condition is enabled or not.
+ * @var {boolean} wspscIsShippingRegionEnabled If shipping region is enabled or not.
+ * @var {array} wpscShippingRegionOptions Available shipping region options if shipping region is enabled or empty array.
  */
+
 
 var wspscPaypalStandardCheckoutForms = document.querySelectorAll('.wspsc_checkout_form_standard');
 var wspscTncCheckboxes = document.querySelectorAll('.wp_shopping_cart_tnc_input');
@@ -12,9 +15,10 @@ var wspscTncContainerSelector = '.wp-shopping-cart-tnc-container';
 var wspscTncInputSelector = '.wp_shopping_cart_tnc_input';
 var wspscTncErrorDivSelector = '.wp-shopping-cart-tnc-error';
 
-var wpscShippingRegionContainerSelector = '.wp-shopping-cart-shipping-region-container';
-var wpscShippingRegionInputSelector = '.wp-shopping-cart-shipping-region-input';
-var wpscShippingRegionErrorDivSelector = '.wp-shopping-cart-shipping-region-error';
+var wpscShippingRegionContainerSelector = '.wpsc-shipping-region-container';
+var wpscShippingRegionInputSelector = '.wpsc-shipping-region-input';
+var wpscShippingRegionSelected = '.wpsc_shipping_region_selected';
+var wpscShippingRegionErrorDivSelector = '.wpsc-shipping-region-error';
 var wpscShippingRegionInputs = document.querySelectorAll(wpscShippingRegionInputSelector);
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -146,9 +150,8 @@ function wspsc_validateShippingRegion(context, showErrorMsg = true) {
 			wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
 		}
 
-		const shippingRegionInput = shippingRegionContainer.querySelector(wpscShippingRegionInputSelector);
-
-		if (shippingRegionInput.value == '' || shippingRegionInput.value == '-1') {
+		const shippingRegionSelected = shippingRegionContainer.querySelector(wpscShippingRegionSelected);
+		if (!wpscShippingRegionOptions.includes(shippingRegionSelected.value)) {
 			return false;
 		}
 	}
@@ -163,9 +166,9 @@ function wspsc_validateShippingRegion(context, showErrorMsg = true) {
  * @param {HTMLElement} shippingRegionContainer The container element of the target shippingRegion select input to display errors.
  */
 function wspsc_handleShippingRegionErrorMsg(shippingRegionContainer) {
-	const shippingRegionInput = shippingRegionContainer.querySelector(wpscShippingRegionInputSelector);
+	const shippingRegionSelected = shippingRegionContainer.querySelector(wpscShippingRegionSelected);
 	const shippingRegionErrorDiv = shippingRegionContainer.querySelector(wpscShippingRegionErrorDivSelector);
-	if (!shippingRegionInput.value || shippingRegionInput.value == '-1') {
+	if (!wpscShippingRegionOptions.includes(shippingRegionSelected.value)) {
 		shippingRegionErrorDiv.innerText = wp.i18n.__("You must select a shipping region before you can proceed.", "wordpress-simple-paypal-shopping-cart");
 	} else {
 		shippingRegionErrorDiv.innerText = "";

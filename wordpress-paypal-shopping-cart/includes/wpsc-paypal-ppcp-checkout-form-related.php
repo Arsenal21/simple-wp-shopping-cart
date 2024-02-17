@@ -45,7 +45,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     $txn_success_extra_msg = __('Feel free to add more items to your shopping cart for another checkout.', 'wordpress-simple-paypal-shopping-cart');
 
     $is_tnc_enabled = get_option( 'wp_shopping_cart_enable_tnc' ) != '';
-
+    $is_shipping_by_region_enabled = get_option('enable_shipping_by_region');
     /****************************
      * PayPal SDK related settings
      ****************************/
@@ -105,6 +105,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
     <script type="text/javascript">
         var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
+        var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
 
         document.addEventListener( "wpsc_paypal_sdk_loaded", function() { 
             //Anything that goes here will only be executed after the PayPal SDK is loaded.
@@ -173,22 +174,36 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 if (!wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
                     actions.disable();
                 }
+                if (!wspsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
+                    actions.disable();
+                }
 
                 // Listen for changes to the required fields.
                 document.querySelectorAll('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').forEach( function(element) {
                     element.addEventListener('change', function () {
+                        let isAnyValidationError = false;
+
                         if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
-                            actions.disable();
-                            return;
+                            isAnyValidationError = true;
                         }
 
-                        // Also check if terms and condition has checked.
+                        // Check if terms and condition has checked.
                         if (wpspscTncEnabled) {
-                            if (wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
-                                actions.enable();
-                            } else {
-                                actions.disable();
+                            if (!wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
+                                isAnyValidationError = true;
                             }
+                        }
+
+                        // Check if shipping by region has selected.
+                        if (wpscShippingRegionEnabled){
+                            if (!wspsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
+                                isAnyValidationError = true;
+                            } 
+                        }
+
+                        if (isAnyValidationError) {
+                            // There is a validation error, don't proceed to checkout.
+                            actions.disable();
                         } else {
                             actions.enable();
                         }
@@ -209,7 +224,13 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                         cartNo: <?php echo $carts_cnt; ?>,
                     }
                 }));
-
+                
+                // Check if shipping region is enabled and append error message if validation fails.
+                if (wpscShippingRegionEnabled) {
+                    const shippingRegionContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wpscShippingRegionContainerSelector)
+                    wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
+                }
+                // Check if terms and condition is enabled and append error message if not checked.
                 if (wpspscTncEnabled) {
                     const tncContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wspscTncContainerSelector)
                     wspsc_handleTncErrorMsg(tncContainer);

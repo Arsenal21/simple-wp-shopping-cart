@@ -6,9 +6,20 @@ jQuery(document).ready(function(){
     jQuery('.wspsc_stripe_btn').on('click',function(e) {
         e.preventDefault();
         
+        let isAnyValidationError = false;
+        
+        // Validate shipping region.
+        if (!wspsc_validateShippingRegion(e.target)) {   
+            isAnyValidationError = true       
+        }
         // Validate terms and conditions.
         if (!wspsc_validateTnc(e.target)) {   
-            return       
+            isAnyValidationError = true       
+        }
+
+        if (isAnyValidationError) {
+            // There is a validation error, don't proceed to checkout.
+            return;
         }
 
         var form =jQuery(this).closest('.wspsc-stripe-payment-form');
