@@ -226,6 +226,7 @@ None
 = WIP =
 - Added more error logging messages for the PayPal Commerce Platform Checkout option.
 - New shipping by region feature added.
+- Fixed price calculation issue with stripe checkout.
 
 = 5.0.2 =
 - Added the 'category' parameter in the PPCP API call.

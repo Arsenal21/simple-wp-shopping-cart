@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	}
 
-	if (wspscIsTncEnabled) {
+	if (wspscIsShippingRegionEnabled) {
 		const wpscShippingRegionInputElements = document.querySelectorAll('.wpsc-shipping-region-input');
 		wpscShippingRegionInputElements.forEach(element => {
 			wpscShippingRegionInputElementsMeta[element.id] = {
