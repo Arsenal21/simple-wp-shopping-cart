@@ -167,14 +167,35 @@ class stripe_ipn_handler {
 				$item_counter++;
 			}
 		}
+
+		$orig_cart_postmeta = WSPSC_Cart::get_cart_from_postmeta($post_id);
+		
+		/**
+		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
+		 */
+		$this->ipn_data['regional_shipping_cost'] = 0;
+		$this->ipn_data['shipping_region'] = '';
+		$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
+		if ($selected_shipping_region) {
+			wspsc_log_payment_debug('Selected shipping region option: ', true);
+			wspsc_log_debug_array($selected_shipping_region, true);
+
+			$this->ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
+			$this->ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+		}
+
 		if (empty( $shipping )) {
 			$shipping = "0.00";
 		} else {
 			$baseShipping = get_option( 'cart_base_shipping_cost' );
-			$shipping = floatval( $shipping ) + floatval( $baseShipping );
+			$shipping = floatval( $shipping ) + floatval( $baseShipping ) + floatval( $this->ipn_data['regional_shipping_cost'] );
 			$shipping = wpspsc_number_format_price( $shipping );
 		}
+
+		wspsc_log_payment_debug('Total shipping cost: '.$shipping, true);
+
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
+		update_post_meta( $post_id, 'wpsc_shipping_region', $this->ipn_data['shipping_region'] );
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
 		$status = "Paid";
 		update_post_meta( $post_id, 'wpsc_order_status', $status );		
