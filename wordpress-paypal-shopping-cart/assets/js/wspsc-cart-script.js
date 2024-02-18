@@ -17,12 +17,12 @@ var wspscTncErrorDivSelector = '.wp-shopping-cart-tnc-error';
 
 var wpscShippingRegionContainerSelector = '.wpsc-shipping-region-container';
 var wpscShippingRegionInputSelector = '.wpsc-shipping-region-input';
-var wpscShippingRegionSelected = '.wpsc_shipping_region_selected';
 var wpscShippingRegionErrorDivSelector = '.wpsc-shipping-region-error';
 var wpscShippingRegionInputs = document.querySelectorAll(wpscShippingRegionInputSelector);
+var wpscShippingRegionInputElementsMeta = {};
 
 document.addEventListener('DOMContentLoaded', function () {
-
+	
 	// Check if standard paypal checkout form is enabled.
 	if (wspscPaypalStandardCheckoutForms !== null) {
 		wspscPaypalStandardCheckoutForms.forEach(form => {
@@ -52,6 +52,16 @@ document.addEventListener('DOMContentLoaded', function () {
 				wspsc_handleTncErrorMsg(tncContainer);
 			});
 		})
+	}
+
+	if (wspscIsTncEnabled) {
+		const wpscShippingRegionInputElements = document.querySelectorAll('.wpsc-shipping-region-input');
+		wpscShippingRegionInputElements.forEach(element => {
+			wpscShippingRegionInputElementsMeta[element.id] = {
+				id: element.id,
+				value: element.value,
+			}
+		});
 	}
 })
 
@@ -140,8 +150,9 @@ function wspsc_validateShippingRegion(context, showErrorMsg = true) {
 			wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
 		}
 
-		const shippingRegionSelected = shippingRegionContainer.querySelector(wpscShippingRegionSelected);
-		if (!wpscShippingRegionOptions.includes(shippingRegionSelected.value)) {
+		const wpscShippingRegionInputElement = shippingRegionContainer.querySelector(wpscShippingRegionInputSelector);
+		const wpscShippingRegionInputMeta = wpscShippingRegionInputElementsMeta[wpscShippingRegionInputElement.id]
+		if (!wpscShippingRegionOptions.includes(wpscShippingRegionInputMeta.value)) {
 			return false;
 		}
 	}
@@ -156,9 +167,12 @@ function wspsc_validateShippingRegion(context, showErrorMsg = true) {
  * @param {HTMLElement} shippingRegionContainer The container element of the target shippingRegion select input to display errors.
  */
 function wspsc_handleShippingRegionErrorMsg(shippingRegionContainer) {
-	const shippingRegionSelected = shippingRegionContainer.querySelector(wpscShippingRegionSelected);
 	const shippingRegionErrorDiv = shippingRegionContainer.querySelector(wpscShippingRegionErrorDivSelector);
-	if (!wpscShippingRegionOptions.includes(shippingRegionSelected.value)) {
+	const wpscShippingRegionInputElement = shippingRegionContainer.querySelector(wpscShippingRegionInputSelector);
+
+	const wpscShippingRegionInputMeta = wpscShippingRegionInputElementsMeta[wpscShippingRegionInputElement.id]
+
+	if (!wpscShippingRegionOptions.includes(wpscShippingRegionInputMeta.value)) {
 		shippingRegionErrorDiv.innerText = wp.i18n.__("You must select a shipping region before you can proceed.", "wordpress-simple-paypal-shopping-cart");
 	} else {
 		shippingRegionErrorDiv.innerText = "";

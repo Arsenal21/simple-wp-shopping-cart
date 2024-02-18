@@ -13,17 +13,22 @@ function show_wp_cart_shipping_settings_page()
                 wp_die('Error! Nonce Security Check Failed! Go back to email settings menu and save the settings again.');
         }
 
+        $enable_shipping_by_region_value = (isset($_POST['enable_shipping_by_region']) && !empty(sanitize_text_field($_POST['enable_shipping_by_region']))) ? 'checked="checked"':'' ;
         update_option('cart_base_shipping_cost', sanitize_text_field($_POST["cart_base_shipping_cost"]));
         update_option('cart_free_shipping_threshold', sanitize_text_field($_POST["cart_free_shipping_threshold"]));
-        update_option('enable_shipping_by_region', (isset($_POST['enable_shipping_by_region']) && $_POST['enable_shipping_by_region']!='') ? 'checked="checked"':'' );
+        update_option('enable_shipping_by_region', $enable_shipping_by_region_value );
 
         $wpsc_shipping_region_variations_base = filter_input( INPUT_POST, 'wpsc_shipping_region_variations_base', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
         $wpsc_shipping_region_variations_l    = filter_input( INPUT_POST, 'wpsc_shipping_region_variations_l', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
         $wpsc_shipping_region_variations_a    = filter_input( INPUT_POST, 'wpsc_shipping_region_variations_a', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-        $wpsc_shipping_variations_arr = array();
-
+        /**
+         * Check if all the three inputs related to shipping region variation option is not empty, only then update the option.
+         * This is to prevent updating the option with empty array and erase all configured variation option when shipping by region is disabled.
+         * But this also raise the problem of deleting the last item, which is solved by the later code block.
+         */
         if ( ! empty( $wpsc_shipping_region_variations_base ) && ! empty( $wpsc_shipping_region_variations_l ) && ! empty( $wpsc_shipping_region_variations_a ) ) {
+            $wpsc_shipping_variations_arr = array();
             foreach ( $wpsc_shipping_region_variations_base as $i => $type ) {
                 $l                    = filter_var( $wpsc_shipping_region_variations_l[ $i ], FILTER_DEFAULT );
                 $tax                  = floatval( filter_var( $wpsc_shipping_region_variations_a[ $i ], FILTER_DEFAULT ) );
@@ -33,9 +38,17 @@ function show_wp_cart_shipping_settings_page()
                     'amount' => $tax,
                 );
             }
+            update_option('wpsc_shipping_region_variations', $wpsc_shipping_variations_arr );
         }
 
-        update_option('wpsc_shipping_region_variations', $wpsc_shipping_variations_arr );
+        /**
+         * Check if the last item needs to be deleted or not.
+         * The hidden input 'wpsc_shipping_region_variations_delete_last' will have the value of '1', set by javascript if the delete button of the last variation item is clicked.
+         */
+        $wpsc_shipping_region_variations_delete_last    = isset($_POST['wpsc_shipping_region_variations_delete_last']) && !empty(sanitize_text_field($_POST['wpsc_shipping_region_variations_delete_last']));
+        if ($wpsc_shipping_region_variations_delete_last) {
+            update_option('wpsc_shipping_region_variations', array() );
+        }
 
         echo '<div id="message" class="notice notice-success"><p><strong>';
         echo 'Shipping Settings Updated!';
@@ -55,7 +68,6 @@ function show_wp_cart_shipping_settings_page()
     }
 
     $wpsc_shipping_variations_arr  = get_option('wpsc_shipping_region_variations');
-    
     $t_var_line_tpl = '<tr>
                             <td>
                                 <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
@@ -181,12 +193,13 @@ function show_wp_cart_shipping_settings_page()
                 e.preventDefault();
                 if (confirm(aspTaxVarData.str.delConfirm)) {
                     jQuery(this).closest('tr').fadeOut(300, function () { jQuery(this).remove(); });
-                    
+                                    
                     // Check if the variation table gets empty. If so, hide the table.
                     const tableBody = jQuery('#wpsc-shipping-region-variations-tbl tbody tr');
                     console.log(tableBody);
                     if(tableBody.length < 2){
                         jQuery('#wpsc-shipping-region-variations-tbl').fadeOut(300);
+                        jQuery('#wpsc_shipping_region_variations_delete_last').val('1');
                     }
                 }
             });
@@ -269,6 +282,8 @@ function show_wp_cart_shipping_settings_page()
                 </table>
             </div>
         </div>
+        
+        <input type="hidden" id="wpsc_shipping_region_variations_delete_last" name="wpsc_shipping_region_variations_delete_last" value="0">
 
         <div class="submit">
             <input type="submit" class="button-primary" name="wpspc_shipping_settings_update" value="<?php echo (__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />

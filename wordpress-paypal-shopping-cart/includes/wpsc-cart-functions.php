@@ -642,7 +642,6 @@ function wspsc_generate_shipping_region_section($carts_cnt, $selected_option) {
 	$html .= '<option value="-1">'.__( 'Select a Region', 'wordpress-simple-paypal-shopping-cart' ).'</option>';
 	$html .= wpsc_get_shipping_region_opts($wpsc_shipping_variations_settings_arr, $selected_option);
 	$html .= '</select>';
-	$html .= '<input type="hidden" class="wpsc_shipping_region_selected" value="'.$selected_option.'" />';
 	$html .= '<span class="wpsc_select_region_button">';
 	$html .= '<input type="submit" name="wpsc_shipping_region_submit" class="wpsc_shipping_region_submit" value="'.__( 'Apply', 'wordpress-simple-paypal-shopping-cart' ).'" />';
 	$html .= '</span>';
