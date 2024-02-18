@@ -310,9 +310,6 @@ class WSPSC_Cart {
         $this->tax = $tax;
         $this->grand_total = $grand_total;
 
-        // Save cart post meta.
-        $this->save_cart_to_postmeta();
-
         return $grand_total;
     }
 

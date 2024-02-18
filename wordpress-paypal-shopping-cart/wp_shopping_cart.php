@@ -108,7 +108,7 @@ function wspsc_stripe_create_checkout_session() {
 	$return_url = get_option( 'cart_return_from_paypal_url' );
 	$cancel_url = get_option( 'cart_cancel_from_paypal_url' );
 	$secret_key = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_stripe_test_secret_key' ) : get_option( 'wpspc_stripe_live_secret_key' );
-	$cart_total = $wspsc_cart->get_cart_total();
+
 	$force_collect_address = get_option( 'wpspc_stripe_collect_address' );
 
 	//Custom field data. 
@@ -120,11 +120,6 @@ function wspsc_stripe_create_checkout_session() {
 
 	$postage_cost = $wspsc_cart->get_postage_cost();
 
-	//Rounding and formatting to avoid issues with Stripe's zero decimal currencies.
-	//Use round and then number_format to ensure that there is always 2 decimal places (even if the trailing zero is dropped by the round function)
-	$postage_cost = round( $postage_cost, 2 );
-	$postage_cost = number_format( $postage_cost, 2 );
-	
 	if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
 		$postage_cost = wpspsc_amount_in_cents( $postage_cost );
 	}
@@ -132,8 +127,6 @@ function wspsc_stripe_create_checkout_session() {
 	// Extracting individual parameters
 	$custom_metadata = array();
 	parse_str( $decoded_custom, $custom_metadata );
-
-	$cart_total = wpspsc_amount_in_cents( $cart_total );
 
 	if ( empty( $currency ) ) {
 		$currency = __( 'USD', 'wordpress-simple-paypal-shopping-cart' );
@@ -536,13 +529,18 @@ function wpspc_cart_actions_handler() {
 
 		$wspsc_cart = WSPSC_Cart::get_instance();
 
+		// Check to make sure selected shipping region option is not tempered.
 		if (!check_shipping_region_str($selected_shipping_region_str)) {
 			$wspsc_cart->set_selected_shipping_region('-1');
 		}else{
 			$wspsc_cart->set_selected_shipping_region($selected_shipping_region_str);
 		}
 	
+		// Recalculate to update all the price for new regional shipping cost.
 		$wspsc_cart->calculate_cart_totals_and_postage();
+
+        // Save the cart.
+        $wspsc_cart->save_cart_to_postmeta();
 
 		wpsc_js_redirect_if_using_anchor();
 	}

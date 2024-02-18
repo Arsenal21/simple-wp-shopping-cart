@@ -236,7 +236,20 @@ function wpsc_settings_output_sandbox_mode_msg(){
     }    
 }
 
-function wpspsc_amount_in_cents($amountFormatted) {
+/**
+ * Converts price amount to cents.
+ * 
+ * It uses round and then number_format to ensure that there is always 2 decimal places (even if the trailing zero is dropped by the round function).
+ * This is to avoid issues with Stripe's zero decimal currencies.
+ *
+ * @param int|float $amount The price amount to convert.
+ * 
+ * @return int Price in cents
+ */
+function wpspsc_amount_in_cents($amount) {
+    $amountFormatted = round( $amount, 2 );
+	$amountFormatted = number_format( $amountFormatted, 2 );
+
     $centsAmount = $amountFormatted;
 
     //if amount is not decimal. multiply by 100
