@@ -79,6 +79,10 @@ if ( isset( $_REQUEST["reset_wp_cart"] ) && ! empty( $_REQUEST["reset_wp_cart"] 
 
 	//resets cart and cart_id after payment is made.
 	$wspsc_cart->reset_cart_after_txn();
+
+	// Redirect to the same url without the 'reset_wp_cart' query arg, by if there is a cart in that page, the query doesn't create problem using the cart.
+	$after_cart_reset_redirect_url = remove_query_arg("reset_wp_cart");
+	wpsc_redirect_to_url( $after_cart_reset_redirect_url );
 }
 
 //Clear the cart if the customer landed on the thank you page (if this option is enabled)

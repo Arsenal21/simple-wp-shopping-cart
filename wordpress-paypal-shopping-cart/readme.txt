@@ -227,6 +227,7 @@ None
 - Added more error logging messages for the PayPal Commerce Platform Checkout option.
 - New shipping by region feature added.
 - Fixed price calculation issue with stripe checkout.
+- Fixe reset_wp_cart query issue of after checkout redirection.
 
 = 5.0.2 =
 - Added the 'category' parameter in the PPCP API call.
