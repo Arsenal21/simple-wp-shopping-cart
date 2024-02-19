@@ -122,6 +122,8 @@ function wspsc_stripe_create_checkout_session() {
 
 	if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
 		$postage_cost = wpspsc_amount_in_cents( $postage_cost );
+	}else{
+		$postage_cost = round( $postage_cost ); // To make sure there is no decimal place number for zero cents currency.
 	}
 
 	// Extracting individual parameters
@@ -169,6 +171,8 @@ function wspsc_stripe_create_checkout_session() {
 
 			if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
 				$item_price = wpspsc_amount_in_cents( $item_price );
+			}else{
+				$item_price = round( $item_price ); // To make sure there is no decimal place number for zero cents currency.
 			}
 
 			$lineItem = array(

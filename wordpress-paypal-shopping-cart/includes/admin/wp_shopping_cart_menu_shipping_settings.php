@@ -196,7 +196,6 @@ function show_wp_cart_shipping_settings_page()
                                     
                     // Check if the variation table gets empty. If so, hide the table.
                     const tableBody = jQuery('#wpsc-shipping-region-variations-tbl tbody tr');
-                    console.log(tableBody);
                     if(tableBody.length < 2){
                         jQuery('#wpsc-shipping-region-variations-tbl').fadeOut(300);
                         jQuery('#wpsc_shipping_region_variations_delete_last').val('1');
