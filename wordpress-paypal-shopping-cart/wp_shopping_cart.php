@@ -79,6 +79,10 @@ if ( isset( $_REQUEST["reset_wp_cart"] ) && ! empty( $_REQUEST["reset_wp_cart"] 
 
 	//resets cart and cart_id after payment is made.
 	$wspsc_cart->reset_cart_after_txn();
+
+	// Redirect to the same url without the 'reset_wp_cart' query arg, by if there is a cart in that page, the query doesn't create problem using the cart.
+	$after_cart_reset_redirect_url = remove_query_arg("reset_wp_cart");
+	wpsc_redirect_to_url( $after_cart_reset_redirect_url );
 }
 
 //Clear the cart if the customer landed on the thank you page (if this option is enabled)
@@ -122,6 +126,8 @@ function wspsc_stripe_create_checkout_session() {
 
 	if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
 		$postage_cost = wpspsc_amount_in_cents( $postage_cost );
+	}else{
+		$postage_cost = round( $postage_cost ); // To make sure there is no decimal place number for zero cents currency.
 	}
 
 	// Extracting individual parameters
@@ -169,6 +175,8 @@ function wspsc_stripe_create_checkout_session() {
 
 			if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
 				$item_price = wpspsc_amount_in_cents( $item_price );
+			}else{
+				$item_price = round( $item_price ); // To make sure there is no decimal place number for zero cents currency.
 			}
 
 			$lineItem = array(
