@@ -247,12 +247,14 @@ function show_wp_cart_shipping_settings_page()
                         <th scope="row"><?php _e("Enable Shipping by Region", "wordpress-simple-paypal-shopping-cart")?></th>
                         <td><input type="checkbox" name="enable_shipping_by_region" value="1" <?php echo $enable_shipping_by_region ?> />
                         <br />
-                        <p class="description"><?php _e('Check this if you want to enable adding shipping cost by region', 'wordpress-simple-paypal-shopping-cart') ?></p></td>
+                        <p class="description"><?php _e('Select this option to enable region based shipping cost additions.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                        <p class="description"><?php _e('You can define shipping regions and allocate extra shipping costs for each. Customers will choose their region from a list, and the relevant additional charge will be included in the total shipping cost.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                        </td>
                     </tr>
 
                     <?php if (!empty($enable_shipping_by_region)) {?>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Regional Shipping Variation", "wordpress-simple-paypal-shopping-cart")?></th>
+                        <th scope="row"><?php _e("Shipping Regions", "wordpress-simple-paypal-shopping-cart")?></th>
                         <td>
                             <div>
                                 <table class="" id="wpsc-shipping-region-variations-tbl"<?php echo empty( $out ) ? 'style="display:none;"' : ''; ?>>
@@ -274,7 +276,7 @@ function show_wp_cart_shipping_settings_page()
                                     <span class="dashicons dashicons-plus"></span> <?php _e( 'Add Shipping Variation', 'wordpress-simple-paypal-shopping-cart' ); ?>
                                 </button>
                             </p>
-                            <p class="description"><?php _e('Use this to configure shipping variations on a per-region basis.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                            <p class="description"><?php _e('Use this to configure shipping additions on a per-region basis.', 'wordpress-simple-paypal-shopping-cart') ?></p>
                         </td>
                     </tr>
                     <?php } ?>

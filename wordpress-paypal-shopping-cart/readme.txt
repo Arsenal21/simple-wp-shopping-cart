@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
 Requires at least: 5.5
 Tested up to: 6.4
-Stable tag: 5.0.2
+Stable tag: 5.0.3
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -76,8 +76,8 @@ or
 * Ability to add a compact shopping cart to your site using a shortcode.
 * Ability to show shopping cart with product image thumbnails.
 * Ability to use a custom checkout page style.
-* Ability to open checkout page in a new browser tab/window.
-* Ability to use TinyMCE shortcode inserter to add shortcodes to your posts/pages.
+* Ability to configure region based shipping additions.
+* Ability to use blocks to add the 'add to cart' button and the 'shopping cart' to your posts/pages/sidebar.
 * Works nicely with responsive WordPress themes.
 * Can be translated into any language.
 * and more...
@@ -156,6 +156,8 @@ Add the following shortcode where you want to show the compact shopping cart:
 or use the following php function from your wordpress template files
 <?php echo print_wp_cart_button_for_product('product name',price,shipping cost); ?>
 
+Visit the [shipping setup documentation page](https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-how-the-shipping-cost-calculation-works-297) for more details.
+
 = Using Variation Control =
 
 1. To use variation control use the variation parameter in the shortcode:
@@ -223,11 +225,12 @@ None
 
 == Changelog ==
 
-= WIP =
+= 5.0.3 =
+- Added a new shipping amount additions by region feature.
+- The shipping related settings have been moved to a new tab in the settings menu.
 - Added more error logging messages for the PayPal Commerce Platform Checkout option.
-- New shipping by region feature added.
-- Fixed price calculation issue with stripe checkout.
-- Fixe reset_wp_cart query issue of after checkout redirection.
+- Updated the reset_wp_cart query after checkout redirection.
+- Fixed a price calculation issue with the stripe checkout.
 
 = 5.0.2 =
 - Added the 'category' parameter in the PPCP API call.
