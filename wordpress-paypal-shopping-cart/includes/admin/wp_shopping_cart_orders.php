@@ -92,11 +92,11 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td><input type="text" size="40" name="wpsc_ipaddress" value="<?php echo esc_attr($ip_address); ?>" /></td>
         </tr>
         <tr>
-            <td><?php _e("Total", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php _e("Total Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_total_amount" value="<?php echo esc_attr($total_amount); ?>" /></td>
         </tr>
         <tr>
-            <td><?php _e("Shipping", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php _e("Shipping Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_shipping_amount" value="<?php echo esc_attr($shipping_amount); ?>" /></td>
         </tr>
         <?php if ($shipping_region) { ?>
@@ -110,8 +110,7 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td>
                 <textarea name="wpsc_address" cols="83" rows="2"><?php echo esc_attr($address); ?></textarea>
                 <p class="description">
-                    <?php _e("An address value will only be present if the order has physical item(s) with shipping amount. ", "wordpress-simple-paypal-shopping-cart"); ?>
-                    <?php _e("If you want to collect address for all orders then enable the 'Must Collect Shipping Address on PayPal' option from the plugin settings.", "wordpress-simple-paypal-shopping-cart"); ?>
+                    <?php _e("An address value is usually provided when the order includes physical items that require shipping. ", "wordpress-simple-paypal-shopping-cart"); ?>
                 </p>
             </td>
         </tr>
