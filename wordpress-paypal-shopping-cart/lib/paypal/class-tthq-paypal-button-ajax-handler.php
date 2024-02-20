@@ -99,7 +99,7 @@ class PayPal_Button_Ajax_Hander {
 			//At least one item is not digital. Get the customer-provided shipping address on the PayPal site.
 			$shipping_preference = 'GET_FROM_FILE';//This is also the default value for the shipping preference.
 		}
-		PayPal_Utility_Functions::log("Shipping preference based on are all items digital flag: " . $shipping_preference, true);
+		PayPal_Utility_Functions::log("Shipping preference based on the 'all items digital' flag: " . $shipping_preference, true);
 
 		// Create the order using the PayPal API.
 		// https://developer.paypal.com/docs/api/orders/v2/#orders_create

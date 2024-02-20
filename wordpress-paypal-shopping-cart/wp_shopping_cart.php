@@ -115,6 +115,18 @@ function wspsc_stripe_create_checkout_session() {
 
 	$force_collect_address = get_option( 'wpspc_stripe_collect_address' );
 
+	//Get the shipping address collection preference.
+	// $all_items_digital = $wspsc_cart->all_cart_items_digital();
+	// if( $all_items_digital ){
+	// 	//This will only happen if the shortcode attribute 'digital' is set to '1' for all the items in the cart. 
+	// 	//So we don't need to check postage cost.
+	// 	$shipping_preference = 'no_shipping';
+	// } else {
+	// 	//At least one item is not digital. Get the customer to provide shipping address on the Stripe checkout page.
+	// 	$shipping_preference = 'required';
+	// }
+	//wspsc_log_payment_debug("Shipping preference based on the 'all items digital' flag: " . $shipping_preference, true);
+
 	//Custom field data. 
 	//Decode the custom field before sanitizing.
 	$custom_input = isset( $_POST['custom'] ) ? $_POST['custom'] : '';
@@ -159,6 +171,13 @@ function wspsc_stripe_create_checkout_session() {
 			'mode' => 'payment',
 			'success_url' => $stripe_ipn_url
 		);
+
+		//TODO - add a settings option to allow the site admin to set the allowed countries.
+		// if ( $shipping_preference == 'required' ) {
+		// 	$opts['shipping_address_collection'] = array(
+		// 		'allowed_countries' => array( 'US', 'CA', 'GB', 'AU' ),
+		// 	);
+		// }
 
 		if ( ! empty( $cancel_url ) ) {
 			$opts["cancel_url"] = $cancel_url;

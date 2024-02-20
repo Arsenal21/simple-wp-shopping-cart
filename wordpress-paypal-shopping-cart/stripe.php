@@ -401,10 +401,10 @@ class stripe_ipn_handler {
 		$address = '';
 		foreach ($address_array as $value) {
 			if (!empty($value)) {
-				$address .= $value . ',';
+				$address .= $value . ', ';
 			}
 		}
-		$address = rtrim($address, ',');
+		$address = rtrim($address, ', ');
 
 		$price_in_cents = floatval($data['amount_received']);
 		$currency_code_payment = strtoupper($data['currency']);
