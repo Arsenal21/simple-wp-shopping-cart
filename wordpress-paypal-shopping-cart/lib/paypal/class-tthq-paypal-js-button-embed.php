@@ -119,15 +119,27 @@ class PayPal_JS_Button_Embed {
 		$script_url = add_query_arg( $sdk_args, 'https://www.paypal.com/sdk/js' );
 		?>
 		<script type="text/javascript">
-			var script = document.createElement( 'script' );
-			script.type = 'text/javascript';
-			script.setAttribute( 'data-partner-attribution-id', 'TipsandTricks_SP_PPCP' );
-			script.async = true;
-			script.src = '<?php echo esc_url_raw( $script_url ); ?>';	
-			script.onload = function () {
-				document.dispatchEvent(new Event('wpsc_paypal_sdk_loaded'));//REPLACE: plugin prefix across different plugins.
-			};
-			document.getElementsByTagName( 'head' )[0].appendChild( script );
+			wpsc_onDocumentReady(function(){
+				var script = document.createElement( 'script' );
+				script.type = 'text/javascript';
+				script.setAttribute( 'data-partner-attribution-id', 'TipsandTricks_SP_PPCP' );
+				script.async = true;
+				script.src = '<?php echo esc_url_raw( $script_url ); ?>';	
+				script.onload = function () {
+					document.dispatchEvent(new Event('wpsc_paypal_sdk_loaded'));//REPLACE: plugin prefix across different plugins.
+				};
+				document.getElementsByTagName( 'head' )[0].appendChild( script );
+			})
+
+			function wpsc_onDocumentReady(callback) {
+            	// If the document is already loaded, execute the callback immediately
+				if (document.readyState !== 'loading') {
+					callback();
+				} else {
+					// Otherwise, wait for the DOMContentLoaded event
+					document.addEventListener('DOMContentLoaded', callback);
+				}
+			}
 		</script>
 		<?php
 	}
