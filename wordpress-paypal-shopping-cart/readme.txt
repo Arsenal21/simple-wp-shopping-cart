@@ -224,8 +224,10 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
 = WIP =
-- Race condition issue fixed.
+- Updated the PPCP JavaScript SDK loading code to improve the race condition that may occur on some sites.
+- Language translation POT file updated.
 
 = 5.0.3 =
 - Added a new shipping amount additions by region feature.
