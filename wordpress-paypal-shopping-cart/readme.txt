@@ -224,6 +224,8 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+= WIP =
+- Race condition issue fixed.
 
 = 5.0.3 =
 - Added a new shipping amount additions by region feature.
