@@ -357,7 +357,7 @@ function check_shipping_region_str($str){
     $str_to_arr = explode(':', $str);
 
     foreach ($available_region_options as $region) {
-        if ($str_to_arr[0] === strtolower($region['loc']) && $str_to_arr[1] == $region['type']) {
+        if ($str_to_arr[0] === strtolower($region['loc']) && isset($str_to_arr[1]) && $str_to_arr[1] == $region['type']) {
             // The shipping region string is valid, return the original array element.
             return $region;
         }

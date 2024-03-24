@@ -662,24 +662,57 @@ function wspsc_generate_shipping_region_section($carts_cnt, $selected_option) {
  */
 function wpsc_get_shipping_region_opts( $region_options, $selected = false ) {
 	$countries = wpsc_get_countries();
-	$out       = '';
-	$tpl = '<option value="%s" %s> %s </option>';
+
+	// Replace the country code with country name. This also helps to sort properly.
+	$region_options = array_map( function( $region ) use ( $countries ,  $selected){
+		$region['loc'] = sanitize_text_field($region['loc']); // option display text
+		$region['type'] = sanitize_text_field($region['type']);
+
+		$lookup_str = implode(':', array(strtolower($region['loc']), $region['type']));
+
+		$region['lookup_str'] = $lookup_str; // option value
+		$region['selected_str'] = $selected !== false && ($lookup_str === $selected) ? 'selected' : ''; // option 'selected' string
+
+		if($region['type'] === '0'){
+			$region['loc'] = $countries[$region['loc']]; 
+		}
+		return $region;
+	}, $region_options);
+
+	sort($region_options);
+
+	$option_tpl = '<option value="%s" %s> %s </option>';
+	$optgroup_tpl = '<optgroup label="%s"> %s </optgroup>';
+	
+	$option_countries = '';
+	$option_states = '';
+	$option_cities = '';
+	
 	foreach ($region_options as $key => $region) {
-		$selected_str = '';
-		$value = implode(':', array(strtolower($region['loc']), $region['type']));
-		if ($selected) {
-			$selected_str = $value === $selected ? 'selected' : '';
+		switch($region['type']){
+			case 1:
+				$option_states .= sprintf( $option_tpl, $region['lookup_str'], $region['selected_str'], $region['loc'] );;
+				break;
+			case 2:
+				$option_cities .= sprintf( $option_tpl, $region['lookup_str'], $region['selected_str'], $region['loc'] );;
+				break;
+			default:
+				$option_countries .= sprintf( $option_tpl, $region['lookup_str'], $region['selected_str'], $region['loc'] );
+				break;
 		}
-		$text = '';
-
-		if ($region['type'] == '0') {
-			$text .= $countries[$region['loc']];
-		}else{
-			$text .= $region['loc'];
-		}
-
-		$out .= sprintf( $tpl, $value, $selected_str, $text );
 	}
 
-    return $out;
+	$html = '';
+
+	if (!empty($option_countries)) {
+		$html .= sprintf($optgroup_tpl, __('Country', 'wordpress-simple-paypal-shopping-cart'),  $option_countries);
+	}
+	if (!empty($option_states)) {
+		$html .= sprintf($optgroup_tpl, __('State', 'wordpress-simple-paypal-shopping-cart'),  $option_states);
+	}
+	if (!empty($option_cities)) {
+		$html .= sprintf($optgroup_tpl, __('City', 'wordpress-simple-paypal-shopping-cart'),  $option_cities);	
+	}
+
+    return $html;
 }
