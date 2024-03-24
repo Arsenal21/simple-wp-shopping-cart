@@ -1,10 +1,10 @@
 === WordPress Simple Shopping Cart ===
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
-Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart, compact cart, coupon, discount
+Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 5.5
-Tested up to: 6.4
-Stable tag: 5.0.3
+Tested up to: 6.5
+Stable tag: 5.0.4
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -225,9 +225,11 @@ None
 
 == Changelog ==
 
-= WIP =
+= 5.0.4 =
 - Updated the PPCP JavaScript SDK loading code to improve the race condition that may occur on some sites.
 - Language translation POT file updated.
+- The shipping region based shipping amount feature now list the countries in alphabetical order.
+- Added a notice in the admin interface to inform the users about switching from PayPal Smart checkout to the PayPal PPCP checkout.
 
 = 5.0.3 =
 - Added a new shipping amount additions by region feature.

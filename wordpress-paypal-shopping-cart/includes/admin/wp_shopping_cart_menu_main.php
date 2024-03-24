@@ -99,3 +99,27 @@ function wspsc_settings_interface() {
     echo '</div>';
 }
 
+
+/*******************************************************************
+ * Admin Notice to prompt users to switch to the new PayPal settings
+ *******************************************************************/
+function wpsc_dashboard_admin_notices(){
+	//Smart Checkout
+	$enable_smart_checkout = get_option( 'wpspc_enable_pp_smart_checkout' );
+
+	if( $enable_smart_checkout ){
+		//The site has the old smart PayPal checkout enabled. Prompt the user to switch to the new PayPal PPCP settings.
+		?>
+		<div class="notice notice-warning is-dismissible">
+			<p><?php _e('You are using the old PayPal Smart Checkout option in the "Simple Shopping Cart" plugin. Please switch to the new PayPal PPCP option for better security and functionaliy.', 'wordpress-simple-paypal-shopping-cart'); ?></p>
+			<p><a href="<?php echo admin_url('admin.php?page=wspsc-menu-main&action=ppcp-settings'); ?>"><?php _e('Switch to the new PayPal Commerce Platform API by configuring the API credentials', 'wordpress-simple-paypal-shopping-cart'); ?></a></p>
+		</div>
+		<?php
+	}
+
+}
+
+if( is_admin() ) {
+	// Add the admin notices hook
+	add_filter('admin_notices', 'wpsc_dashboard_admin_notices');
+}
