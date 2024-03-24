@@ -70,6 +70,12 @@ class PayPal_JS_Button_Embed {
 		//Reference - https://developer.paypal.com/sdk/js/configuration/
 		$sdk_args = array();
 		$sdk_args['client-id'] = $args['is_live_mode'] ? $args['live_client_id'] : $args['sandbox_client_id'];
+		if( empty($sdk_args['client-id']) ){
+			//Client ID is required. Add a log entry for this.
+			$env_mode_name = $args['is_live_mode'] ? 'Live' : 'Sandbox';
+			PayPal_Utility_Functions::log( 'PayPal client ID is missing in the settings for environment mode: ' . $env_mode_name, false );
+		}
+
 		$sdk_args['intent'] = isset($args['intent']) ? $args['intent'] : 'capture';
 		$sdk_args['currency'] = $args['currency'];
 
