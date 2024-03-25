@@ -68,6 +68,7 @@ function show_wp_cart_shipping_settings_page()
     }
 
     $wpsc_shipping_variations_arr  = get_option('wpsc_shipping_region_variations');
+
     $t_var_line_tpl = '<tr>
                             <td>
                                 <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
@@ -96,29 +97,6 @@ function show_wp_cart_shipping_settings_page()
                                 </button>
                             </td>
                         </tr>';
-
-    $out = '';
-    if ( ! empty( $wpsc_shipping_variations_arr ) ) {
-        foreach ( $wpsc_shipping_variations_arr as $v ) {
-            $c_code = '0' === $v['type'] ? $v['loc'] : '';
-            $out   .= sprintf(
-                $t_var_line_tpl,
-                wpsc_get_countries_opts( $c_code ),
-                $v['amount'],
-                '0' === $v['type'] ? '' : 'display:none',
-                '1' === $v['type'] ? '' : 'display:none',
-                '2' === $v['type'] ? '' : 'display:none',
-                '0' === $v['type'] ? '' : 'disabled',
-                '1' === $v['type'] ? '' : 'disabled',
-                '2' === $v['type'] ? '' : 'disabled',
-                '1' === $v['type'] ? $v['loc'] : '',
-                '2' === $v['type'] ? $v['loc'] : '',
-                '0' === $v['type'] ? 'selected' : '',
-                '1' === $v['type'] ? 'selected' : '',
-                '2' === $v['type'] ? 'selected' : ''
-            );
-        }
-    }
 
     //Show the documentation message
     wpspsc_settings_menu_documentation_msg();    
@@ -257,7 +235,7 @@ function show_wp_cart_shipping_settings_page()
                         <th scope="row"><?php _e("Shipping Regions", "wordpress-simple-paypal-shopping-cart")?></th>
                         <td>
                             <div>
-                                <table class="" id="wpsc-shipping-region-variations-tbl"<?php echo empty( $out ) ? 'style="display:none;"' : ''; ?>>
+                                <table class="" id="wpsc-shipping-region-variations-tbl"<?php echo empty( $wpsc_shipping_variations_arr ) ? 'style="display:none;"' : ''; ?>>
                                     <thead>
                                         <tr id="wpsc-shipping-region-variations-tbl-header-row">
                                             <th style="width: 20%;"><?php esc_html_e( 'Type', 'wordpress-simple-paypal-shopping-cart' ); ?></th>
@@ -267,7 +245,43 @@ function show_wp_cart_shipping_settings_page()
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php echo $out; ?>
+                                        <?php 
+                                        foreach ( $wpsc_shipping_variations_arr as $v ) {
+                                            $c_code = '0' === $v['type'] ? $v['loc'] : '';
+                                        ?>
+
+                                        <tr>
+                                            <td>
+                                                <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
+                                                    <option value="0" <?php echo '0' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'Country', 'stripe-payments' ) ?></option>
+                                                    <option value="1" <?php echo '1' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'State', 'stripe-payments' ) ?></option>
+                                                    <option value="2" <?php echo '2' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'City', 'stripe-payments' ) ?></option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="wpsc-shipping-region-variations-cont-type-0" style="<?php echo '0' === $v['type'] ? '' : 'display:none' ?>">
+                                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" <?php echo '0' === $v['type'] ? '' : 'disabled' ?>>
+                                                        <?php echo wpsc_get_countries_opts( $c_code ) ?>
+                                                    </select>
+                                                </div>
+                                                <div class="wpsc-shipping-region-variations-cont-type-1" style="<?php echo '1' === $v['type'] ? '' : 'display:none' ?>">
+                                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" <?php echo '1' === $v['type'] ? '' : 'disabled' ?> value="<?php echo '1' === $v['type'] ? $v['loc'] : '' ?>">
+                                                </div>
+                                                <div class="wpsc-shipping-region-variations-cont-type-2" style="<?php echo '2' === $v['type'] ? '' : 'display:none' ?>">
+                                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" <?php echo '2' === $v['type'] ? '' : 'disabled' ?> value="<?php echo '2' === $v['type'] ? $v['loc'] : '' ?>">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_a[]" value="<?php esc_attr_e($v['amount']) ?>">
+                                            </td>
+                                            <td>
+                                                <button type="button" class="button wpsc-shipping-region-variations-del-btn wpsc-shipping-region-variations-del-btn-small">
+                                                    <span class="dashicons dashicons-trash" title="<?php _e( 'Delete variation', 'stripe-payments' ) ?>"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
