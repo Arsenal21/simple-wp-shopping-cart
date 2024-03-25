@@ -661,29 +661,10 @@ function wspsc_generate_shipping_region_section($carts_cnt, $selected_option) {
  * @return string HTML option elements as string.
  */
 function wpsc_get_shipping_region_opts( $region_options, $selected = '' ) {
-	$countries = wpsc_get_countries();
-
-	// Replace the country code with country name. This also helps to sort properly.
-	$region_options = array_map( function( $region ) use ( $countries ,  $selected){
-		$region['loc'] = sanitize_text_field($region['loc']); // option display text
-		$region['type'] = sanitize_text_field($region['type']);
-
-		$lookup_str = implode(':', array(strtolower($region['loc']), $region['type']));
-
-		$region['lookup_str'] = $lookup_str; // option value
-		
-		// Check if the option is selected.
-		$region['selected_str'] = !empty($selected) && ($lookup_str === $selected) ? 'selected' : ''; // option 'selected' string
-
-		if($region['type'] === '0'){
-			$region['loc'] = $countries[$region['loc']]; 
-		}
-		return $region;
-	}, $region_options);
-
-	sort($region_options);
 	
-	$options_group = array(
+	$options = wpsc_process_region_opts($region_options, $selected);
+
+	$options_groups = array(
 		'country' => array(
 			'title' => __('Country', 'wordpress-simple-paypal-shopping-cart'),
 			'options' => '',
@@ -698,28 +679,65 @@ function wpsc_get_shipping_region_opts( $region_options, $selected = '' ) {
 		),
 	);
 
-	foreach ($region_options as $region) {
-		$option = '<option value="' . esc_attr($region['lookup_str']) . '" ' . $region['selected_str'] . '>' . esc_attr($region['loc']) . '</option>';
-		switch($region['type']){
+	foreach ($options as $option) {
+		$option_html = '<option value="' . esc_attr($option['lookup_str']) . '" ' . $option['selected_str'] . '>' . esc_attr($option['loc']) . '</option>';
+		switch($option['type']){
 			case 1:
-				$options_group['state']['options'] .= $option;
+				$options_groups['state']['options'] .= $option_html;
 				break;
 			case 2:
-				$options_group['city']['options'] .= $option;
+				$options_groups['city']['options'] .= $option_html;
 				break;
 			default:
-				$options_group['country']['options'] .= $option;
+				$options_groups['country']['options'] .= $option_html;
 				break;
 		}
 	}
 
 	$html = '';
 
-	foreach ($options_group as $group) {
+	foreach ($options_groups as $group) {
 		if (!empty($group['options'])) {
 			$html .= '<optgroup label="' . $group['title'] . '">' . $group['options'] . '</optgroup>';
 		}
 	}
 
     return $html;
+}
+
+/**
+ * Process and sort region options array.
+ *
+ * @param array $region_options Array of region option lookup string.
+ * @param string $selected Selected option. Empty if no option selected.
+ * 
+ * @return array Processed region options.
+ */
+function wpsc_process_region_opts(&$region_options, $selected ){
+	$countries = wpsc_get_countries();
+
+	$processed_options = array();
+
+	foreach ($region_options as $region) {
+		$region['loc'] = sanitize_text_field($region['loc']); // option display text
+		$region['type'] = sanitize_text_field($region['type']);
+
+		$lookup_str = implode(':', array(strtolower($region['loc']), $region['type']));
+
+		$region['lookup_str'] = $lookup_str; // option value
+		
+		// Check if the option is selected.
+		$region['selected_str'] = !empty($selected) && ($lookup_str === $selected) ? 'selected' : ''; // option 'selected' string
+
+		if($region['type'] === '0'){
+			// Replace the country code with country name. This also helps to sort properly.
+			$region['loc'] = $countries[$region['loc']]; 
+		}
+
+		array_push($processed_options, $region);
+	}
+
+	sort($processed_options);
+
+	return $processed_options;
 }
