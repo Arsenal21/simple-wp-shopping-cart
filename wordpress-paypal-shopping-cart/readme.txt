@@ -224,6 +224,8 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+= WIP =
+- Fixed special character issue in shipping variation settings.
 
 = 5.0.4 =
 - Updated the PPCP JavaScript SDK loading code to improve the race condition that may occur on some sites.

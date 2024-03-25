@@ -114,7 +114,7 @@ function show_wp_cart_shipping_settings_page()
     </style>
     <script>
         jQuery($).ready(function(){
-            let aspTaxVarData = <?php echo json_encode(	array(
+            let wpscShippingVarData = <?php echo json_encode(	array(
 				'cOpts'             => wpsc_get_countries_opts(),
 				'disabledForSub'    => empty($enable_shipping_by_region),
 				'text'               => array(
@@ -127,17 +127,17 @@ function show_wp_cart_shipping_settings_page()
 			)) ?>;
             jQuery('#wpsc-shipping-region-variations-add-btn').click(function (e) {
                 e.preventDefault();
-                var variationRowTpl = `<tr>
+                const variationRowTpl = `<tr>
                             <td>
                                 <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
-                                    <option value="0">${aspTaxVarData.text.country}</option>
-                                    <option value="1">${aspTaxVarData.text.state}</option>
-                                    <option value="2">${aspTaxVarData.text.city}</option>
+                                    <option value="0">${wpscShippingVarData.text.country}</option>
+                                    <option value="1">${wpscShippingVarData.text.state}</option>
+                                    <option value="2">${wpscShippingVarData.text.city}</option>
                                 </select>
                             </td>
                             <td>
                                 <div class="wpsc-shipping-region-variations-cont-type-0">
-                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]">${aspTaxVarData.cOpts}</select>
+                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]">${wpscShippingVarData.cOpts}</select>
                                 </div>
                                 <div class="wpsc-shipping-region-variations-cont-type-1" style="display:none;">
                                     <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]" type="text" disabled value="">
@@ -151,12 +151,12 @@ function show_wp_cart_shipping_settings_page()
                             </td>
                             <td>
                                 <button type="button" class="button wpsc-shipping-region-variations-del-btn wpsc-shipping-region-variations-del-btn-small">
-                                    <span class="dashicons dashicons-trash" title="${aspTaxVarData.text.delButton}"></span>
+                                    <span class="dashicons dashicons-trash" title="${wpscShippingVarData.text.delButton}"></span>
                                 </button>
                             </td>
                         </tr>`;
 
-                var variationRowTplHidden = jQuery(variationRowTpl).css('display', 'none');
+                const variationRowTplHidden = jQuery(variationRowTpl).css('display', 'none');
                 jQuery('#wpsc-shipping-region-variations-tbl').find('tbody').append(variationRowTplHidden);
                 jQuery('#wpsc-shipping-region-variations-tbl').show();
                 variationRowTplHidden.fadeIn(200);
@@ -164,7 +164,7 @@ function show_wp_cart_shipping_settings_page()
 
             jQuery('#wpsc-shipping-region-variations-tbl').on('click', 'button.wpsc-shipping-region-variations-del-btn', function (e) {
                 e.preventDefault();
-                if (confirm(aspTaxVarData.text.delConfirm)) {
+                if (confirm(wpscShippingVarData.text.delConfirm)) {
                     jQuery(this).closest('tr').fadeOut(300, function () { jQuery(this).remove(); });
                                     
                     // Check if the variation table gets empty. If so, hide the table.
