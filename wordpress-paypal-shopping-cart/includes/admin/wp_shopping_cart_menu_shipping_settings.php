@@ -18,23 +18,23 @@ function show_wp_cart_shipping_settings_page()
         update_option('cart_free_shipping_threshold', sanitize_text_field($_POST["cart_free_shipping_threshold"]));
         update_option('enable_shipping_by_region', $enable_shipping_by_region_value );
 
-        $wpsc_shipping_region_variations_base = filter_input( INPUT_POST, 'wpsc_shipping_region_variations_base', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-        $wpsc_shipping_region_variations_l    = filter_input( INPUT_POST, 'wpsc_shipping_region_variations_l', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-        $wpsc_shipping_region_variations_a    = filter_input( INPUT_POST, 'wpsc_shipping_region_variations_a', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-
+        $wpsc_shipping_region_variations_base = isset($_POST['wpsc_shipping_region_variations_base']) ? array_map('sanitize_text_field', $_POST['wpsc_shipping_region_variations_base']) : array();
+        $wpsc_shipping_region_variations_loc = isset($_POST['wpsc_shipping_region_variations_loc']) ? array_map('sanitize_text_field', $_POST['wpsc_shipping_region_variations_loc']) : array();
+        $wpsc_shipping_region_variations_amt = isset($_POST['wpsc_shipping_region_variations_amt']) ? array_map('sanitize_text_field', $_POST['wpsc_shipping_region_variations_amt']) : array();
+        
         /**
          * Check if all the three inputs related to shipping region variation option is not empty, only then update the option.
          * This is to prevent updating the option with empty array and erase all configured variation option when shipping by region is disabled.
          * But this also raise the problem of deleting the last item, which is solved by the later code block.
          */
-        if ( ! empty( $wpsc_shipping_region_variations_base ) && ! empty( $wpsc_shipping_region_variations_l ) && ! empty( $wpsc_shipping_region_variations_a ) ) {
+        if ( ! empty( $wpsc_shipping_region_variations_base ) && ! empty( $wpsc_shipping_region_variations_loc ) && ! empty( $wpsc_shipping_region_variations_amt ) ) {
             $wpsc_shipping_variations_arr = array();
             foreach ( $wpsc_shipping_region_variations_base as $i => $type ) {
-                $l                    = filter_var( $wpsc_shipping_region_variations_l[ $i ], FILTER_DEFAULT );
-                $tax                  = floatval( filter_var( $wpsc_shipping_region_variations_a[ $i ], FILTER_DEFAULT ) );
+                $loc_str = isset($wpsc_shipping_region_variations_loc[ $i ]) ? sanitize_text_field(stripslashes($wpsc_shipping_region_variations_loc[ $i ])) : '';
+                $tax = isset($wpsc_shipping_region_variations_amt[ $i ]) ? floatval( $wpsc_shipping_region_variations_amt[ $i ] ) : 0;
                 $wpsc_shipping_variations_arr[] = array(
                     'type'   => $type,
-                    'loc'    => $l,
+                    'loc'    => $loc_str,
                     'amount' => $tax,
                 );
             }
@@ -45,7 +45,7 @@ function show_wp_cart_shipping_settings_page()
          * Check if the last item needs to be deleted or not.
          * The hidden input 'wpsc_shipping_region_variations_delete_last' will have the value of '1', set by javascript if the delete button of the last variation item is clicked.
          */
-        $wpsc_shipping_region_variations_delete_last    = isset($_POST['wpsc_shipping_region_variations_delete_last']) && !empty(sanitize_text_field($_POST['wpsc_shipping_region_variations_delete_last']));
+        $wpsc_shipping_region_variations_delete_last = isset($_POST['wpsc_shipping_region_variations_delete_last']) && !empty(sanitize_text_field($_POST['wpsc_shipping_region_variations_delete_last']));
         if ($wpsc_shipping_region_variations_delete_last) {
             update_option('wpsc_shipping_region_variations', array() );
         }
@@ -137,17 +137,17 @@ function show_wp_cart_shipping_settings_page()
                             </td>
                             <td>
                                 <div class="wpsc-shipping-region-variations-cont-type-0">
-                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]">${aspTaxVarData.cOpts}</select>
+                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]">${aspTaxVarData.cOpts}</select>
                                 </div>
                                 <div class="wpsc-shipping-region-variations-cont-type-1" style="display:none;">
-                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" disabled value="">
+                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]" type="text" disabled value="">
                                 </div>
                                 <div class="wpsc-shipping-region-variations-cont-type-2" style="display:none;">
-                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" disabled value="">
+                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]" type="text" disabled value="">
                                 </div>
                             </td>
                             <td>
-                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_a[]" value="0">
+                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_amt[]" value="0">
                             </td>
                             <td>
                                 <button type="button" class="button wpsc-shipping-region-variations-del-btn wpsc-shipping-region-variations-del-btn-small">
@@ -253,20 +253,23 @@ function show_wp_cart_shipping_settings_page()
                                                 </select>
                                             </td>
                                             <td>
-                                                <div class="wpsc-shipping-region-variations-cont-type-0" style="<?php echo '0' === $v['type'] ? '' : 'display:none' ?>">
-                                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" <?php echo '0' === $v['type'] ? '' : 'disabled' ?>>
+                                                <!-- Country type location field (type = 0) -->
+                                                <div class="wpsc-shipping-region-variations-cont-type-0" style="<?php echo $v['type'] === '0' ? '' : 'display:none' ?>">
+                                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]" <?php echo '0' === $v['type'] ? '' : 'disabled' ?>>
                                                         <?php echo wpsc_get_countries_opts( $c_code ) ?>
                                                     </select>
                                                 </div>
+                                                <!-- State type location field (type = 1) -->
                                                 <div class="wpsc-shipping-region-variations-cont-type-1" style="<?php echo '1' === $v['type'] ? '' : 'display:none' ?>">
-                                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" <?php echo '1' === $v['type'] ? '' : 'disabled' ?> value="<?php echo '1' === $v['type'] ? $v['loc'] : '' ?>">
+                                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]" type="text" <?php echo $v['type'] === '1' ? '' : 'disabled' ?> value="<?php echo $v['type'] === '1' ? esc_attr($v['loc']) : '' ?>">
                                                 </div>
+                                                <!-- City type location field (type = 2) -->
                                                 <div class="wpsc-shipping-region-variations-cont-type-2" style="<?php echo '2' === $v['type'] ? '' : 'display:none' ?>">
-                                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" <?php echo '2' === $v['type'] ? '' : 'disabled' ?> value="<?php echo '2' === $v['type'] ? $v['loc'] : '' ?>">
+                                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]" type="text" <?php echo $v['type'] === '2' ? '' : 'disabled' ?> value="<?php echo $v['type'] === '2' ? esc_attr($v['loc']) : '' ?>">
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_a[]" value="<?php esc_attr_e($v['amount']) ?>">
+                                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_amt[]" value="<?php esc_attr_e($v['amount']) ?>">
                                             </td>
                                             <td>
                                                 <button type="button" class="button wpsc-shipping-region-variations-del-btn wpsc-shipping-region-variations-del-btn-small">
