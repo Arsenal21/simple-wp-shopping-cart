@@ -69,35 +69,6 @@ function show_wp_cart_shipping_settings_page()
 
     $wpsc_shipping_variations_arr  = get_option('wpsc_shipping_region_variations');
 
-    $t_var_line_tpl = '<tr>
-                            <td>
-                                <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
-                                    <option value="0" %11$s>' . esc_html__( 'Country', 'stripe-payments' ) . '</option>
-                                    <option value="1" %12$s>' . esc_html__( 'State', 'stripe-payments' ) . '</option>
-                                    <option value="2" %13$s>' . esc_html__( 'City', 'stripe-payments' ) . '</option>
-                                </select>
-                            </td>
-                            <td>
-                                <div class="wpsc-shipping-region-variations-cont-type-0" style="%3$s">
-                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" %6$s>%1$s</select>
-                                </div>
-                                <div class="wpsc-shipping-region-variations-cont-type-1" style="%4$s">
-                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" %7$s value="%9$s">
-                                </div>
-                                <div class="wpsc-shipping-region-variations-cont-type-2" style="%5$s">
-                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" %8$s value="%10$s">
-                                </div>
-                            </td>
-                            <td>
-                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_a[]" value="%2$s">
-                            </td>
-                            <td>
-                                <button type="button" class="button wpsc-shipping-region-variations-del-btn wpsc-shipping-region-variations-del-btn-small">
-                                    <span class="dashicons dashicons-trash" title="' . __( 'Delete variation', 'stripe-payments' ) . '"></span>
-                                </button>
-                            </td>
-                        </tr>';
-
     //Show the documentation message
     wpspsc_settings_menu_documentation_msg();    
     ?>
@@ -144,32 +115,56 @@ function show_wp_cart_shipping_settings_page()
     <script>
         jQuery($).ready(function(){
             let aspTaxVarData = <?php echo json_encode(	array(
-				'tplLine'        => $t_var_line_tpl,
-				'cOpts'          => wpsc_get_countries_opts(),
-				'disabledForSub' => empty($enable_shipping_by_region),
-				'str'            => array(
-					'delConfirm' => __( 'Are you sure you want to delete this variation?', "wordpress-simple-paypal-shopping-cart" ),
+				'cOpts'             => wpsc_get_countries_opts(),
+				'disabledForSub'    => empty($enable_shipping_by_region),
+				'text'               => array(
+					'delConfirm'    => __( 'Are you sure you want to delete this variation?', "wordpress-simple-paypal-shopping-cart" ),
+					'delButton'     => __( 'Delete variation', "wordpress-simple-paypal-shopping-cart" ),
+					'country'       => __( 'Country', "wordpress-simple-paypal-shopping-cart" ),
+					'state'         => __( 'State', "wordpress-simple-paypal-shopping-cart" ),
+					'city'          => __( 'City', "wordpress-simple-paypal-shopping-cart" ),
 				),
 			)) ?>;
             jQuery('#wpsc-shipping-region-variations-add-btn').click(function (e) {
                 e.preventDefault();
-                var tplLine = aspTaxVarData.tplLine;
-                tplLine = tplLine.replaceAll('%1$s', aspTaxVarData.cOpts);
-                tplLine = tplLine.replaceAll('%2$s', 0);
-                tplLine = tplLine.replaceAll('%4$s', 'display:none;');
-                tplLine = tplLine.replaceAll('%5$s', 'display:none;');
-                tplLine = tplLine.replaceAll('%7$s', 'disabled');
-                tplLine = tplLine.replaceAll('%8$s', 'disabled');
-                tplLine = tplLine.replaceAll(/%[0-9]*\$s/g, '');
-                var tplLineHide = jQuery(tplLine).css('display', 'none');
-                jQuery('#wpsc-shipping-region-variations-tbl').find('tbody').append(tplLineHide);
+                var variationRowTpl = `<tr>
+                            <td>
+                                <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
+                                    <option value="0">${aspTaxVarData.text.country}</option>
+                                    <option value="1">${aspTaxVarData.text.state}</option>
+                                    <option value="2">${aspTaxVarData.text.city}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="wpsc-shipping-region-variations-cont-type-0">
+                                    <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]">${aspTaxVarData.cOpts}</select>
+                                </div>
+                                <div class="wpsc-shipping-region-variations-cont-type-1" style="display:none;">
+                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" disabled value="">
+                                </div>
+                                <div class="wpsc-shipping-region-variations-cont-type-2" style="display:none;">
+                                    <input class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_l[]" type="text" disabled value="">
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_a[]" value="0">
+                            </td>
+                            <td>
+                                <button type="button" class="button wpsc-shipping-region-variations-del-btn wpsc-shipping-region-variations-del-btn-small">
+                                    <span class="dashicons dashicons-trash" title="${aspTaxVarData.text.delButton}"></span>
+                                </button>
+                            </td>
+                        </tr>`;
+
+                var variationRowTplHidden = jQuery(variationRowTpl).css('display', 'none');
+                jQuery('#wpsc-shipping-region-variations-tbl').find('tbody').append(variationRowTplHidden);
                 jQuery('#wpsc-shipping-region-variations-tbl').show();
-                tplLineHide.fadeIn(200);
+                variationRowTplHidden.fadeIn(200);
             });
 
             jQuery('#wpsc-shipping-region-variations-tbl').on('click', 'button.wpsc-shipping-region-variations-del-btn', function (e) {
                 e.preventDefault();
-                if (confirm(aspTaxVarData.str.delConfirm)) {
+                if (confirm(aspTaxVarData.text.delConfirm)) {
                     jQuery(this).closest('tr').fadeOut(300, function () { jQuery(this).remove(); });
                                     
                     // Check if the variation table gets empty. If so, hide the table.
@@ -249,7 +244,6 @@ function show_wp_cart_shipping_settings_page()
                                         foreach ( $wpsc_shipping_variations_arr as $v ) {
                                             $c_code = '0' === $v['type'] ? $v['loc'] : '';
                                         ?>
-
                                         <tr>
                                             <td>
                                                 <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
@@ -280,7 +274,6 @@ function show_wp_cart_shipping_settings_page()
                                                 </button>
                                             </td>
                                         </tr>
-
                                         <?php } ?>
                                     </tbody>
                                 </table>

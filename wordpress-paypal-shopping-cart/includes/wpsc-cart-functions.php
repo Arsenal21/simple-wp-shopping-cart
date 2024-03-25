@@ -680,38 +680,43 @@ function wpsc_get_shipping_region_opts( $region_options, $selected = false ) {
 	}, $region_options);
 
 	sort($region_options);
+	
+	$options_group = array(
+		'country' => array(
+			'title' => __('Country', 'wordpress-simple-paypal-shopping-cart'),
+			'options' => '',
+		),
+		'state' => array(
+			'title' => __('State', 'wordpress-simple-paypal-shopping-cart'),
+			'options' => '',
+		),
+		'city' => array(
+			'title' => __('City', 'wordpress-simple-paypal-shopping-cart'),
+			'options' => '',
+		),
+	);
 
-	$option_tpl = '<option value="%s" %s> %s </option>';
-	$optgroup_tpl = '<optgroup label="%s"> %s </optgroup>';
-	
-	$option_countries = '';
-	$option_states = '';
-	$option_cities = '';
-	
-	foreach ($region_options as $key => $region) {
+	foreach ($region_options as $region) {
+		$option = '<option value="' . esc_attr($region['lookup_str']) . '" ' . $region['selected_str'] . '>' . esc_attr($region['loc']) . '</option>';
 		switch($region['type']){
 			case 1:
-				$option_states .= sprintf( $option_tpl, $region['lookup_str'], $region['selected_str'], $region['loc'] );;
+				$options_group['state']['options'] .= $option;
 				break;
 			case 2:
-				$option_cities .= sprintf( $option_tpl, $region['lookup_str'], $region['selected_str'], $region['loc'] );;
+				$options_group['city']['options'] .= $option;
 				break;
 			default:
-				$option_countries .= sprintf( $option_tpl, $region['lookup_str'], $region['selected_str'], $region['loc'] );
+				$options_group['country']['options'] .= $option;
 				break;
 		}
 	}
 
 	$html = '';
 
-	if (!empty($option_countries)) {
-		$html .= sprintf($optgroup_tpl, __('Country', 'wordpress-simple-paypal-shopping-cart'),  $option_countries);
-	}
-	if (!empty($option_states)) {
-		$html .= sprintf($optgroup_tpl, __('State', 'wordpress-simple-paypal-shopping-cart'),  $option_states);
-	}
-	if (!empty($option_cities)) {
-		$html .= sprintf($optgroup_tpl, __('City', 'wordpress-simple-paypal-shopping-cart'),  $option_cities);	
+	foreach ($options_group as $group) {
+		if (!empty($group['options'])) {
+			$html .= '<optgroup label="' . $group['title'] . '">' . $group['options'] . '</optgroup>';
+		}
 	}
 
     return $html;
