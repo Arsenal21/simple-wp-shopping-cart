@@ -552,7 +552,7 @@ function wpspc_cart_actions_handler() {
 			wp_die( 'Error! Nonce Security Check Failed!' );
 		}
 
-		$selected_shipping_region_str = isset( $_POST['wpsc_shipping_region'] ) ? sanitize_text_field( $_POST['wpsc_shipping_region'] ) : '';
+		$selected_shipping_region_str = isset( $_POST['wpsc_shipping_region'] ) ? sanitize_text_field( stripslashes($_POST['wpsc_shipping_region'] )) : '';
 
 		$wspsc_cart = WSPSC_Cart::get_instance();
 

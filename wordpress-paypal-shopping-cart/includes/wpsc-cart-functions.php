@@ -660,7 +660,7 @@ function wspsc_generate_shipping_region_section($carts_cnt, $selected_option) {
  * @param boolean|string $selected Selected option as string if there is any.
  * @return string HTML option elements as string.
  */
-function wpsc_get_shipping_region_opts( $region_options, $selected = false ) {
+function wpsc_get_shipping_region_opts( $region_options, $selected = '' ) {
 	$countries = wpsc_get_countries();
 
 	// Replace the country code with country name. This also helps to sort properly.
@@ -671,7 +671,9 @@ function wpsc_get_shipping_region_opts( $region_options, $selected = false ) {
 		$lookup_str = implode(':', array(strtolower($region['loc']), $region['type']));
 
 		$region['lookup_str'] = $lookup_str; // option value
-		$region['selected_str'] = $selected !== false && ($lookup_str === $selected) ? 'selected' : ''; // option 'selected' string
+		
+		// Check if the option is selected.
+		$region['selected_str'] = !empty($selected) && ($lookup_str === $selected) ? 'selected' : ''; // option 'selected' string
 
 		if($region['type'] === '0'){
 			$region['loc'] = $countries[$region['loc']]; 
