@@ -199,6 +199,9 @@ function wpspc_run_activation()
 	if ( empty( get_option( 'wspsc_plugin_activated_time' ) ) ) {
 		add_option( 'wspsc_plugin_activated_time', time() );
 	}
+
+    $default_allowed_shipping_countries = "US, GB, CA, AU";
+    add_option('wpsc_stripe_allowed_shipping_countries', $default_allowed_shipping_countries);
 }
 
 function wpspsc_settings_menu_documentation_msg()

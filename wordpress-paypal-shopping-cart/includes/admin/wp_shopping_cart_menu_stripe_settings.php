@@ -122,7 +122,7 @@ function show_wp_cart_stripe_settings_page()
                         <th scope="row"><?php _e("Allowed countries for shipping", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="text" name="wpsc_stripe_allowed_shipping_countries" size="100" value="<?php esc_attr_e($wpsc_stripe_allowed_shipping_countries); ?>" />
                         <div class="description">
-                            <span><?php _e("Enter the countries that are allowed for shipping by specifying their two-letter ISO country codes separated by comma. For example: US, UA, PH", "wordpress-simple-paypal-shopping-cart"); ?></span><a href="https://www.nationsonline.org/oneworld/country_code_list.htm" target="_blank"><?php _e('See the list of ISO country codes here.', "wordpress-simple-paypal-shopping-cart") ?></a>
+                            <span><?php _e("Enter the countries that are allowed for shipping by specifying their two-letter ISO country codes separated by comma. For example: US, UA, PH etc.", "wordpress-simple-paypal-shopping-cart"); ?></span> <a href="https://www.nationsonline.org/oneworld/country_code_list.htm" target="_blank"><?php _e('See the list of ISO country codes here.', "wordpress-simple-paypal-shopping-cart") ?></a>
                         </div>
                         </td>
                     </tr>
