@@ -38,7 +38,8 @@ class stripe_ipn_handler {
 		$last_name = $this->ipn_data["last_name"];
 		$buyer_email = $this->ipn_data["payer_email"];
 		$phone = $this->ipn_data["phone"];
-		$address = $this->ipn_data["address"];
+		$shipping_address = $this->ipn_data["shipping_address"];
+		$billing_address = $this->ipn_data["billing_address"];
 
         //$custom_values = json_decode(json_encode($this->ipn_data["custom"]), true);
 		$custom_value_str = $this->ipn_data["custom"];
@@ -140,7 +141,8 @@ class stripe_ipn_handler {
 		$formatted_payment_amount = wpspsc_number_format_price( $payment_amount );
 		update_post_meta( $post_id, 'wpsc_total_amount', $formatted_payment_amount );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
-		update_post_meta( $post_id, 'wpsc_address', $address );
+		update_post_meta( $post_id, 'wpsc_address', $shipping_address ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
+		update_post_meta( $post_id, 'wpsc_billing_address', $billing_address );
 		update_post_meta( $post_id, 'wpspsc_phone', $phone);
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
 		$gateway = isset( $this->ipn_data['gateway'] ) ? $this->ipn_data['gateway'] : '';
@@ -204,7 +206,7 @@ class stripe_ipn_handler {
 		$args['product_details'] = $product_details;
 		$args['order_id'] = $post_id;
 		$args['coupon_code'] = $applied_coupon_code;
-		$args['address'] = $address;
+		$args['address'] = $shipping_address;
 		$args['payer_email'] = $buyer_email;
 
 		$from_email = get_option( 'wpspc_buyer_from_email' );
@@ -386,25 +388,10 @@ class stripe_ipn_handler {
 		$name = isset($charge_array['billing_details']['name']) ? trim($charge_array['billing_details']['name']) : '';
 		$last_name  = ( strpos( $name, ' ' ) === false ) ? '' : preg_replace( '#.*\s([\w-]*)$#', '$1', $name );
 		$first_name = trim( preg_replace( '#' . $last_name . '#', '', $name ) );
-		// Get address
-		$bd_addr = isset($charge_array['billing_details']['address']) ? $charge_array['billing_details']['address'] : array();
-		$city = isset($bd_addr['city']) ? $bd_addr['city'] : '';
-		$state = isset($bd_addr['state']) ? $bd_addr['state'] : '';
-		$zip = isset($bd_addr['postal_code']) ? $bd_addr['postal_code'] : '';
-		$country = isset($bd_addr['country']) ? wpsc_get_country_name_by_country_code($bd_addr['country']) : '';
-		$line1 = isset($bd_addr['line1']) ? $bd_addr['line1'] : '';
-		$line2 = isset($bd_addr['line2']) ? $bd_addr['line2'] : '';
-		// Get full address.
-		$address_array = array(
-			$line1, $line2 , $city , $state , $zip , $country
-		);
-		$address = '';
-		foreach ($address_array as $value) {
-			if (!empty($value)) {
-				$address .= $value . ', ';
-			}
-		}
-		$address = rtrim($address, ', ');
+		// Get billing address
+		$billing_address = $this->get_ipn_billing_address($charge_array);
+		// Get shipping address
+		$shipping_address = $this->get_ipn_shipping_address($data);
 
 		$price_in_cents = floatval($data['amount_received']);
 		$currency_code_payment = strtoupper($data['currency']);
@@ -441,7 +428,8 @@ class stripe_ipn_handler {
 		$ipn['last_name'] = $last_name;
 		$ipn['phone'] = $phone;
 		$ipn['payer_email'] = $stripe_email;
-		$ipn['address'] = $address;
+		$ipn['shipping_address'] = $shipping_address;
+		$ipn['billing_address'] = $billing_address;
 
 		// Items data.
 		$cart_items = $wspsc_cart->get_items();
@@ -461,6 +449,58 @@ class stripe_ipn_handler {
 		//Save the IPN data in the class variable
 		$this->ipn_data = $ipn;
 		return true;
+	}
+
+	public function get_ipn_shipping_address(&$pi_data){
+		if (!isset($pi_data['shipping']['address'])) {
+			return '';
+		}
+
+		$shipping_addr = $pi_data['shipping']['address'];
+		$city = isset($shipping_addr['city']) ? $shipping_addr['city'] : '';
+		$state = isset($shipping_addr['state']) ? $shipping_addr['state'] : '';
+		$zip = isset($shipping_addr['postal_code']) ? $shipping_addr['postal_code'] : '';
+		$country = isset($shipping_addr['country']) ? wpsc_get_country_name_by_country_code($shipping_addr['country']) : '';
+		$line1 = isset($shipping_addr['line1']) ? $shipping_addr['line1'] : '';
+		$line2 = isset($shipping_addr['line2']) ? $shipping_addr['line2'] : '';
+
+		// Get full address.
+		$address_array = array(
+			$line1, $line2 , $city , $state , $zip , $country
+		);
+		$address = '';
+		foreach ($address_array as $value) {
+			if (!empty($value)) {
+				$address .= $value . ', ';
+			}
+		}
+		return rtrim($address, ', ');
+	}
+
+	public function get_ipn_billing_address(&$charge_array){
+		if (!isset($charge_array['billing_details']['address'])) {
+			return '';
+		}
+
+		$bd_addr = isset($charge_array['billing_details']['address']) ? $charge_array['billing_details']['address'] : array();
+		$city = isset($bd_addr['city']) ? $bd_addr['city'] : '';
+		$state = isset($bd_addr['state']) ? $bd_addr['state'] : '';
+		$zip = isset($bd_addr['postal_code']) ? $bd_addr['postal_code'] : '';
+		$country = isset($bd_addr['country']) ? wpsc_get_country_name_by_country_code($bd_addr['country']) : '';
+		$line1 = isset($bd_addr['line1']) ? $bd_addr['line1'] : '';
+		$line2 = isset($bd_addr['line2']) ? $bd_addr['line2'] : '';
+
+		// Get full address.
+		$address_array = array(
+			$line1, $line2 , $city , $state , $zip , $country
+		);
+		$address = '';
+		foreach ($address_array as $value) {
+			if (!empty($value)) {
+				$address .= $value . ', ';
+			}
+		}
+		return rtrim($address, ', ');
 	}
 
 	function log_ipn_results( $success ) {

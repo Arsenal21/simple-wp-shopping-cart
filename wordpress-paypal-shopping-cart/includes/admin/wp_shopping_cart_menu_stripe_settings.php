@@ -20,6 +20,7 @@ function show_wp_cart_stripe_settings_page()
         $live_secret_key             = sanitize_text_field($_POST['wpspc_stripe_live_secret_key']);
         $test_secret_key             = sanitize_text_field($_POST['wpspc_stripe_test_secret_key']);
 
+        $wpsc_stripe_allowed_shipping_countries = !empty($_POST['wpsc_stripe_allowed_shipping_countries']) ? sanitize_text_field(stripslashes($_POST['wpsc_stripe_allowed_shipping_countries'])) : "US, GB, CA, AU";
         $wpspc_stripe_button_image_url             = sanitize_text_field($_POST['wpspc_stripe_button_image_url']);
 
 
@@ -29,6 +30,8 @@ function show_wp_cart_stripe_settings_page()
         update_option('wpspc_stripe_test_publishable_key', $test_publishable_key);
         update_option('wpspc_stripe_test_secret_key', $test_secret_key);
         update_option('wpspc_stripe_collect_address', (isset($_POST['wpspc_stripe_collect_address']) && $_POST['wpspc_stripe_collect_address']!='') ? 'checked="checked"':'' );
+        update_option('wpsc_stripe_collect_shipping_address', (isset($_POST['wpsc_stripe_collect_shipping_address']) && $_POST['wpsc_stripe_collect_shipping_address']!='') ? 'checked="checked"':'' );
+        update_option('wpsc_stripe_allowed_shipping_countries', $wpsc_stripe_allowed_shipping_countries );
 
         update_option('wpspc_stripe_button_image_url', $wpspc_stripe_button_image_url);
 
@@ -36,12 +39,22 @@ function show_wp_cart_stripe_settings_page()
         echo 'Stripe Settings Updated!';
         echo '</strong></p></div>';
     }
+
     if (get_option('wpspc_stripe_collect_address')){
         $wpspc_stripe_collect_address = 'checked="checked"';
     }
     else{
         $wpspc_stripe_collect_address = '';
     }
+
+    if (get_option('wpsc_stripe_collect_shipping_address')){
+        $wpsc_stripe_collect_shipping_address = 'checked="checked"';
+    }
+    else{
+        $wpsc_stripe_collect_shipping_address = '';
+    }
+
+    $wpsc_stripe_allowed_shipping_countries = get_option('wpsc_stripe_allowed_shipping_countries');
 
     //Show the documentation message
     wpspsc_settings_menu_documentation_msg();    
@@ -96,9 +109,22 @@ function show_wp_cart_stripe_settings_page()
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Collect Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <th scope="row"><?php _e("Collect Billing Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td><input type="checkbox" name="wpspc_stripe_collect_address" value="1" <?php echo $wpspc_stripe_collect_address;?> />
-                        <span class="description"><?php _e("If this option is checked, customers will be required to enter their address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
+                        <span class="description"><?php _e("If this option is checked, customers will be required to enter their billing address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row"><?php _e("Collect Shipping Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <td><input type="checkbox" name="wpsc_stripe_collect_shipping_address" value="1" <?php esc_attr_e($wpsc_stripe_collect_shipping_address);?> />
+                        <span class="description"><?php _e("If this option is checked, customers will be required to enter their shipping address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row"><?php _e("Allowed countries for shipping", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <td><input type="text" name="wpsc_stripe_allowed_shipping_countries" size="100" value="<?php esc_attr_e($wpsc_stripe_allowed_shipping_countries); ?>" />
+                        <div class="description">
+                            <span><?php _e("Enter the countries that are allowed for shipping by specifying their two-letter ISO country codes separated by comma. For example: US, UA, PH etc.", "wordpress-simple-paypal-shopping-cart"); ?></span> <a href="https://www.nationsonline.org/oneworld/country_code_list.htm" target="_blank"><?php _e('See the list of ISO country codes here.', "wordpress-simple-paypal-shopping-cart") ?></a>
+                        </div>
+                        </td>
                     </tr>
 
                 </table>

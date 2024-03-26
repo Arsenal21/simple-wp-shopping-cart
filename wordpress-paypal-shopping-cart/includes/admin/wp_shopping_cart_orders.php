@@ -48,7 +48,8 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
     $total_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_total_amount', true);
     $shipping_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_amount', true);
     $shipping_region = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_region', true);
-    $address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_address', true);
+    $shipping_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_address', true); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
+    $billing_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_billing_address', true);
     $phone = get_post_meta($wpsc_cart_orders->ID, 'wpspsc_phone', true);
     $email_sent_value = get_post_meta($wpsc_cart_orders->ID, 'wpsc_buyer_email_sent', true);
 
@@ -106,14 +107,25 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
         </tr>
         <?php } ?>
         <tr>
-            <td><?php _e("Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php _e("Shipping Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
-                <textarea name="wpsc_address" cols="83" rows="2"><?php echo esc_attr($address); ?></textarea>
+                <textarea name="wpsc_address" cols="83" rows="2"><?php echo esc_attr($shipping_address); ?></textarea>
                 <p class="description">
                     <?php _e("An address value is usually provided when the order includes physical items that require shipping. ", "wordpress-simple-paypal-shopping-cart"); ?>
                 </p>
             </td>
         </tr>
+        <?php if ($billing_address) { ?>
+        <tr>
+            <td><?php _e("Billing Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td>
+                <textarea name="wpsc_billing_address" cols="83" rows="2"><?php echo esc_attr($billing_address); ?></textarea>
+                <p class="description">
+                    <?php _e("An billing address value is usually provided during checkout in the stripe checkout page.", "wordpress-simple-paypal-shopping-cart"); ?>
+                </p>
+            </td>
+        </tr>
+        <?php } ?>
         <tr>
             <td><?php _e("Phone", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
@@ -182,8 +194,12 @@ function wpspc_cart_save_orders($order_id, $wpsc_cart_orders) {
             update_post_meta($order_id, 'wpsc_shipping_amount', $shipping_amount);
         }
         if (isset($_POST['wpsc_address']) && $_POST['wpsc_address'] != '') {
-            $address = sanitize_text_field($_POST['wpsc_address']);
-            update_post_meta($order_id, 'wpsc_address', $address);
+            $shipping_address = sanitize_text_field($_POST['wpsc_address']);
+            update_post_meta($order_id, 'wpsc_address', $shipping_address);
+        }
+        if (isset($_POST['wpsc_billing_address']) && $_POST['wpsc_billing_address'] != '') {
+            $billing_address = sanitize_text_field($_POST['wpsc_billing_address']);
+            update_post_meta($order_id, 'wpsc_billing_address', $billing_address);
         }
         if (isset($_POST['wpspsc_phone']) && $_POST['wpspsc_phone'] != '') {
             $phone = sanitize_text_field($_POST['wpspsc_phone']);
