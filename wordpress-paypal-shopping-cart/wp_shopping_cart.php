@@ -172,6 +172,25 @@ function wspsc_stripe_create_checkout_session() {
 			'success_url' => $stripe_ipn_url
 		);
 
+		$force_collect_shipping_address = sanitize_text_field(get_option( 'wpsc_stripe_collect_shipping_address' ));
+		$allowed_shipping_countries = sanitize_text_field(get_option( 'wpsc_stripe_allowed_shipping_countries' ));
+		$allowed_shipping_countries = process_allowed_shipping_countries($allowed_shipping_countries);
+        if( !empty($force_collect_shipping_address) ){
+            $opts['shipping_address_collection'] = array(
+                'allowed_countries' => $allowed_shipping_countries,
+            );
+        } else {
+            $all_items_digital = $wspsc_cart->all_cart_items_digital();
+            if( $all_items_digital ){
+                //All items are digital. No need to collect shipping address.
+            } else {
+                //At least one item is not digital. Get the customer to provide shipping address on the Stripe checkout page.
+                $opts['shipping_address_collection'] = array(
+                    'allowed_countries' => $allowed_shipping_countries,
+                );
+            }
+        }
+		
 		//TODO - add a settings option to allow the site admin to set the allowed countries.
 		// if ( $shipping_preference == 'required' ) {
 		// 	$opts['shipping_address_collection'] = array(
@@ -240,6 +259,21 @@ function wspsc_stripe_create_checkout_session() {
 	}
 	wp_send_json( array( 'session_id' => $session->id ) );
 
+}
+
+function process_allowed_shipping_countries($countries_str){
+	if (empty($countries_str)) {
+		return array();
+	}
+
+	$countries_arr = explode(',', $countries_str);
+	$processed_countries_arr = array();
+
+	foreach ($countries_arr as $country) {
+		array_push($processed_countries_arr, strtoupper(trim($country)));
+	}
+
+	return $processed_countries_arr;
 }
 
 function wpspsc_process_pp_smart_checkout() {

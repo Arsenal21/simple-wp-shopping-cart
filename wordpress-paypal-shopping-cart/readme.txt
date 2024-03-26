@@ -226,6 +226,7 @@ None
 == Changelog ==
 = WIP =
 - Fixed special character issue in shipping variation settings.
+- New option to collect customer's shipping address on stripe checkout.
 
 = 5.0.4 =
 - Updated the PPCP JavaScript SDK loading code to improve the race condition that may occur on some sites.
