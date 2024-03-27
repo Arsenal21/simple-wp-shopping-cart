@@ -226,7 +226,7 @@ function wpspsc_settings_menu_footer()
         <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a>
     </p>
     <p>
-        You can also try our free <a href="https://wordpress.org/plugins/wp-express-checkout/" target="_blank">WP Express Checkout</a> or <a href="https://wordpress.org/plugins/stripe-payments/" target="_blank">Accept Stripe Payments</a> plugins to sell your products.
+        <?php _e('You can also try our free', "wordpress-simple-paypal-shopping-cart") ?> <a href="https://wordpress.org/plugins/wp-express-checkout/" target="_blank">WP Express Checkout</a> <?php _e('or', "wordpress-simple-paypal-shopping-cart") ?> <a href="https://wordpress.org/plugins/stripe-payments/" target="_blank">Accept Stripe Payments</a> <?php _e('plugins to sell your products.', "wordpress-simple-paypal-shopping-cart") ?>
     </p>
     </div>
     <?php
