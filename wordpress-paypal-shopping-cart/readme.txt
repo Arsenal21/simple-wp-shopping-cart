@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 5.5
 Tested up to: 6.5
-Stable tag: 5.0.4
+Stable tag: 5.0.5
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -225,9 +225,11 @@ None
 
 == Changelog ==
 
-= WIP =
+= 5.0.5 =
 - New option in the settings menu to force collect customer's shipping address for stripe checkout.
 - Fixed an issue with the quote character in the shipping variation settings.
+- Updated the language POT file.
+- Added blueprint.json file to enable plugin preview feature of WordPress.
 
 = 5.0.4 =
 - Updated the PPCP JavaScript SDK loading code to improve the race condition that may occur on some sites.
