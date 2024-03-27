@@ -107,7 +107,7 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
         </tr>
         <?php } ?>
         <tr>
-            <td><?php _e("Shipping Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php _e("Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
                 <textarea name="wpsc_address" cols="83" rows="2"><?php echo esc_attr($shipping_address); ?></textarea>
                 <p class="description">
