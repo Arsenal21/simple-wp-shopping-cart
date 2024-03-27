@@ -88,7 +88,7 @@ class stripe_ipn_handler {
 			wp_die(esc_html($error_msg));
 		}
 
-		if($currency_code_payment!=$currency_code_settings)
+		if($currency_code_payment != $currency_code_settings)
 		{
 			// Fatal error. Currency code may have been tampered with.
 			$error_msg='Fatal Error! Received currency code (' . $currency_code_payment . ') does not match with the original code (' . $currency_code_settings . ')';
@@ -112,14 +112,14 @@ class stripe_ipn_handler {
 		}
 
 		$orig_individual_item_total = round( $orig_individual_item_total, 2 );
-		$individual_paid_item_total = round( $payment_amount, 2 );
+		$paid_total = round( $payment_amount, 2 );
 
-		$this->debug_log( 'Checking price. Original price: ' . $orig_individual_item_total . '. Paid price: ' . $individual_paid_item_total, true );
+		$this->debug_log( 'Checking price. Expected individual item total: ' . $orig_individual_item_total . '. Paid total amount: ' . $paid_total, true );
 
-		if ($individual_paid_item_total < $orig_individual_item_total) { //Paid price is less so block this transaction.
+		if ($paid_total < $orig_individual_item_total) { //Paid price is less so block this transaction.
 			$error_msg = 'Error! Post payment price validation failed. The price amount may have been altered. This transaction will not be processed.';
 			$this->debug_log($error_msg , false );
-			$this->debug_log( 'Original total price: ' . $orig_individual_item_total . '. Paid total price: ' . $individual_paid_item_total, false );
+			$this->debug_log( 'Expected individual item total: ' . $orig_individual_item_total . '. Paid total amount: ' . $paid_total, false );
 			wp_die(esc_html($error_msg));
 		}
 		//*** End of security check ***

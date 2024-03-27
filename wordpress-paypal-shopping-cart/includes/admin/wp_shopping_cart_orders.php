@@ -121,7 +121,7 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
             <td>
                 <textarea name="wpsc_billing_address" cols="83" rows="2"><?php echo esc_attr($billing_address); ?></textarea>
                 <p class="description">
-                    <?php _e("An billing address value is usually provided during checkout in the stripe checkout page.", "wordpress-simple-paypal-shopping-cart"); ?>
+                    <?php _e("The billing address (if available).", "wordpress-simple-paypal-shopping-cart"); ?>
                 </p>
             </td>
         </tr>
