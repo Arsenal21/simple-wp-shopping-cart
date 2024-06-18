@@ -224,7 +224,7 @@ echo '
 <tr valign="top">
 <th scope="row">'.__( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ).'</th>
 <td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1" '.$wpspc_disable_standard_checkout.' />
-<span class="description">'. __( "By default PayPal standard checkout is always enabled. If you only want to use the PayPal Smart Checkout or Stripe option then use this checkbox to disable the standard PayPal checkout option.", "wordpress-simple-paypal-shopping-cart" ).'</span>
+<span class="description">'. __( "By default the PayPal standard checkout option is always enabled. If you only want to use the PayPal PPCP or Stripe option then use this checkbox to disable the standard PayPal checkout option.", "wordpress-simple-paypal-shopping-cart" ).'</span>
 </td>
 </tr>
 <tr valign="top">
