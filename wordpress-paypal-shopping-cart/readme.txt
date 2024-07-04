@@ -3,7 +3,7 @@ Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 5.5
-Tested up to: 6.5
+Tested up to: 6.6
 Stable tag: 5.0.5
 License: GPLv2 or later
 
