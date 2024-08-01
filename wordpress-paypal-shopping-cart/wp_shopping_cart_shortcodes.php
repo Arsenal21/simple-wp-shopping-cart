@@ -100,29 +100,32 @@ function wp_cart_display_product_handler($atts)
     $formatted_price = print_payment_currency($price, $currency_symbol);
     $button_code = print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
 
-    $display_code = <<<EOT
+	ob_start();
+	?>
     <div class="wp_cart_product_display_box_wrapper">
-    <div class="wp_cart_product_display_box">
-        <div class="wp_cart_product_thumbnail">
-            $thumbnail_code
-        </div>
-        <div class="wp_cart_product_display_bottom">
-            <div class="wp_cart_product_name">
-                $name
-            </div>
-            <div class="wp_cart_product_description">
-                $description
-            </div>
+	    <div class="wp_cart_product_display_box">
+	        <div class="wp_cart_product_thumbnail">
+	            <?php echo $thumbnail_code; ?>
+	        </div>
+	        <div class="wp_cart_product_display_bottom">
+	            <div class="wp_cart_product_name">
+	                <?php echo $name ?>
+	            </div>
+	            <div class="wp_cart_product_description">
+		            <?php echo $description ?>
+	            </div>
                 <div class="wp_cart_product_price">
-                $formatted_price
-            </div>
+	                <?php echo $formatted_price ?>
+	            </div>
                 <div class="wp_cart_product_button">
-                $button_code
+	                <?php echo $button_code ?>
                 </div>
             </div>
+	    </div>
     </div>
-    </div>
-EOT;
+	<?php
+	$display_code = ob_get_clean();
+
     return $display_code;
 }
 
