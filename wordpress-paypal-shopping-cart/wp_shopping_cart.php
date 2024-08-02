@@ -42,6 +42,7 @@ include_once( WP_CART_PATH . 'includes/wpsc-shortcodes-related.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-debug-logging-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-utility-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-functions.php' );
+include_once( WP_CART_PATH . 'includes/classes/class-persistent-msg.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-coupon.php' );
 include_once( WP_CART_PATH . 'includes/class-wspsc-cart.php' );
 include_once( WP_CART_PATH . 'includes/class-wspsc-cart-item.php' );
@@ -218,7 +219,7 @@ function wpspc_cart_actions_handler() {
 			wp_die( 'Error! Missing shipping price value. The price must be set.' );
 		}
 
-
+		$is_do_not_show_qty_in_cart_enabled = get_option('wp_shopping_cart_do_not_show_qty_in_cart') == 'checked="checked"' ? true : false;
 		$count = 1;
 		$products = array();
 		if ( $wspsc_cart->get_items() ) {
@@ -226,10 +227,24 @@ function wpspc_cart_actions_handler() {
 			if ( is_array( $products ) ) {
 				foreach ( $products as $key => $item ) {
 					if ( $item->get_name() == $post_wspsc_product ) {
-						$count += $item->get_quantity();
-						$item->set_quantity( $item->get_quantity() + 1 );
-						unset( $products[ $key ] );
-						array_push( $products, $item );
+                        $count += $item->get_quantity();
+                        if ($is_do_not_show_qty_in_cart_enabled){
+                            // TODO: Need to add message here.
+	                        $msg = __( "Item already added to the cart", "wordpress-simple-paypal-shopping-cart" );
+	                        $msg_type = 'error';
+
+                            $persistent_msg = WPSC_Persistent_Msg::get_instance();
+
+                            // This one is to show below add to cart button.
+	                        $persistent_msg->set_msg( $item->get_name(), $msg, $msg_type );
+
+                            // This one is to show in the cart.
+	                        $wspsc_cart->set_cart_action_msg($persistent_msg->get_formatted_msg( $msg, $msg_type ));
+                        } else {
+						    $item->set_quantity( $item->get_quantity() + 1 );
+                            unset( $products[ $key ] );
+                            array_push( $products, $item );
+                        }
 					}
 				}
 			} else {

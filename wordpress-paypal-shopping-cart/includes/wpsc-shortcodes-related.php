@@ -103,6 +103,9 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	$replacement .= '<input type="hidden" name="hash_two" value="' . $hash_two . '" />';
 
 	$replacement .= '</form>';
+
+	$replacement .= WPSC_Persistent_Msg::get_instance()->get_msg($product_tmp_two);
+
 	$replacement .= '</div>';
 	return $replacement;
 }

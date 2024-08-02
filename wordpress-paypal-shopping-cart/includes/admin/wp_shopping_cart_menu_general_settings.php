@@ -52,6 +52,7 @@ function wspsc_show_general_settings_page ()
         update_option('wp_cart_paypal_co_page_style', sanitize_text_field($_POST["wp_cart_paypal_co_page_style"]));
         update_option('wp_shopping_cart_strict_email_check', (isset($_POST['wp_shopping_cart_strict_email_check']) && $_POST['wp_shopping_cart_strict_email_check']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_nonce_add_cart', (isset($_POST['wspsc_disable_nonce_add_cart']) && $_POST['wspsc_disable_nonce_add_cart']!='') ? 'checked="checked"':'' );
+        update_option('wp_shopping_cart_do_not_show_qty_in_cart', (isset($_POST['wp_shopping_cart_do_not_show_qty_in_cart']) && $_POST['wp_shopping_cart_do_not_show_qty_in_cart']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_price_check_add_cart', (isset($_POST['wspsc_disable_price_check_add_cart']) && $_POST['wspsc_disable_price_check_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wp_use_aff_platform', (isset($_POST['wp_use_aff_platform']) && $_POST['wp_use_aff_platform']!='') ? 'checked="checked"':'' );
         update_option('shopping_cart_anchor', (isset($_POST['shopping_cart_anchor']) && $_POST['shopping_cart_anchor']!='') ? 'checked="checked"':'' );
@@ -125,6 +126,13 @@ function wspsc_show_general_settings_page ()
     }
     else{
         $wp_cart_image_hide = '';
+    }
+
+    if (get_option('wp_shopping_cart_do_not_show_qty_in_cart')){
+        $wp_cart_do_not_show_qty_in_cart = 'checked="checked"';
+    }
+    else{
+        $wp_cart_do_not_show_qty_in_cart = '';
     }
 
     $wp_cart_paypal_co_page_style = get_option('wp_cart_paypal_co_page_style');
@@ -369,6 +377,11 @@ echo '<tr valign="top">
 <tr valign="top">
 <th scope="row">'.(__("Hide Shopping Cart Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_image_hide" value="1" '.$wp_cart_image_hide.' /><br />'.(__("If ticked the shopping cart image will not be shown.", "wordpress-simple-paypal-shopping-cart")).'</td>
+</tr>
+
+<tr valign="top">
+<th scope="row">'.(__("Do Not Show Quantity in Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_do_not_show_qty_in_cart" value="1" '.$wp_cart_do_not_show_qty_in_cart.' /><br />'.(__("Check this if you do not want the shopping cart to display the product quantity. Your customer can only add one copy of the product to the shopping cart. Can be helpful if you are only selling digital products and you do not want your customers to buy multiple copies of a product.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">

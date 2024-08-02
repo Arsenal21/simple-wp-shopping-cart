@@ -37,7 +37,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	$defaultCurrency = get_option( 'cart_payment_currency' );
 	$defaultSymbol = get_option( 'cart_currency_symbol' );
 	$defaultEmail = get_option( 'cart_paypal_email' );
-		if ( ! empty( $defaultCurrency ) ) {
+	if ( ! empty( $defaultCurrency ) ) {
 		$paypal_currency = $defaultCurrency;
 	} else {
 		$paypal_currency = __( 'USD', 'wordpress-simple-paypal-shopping-cart' );
@@ -91,14 +91,28 @@ function print_wp_shopping_cart( $args = array() ) {
 	$output .= '<span id="pinfo" style="display: none; font-weight: bold; color: red;">' . ( __( 'Hit enter to submit new Quantity.', 'wordpress-simple-paypal-shopping-cart' ) ) . '</span>';
 	$output .= '<table style="width: 100%;">';
 
+	$show_quantity_column = get_option('wp_shopping_cart_do_not_show_qty_in_cart') != 'checked="checked"' ? true : false;
+	$calculations_row_colspan = 2;
+	if (!$show_quantity_column){
+		$calculations_row_colspan--;
+	}
+
 	$count = 1;
 	$total = 0;
 	$form = '';
 	if ( $wspsc_cart->get_items() ) {
-		$output .= '
+		ob_start();
+		?>
         <tr class="wspsc_cart_item_row">
-        <th class="wspsc_cart_item_name_th">' . ( __( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_cart_qty_th">' . ( __( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_cart_price_th">' . ( __( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ) . '</th><th class="wspsc_remove_item_th"></th>
-        </tr>';
+            <th class="wspsc_cart_item_name_th"><?php _e( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+			<?php if($show_quantity_column) { ?>
+                <th class="wspsc_cart_qty_th"><?php _e( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+			<?php } ?>
+            <th class="wspsc_cart_price_th"><?php _e( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+            <th class="wspsc_remove_item_th"></th>
+        </tr>
+		<?php
+		$output .= ob_get_clean();
 
 		$total = $wspsc_cart->get_total_cart_sub_total();
 		$postage_cost = $wspsc_cart->get_postage_cost();
@@ -129,15 +143,48 @@ function print_wp_shopping_cart( $args = array() ) {
 
 			$uniqid = uniqid();
 
-			$output .= "<td class='wspsc_cart_qty_td' style='text-align: center'><form method=\"post\"  action=\"\" name='pcquantity_" . $uniqid . "' style='display: inline'>" . wp_nonce_field( 'wspsc_cquantity', '_wpnonce', true, false ) . '
-                <input type="hidden" name="wspsc_product" value="' . htmlspecialchars( $item->get_name() ) . "\" />
-	        <input type='hidden' name='cquantity' value='1' /><input type='number' class='wspsc_cart_item_qty' name='quantity' value='" . esc_attr( $item->get_quantity() ) . "' min='0' step='1' size='3' onchange='document.pcquantity_" . $uniqid . ".submit();' onkeypress='document.getElementById(\"pinfo\").style.display = \"\";' /></form></td>
-	        <td style='text-align: center'>" . print_payment_currency( ( $item->get_price() * $item->get_quantity() ), $paypal_symbol, $decimal ) . "</td>
-	        <td class='wspsc_remove_item_td'><form method=\"post\" action=\"\" class=\"wp_cart_remove_item_form\">" . wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, false ) . '
-	        <input type="hidden" name="wspsc_product" value="' . esc_attr( $item->get_name() ) . "\" />
-	        <input type='hidden' name='delcart' value='1' />
-	        <input type='image' src='" . WP_CART_URL . "/images/Shoppingcart_delete.png' value='" . ( __( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ) . "' title='" . ( __( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ) . "' /></form></td></tr>
-	        ";
+			ob_start();
+			?>
+
+			<?php if($show_quantity_column) {?>
+                <td class='wspsc_cart_qty_td' style='text-align: center'>
+                    <form method="post"  action="" name='pcquantity_<?php echo $uniqid ?>' style='display: inline'>
+						<?php echo wp_nonce_field( 'wspsc_cquantity', '_wpnonce', true, false ) ?>
+                        <input type="hidden" name="wspsc_product" value="<?php echo htmlspecialchars( $item->get_name() ) ?>" />
+                        <input type='hidden' name='cquantity' value='1' />
+                        <input
+                                type='number'
+                                class='wspsc_cart_item_qty'
+                                name='quantity'
+                                value='<?php echo esc_attr( $item->get_quantity() ) ?>'
+                                min='0'
+                                step='1'
+                                size='3'
+                                onchange='document.pcquantity_<?php echo $uniqid ?>.submit();'
+                                onkeypress='document.getElementById("pinfo").style.display = "";'
+                        />
+                    </form>
+                </td>
+			<?php } ?>
+            <td style='text-align: center'>
+				<?php echo print_payment_currency( ( $item->get_price() * $item->get_quantity() ), $paypal_symbol, $decimal ) ?>
+            </td>
+            <td class='wspsc_remove_item_td'>
+                <form method="post" action="" class="wp_cart_remove_item_form">
+					<?php echo wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, false ) ?>
+                    <input type="hidden" name="wspsc_product" value="<?php echo esc_attr( $item->get_name() ) ?>"/>
+                    <input type='hidden' name='delcart' value='1'/>
+                    <input
+                            type='image'
+                            src='<?php echo WP_CART_URL . "/images/Shoppingcart_delete.png" ?>'
+                            value='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                            title='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                    />
+                </form>
+            </td>
+			<?php
+			$output .= ob_get_clean();
+			$output .= '</tr>';
 
 			$form .= "
 	            <input type=\"hidden\" name=\"item_name_$count\" value=\"" . esc_attr( $item->get_name() ) . "\" />
@@ -174,11 +221,11 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		if ( $postage_cost != 0 ) {
 			$output .= "
-                <tr class='wspsc_cart_subtotal'><td colspan='2' style='font-weight: bold; text-align: right;'>" . ( __( 'Subtotal', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $total, $paypal_symbol, $decimal ) . "</td><td></td></tr>
-                <tr class='wspsc_cart_shipping'><td colspan='2' style='font-weight: bold; text-align: right;'>" . ( __( 'Shipping', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $postage_cost, $paypal_symbol, $decimal ) . '</td><td></td></tr>';
+                <tr class='wspsc_cart_subtotal'><td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Subtotal', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $total, $paypal_symbol, $decimal ) . "</td><td></td></tr>
+                <tr class='wspsc_cart_shipping'><td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Shipping', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $postage_cost, $paypal_symbol, $decimal ) . '</td><td></td></tr>';
 		}
 
-		$output .= "<tr class='wspsc_cart_total'><td colspan='2' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td><td></td></tr>';
+		$output .= "<tr class='wspsc_cart_total'><td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td><td></td></tr>';
 
 		$wpspsc_cart_action_msg = $wspsc_cart->get_cart_action_msg();
 		if ( $wpspsc_cart_action_msg ) {
@@ -212,7 +259,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
 
 		$is_shipping_by_region_enabled = get_option('enable_shipping_by_region');
-		
+
 		if ( $is_shipping_by_region_enabled ) {
 			$selected_shipping_region_variant = $wspsc_cart->get_selected_shipping_region();
 			$output .= wspsc_generate_shipping_region_section($carts_cnt, $selected_shipping_region_variant);
@@ -254,19 +301,19 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		//The args array that we will use to pass any data to the functions that render the checkout forms. 
 		//The cart object can be retrieved from the global scope (if additional details from cart is needed).
-		$args = array( 
-			'carts_cnt' => $carts_cnt, 
-			'total' => $total, 
-			'postage_cost' => $postage_cost, 
-			'currency' => $paypal_currency, 
-			'return_url' => $return_url, 
-			'items_list' => $items_list, 
-			'is_tnc_enabled' => $is_tnc_enabled 
+		$args = array(
+			'carts_cnt' => $carts_cnt,
+			'total' => $total,
+			'postage_cost' => $postage_cost,
+			'currency' => $paypal_currency,
+			'return_url' => $return_url,
+			'items_list' => $items_list,
+			'is_tnc_enabled' => $is_tnc_enabled
 		);
-		
+
 		//--- Start PayPal (New API) Checkout ---
 		$paypal_ppcp_configs = PayPal_PPCP_Config::get_instance();
-		$paypal_ppcp_checkout_enabled = $paypal_ppcp_configs->get_value('ppcp_checkout_enable');	
+		$paypal_ppcp_checkout_enabled = $paypal_ppcp_configs->get_value('ppcp_checkout_enable');
 		if( !empty($paypal_ppcp_checkout_enabled) ){
 			//PayPal (New API) option is enabled.
 			$ppcp_checkout_output = wpsc_render_paypal_ppcp_checkout_form($args);
@@ -317,229 +364,229 @@ function print_wp_shopping_cart( $args = array() ) {
 				ob_start();
 				?>
 
-				<div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
-				<input type="submit" class="wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?> wp_cart_checkout_button"
-					style="display:none" />
-				</form>
+                <div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
+                <input type="submit" class="wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?> wp_cart_checkout_button"
+                       style="display:none" />
+                </form>
 
-				<script type="text/javascript">
-					// Get terms and condition settings.
-					var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
-					var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
+                <script type="text/javascript">
+                    // Get terms and condition settings.
+                    var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
+                    var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
 
-					document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function () {
+                    document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function () {
 
-						//disable form submission, as it is smart checkout
-						jQuery(".wpspc_pp_smart_checkout_form").submit(false);
+                        //disable form submission, as it is smart checkout
+                        jQuery(".wpspc_pp_smart_checkout_form").submit(false);
 
-						//Anything that goes here will only be executed after the PayPal SDK is loaded.
-						console.log('PayPal Smart Checkout SDK loaded.');
+                        //Anything that goes here will only be executed after the PayPal SDK is loaded.
+                        console.log('PayPal Smart Checkout SDK loaded.');
 
-						var wpspsc_cci_do_submit = true;
+                        var wpspsc_cci_do_submit = true;
 
-						paypal.Button.render({
-							env: '<?php echo get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'sandbox' : 'production'; ?>',
-							style: {
-								layout: '<?php echo esc_js( $btn_layout ); ?>',
-								size: '<?php echo esc_js( $btn_size ); ?>',
-								shape: '<?php echo esc_js( $btn_shape ); ?>',
-								color: '<?php echo esc_js( $btn_color ); ?>'
-							},
-							funding: {
-								allowed: [paypal.FUNDING.CARD<?php echo $pm_str; ?>],
-								disallowed: []
-							},
-							client: {
-								sandbox: '<?php echo get_option( 'wpspc_pp_test_client_id' ); ?>',
-								production: '<?php echo get_option( 'wpspc_pp_live_client_id' ); ?>'
-							},
-							validate: function (actions) {
-								//			    wpspsc_pp_actions = actions;
-								//			    wpspsc_pp_actions.disable();
+                        paypal.Button.render({
+                            env: '<?php echo get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'sandbox' : 'production'; ?>',
+                            style: {
+                                layout: '<?php echo esc_js( $btn_layout ); ?>',
+                                size: '<?php echo esc_js( $btn_size ); ?>',
+                                shape: '<?php echo esc_js( $btn_shape ); ?>',
+                                color: '<?php echo esc_js( $btn_color ); ?>'
+                            },
+                            funding: {
+                                allowed: [paypal.FUNDING.CARD<?php echo $pm_str; ?>],
+                                disallowed: []
+                            },
+                            client: {
+                                sandbox: '<?php echo get_option( 'wpspc_pp_test_client_id' ); ?>',
+                                production: '<?php echo get_option( 'wpspc_pp_live_client_id' ); ?>'
+                            },
+                            validate: function (actions) {
+                                //			    wpspsc_pp_actions = actions;
+                                //			    wpspsc_pp_actions.disable();
 
-								//validate only runs when buttons render first time
-								jQuery(document).ready(function ($) {
+                                //validate only runs when buttons render first time
+                                jQuery(document).ready(function ($) {
 
-									actions.enable();
+                                    actions.enable();
 
-									/**
-									 * The codes below will run only if the customer input addon is installed and there are fields added.
-									 */
+                                    /**
+                                     * The codes below will run only if the customer input addon is installed and there are fields added.
+                                     */
 
-									// checks if there is any required input field with empty value.
-									if (jQuery('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
-										actions.disable();
-									}
+                                    // checks if there is any required input field with empty value.
+                                    if (jQuery('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                                        actions.disable();
+                                    }
 
-									// Disable paypal smart checkout form submission if terms and condition validation error.
-									const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
-									if (!wspsc_validateTnc(currentSmartPaymentForm, false)) {
-										actions.disable();
-									}
-									if (!wspsc_validateShippingRegion(currentSmartPaymentForm, false)) {
-										actions.disable();
-									}
+                                    // Disable paypal smart checkout form submission if terms and condition validation error.
+                                    const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
+                                    if (!wspsc_validateTnc(currentSmartPaymentForm, false)) {
+                                        actions.disable();
+                                    }
+                                    if (!wspsc_validateShippingRegion(currentSmartPaymentForm, false)) {
+                                        actions.disable();
+                                    }
 
-									// listen to change in inputs and check if any empty required input fields.
-									jQuery('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').on('change', function () {
-										let isAnyValidationError = false;
-										if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
-											isAnyValidationError = true;
-										}
-										
-										// Also check if terms and condition has checked.
-										if (wpspscTncEnabled) {
-											if (!wspsc_validateTnc(currentSmartPaymentForm, false)) {
-												isAnyValidationError = true;
-											}
-										}
+                                    // listen to change in inputs and check if any empty required input fields.
+                                    jQuery('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').on('change', function () {
+                                        let isAnyValidationError = false;
+                                        if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                                            isAnyValidationError = true;
+                                        }
 
-										// Also check if shipping by region has selected.	
-										if (wpscShippingRegionEnabled){
-											if (!wspsc_validateShippingRegion(currentSmartPaymentForm, false)) {
-												isAnyValidationError = true;
-											}
-										}
+                                        // Also check if terms and condition has checked.
+                                        if (wpspscTncEnabled) {
+                                            if (!wspsc_validateTnc(currentSmartPaymentForm, false)) {
+                                                isAnyValidationError = true;
+                                            }
+                                        }
 
-										if (isAnyValidationError) {
-											// There is a validation error, don't proceed to checkout.
-											actions.disable();
-										} else {
-											actions.enable();
-										}
-									});
-								});
-							},
-							onClick: function () {
-								wpspsc_cci_do_submit = false;
-								var res = jQuery('.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>').triggerHandler('click');
-								// if (typeof res === "undefined" || res) {
-								//				    wpspsc_pp_actions.enable();
-								// } else {
-								//				    wpspsc_pp_actions.disable();
-								// }
-								wpspsc_cci_do_submit = true;
+                                        // Also check if shipping by region has selected.
+                                        if (wpscShippingRegionEnabled){
+                                            if (!wspsc_validateShippingRegion(currentSmartPaymentForm, false)) {
+                                                isAnyValidationError = true;
+                                            }
+                                        }
 
-								const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
-								// Check if shipping region is enabled and append error message if validation fails.
-								if (wpscShippingRegionEnabled) {
-									const shippingRegionContainer = wspsc_getClosestElement(currentSmartPaymentForm, wpscShippingRegionContainerSelector)
-									wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
-								}
+                                        if (isAnyValidationError) {
+                                            // There is a validation error, don't proceed to checkout.
+                                            actions.disable();
+                                        } else {
+                                            actions.enable();
+                                        }
+                                    });
+                                });
+                            },
+                            onClick: function () {
+                                wpspsc_cci_do_submit = false;
+                                var res = jQuery('.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>').triggerHandler('click');
+                                // if (typeof res === "undefined" || res) {
+                                //				    wpspsc_pp_actions.enable();
+                                // } else {
+                                //				    wpspsc_pp_actions.disable();
+                                // }
+                                wpspsc_cci_do_submit = true;
 
-								// Check if terms and condition is enabled and append error message if not checked.
-								if (wpspscTncEnabled) {
-									const tncContainer = wspsc_getClosestElement(currentSmartPaymentForm, wspscTncContainerSelector)
-									wspsc_handleTncErrorMsg(tncContainer);
-								}
+                                const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
+                                // Check if shipping region is enabled and append error message if validation fails.
+                                if (wpscShippingRegionEnabled) {
+                                    const shippingRegionContainer = wspsc_getClosestElement(currentSmartPaymentForm, wpscShippingRegionContainerSelector)
+                                    wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
+                                }
 
-							},
-							payment: function (data, actions) {
-								return actions.payment.create({
-									payment: {
-										transactions: [{
-											amount: {
-												total: '<?php echo $formatted_totalpluspostage; ?>', currency: '<?php echo $paypal_currency; ?>',
-												details: { subtotal: '<?php echo $formatted_total; ?>', shipping: '<?php echo $formatted_postage_cost; ?>' }
-											},
-											item_list: {
-												items: [<?php echo $items_list; ?>]
-											}
-										}]
-									},
-									meta: { partner_attribution_id: 'TipsandTricks_SP' }
-								});
-							},
-							onError: function (error) {
-								console.log(error);
-								alert('<?php echo esc_js( __( 'Error occured during PayPal Smart Checkout process.', 'wordpress-simple-paypal-shopping-cart' ) ); ?>\n\n' + error);
-							},
-							onAuthorize: function (data, actions) {
-								jQuery("[class^='wp-cart-paypal-button-container']").hide();
-								jQuery('.wp_cart_checkout_button').hide();
-								jQuery('.wpspsc-spinner-cont').css('display', 'inline-block');
-								return actions.payment.execute().then(function (data) {
-									jQuery.post('<?php echo get_admin_url(); ?>admin-ajax.php',
-										{ 'action': 'wpspsc_process_pp_smart_checkout', 'wpspsc_payment_data': data })
-										.done(function (result) {
-											if (result.success) {
-												window.location.href = '<?php echo esc_js( $return_url ); ?>';
-											} else {
-												console.log(result);
-												alert(result.errMsg)
-												jQuery("[class^='wp-cart-paypal-button-container']").show();
-												if (jQuery('.wp_cart_checkout_button').data('wspsc-hidden') !== "1") {
-													jQuery('.wp_cart_checkout_button').show();
-												}
-												jQuery('.wp_cart_checkout_button').show();
-												jQuery('.wpspsc-spinner-cont').hide();
-											}
-										})
-										.fail(function (result) {
-											console.log(result);
-											jQuery("[class^='wp-cart-paypal-button-container']").show();
-											if (jQuery('.wp_cart_checkout_button').data('wspsc-hidden') !== "1") {
-												jQuery('.wp_cart_checkout_button').show();
-											}
-											jQuery('.wpspsc-spinner-cont').hide();
-											alert('<?php echo esc_js( __( 'HTTP error occured during payment process:', 'wordpress-simple-paypal-shopping-cart' ) ); ?>' + ' ' + result.status + ' ' + result.statusText);
-										});
-								});
-							}
-						}, '.wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>');
+                                // Check if terms and condition is enabled and append error message if not checked.
+                                if (wpspscTncEnabled) {
+                                    const tncContainer = wspsc_getClosestElement(currentSmartPaymentForm, wspscTncContainerSelector)
+                                    wspsc_handleTncErrorMsg(tncContainer);
+                                }
 
-					});
+                            },
+                            payment: function (data, actions) {
+                                return actions.payment.create({
+                                    payment: {
+                                        transactions: [{
+                                            amount: {
+                                                total: '<?php echo $formatted_totalpluspostage; ?>', currency: '<?php echo $paypal_currency; ?>',
+                                                details: { subtotal: '<?php echo $formatted_total; ?>', shipping: '<?php echo $formatted_postage_cost; ?>' }
+                                            },
+                                            item_list: {
+                                                items: [<?php echo $items_list; ?>]
+                                            }
+                                        }]
+                                    },
+                                    meta: { partner_attribution_id: 'TipsandTricks_SP' }
+                                });
+                            },
+                            onError: function (error) {
+                                console.log(error);
+                                alert('<?php echo esc_js( __( 'Error occured during PayPal Smart Checkout process.', 'wordpress-simple-paypal-shopping-cart' ) ); ?>\n\n' + error);
+                            },
+                            onAuthorize: function (data, actions) {
+                                jQuery("[class^='wp-cart-paypal-button-container']").hide();
+                                jQuery('.wp_cart_checkout_button').hide();
+                                jQuery('.wpspsc-spinner-cont').css('display', 'inline-block');
+                                return actions.payment.execute().then(function (data) {
+                                    jQuery.post('<?php echo get_admin_url(); ?>admin-ajax.php',
+                                        { 'action': 'wpspsc_process_pp_smart_checkout', 'wpspsc_payment_data': data })
+                                        .done(function (result) {
+                                            if (result.success) {
+                                                window.location.href = '<?php echo esc_js( $return_url ); ?>';
+                                            } else {
+                                                console.log(result);
+                                                alert(result.errMsg)
+                                                jQuery("[class^='wp-cart-paypal-button-container']").show();
+                                                if (jQuery('.wp_cart_checkout_button').data('wspsc-hidden') !== "1") {
+                                                    jQuery('.wp_cart_checkout_button').show();
+                                                }
+                                                jQuery('.wp_cart_checkout_button').show();
+                                                jQuery('.wpspsc-spinner-cont').hide();
+                                            }
+                                        })
+                                        .fail(function (result) {
+                                            console.log(result);
+                                            jQuery("[class^='wp-cart-paypal-button-container']").show();
+                                            if (jQuery('.wp_cart_checkout_button').data('wspsc-hidden') !== "1") {
+                                                jQuery('.wp_cart_checkout_button').show();
+                                            }
+                                            jQuery('.wpspsc-spinner-cont').hide();
+                                            alert('<?php echo esc_js( __( 'HTTP error occured during payment process:', 'wordpress-simple-paypal-shopping-cart' ) ); ?>' + ' ' + result.status + ' ' + result.statusText);
+                                        });
+                                });
+                            }
+                        }, '.wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>');
 
-					/**
-					 * Checks if any input element has required attribute with empty value
-					 * @param cart_no Target cart no.
-					 * @returns {boolean}
-					 */
-					function has_empty_required_input(cart_no) {
-						let has_any = false;
-						let target_input = '.wpspsc_cci_input';
-						let target_form = jQuery('.wpspc_pp_smart_checkout_form_' + cart_no).closest('.shopping_cart');
+                    });
 
-						jQuery(target_form).find(target_input).each(function () {
-							if (jQuery(this).prop("required") && !jQuery(this).val().trim()) {
-								has_any = true;
-							}
-						});
+                    /**
+                     * Checks if any input element has required attribute with empty value
+                     * @param cart_no Target cart no.
+                     * @returns {boolean}
+                     */
+                    function has_empty_required_input(cart_no) {
+                        let has_any = false;
+                        let target_input = '.wpspsc_cci_input';
+                        let target_form = jQuery('.wpspc_pp_smart_checkout_form_' + cart_no).closest('.shopping_cart');
 
-						return has_any;
-					}
-				</script>
-				<style>
-					@keyframes wpspsc-spinner {
-						to {
-							transform: rotate(360deg);
-						}
-					}
+                        jQuery(target_form).find(target_input).each(function () {
+                            if (jQuery(this).prop("required") && !jQuery(this).val().trim()) {
+                                has_any = true;
+                            }
+                        });
 
-					.wpspsc-spinner {
-						margin: 0 auto;
-						text-indent: -9999px;
-						vertical-align: middle;
-						box-sizing: border-box;
-						position: relative;
-						width: 60px;
-						height: 60px;
-						border-radius: 50%;
-						border: 5px solid #ccc;
-						border-top-color: #0070ba;
-						animation: wpspsc-spinner .6s linear infinite;
-					}
+                        return has_any;
+                    }
+                </script>
+                <style>
+                    @keyframes wpspsc-spinner {
+                        to {
+                            transform: rotate(360deg);
+                        }
+                    }
 
-					.wpspsc-spinner-cont {
-						width: 100%;
-						text-align: center;
-						margin-top: 10px;
-						display: none;
-					}
-				</style>
-				<div class="wpspsc-spinner-cont">
-					<div class="wpspsc-spinner"></div>
-				</div>
+                    .wpspsc-spinner {
+                        margin: 0 auto;
+                        text-indent: -9999px;
+                        vertical-align: middle;
+                        box-sizing: border-box;
+                        position: relative;
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        border: 5px solid #ccc;
+                        border-top-color: #0070ba;
+                        animation: wpspsc-spinner .6s linear infinite;
+                    }
+
+                    .wpspsc-spinner-cont {
+                        width: 100%;
+                        text-align: center;
+                        margin-top: 10px;
+                        display: none;
+                    }
+                </style>
+                <div class="wpspsc-spinner-cont">
+                    <div class="wpspsc-spinner"></div>
+                </div>
 				<?php
 				$output .= ob_get_clean();
 			}
@@ -576,30 +623,30 @@ function print_wp_shopping_cart( $args = array() ) {
 }
 
 /**
- * Loads the checkout.js script from PayPal that is used for PayPal Smart Checkout. 
+ * Loads the checkout.js script from PayPal that is used for PayPal Smart Checkout.
  * Then it triggers the wspsc_paypal_smart_checkout_sdk_loaded event.
  */
 function wspsc_load_paypal_smart_checkout_js() {
 	$script_url = 'https://www.paypalobjects.com/api/checkout.js';
 	?>
-	<script type="text/javascript">
-		var script = document.createElement('script');
-		script.type = 'text/javascript';
-		script.async = true;
-		script.src = '<?php echo esc_url_raw( $script_url ); ?>';
-		script.onload = function () {
-			document.dispatchEvent(new Event('wspsc_paypal_smart_checkout_sdk_loaded'));
-		};
-		document.getElementsByTagName('head')[0].appendChild(script);
-	</script>
+    <script type="text/javascript">
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = '<?php echo esc_url_raw( $script_url ); ?>';
+        script.onload = function () {
+            document.dispatchEvent(new Event('wspsc_paypal_smart_checkout_sdk_loaded'));
+        };
+        document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
 	<?php
 }
 
 /**
  * Generate the rendering code for term and conditions if enabled.
- * 
+ *
  * @param int $carts_cnt The cart no.
- * 		
+ *
  * @return string HTML output.
  */
 function wspsc_generate_tnc_section( $carts_cnt ) {
@@ -624,17 +671,17 @@ function wspsc_generate_tnc_section( $carts_cnt ) {
 
 /**
  * Generate the rendering code for shipping region if enabled.
- * 
+ *
  * @param int $carts_cnt The cart no.
  * @param string $selected_option The selected option as string.
- * 
+ *
  * @return string HTML output.
  */
 function wspsc_generate_shipping_region_section($carts_cnt, $selected_option) {
 	$wpsc_shipping_variations_settings_arr  = get_option('wpsc_shipping_region_variations');
 
 	$html = '';
-	
+
 	$html .= '<div class="wpsc-shipping-region-container" style="margin-bottom: 8px">';
 	$html .= '<form method="post" action="" class="wpsc-shipping-region-form" id="wpsc-shipping-region-form-'.$carts_cnt.'">';
 	$html .= '<div><label class="wpsc-shipping-region-label" for="wpsc-shipping-region-input-'.$carts_cnt.'">'. __( 'Select Shipping Region', 'wordpress-simple-paypal-shopping-cart' ). '</label></div>';
@@ -661,7 +708,7 @@ function wspsc_generate_shipping_region_section($carts_cnt, $selected_option) {
  * @return string HTML option elements as string.
  */
 function wpsc_get_shipping_region_opts( $region_options, $selected = '' ) {
-	
+
 	$options = wpsc_process_region_opts($region_options, $selected);
 
 	$options_groups = array(
@@ -702,7 +749,7 @@ function wpsc_get_shipping_region_opts( $region_options, $selected = '' ) {
 		}
 	}
 
-    return $html;
+	return $html;
 }
 
 /**
@@ -710,7 +757,7 @@ function wpsc_get_shipping_region_opts( $region_options, $selected = '' ) {
  *
  * @param array $region_options Array of region option lookup string.
  * @param string $selected Selected option. Empty if no option selected.
- * 
+ *
  * @return array Processed region options.
  */
 function wpsc_process_region_opts(&$region_options, $selected ){
@@ -725,13 +772,13 @@ function wpsc_process_region_opts(&$region_options, $selected ){
 		$lookup_str = implode(':', array(strtolower($region['loc']), $region['type']));
 
 		$region['lookup_str'] = $lookup_str; // option value
-		
+
 		// Check if the option is selected.
 		$region['selected_str'] = !empty($selected) && ($lookup_str === $selected) ? 'selected' : ''; // option 'selected' string
 
 		if($region['type'] === '0'){
 			// Replace the country code with country name. This also helps to sort properly.
-			$region['loc'] = $countries[$region['loc']]; 
+			$region['loc'] = $countries[$region['loc']];
 		}
 
 		array_push($processed_options, $region);
