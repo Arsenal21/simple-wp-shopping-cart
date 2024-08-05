@@ -45,7 +45,7 @@ class WPSC_Persistent_Msg {
 	 *
 	 * @return string
 	 */
-	private static function generate_transient_key_fron_action( string $action_name ): string {
+	private static function generate_transient_key_from_action( string $action_name ): string {
 		$output = self::$prefix;
 
 		if (!empty(self::$cart_id)) {
@@ -102,7 +102,7 @@ class WPSC_Persistent_Msg {
 			return;
 		}
 
-		$transient_key   = self::generate_transient_key_fron_action( $action_name );
+		$transient_key   = self::generate_transient_key_from_action( $action_name );
 		$transient_value = array(
 			'message' => $msg,
 		);
@@ -122,7 +122,7 @@ class WPSC_Persistent_Msg {
 			return '';
 		}
 
-		$transient_key = self::generate_transient_key_fron_action( $action_name );
+		$transient_key = self::generate_transient_key_from_action( $action_name );
 
 		$msg_data = get_transient( $transient_key );
 
@@ -156,7 +156,7 @@ class WPSC_Persistent_Msg {
 	 * @return void
 	 */
 	public function clear_msg( string $action_name ): void {
-		$transient_key = self::generate_transient_key_fron_action( $action_name );
+		$transient_key = self::generate_transient_key_from_action( $action_name );
 
 		delete_transient( $transient_key );
 	}
