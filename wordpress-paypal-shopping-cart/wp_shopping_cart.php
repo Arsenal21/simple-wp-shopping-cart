@@ -42,7 +42,7 @@ include_once( WP_CART_PATH . 'includes/wpsc-shortcodes-related.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-debug-logging-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-utility-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-functions.php' );
-include_once( WP_CART_PATH . 'includes/classes/class-persistent-msg.php' );
+include_once( WP_CART_PATH . 'includes/classes/class-wpsc-persistent-msg.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-coupon.php' );
 include_once( WP_CART_PATH . 'includes/class-wspsc-cart.php' );
 include_once( WP_CART_PATH . 'includes/class-wspsc-cart-item.php' );
@@ -229,17 +229,17 @@ function wpspc_cart_actions_handler() {
 					if ( $item->get_name() == $post_wspsc_product ) {
                         $count += $item->get_quantity();
                         if ($is_do_not_show_qty_in_cart_enabled){
-                            // TODO: Need to add message here.
 	                        $msg = __( "Item already added to the cart", "wordpress-simple-paypal-shopping-cart" );
-	                        $msg_type = 'error';
+                            $cart_id = $wspsc_cart->get_cart_id();
 
                             $persistent_msg = WPSC_Persistent_Msg::get_instance();
+                            $persistent_msg->set_cart_id($cart_id);
 
                             // This one is to show below add to cart button.
-	                        $persistent_msg->set_msg( $item->get_name(), $msg, $msg_type );
+	                        $persistent_msg->set_msg( $item->get_name(), $msg );
 
                             // This one is to show in the cart.
-	                        $wspsc_cart->set_cart_action_msg($persistent_msg->get_formatted_msg( $msg, $msg_type ));
+	                        $wspsc_cart->set_cart_action_msg($persistent_msg->get_formatted_msg( $msg ));
                         } else {
 						    $item->set_quantity( $item->get_quantity() + 1 );
                             unset( $products[ $key ] );
