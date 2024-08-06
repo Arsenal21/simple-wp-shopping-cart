@@ -74,7 +74,7 @@ function wspsc_stripe_create_checkout_session() {
 	try {
 
 		\Stripe\Stripe::setApiKey( $secret_key );
-		\Stripe\Stripe::setApiVersion( "2022-08-01" );
+		\Stripe\Stripe::setApiVersion( "2024-06-20" );
 
 		$opts = array(
 			'client_reference_id' => $cart_id,
