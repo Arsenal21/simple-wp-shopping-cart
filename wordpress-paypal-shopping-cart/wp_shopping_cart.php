@@ -125,7 +125,8 @@ function wpspc_cart_actions_handler() {
 	$wspsc_cart = WSPSC_Cart::get_instance();
 	$wspsc_cart->clear_cart_action_msg();
 
-	if ( isset( $_POST['addcart'] ) ) { //Add to cart action
+	if ( isset( $_POST['addcart'] ) ) { 
+		//Add to cart action
 
 		//create new cart object when add to cart button is clicked the first time
 		if ( ! $wspsc_cart->get_cart_id() ) {
@@ -345,9 +346,10 @@ function wpspc_cart_actions_handler() {
 		//Redirect to the anchor if the anchor option is enabled.
 		wpsc_redirect_if_using_anchor();
 	} else if ( isset( $_POST['delcart'] ) ) {
+		//Remove item action
 		$nonce = $_REQUEST['_wpnonce'];
 		if ( ! wp_verify_nonce( $nonce, 'wspsc_delcart' ) ) {
-			wp_die( 'Error! Nonce Security Check Failed!' );
+			wp_die( 'Error! Nonce security check failed for remove item from the cart action!' );
 		}
 		$post_wspsc_product = isset( $_POST['wspsc_product'] ) ? stripslashes( sanitize_text_field( $_POST['wspsc_product'] ) ) : '';
 		$products = $wspsc_cart->get_items();
@@ -370,7 +372,19 @@ function wpspc_cart_actions_handler() {
 		}
 		//Redirect to the anchor if the anchor option is enabled.
 		wpsc_redirect_if_using_anchor();
+	} else if ( isset( $_POST['wpsc_empty_cart'])) {
+		//Empty cart action
+		$nonce = $_REQUEST['_wpnonce'];
+		if ( ! wp_verify_nonce( $nonce, 'wpsc_empty_cart' ) ) {
+			wp_die( 'Error! Nonce security check failed for empty cart action!' );
+		}
+
+		//Empty the cart
+		$wspsc_cart->reset_cart();
+		//Redirect to the anchor if the anchor option is enabled.
+		wpsc_redirect_if_using_anchor();
 	} else if ( isset( $_POST['wpspsc_coupon_code'] ) ) {
+		//Apply coupon action
 		$nonce = $_REQUEST['_wpnonce'];
 		if ( ! wp_verify_nonce( $nonce, 'wspsc_coupon' ) ) {
 			wp_die( 'Error! Nonce Security Check Failed!' );
@@ -381,6 +395,7 @@ function wpspc_cart_actions_handler() {
 		//Redirect to the anchor if the anchor option is enabled. This redirect needs to be handled using JS.
 		wpsc_js_redirect_if_using_anchor();
 	} else if ( isset( $_POST['wpsc_shipping_region_submit'] ) ) {
+		//Shipping region selected action
 		$nonce = $_REQUEST['_wpnonce'];
 		if ( ! wp_verify_nonce( $nonce, 'wpsc_shipping_region' ) ) {
 			wp_die( 'Error! Nonce Security Check Failed!' );

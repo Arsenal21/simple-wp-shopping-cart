@@ -226,6 +226,7 @@ None
 == Changelog ==
 
 = WIP =
+- Added a new option to empty the shopping cart from the cart page.
 - The remove item icon in the cart now uses an SVG icon for better performance.
 
 = 5.0.5 =

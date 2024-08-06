@@ -176,7 +176,7 @@ function print_wp_shopping_cart( $args = array() ) {
                     <input type='hidden' name='delcart' value='1'/>
                     <input
                             type='image'
-                            src='<?php echo WP_CART_URL . "/images/remove-item-svg-26px.svg" ?>'
+                            src='<?php echo WP_CART_URL . "/images/remove-item-svg-1.2em.svg" ?>'
                             value='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
                             title='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
                     />
@@ -229,14 +229,32 @@ function print_wp_shopping_cart( $args = array() ) {
 		//The total row
 		$output .= "<tr class='wspsc_cart_total'>";
 		$output .= "<td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td>';
-		$output .= '<td></td>';
+		//Empty cart button
+		ob_start();
+		?>
+		<td class='wpsc_empty_cart_td'>
+			<form method="post" action="" class="wpsc_empty_cart_form">
+				<?php echo wp_nonce_field( 'wpsc_empty_cart', '_wpnonce', true, false ) ?>
+				<input type='hidden' name='wpsc_empty_cart' value='1'/>
+				<input
+						type='image'
+						src='<?php echo WP_CART_URL . "/images/empty-cart-svg-1.2em.svg" ?>'
+						value='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+						title='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+				/>
+			</form>
+		</td>
+		<?php
+		$output .= ob_get_clean();
 		$output .= '</tr>';
 
+		//Display the cart action message (if any)
 		$wpspsc_cart_action_msg = $wspsc_cart->get_cart_action_msg();
 		if ( $wpspsc_cart_action_msg ) {
 			$output .= '<tr class="wspsc_cart_action_msg"><td colspan="4"><span class="wpspsc_cart_action_msg">' . $wpspsc_cart_action_msg . '</span></td></tr>';
 		}
 
+		//Display the coupon section
 		if ( get_option( 'wpspsc_enable_coupon' ) == '1' ) {
 			$output .= '<tr class="wspsc_cart_coupon_row"><td colspan="4">
                 <div class="wpspsc_coupon_section">
