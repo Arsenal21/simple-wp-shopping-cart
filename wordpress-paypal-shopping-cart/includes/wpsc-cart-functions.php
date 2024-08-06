@@ -219,13 +219,18 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		wp_enqueue_script( "wspsc-checkout-cart-script" );
 
+		//The sub-totals and shipping cost row
 		if ( $postage_cost != 0 ) {
 			$output .= "
                 <tr class='wspsc_cart_subtotal'><td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Subtotal', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $total, $paypal_symbol, $decimal ) . "</td><td></td></tr>
                 <tr class='wspsc_cart_shipping'><td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Shipping', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $postage_cost, $paypal_symbol, $decimal ) . '</td><td></td></tr>';
 		}
 
-		$output .= "<tr class='wspsc_cart_total'><td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td><td></td></tr>';
+		//The total row
+		$output .= "<tr class='wspsc_cart_total'>";
+		$output .= "<td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td>';
+		$output .= '<td></td>';
+		$output .= '</tr>';
 
 		$wpspsc_cart_action_msg = $wspsc_cart->get_cart_action_msg();
 		if ( $wpspsc_cart_action_msg ) {
