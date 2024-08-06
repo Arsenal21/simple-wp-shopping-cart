@@ -176,7 +176,7 @@ function print_wp_shopping_cart( $args = array() ) {
                     <input type='hidden' name='delcart' value='1'/>
                     <input
                             type='image'
-                            src='<?php echo WP_CART_URL . "/images/Shoppingcart_delete.png" ?>'
+                            src='<?php echo WP_CART_URL . "/images/remove-item-svg-26px.svg" ?>'
                             value='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
                             title='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
                     />
