@@ -77,13 +77,18 @@ function wspsc_stripe_create_checkout_session() {
 		\Stripe\Stripe::setApiVersion( "2022-08-01" );
 
 		$opts = array(
-			'payment_method_types' => array( 'card' ),
 			'client_reference_id' => $cart_id,
 			'billing_address_collection' => $force_collect_address ? 'required' : 'auto',
 			'mode' => 'payment',
 			'success_url' => $stripe_ipn_url
 		);
 
+		/*
+		* We are not specifying any payment method types. Stripe will automatically display the payment methods that the merchant has enabled in their Stripe account.
+		*/
+		//$opts['payment_method_types'] = array( 'card' );
+
+		//Other options for the checkout session.
 		$force_collect_shipping_address = sanitize_text_field(get_option( 'wpsc_stripe_collect_shipping_address' ));
 		$allowed_shipping_countries = sanitize_text_field(get_option( 'wpsc_stripe_allowed_shipping_countries' ));
 		$allowed_shipping_countries = process_allowed_shipping_countries($allowed_shipping_countries);

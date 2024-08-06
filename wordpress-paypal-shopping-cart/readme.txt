@@ -228,6 +228,7 @@ None
 = WIP =
 - Added a new option to empty the shopping cart from the cart page.
 - The remove item icon in the cart now uses an SVG icon for better performance.
+- The Stripe checkout will show the payment method options based on what the merchant has enabled in their Stripe account.
 
 = 5.0.5 =
 - New option in the settings menu to force collect customer's shipping address for stripe checkout.
