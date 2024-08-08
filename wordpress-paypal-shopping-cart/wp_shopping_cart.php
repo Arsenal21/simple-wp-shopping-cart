@@ -230,7 +230,7 @@ function wpspc_cart_actions_handler() {
 					if ( $item->get_name() == $post_wspsc_product ) {
                         $count += $item->get_quantity();
                         if ($is_do_not_show_qty_in_cart_enabled){
-	                        $msg = __( "Item already added to the cart", "wordpress-simple-paypal-shopping-cart" );
+	                        $msg = __( "This item is already in your cart", "wordpress-simple-paypal-shopping-cart" );
                             $cart_id = $wspsc_cart->get_cart_id();
 
                             $persistent_msg = WPSC_Persistent_Msg::get_instance();

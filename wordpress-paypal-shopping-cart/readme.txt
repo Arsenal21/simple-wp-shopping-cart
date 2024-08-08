@@ -78,6 +78,7 @@ or
 * Ability to use a custom checkout page style.
 * Ability to configure region based shipping additions.
 * Ability to use blocks to add the 'add to cart' button and the 'shopping cart' to your posts/pages/sidebar.
+* Option to hide the quantity field in the shopping cart. This can be useful for a site selling only digital products where the quantity is always 1.
 * Works nicely with responsive WordPress themes.
 * Can be translated into any language.
 * and more...
@@ -226,9 +227,11 @@ None
 == Changelog ==
 
 = WIP =
+- Option to hide the quantity field in the cart. This can be useful for a site selling only digital products where the quantity is always 1.
 - Added a new option to empty the shopping cart from the cart page.
 - The remove item icon in the cart now uses an SVG icon for better performance.
 - The Stripe checkout will show the payment method options based on what the merchant has enabled in their Stripe account.
+- The Stripe API version for creating Stripe checkout session has been updated to the latest version.
 
 = 5.0.5 =
 - New option in the settings menu to force collect customer's shipping address for stripe checkout.

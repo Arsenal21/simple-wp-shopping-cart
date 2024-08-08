@@ -11,7 +11,7 @@ class WPSC_Persistent_Msg {
 	/**
 	 * @var string The prefix for persistent msg transient.
 	 */
-	private static string $prefix = 'wpsc_persistent_msg_';
+	private static $prefix = 'wpsc_persistent_msg_';
 
 	private static int $cart_id;
 

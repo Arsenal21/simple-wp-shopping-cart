@@ -381,7 +381,7 @@ echo '<tr valign="top">
 
 <tr valign="top">
 <th scope="row">'.(__("Do Not Show Quantity in Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_do_not_show_qty_in_cart" value="1" '.$wp_cart_do_not_show_qty_in_cart.' /><br />'.(__("Check this if you do not want the shopping cart to display the product quantity. Your customer can only add one copy of the product to the shopping cart. Can be helpful if you are only selling digital products and you do not want your customers to buy multiple copies of a product.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<td><input type="checkbox" name="wp_shopping_cart_do_not_show_qty_in_cart" value="1" '.$wp_cart_do_not_show_qty_in_cart.' /><br />'.(__("Check this option to prevent the shopping cart from displaying product quantities. Customers will only be able to add one copy of each product to the cart. This is useful if you are selling digital products and do not want customers to purchase multiple copies of a single item.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
