@@ -13,9 +13,9 @@ class WPSC_Persistent_Msg {
 	 */
 	private static $prefix = 'wpsc_persistent_msg_';
 
-	private static int $cart_id;
+	private static $cart_id;
 
-	private static int $expiration = 3600; // 1 hour
+	private static $expiration = 3600; // 1 hour
 
 	private function __construct() {}
 
@@ -34,7 +34,7 @@ class WPSC_Persistent_Msg {
 	 *
 	 * @return void
 	 */
-	public function set_cart_id(int $cart_id) {
+	public function set_cart_id( $cart_id ) {
 		self::$cart_id = $cart_id;
 	}
 
@@ -45,7 +45,7 @@ class WPSC_Persistent_Msg {
 	 *
 	 * @return string
 	 */
-	private static function generate_transient_key_from_action( string $action_name ) {
+	private static function generate_transient_key_from_action( $action_name ) {
 		$output = self::$prefix;
 
 		if (!empty(self::$cart_id)) {
@@ -58,31 +58,13 @@ class WPSC_Persistent_Msg {
 	}
 
 	/**
-	 * Returns a css class based on message type.
-	 *
-	 * @param string $type
-	 *
-	 * @return string
-	 */
-/*	public static function get_msg_type_selector( string $type ): string {
-		switch ( trim( strtolower( $type ) ) ) {
-			case 'success':
-				return 'wpspsc_success_message';
-			case 'error':
-				return 'wpspsc_error_message';
-			default:
-				return '';
-		}
-	}*/
-
-	/**
 	 * TODO: Remove special characters and spaces. So that there is no issue with transient key.
 	 *
 	 * @param string $action_name The action name to generate transient key with.
 	 *
 	 * @return string
 	 */
-	private static function get_filtered_action_name( string $action_name ) {
+	private static function get_filtered_action_name( $action_name ) {
 		$output = sanitize_text_field($action_name);
 		$output = str_replace(' ', '_', $output);
 		$output = strtolower($output);
@@ -97,7 +79,7 @@ class WPSC_Persistent_Msg {
 	 *
 	 * @return void
 	 */
-	public function set_msg( string $action_name, string $msg ) {
+	public function set_msg( $action_name, $msg ) {
 		if ( empty( $action_name ) || empty( $msg ) ) {
 			return;
 		}
@@ -117,7 +99,7 @@ class WPSC_Persistent_Msg {
 	 *
 	 * @return string The message.
 	 */
-	public function get_msg( string $action_name ) {
+	public function get_msg( $action_name ) {
 		if ( empty( $action_name ) ) {
 			return '';
 		}
@@ -144,7 +126,7 @@ class WPSC_Persistent_Msg {
 	 *
 	 * @return string
 	 */
-	public static function get_formatted_msg(string $msg) {
+	public static function get_formatted_msg($msg) {
 		return '<div class="wpspsc_error_message">' . $msg . '</div>';
 	}
 
@@ -155,7 +137,7 @@ class WPSC_Persistent_Msg {
 	 *
 	 * @return void
 	 */
-	public function clear_msg( string $action_name ) {
+	public function clear_msg( $action_name ) {
 		$transient_key = self::generate_transient_key_from_action( $action_name );
 
 		delete_transient( $transient_key );
