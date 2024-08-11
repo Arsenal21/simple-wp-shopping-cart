@@ -13,11 +13,13 @@ function show_wp_cart_email_settings_page()
                 wp_die('Error! Nonce Security Check Failed! Go back to email settings menu and save the settings again.');
         }
         update_option('wpspc_send_buyer_email', (isset($_POST['wpspc_send_buyer_email']) && $_POST['wpspc_send_buyer_email']!='') ? 'checked="checked"':'' );
+        update_option('wpsc_buyer_email_content_type', sanitize_text_field($_POST["wpsc_buyer_email_content_type"]));
         update_option('wpspc_buyer_from_email', stripslashes($_POST["wpspc_buyer_from_email"]));
         update_option('wpspc_buyer_email_subj', stripslashes(sanitize_text_field($_POST["wpspc_buyer_email_subj"])));
         update_option('wpspc_buyer_email_body', stripslashes(wp_filter_post_kses($_POST["wpspc_buyer_email_body"])));
 
         update_option('wpspc_send_seller_email', (isset($_POST['wpspc_send_seller_email']) && $_POST['wpspc_send_seller_email']!='') ? 'checked="checked"':'' );
+        update_option('wpsc_seller_email_content_type', sanitize_text_field($_POST["wpsc_seller_email_content_type"]));
         update_option('wpspc_notify_email_address', stripslashes(sanitize_text_field($_POST["wpspc_notify_email_address"])));
         update_option('wpspc_seller_email_subj', stripslashes(sanitize_text_field($_POST["wpspc_seller_email_subj"])));
         update_option('wpspc_seller_email_body', stripslashes(wp_filter_post_kses($_POST["wpspc_seller_email_body"])));
@@ -30,13 +32,17 @@ function show_wp_cart_email_settings_page()
     if (get_option('wpspc_send_buyer_email')){
         $wpspc_send_buyer_email = 'checked="checked"';
     }
+
+    $wpsc_buyer_email_content_type = get_option('wpsc_buyer_email_content_type');
     $wpspc_buyer_from_email = get_option('wpspc_buyer_from_email');
     $wpspc_buyer_email_subj = get_option('wpspc_buyer_email_subj');
     $wpspc_buyer_email_body = get_option('wpspc_buyer_email_body');
+
     $wpspc_send_seller_email = '';
     if (get_option('wpspc_send_seller_email')){
         $wpspc_send_seller_email = 'checked="checked"';
     }
+	$wpsc_seller_email_content_type = get_option('wpsc_seller_email_content_type');
     $wpspc_notify_email_address = get_option('wpspc_notify_email_address');
     if(empty($wpspc_notify_email_address)){
         $wpspc_notify_email_address = get_bloginfo('admin_email'); //default value
@@ -76,6 +82,23 @@ function show_wp_cart_email_settings_page()
     </tr>
 
     <tr valign="top">
+        <th scope="row"><?php _e("Buyer Email Content Type", "wordpress-simple-paypal-shopping-cart");?></th>
+        <td>
+            <select name="wpsc_buyer_email_content_type">
+                <option value="plain_text" <?php echo $wpsc_buyer_email_content_type == 'plain_text' ? 'selected' : ''; ?>>
+                    <?php _e('Plain Text', 'wordpress-simple-paypal-shopping-cart'); ?>
+                </option>
+                <option value="html" <?php echo $wpsc_buyer_email_content_type == 'html' ? 'selected' : ''; ?>>
+                    <?php _e('HTML', 'wordpress-simple-paypal-shopping-cart'); ?>
+                </option>
+            </select>
+            <p>
+                <span class="description"><?php _e("Choose which format of email to send.", "wordpress-simple-paypal-shopping-cart");?></span>
+            </p>
+        </td>
+    </tr>
+
+    <tr valign="top">
     <th scope="row"><?php _e("From Email Address", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_buyer_from_email" value="<?php echo esc_attr($wpspc_buyer_from_email); ?>" size="50" />
     <br /><p class="description"><?php _e("Example: Your Name &lt;sales@your-domain.com&gt; This is the email address that will be used to send the email to the buyer. This name and email address will appear in the from field of the email.", "wordpress-simple-paypal-shopping-cart");?></p></td>
@@ -88,9 +111,24 @@ function show_wp_cart_email_settings_page()
     </tr>
 
     <tr valign="top">
-    <th scope="row"><?php _e("Buyer Email Body", "wordpress-simple-paypal-shopping-cart");?></th>
+        <th scope="row"><?php _e("Buyer Email Body", "wordpress-simple-paypal-shopping-cart");?></th>
     <td>
-    <textarea name="wpspc_buyer_email_body" cols="90" rows="7"><?php echo esc_textarea($wpspc_buyer_email_body); ?></textarea>
+
+    <?php if ($wpsc_buyer_email_content_type == 'html') {
+        add_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
+        wp_editor(
+            html_entity_decode( $wpspc_buyer_email_body ),
+            'wpspc_buyer_email_body',
+            array(
+                'textarea_name' => "wpspc_buyer_email_body",
+                'teeny'         => true,
+            )
+        );
+        remove_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
+    } else { ?>
+        <textarea name="wpspc_buyer_email_body" cols="90" rows="7"><?php echo esc_textarea($wpspc_buyer_email_body); ?></textarea>
+	<?php } ?>
+
     <br /><p class="description"><?php _e("This is the body of the email that will be sent to the buyer. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
     <br />{first_name} – <?php _e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
     <br />{last_name} – <?php _e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
@@ -111,6 +149,23 @@ function show_wp_cart_email_settings_page()
     </tr>
 
     <tr valign="top">
+        <th scope="row"><?php _e("Seller Email Content Type", "wordpress-simple-paypal-shopping-cart");?></th>
+        <td>
+            <select name="wpsc_seller_email_content_type">
+                <option value="plain_text" <?php echo $wpsc_seller_email_content_type == 'plain_text' ? 'selected' : ''; ?>>
+                    <?php _e('Plain Text', 'wordpress-simple-paypal-shopping-cart'); ?>
+                </option>
+                <option value="html" <?php echo $wpsc_seller_email_content_type == 'html' ? 'selected' : ''; ?>>
+                    <?php _e('HTML', 'wordpress-simple-paypal-shopping-cart'); ?>
+                </option>
+            </select>
+            <p>
+                <span class="description"><?php _e("Choose which format of email to send.", "wordpress-simple-paypal-shopping-cart");?></span>
+            </p>
+        </td>
+    </tr>
+
+    <tr valign="top">
     <th scope="row"><?php _e("Notification Email Address*", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_notify_email_address" value="<?php echo esc_attr($wpspc_notify_email_address); ?>" size="50" />
     <br /><p class="description"><?php _e("This is the email address where the seller will be notified of product sales. You can put multiple email addresses separated by comma (,) in the above field to send the notification to multiple email addresses.", "wordpress-simple-paypal-shopping-cart");?></p></td>
@@ -125,7 +180,20 @@ function show_wp_cart_email_settings_page()
     <tr valign="top">
     <th scope="row"><?php _e("Seller Email Body*", "wordpress-simple-paypal-shopping-cart");?></th>
     <td>
-    <textarea name="wpspc_seller_email_body" cols="90" rows="7"><?php echo esc_textarea($wpspc_seller_email_body); ?></textarea>
+	<?php if ($wpsc_seller_email_content_type == 'html') {
+	add_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
+	wp_editor(
+		html_entity_decode( $wpspc_seller_email_body ),
+		'wpspc_seller_email_body',
+		array(
+			'textarea_name' => "wpspc_seller_email_body",
+			'teeny'         => true,
+		)
+	);
+	remove_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
+    } else { ?>
+        <textarea name="wpspc_seller_email_body" cols="90" rows="7"><?php echo esc_textarea($wpspc_seller_email_body); ?></textarea>
+    <?php } ?>
     <br /><p class="description"><?php _e("This is the body of the email that will be sent to the seller for record. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
     <br />{first_name} – <?php _e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
     <br />{last_name} – <?php _e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
@@ -151,4 +219,9 @@ function show_wp_cart_email_settings_page()
 
     <?php
     wpspsc_settings_menu_footer();
+}
+
+function wpsc_set_default_email_body_editor( $r ) {
+	$r = 'html';
+	return $r;
 }
