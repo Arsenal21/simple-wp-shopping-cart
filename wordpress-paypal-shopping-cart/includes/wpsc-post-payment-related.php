@@ -184,7 +184,12 @@ class WPSC_Post_Payment_Related
 
 		$buyer_email = $ipn_data['payer_email'];
 
-		$headers = 'From: ' . $from_email . "\r\n";
+		$headers = array();
+		$headers[] = 'From: ' . $from_email . "\r\n";
+		if ( get_option('wpsc_buyer_email_content_type') == 'html' ) {
+			$headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
+			$body = nl2br( $body );
+		}
 		if (!empty($buyer_email)) {
 			if (get_option('wpspc_send_buyer_email')) {
 				wp_mail($buyer_email, $subject, $body, $headers);
@@ -203,9 +208,15 @@ class WPSC_Post_Payment_Related
 		wspsc_log_payment_debug('Applying filter - wspsc_seller_notification_email_body', true);
 		$seller_email_body = apply_filters('wspsc_seller_notification_email_body', $seller_email_body, $ipn_data, $ipn_data['cart_items']);
 
+		$seller_email_headers = array();
+		$seller_email_headers[] = 'From: ' . $from_email . "\r\n";
+		if ( get_option('wpsc_seller_email_content_type') == 'html' ) {
+			$seller_email_headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
+			$seller_email_body = nl2br( $seller_email_body );
+		}
 		if (!empty($notify_email)) {
 			if (get_option('wpspc_send_seller_email')) {
-				wp_mail($notify_email, $seller_email_subject, $seller_email_body, $headers);
+				wp_mail($notify_email, $seller_email_subject, $seller_email_body, $seller_email_headers);
 				wspsc_log_payment_debug('Seller notification email successfully sent to: ' . $notify_email, true);
 			}
 		}

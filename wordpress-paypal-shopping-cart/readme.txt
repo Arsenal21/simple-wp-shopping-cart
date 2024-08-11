@@ -232,6 +232,7 @@ None
 - The remove item icon in the cart now uses an SVG icon for better performance.
 - The Stripe checkout will show the payment method options based on what the merchant has enabled in their Stripe account.
 - The Stripe API version for creating Stripe checkout session has been updated to the latest version.
+- HTML email feature added for both the buyer and seller email content.
 
 = 5.0.5 =
 - New option in the settings menu to force collect customer's shipping address for stripe checkout.
