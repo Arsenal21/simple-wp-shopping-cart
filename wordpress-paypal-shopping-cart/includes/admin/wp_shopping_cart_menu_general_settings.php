@@ -54,7 +54,7 @@ function wspsc_show_general_settings_page ()
         update_option('wspsc_disable_nonce_add_cart', (isset($_POST['wspsc_disable_nonce_add_cart']) && $_POST['wspsc_disable_nonce_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_do_not_show_qty_in_cart', (isset($_POST['wp_shopping_cart_do_not_show_qty_in_cart']) && $_POST['wp_shopping_cart_do_not_show_qty_in_cart']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_price_check_add_cart', (isset($_POST['wspsc_disable_price_check_add_cart']) && $_POST['wspsc_disable_price_check_add_cart']!='') ? 'checked="checked"':'' );
-        update_option('wpsc_enable_empty_cart_button', (isset($_POST['wpsc_enable_empty_cart_button']) && $_POST['wpsc_enable_empty_cart_button']!='') ? 'checked="checked"':'' );
+        update_option('wpsc_show_empty_cart_option', (isset($_POST['wpsc_show_empty_cart_option']) && $_POST['wpsc_show_empty_cart_option']!='') ? 'checked="checked"':'' );
         update_option('wp_use_aff_platform', (isset($_POST['wp_use_aff_platform']) && $_POST['wp_use_aff_platform']!='') ? 'checked="checked"':'' );
         update_option('shopping_cart_anchor', (isset($_POST['shopping_cart_anchor']) && $_POST['shopping_cart_anchor']!='') ? 'checked="checked"':'' );
         update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
@@ -153,9 +153,9 @@ function wspsc_show_general_settings_page ()
         $wspsc_disable_price_check_add_cart = 'checked="checked"';
     }
 
-    $wpsc_enable_empty_cart_button = '';
-    if (get_option('wpsc_enable_empty_cart_button')){
-        $wpsc_enable_empty_cart_button = 'checked="checked"';
+    $wpsc_show_empty_cart_option = '';
+    if (get_option('wpsc_show_empty_cart_option')){
+        $wpsc_show_empty_cart_option = 'checked="checked"';
     }
 
     if (get_option('wp_use_aff_platform')){
@@ -403,8 +403,8 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Enable Empty Cart Button", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wpsc_enable_empty_cart_button" value="1" '.$wpsc_enable_empty_cart_button.' />
+<th scope="row">'.(__("Show Empty Cart Option", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wpsc_show_empty_cart_option" value="1" '.$wpsc_show_empty_cart_option.' />
 <br />'.(__("Checking this option will display a empty cart button in the cart. It can be used to clear all the cart items.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 

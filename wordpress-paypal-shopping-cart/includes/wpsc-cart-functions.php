@@ -230,7 +230,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= "<tr class='wspsc_cart_total'>";
 		$output .= "<td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td>';
 
-        $wpsc_enable_empty_cart_button = get_option('wpsc_enable_empty_cart_button') == 'checked="checked"' ? true : false;
+        $wpsc_enable_empty_cart_button = get_option('wpsc_show_empty_cart_option') == 'checked="checked"' ? true : false;
         if ($wpsc_enable_empty_cart_button) {
             //Empty cart button
             ob_start();
