@@ -229,23 +229,28 @@ function print_wp_shopping_cart( $args = array() ) {
 		//The total row
 		$output .= "<tr class='wspsc_cart_total'>";
 		$output .= "<td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost ), $paypal_symbol, $decimal ) . '</td>';
-		//Empty cart button
-		ob_start();
-		?>
-		<td class='wpsc_empty_cart_td'>
-			<form method="post" action="" class="wpsc_empty_cart_form">
-				<?php echo wp_nonce_field( 'wpsc_empty_cart', '_wpnonce', true, false ) ?>
-				<input type='hidden' name='wpsc_empty_cart' value='1'/>
-				<input
-						type='image'
-						src='<?php echo WP_CART_URL . "/images/empty-cart-svg-1.2em.svg" ?>'
-						value='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
-						title='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
-				/>
-			</form>
-		</td>
-		<?php
-		$output .= ob_get_clean();
+
+        $wpsc_enable_empty_cart_button = get_option('wpsc_enable_empty_cart_button') == 'checked="checked"' ? true : false;
+        if ($wpsc_enable_empty_cart_button) {
+            //Empty cart button
+            ob_start();
+            ?>
+            <td class='wpsc_empty_cart_td'>
+                <form method="post" action="" class="wpsc_empty_cart_form">
+                    <?php echo wp_nonce_field( 'wpsc_empty_cart', '_wpnonce', true, false ) ?>
+                    <input type='hidden' name='wpsc_empty_cart' value='1'/>
+                    <input
+                            type='image'
+                            src='<?php echo WP_CART_URL . "/images/empty-cart-svg-1.2em.svg" ?>'
+                            value='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                            title='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                    />
+                </form>
+            </td>
+            <?php
+            $output .= ob_get_clean();
+        }
+
 		$output .= '</tr>';
 
 		//Display the cart action message (if any)
