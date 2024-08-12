@@ -381,6 +381,12 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
+<th scope="row">'.(__("Show Empty Cart Option", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wpsc_show_empty_cart_option" value="1" '.$wpsc_show_empty_cart_option.' />
+<br />'.(__("Selecting this feature will add an Empty Cart option to the shopping cart, allowing users to clear all items with a single click.", "wordpress-simple-paypal-shopping-cart")).'</td>
+</tr>
+
+<tr valign="top">
 <th scope="row">'.(__("Hide Shopping Cart Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wp_shopping_cart_image_hide" value="1" '.$wp_cart_image_hide.' /><br />'.(__("If ticked the shopping cart image will not be shown.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
@@ -400,12 +406,6 @@ echo '<tr valign="top">
 <th scope="row">'.(__("Disable Price Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wspsc_disable_price_check_add_cart" value="1" '.$wspsc_disable_price_check_add_cart.' />
 <br />'.(__("Using complex characters for the product name can trigger the error: The price field may have been tampered. Security check failed. This option will stop that check and remove the error.", "wordpress-simple-paypal-shopping-cart")).'</td>
-</tr>
-
-<tr valign="top">
-<th scope="row">'.(__("Show Empty Cart Option", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wpsc_show_empty_cart_option" value="1" '.$wpsc_show_empty_cart_option.' />
-<br />'.(__("Checking this option will display a empty cart button in the cart. It can be used to clear all the cart items.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
