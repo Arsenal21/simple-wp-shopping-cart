@@ -13,13 +13,12 @@ function show_wp_cart_email_settings_page()
                 wp_die('Error! Nonce Security Check Failed! Go back to email settings menu and save the settings again.');
         }
         update_option('wpspc_send_buyer_email', (isset($_POST['wpspc_send_buyer_email']) && $_POST['wpspc_send_buyer_email']!='') ? 'checked="checked"':'' );
-        update_option('wpsc_buyer_email_content_type', sanitize_text_field($_POST["wpsc_buyer_email_content_type"]));
+        update_option('wpsc_email_content_type', sanitize_text_field($_POST["wpsc_email_content_type"]));
         update_option('wpspc_buyer_from_email', stripslashes($_POST["wpspc_buyer_from_email"]));
         update_option('wpspc_buyer_email_subj', stripslashes(sanitize_text_field($_POST["wpspc_buyer_email_subj"])));
         update_option('wpspc_buyer_email_body', stripslashes(wp_filter_post_kses($_POST["wpspc_buyer_email_body"])));
 
         update_option('wpspc_send_seller_email', (isset($_POST['wpspc_send_seller_email']) && $_POST['wpspc_send_seller_email']!='') ? 'checked="checked"':'' );
-        update_option('wpsc_seller_email_content_type', sanitize_text_field($_POST["wpsc_seller_email_content_type"]));
         update_option('wpspc_notify_email_address', stripslashes(sanitize_text_field($_POST["wpspc_notify_email_address"])));
         update_option('wpspc_seller_email_subj', stripslashes(sanitize_text_field($_POST["wpspc_seller_email_subj"])));
         update_option('wpspc_seller_email_body', stripslashes(wp_filter_post_kses($_POST["wpspc_seller_email_body"])));
@@ -33,7 +32,7 @@ function show_wp_cart_email_settings_page()
         $wpspc_send_buyer_email = 'checked="checked"';
     }
 
-    $wpsc_buyer_email_content_type = get_option('wpsc_buyer_email_content_type');
+    $wpsc_email_content_type = get_option('wpsc_email_content_type');
     $wpspc_buyer_from_email = get_option('wpspc_buyer_from_email');
     $wpspc_buyer_email_subj = get_option('wpspc_buyer_email_subj');
     $wpspc_buyer_email_body = get_option('wpspc_buyer_email_body');
@@ -42,7 +41,6 @@ function show_wp_cart_email_settings_page()
     if (get_option('wpspc_send_seller_email')){
         $wpspc_send_seller_email = 'checked="checked"';
     }
-	$wpsc_seller_email_content_type = get_option('wpsc_seller_email_content_type');
     $wpspc_notify_email_address = get_option('wpspc_notify_email_address');
     if(empty($wpspc_notify_email_address)){
         $wpspc_notify_email_address = get_bloginfo('admin_email'); //default value
@@ -72,23 +70,18 @@ function show_wp_cart_email_settings_page()
     <h3 class="hndle"><label for="title"><?php _e("Purchase Confirmation Email Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
     <div class="inside">
 
-    <p><i><?php _e("The following options affect the emails that gets sent to your buyers after a purchase.", "wordpress-simple-paypal-shopping-cart");?></i></p>
+    <p><i><?php _e("This section allows you to configure general email-related settings.", "wordpress-simple-paypal-shopping-cart");?></i></p>
 
     <table class="form-table">
 
     <tr valign="top">
-    <th scope="row"><?php _e("Send Emails to Buyer After Purchase", "wordpress-simple-paypal-shopping-cart");?></th>
-    <td><input type="checkbox" name="wpspc_send_buyer_email" value="1" <?php echo $wpspc_send_buyer_email; ?> /><span class="description"><?php _e("If checked the plugin will send an email to the buyer with the sale details. If digital goods are purchased then the email will contain the download links for the purchased products.", "wordpress-simple-paypal-shopping-cart");?></a></span></td>
-    </tr>
-
-    <tr valign="top">
-        <th scope="row"><?php _e("Buyer Email Content Type", "wordpress-simple-paypal-shopping-cart");?></th>
+        <th scope="row"><?php _e("Email Content Type", "wordpress-simple-paypal-shopping-cart");?></th>
         <td>
-            <select name="wpsc_buyer_email_content_type">
-                <option value="plain_text" <?php echo $wpsc_buyer_email_content_type == 'plain_text' ? 'selected' : ''; ?>>
+            <select name="wpsc_email_content_type">
+                <option value="plain_text" <?php echo $wpsc_email_content_type == 'plain_text' ? 'selected' : ''; ?>>
                     <?php _e('Plain Text', 'wordpress-simple-paypal-shopping-cart'); ?>
                 </option>
-                <option value="html" <?php echo $wpsc_buyer_email_content_type == 'html' ? 'selected' : ''; ?>>
+                <option value="html" <?php echo $wpsc_email_content_type == 'html' ? 'selected' : ''; ?>>
                     <?php _e('HTML', 'wordpress-simple-paypal-shopping-cart'); ?>
                 </option>
             </select>
@@ -102,6 +95,23 @@ function show_wp_cart_email_settings_page()
     <th scope="row"><?php _e("From Email Address", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_buyer_from_email" value="<?php echo esc_attr($wpspc_buyer_from_email); ?>" size="50" />
     <br /><p class="description"><?php _e("Example: Your Name &lt;sales@your-domain.com&gt; This is the email address that will be used to send the email to the buyer. This name and email address will appear in the from field of the email.", "wordpress-simple-paypal-shopping-cart");?></p></td>
+    </tr>    
+
+    </table>
+    </div>
+    </div><!--end of general email section postbox-->
+
+    <div class="postbox">
+    <h3 class="hndle"><label for="title"><?php _e("General Email Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
+    <div class="inside">
+
+    <p><i><?php _e("The following options affect the emails that gets sent to your buyers after a purchase.", "wordpress-simple-paypal-shopping-cart");?></i></p>
+
+    <table class="form-table">
+
+    <tr valign="top">
+    <th scope="row"><?php _e("Send Emails to Buyer After Purchase", "wordpress-simple-paypal-shopping-cart");?></th>
+    <td><input type="checkbox" name="wpspc_send_buyer_email" value="1" <?php echo $wpspc_send_buyer_email; ?> /><span class="description"><?php _e("If checked the plugin will send an email to the buyer with the sale details. If digital goods are purchased then the email will contain the download links for the purchased products.", "wordpress-simple-paypal-shopping-cart");?></a></span></td>
     </tr>
 
     <tr valign="top">
@@ -114,7 +124,7 @@ function show_wp_cart_email_settings_page()
         <th scope="row"><?php _e("Buyer Email Body", "wordpress-simple-paypal-shopping-cart");?></th>
     <td>
 
-    <?php if ($wpsc_buyer_email_content_type == 'html') {
+    <?php if ($wpsc_email_content_type == 'html') {
         add_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
         wp_editor(
             html_entity_decode( $wpspc_buyer_email_body ),
@@ -149,23 +159,6 @@ function show_wp_cart_email_settings_page()
     </tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Seller Email Content Type", "wordpress-simple-paypal-shopping-cart");?></th>
-        <td>
-            <select name="wpsc_seller_email_content_type">
-                <option value="plain_text" <?php echo $wpsc_seller_email_content_type == 'plain_text' ? 'selected' : ''; ?>>
-                    <?php _e('Plain Text', 'wordpress-simple-paypal-shopping-cart'); ?>
-                </option>
-                <option value="html" <?php echo $wpsc_seller_email_content_type == 'html' ? 'selected' : ''; ?>>
-                    <?php _e('HTML', 'wordpress-simple-paypal-shopping-cart'); ?>
-                </option>
-            </select>
-            <p>
-                <span class="description"><?php _e("Choose which format of email to send.", "wordpress-simple-paypal-shopping-cart");?></span>
-            </p>
-        </td>
-    </tr>
-
-    <tr valign="top">
     <th scope="row"><?php _e("Notification Email Address*", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_notify_email_address" value="<?php echo esc_attr($wpspc_notify_email_address); ?>" size="50" />
     <br /><p class="description"><?php _e("This is the email address where the seller will be notified of product sales. You can put multiple email addresses separated by comma (,) in the above field to send the notification to multiple email addresses.", "wordpress-simple-paypal-shopping-cart");?></p></td>
@@ -180,7 +173,7 @@ function show_wp_cart_email_settings_page()
     <tr valign="top">
     <th scope="row"><?php _e("Seller Email Body*", "wordpress-simple-paypal-shopping-cart");?></th>
     <td>
-	<?php if ($wpsc_seller_email_content_type == 'html') {
+	<?php if ($wpsc_email_content_type == 'html') {
 	add_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
 	wp_editor(
 		html_entity_decode( $wpspc_seller_email_body ),
@@ -210,7 +203,8 @@ function show_wp_cart_email_settings_page()
 
     </table>
 
-    </div></div>
+    </div>
+    </div><!--end of confirmation email section postbox-->
 
     <div class="submit">
         <input type="submit" class="button-primary" name="wpspc_email_settings_update" value="<?php echo (__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />

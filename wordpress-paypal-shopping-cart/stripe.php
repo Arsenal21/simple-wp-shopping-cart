@@ -222,7 +222,7 @@ class stripe_ipn_handler {
 
 		$headers = array();
 		$headers[] = 'From: ' . $from_email . "\r\n";
-		if ( get_option('wpsc_buyer_email_content_type') == 'html' ) {
+		if ( get_option('wpsc_email_content_type') == 'html' ) {
 			$headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
 			$body = nl2br( $body );
 		}
