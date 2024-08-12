@@ -244,15 +244,12 @@ class stripe_ipn_handler {
 		$this->debug_log( 'Applying filter - wspsc_seller_notification_email_body', true );
 		$seller_email_body = apply_filters( 'wspsc_seller_notification_email_body', $seller_email_body, $this->ipn_data, $cart_items );
 
-		$seller_email_headers = array();
-		$seller_email_headers[] = 'From: ' . $from_email . "\r\n";
 		if ( get_option('wpsc_seller_email_content_type') == 'html' ) {
-			$seller_email_headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
 			$seller_email_body = nl2br( $seller_email_body );
 		}
 		if (! empty( $notify_email )) {
 			if (get_option( 'wpspc_send_seller_email' )) {
-				wp_mail( $notify_email, $seller_email_subject, $seller_email_body, $seller_email_headers );
+				wp_mail( $notify_email, $seller_email_subject, $seller_email_body, $headers );
 				$this->debug_log( 'Notify Email successfully sent to ' . $notify_email, true );
 			}
 		}
