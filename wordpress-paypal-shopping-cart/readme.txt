@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 5.5
 Tested up to: 6.6
-Stable tag: 5.0.5
+Stable tag: 5.0.6
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -62,6 +62,7 @@ or
 * You can use PayPal sandbox to do testing if needed (before you go live).
 * Ability to offer the Stripe checkout option. Your customers can conveniently make credit card payments through the secure Stripe payment gateway.
 * You can use Stripe testmode to do testing if needed (before going live).
+* The Stripe checkout will display payment method options based on what you, as the merchant, have enabled in your Stripe account.
 * The orders menu will show you all the orders that you have received from your site.
 * Ability to configure an email that will get sent to your buyers after they purchase your product.
 * Ability to configure a sale notification email that gets sent to the site admin when a customer purchase your item(s).
@@ -226,7 +227,7 @@ None
 
 == Changelog ==
 
-= WIP =
+= 5.0.6 =
 - Option to hide the quantity field in the cart. This can be useful for a site selling only digital products where the quantity is always 1.
 - Added a new option to empty the shopping cart from the cart page.
 - The remove item icon in the cart now uses an SVG icon for better performance.
