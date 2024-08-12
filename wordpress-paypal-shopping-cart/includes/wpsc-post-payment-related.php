@@ -179,6 +179,8 @@ class WPSC_Post_Payment_Related
 		$args['email_body'] = $body;
 		$body = wpspc_apply_dynamic_tags_on_email($body, $ipn_data, $args);
 
+		$is_html_content_type = get_option('wpsc_email_content_type') == 'html' ? true : false;
+
 		wspsc_log_payment_debug('Applying filter - wspsc_buyer_notification_email_body', true);
 		$body = apply_filters('wspsc_buyer_notification_email_body', $body, $ipn_data, $ipn_data['cart_items']);
 
@@ -186,7 +188,7 @@ class WPSC_Post_Payment_Related
 
 		$headers = array();
 		$headers[] = 'From: ' . $from_email . "\r\n";
-		if ( get_option('wpsc_email_content_type') == 'html' ) {
+		if ( $is_html_content_type ) {
 			$headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
 			$body = nl2br( $body );
 		}
@@ -208,7 +210,7 @@ class WPSC_Post_Payment_Related
 		wspsc_log_payment_debug('Applying filter - wspsc_seller_notification_email_body', true);
 		$seller_email_body = apply_filters('wspsc_seller_notification_email_body', $seller_email_body, $ipn_data, $ipn_data['cart_items']);
 
-		if ( get_option('wpsc_seller_email_content_type') == 'html' ) {
+		if ( $is_html_content_type ) {
 			$seller_email_body = nl2br( $seller_email_body );
 		}
 		if (!empty($notify_email)) {
