@@ -292,12 +292,14 @@ class paypal_ipn_handler {
 		$args['email_body'] = $body;
 		$body = wpspc_apply_dynamic_tags_on_email( $body, $this->ipn_data, $args );
 
+		$is_html_content_type = get_option('wpsc_email_content_type') == 'html' ? true : false;
+
 		$this->debug_log( 'Applying filter - wspsc_buyer_notification_email_body', true );
 		$body = apply_filters( 'wspsc_buyer_notification_email_body', $body, $this->ipn_data, $cart_items );
 
 		$headers = array();
 		$headers[] = 'From: ' . $from_email . "\r\n";
-		if ( get_option('wpsc_email_content_type') == 'html' ) {
+		if ( $is_html_content_type ) {
 			$headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
 			$body = nl2br( $body );
 		}
@@ -319,7 +321,7 @@ class paypal_ipn_handler {
 		$this->debug_log( 'Applying filter - wspsc_seller_notification_email_body', true );
 		$seller_email_body = apply_filters( 'wspsc_seller_notification_email_body', $seller_email_body, $this->ipn_data, $cart_items );
 
-		if ( get_option('wpsc_seller_email_content_type') == 'html' ) {
+		if ( $is_html_content_type ) {
 			$seller_email_body = nl2br( $seller_email_body );
 		}
 		if (! empty( $notify_email )) {
