@@ -293,6 +293,22 @@ class WSPSC_Cart {
 			$postage_cost = (float) $item_total_shipping + (float) $baseShipping + (float) $regional_shipping_amount;
 		}
 
+        /**
+         * Custom hook to allow modification of the postage cost.
+         *
+         * This filter allows developers to provide their own custom postage cost calculation routine.
+         * It gives access to the WSPSC_Cart class instance which can be used for additional context
+         * or logic when calculating the postage cost.
+         *
+         * @since 5.0.7
+         *
+         * @param float        $postage_cost The default postage cost calculated by the plugin.
+         * @param WSPSC_Cart   $this The instance of the WSPSC_Cart class, providing
+         *                           context and additional methods/properties if needed.
+         * @return float The modified postage cost.
+         */
+        $postage_cost = apply_filters('wspsc_custom_postage_cost', $postage_cost, $this);
+
 		$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
 		if ( ! empty( $cart_free_shipping_threshold ) && $sub_total > $cart_free_shipping_threshold ) {
 			$postage_cost = 0;
