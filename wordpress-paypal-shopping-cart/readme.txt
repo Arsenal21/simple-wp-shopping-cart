@@ -227,6 +227,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- New filter hook added 'wspsc_custom_postage_cost' to allow custom postage cost calculation.
+
 = 5.0.6 =
 - Option to hide the quantity field in the cart. This can be useful for a site selling only digital products where the quantity is always 1.
 - Added a new option to empty the shopping cart from the cart page.
