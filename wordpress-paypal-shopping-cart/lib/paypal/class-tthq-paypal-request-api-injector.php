@@ -235,6 +235,7 @@ class PayPal_Request_API_Injector {
             if( is_array($pu_items) && !empty($pu_items)) {
                 // Use the pu_items array passed to the function to sumit the purchase unit in the order_data.
                 // If the 'breakdown' is provided then it needs to contain the sub_total, postage cost and tax (if any).
+                // When 'breakdown' is provided, [purchase_units][amount][breakdown][item_total][value] Should equal sum of (unit_amount * quantity) across all items for a given purchase_unit.
                 $order_data = [
                     "intent" => "CAPTURE",
                     "payment_source" => [
