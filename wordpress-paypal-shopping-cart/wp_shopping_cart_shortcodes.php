@@ -6,6 +6,7 @@ add_shortcode('wp_cart_button', 'wp_cart_button_handler');
 add_shortcode('wp_cart_display_product', 'wp_cart_display_product_handler');
 add_shortcode('wp_compact_cart', 'wspsc_compact_cart_handler');
 add_shortcode('wp_compact_cart2', 'wspsc_compact_cart2_handler');
+add_shortcode( 'wpsc_thank_you', 'wpsc_thank_you_handler' );
 
 function wp_cart_button_handler($atts){
 	extract(shortcode_atts(array(
@@ -183,4 +184,29 @@ function wspsc_compact_cart2_handler($args)
     $output .= '</div>';//end of .wspsc_compact_cart2_container
     $output .= '</div>';
     return $output;
+}
+
+function wpsc_thank_you_handler( $atts ) {
+	$error_message = '';
+
+	if ( ! isset( $_GET['order_id'] ) || empty( $_GET['order_id'] ) ) {
+		$error_message .= '<p>' . __( 'This page is used to show the transaction result after a customer makes a payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+		$error_message .= '<p>' . __( 'It will dynamically show the order details to the customers when they are redirected here after a payment. Do not access this page directly.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+		$error_message .= '<div>' . __( 'Error! Order ID value is missing in the URL.', 'wordpress-simple-paypal-shopping-cart' ) . '</div>';
+		return $error_message;
+	}
+
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpsc_thank_you_nonce_action' ) ) {
+		$error_message .= '<p>' . __( 'This page is used to show the transaction result after a customer makes a payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+		$error_message .= '<p>' . __( 'It will dynamically show the order details to the customers when they are redirected here after a payment. Do not access this page directly.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+		$error_message .= '<div>' . __( 'Error! Nonce value is missing in the URL or Nonce verification failed.', 'wordpress-simple-paypal-shopping-cart' ) . '</div>';
+		return $error_message;
+	}
+
+	$order_id = (int) $_GET['order_id'];
+
+    $order_post = get_post( $order_id );
+    ob_start();
+    wpsc_ty_order_summary( $order_post );
+    return ob_get_clean();
 }

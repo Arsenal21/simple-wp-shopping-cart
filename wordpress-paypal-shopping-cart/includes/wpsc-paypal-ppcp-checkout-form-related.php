@@ -335,7 +335,9 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                         console.log('Capture-order API call to PayPal completed successfully.');
 
                         //Redirect to the Thank you page URL if it is set.
-                        return_url = '<?php echo esc_url_raw($return_url); ?>';
+                        let return_url = new URL("<?php echo esc_url_raw($return_url); ?>");
+                        return_url.searchParams.set('order_id',  pp_bn_data.cart_id);
+                        return_url.searchParams.set('_wpnonce',  '<?php echo wp_create_nonce('wpsc_thank_you_nonce_action'); ?>');
                         if( return_url ){
                             //redirect to the Thank you page URL.
                             console.log('Redirecting to the Thank you page URL: ' + return_url);
