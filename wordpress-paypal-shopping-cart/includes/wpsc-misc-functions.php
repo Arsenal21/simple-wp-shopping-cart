@@ -202,6 +202,33 @@ function wpspc_run_activation()
 
     $default_allowed_shipping_countries = "US, GB, CA, AU";
     add_option('wpsc_stripe_allowed_shipping_countries', $default_allowed_shipping_countries);
+
+	wpsc_check_and_create_thank_you_page();
+}
+
+/**
+ * Check if a Thank-you page exists. Create new one if not.
+ */
+function wpsc_check_and_create_thank_you_page() {
+    $thank_you_page_url = get_option('cart_return_from_paypal_url');
+    if (!empty($thank_you_page_url)){
+        // User already using a page as a thank-you page, don't create another one.
+        return;
+    }
+
+    // Create new thank you page.
+	$post_id = wp_insert_post( array(
+		'post_title'     => 'Thank You',
+		'post_name'      => 'Thank-You-Order-Summary',
+		'comment_status' => 'closed',
+		'ping_status'    => 'closed',
+		'post_content'   => '<!-- wp:shortcode -->[wpsc_thank_you]<!-- /wp:shortcode -->',
+		'post_status'    => 'publish',
+		'post_type'      => 'page',
+	) );
+
+	// Save the Thank you page URL in settings.
+	update_option( 'cart_return_from_paypal_url', get_permalink($post_id) );
 }
 
 function wpspsc_settings_menu_documentation_msg()

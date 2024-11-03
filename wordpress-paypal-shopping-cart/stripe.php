@@ -629,7 +629,7 @@ function wpc_handle_stripe_ipn() {
 
 	$order_id = isset($_GET["ref_id"])?$_GET["ref_id"]:'';
 	$redirect_url = add_query_arg( 'order_id', $order_id, $return_url );
-	
+	$redirect_url = add_query_arg('_wpnonce', wp_create_nonce('wpsc_thank_you_nonce_action'), $redirect_url);
 	if ( ! headers_sent() ) {
 		header( 'Location: ' . $redirect_url );
 	} else {

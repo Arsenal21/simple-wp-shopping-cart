@@ -229,6 +229,8 @@ None
 
 = WIP =
 - New filter hook added 'wspsc_custom_postage_cost' to allow custom postage cost calculation.
+- New thank you page shortcode added.
+- Now thank you page gets created automatically.
 
 = 5.0.6 =
 - Option to hide the quantity field in the cart. This can be useful for a site selling only digital products where the quantity is always 1.

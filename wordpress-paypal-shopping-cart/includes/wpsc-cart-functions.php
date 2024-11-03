@@ -59,7 +59,10 @@ function print_wp_shopping_cart( $args = array() ) {
 	if ( empty( $return ) ) {
 		$return = WP_CART_SITE_URL . '/';
 	}
+
 	$return_url = add_query_arg( 'reset_wp_cart', '1', $return );
+	$return_url = add_query_arg( 'order_id', WSPSC_Cart::get_instance()->get_cart_id(), $return_url );
+	$return_url = add_query_arg('_wpnonce', wp_create_nonce('wpsc_thank_you_nonce_action'), $return_url);
 
 	$urls .= '<input type="hidden" name="return" value="' . $return_url . '" />';
 
