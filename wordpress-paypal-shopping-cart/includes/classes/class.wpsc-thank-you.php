@@ -12,9 +12,10 @@ class WPSC_Thank_You {
 		$shipping_region  = get_post_meta( $order_id, 'wpsc_shipping_region', true );
 		$shipping_address = get_post_meta( $order_id, 'wpsc_address', true ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
 		$billing_address  = get_post_meta( $order_id, 'wpsc_billing_address', true );
+		$wpsc_order_status  = get_post_meta( $order_id, 'wpsc_order_status', true );
 
 		// Check if the order data has not updated yet. (For the case of PayPal Standard)
-		if ( empty( $email ) || empty( $total_amount ) || empty( $payment_gateway ) ) {
+		if ( empty( $wpsc_order_status ) || strtolower(sanitize_text_field($wpsc_order_status)) != 'paid' ) {
 			$output = '';
 			$output .= '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 8px  14px;">';
 			$output .= wpautop( __( 'Your order is still processing. Please wait and refresh this page after a while.', "wordpress-simple-paypal-shopping-cart" ) );
@@ -46,7 +47,6 @@ class WPSC_Thank_You {
 		}
 
 		?>
-
         <div>
             <h2><?php _e( "Thank You: Your order has been received.", "wordpress-simple-paypal-shopping-cart" ); ?></h2>
             <div class="wpsc-order-data-box">
