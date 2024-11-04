@@ -205,8 +205,9 @@ function wpsc_thank_you_handler( $atts ) {
 
 	$order_id = (int) $_GET['order_id'];
 
-    $order_post = get_post( $order_id );
+	require_once( WP_CART_PATH . '/includes/classes/class.wpsc-thank-you.php' );
+
     ob_start();
-    wpsc_ty_order_summary( $order_post );
+	WPSC_Thank_You::wpsc_ty_order_summary( $order_id );
     return ob_get_clean();
 }
