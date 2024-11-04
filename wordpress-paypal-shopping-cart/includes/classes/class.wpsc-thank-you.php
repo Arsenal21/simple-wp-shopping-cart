@@ -12,9 +12,10 @@ class WPSC_Thank_You {
 		$shipping_region  = get_post_meta( $order_id, 'wpsc_shipping_region', true );
 		$shipping_address = get_post_meta( $order_id, 'wpsc_address', true ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
 		$billing_address  = get_post_meta( $order_id, 'wpsc_billing_address', true );
+		$wpsc_order_status  = get_post_meta( $order_id, 'wpsc_order_status', true );
 
 		// Check if the order status is confirmed. For the case of PayPal Standard, the order status is not confirmed until the IPN is received.
-		if ( empty( $email ) || empty( $total_amount ) || empty( $payment_gateway ) ) {
+		if ( empty( $wpsc_order_status ) || strtolower( sanitize_text_field($wpsc_order_status) ) != 'paid' ) {
 			$output = '';
 			$output .= '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 8px  14px;">';
             $output .= '<p>' . __( 'Our system is currently awaiting payment confirmation from the payment gateway. Please wait a few minutes and refresh this page. You may also navigate away, as we will send you an email once the payment confirmation is received.', "wordpress-simple-paypal-shopping-cart" ) . '</p>';
@@ -60,7 +61,7 @@ class WPSC_Thank_You {
                 <div class="wpsc-order-data-box-col">
                     <div><?php _e( "Total", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( print_payment_currency( $total_amount, WP_CART_CURRENCY_SYMBOL ) ) ?></div>
-                </div>                
+                </div>
                 <div class="wpsc-order-data-box-col">
                     <div><?php _e( "Email", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( $email ) ?></div>
