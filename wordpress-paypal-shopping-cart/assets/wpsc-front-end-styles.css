@@ -186,3 +186,41 @@ text-decoration: none;
     color: #6c757d !important;
 }
 
+/* Thank you shortcode related */
+ .wpsc-order-data-box {
+     display: flex;
+     justify-content: space-between;
+     align-content: center;
+     width: 100%;
+ }
+
+.wpsc-order-data-box-col {
+    margin-bottom: 12px;
+}
+
+.wpsc-order-data-box-col :nth-child(1) {
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+@media screen and (max-width: 768px) {
+    .wpsc-order-data-box {
+        display: block;
+    }
+}
+
+.wpsc-order-details-table,
+.wpsc-order-downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid lightgray;
+}
+
+.wpsc-order-details-table td,
+.wpsc-order-details-table th,
+.wpsc-order-downloads-table td,
+.wpsc-order-downloads-table th {
+    padding: 14px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
