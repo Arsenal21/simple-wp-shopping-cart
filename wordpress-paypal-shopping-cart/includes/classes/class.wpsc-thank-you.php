@@ -4,7 +4,7 @@ class WPSC_Thank_You {
 	/**
 	 * Outputs the order summary for thank you page.
 	 */
-	public static function wpsc_ty_order_summary( $order_id ) {
+	public static function wpsc_ty_output_order_summary( $order_id ) {
 		$payment_gateway  = get_post_meta( $order_id, 'wpsc_payment_gateway', true );
 		$email            = get_post_meta( $order_id, 'wpsc_email_address', true );
 		$total_amount     = get_post_meta( $order_id, 'wpsc_total_amount', true );
@@ -14,14 +14,13 @@ class WPSC_Thank_You {
 		$billing_address  = get_post_meta( $order_id, 'wpsc_billing_address', true );
 		$wpsc_order_status  = get_post_meta( $order_id, 'wpsc_order_status', true );
 
-		// Check if the order data has not updated yet. (For the case of PayPal Standard)
-		if ( empty( $wpsc_order_status ) || strtolower(sanitize_text_field($wpsc_order_status)) != 'paid' ) {
+		// Check if the order status is confirmed. For the case of PayPal Standard, the order status is not confirmed until the IPN is received.
+		if ( empty( $wpsc_order_status ) || strtolower( sanitize_text_field($wpsc_order_status) ) != 'paid' ) {
 			$output = '';
 			$output .= '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 8px  14px;">';
-			$output .= wpautop( __( 'Your order is still processing. Please wait and refresh this page after a while.', "wordpress-simple-paypal-shopping-cart" ) );
+            $output .= '<p>' . __( 'Our system is currently awaiting payment confirmation from the payment gateway. Please wait a few minutes and refresh this page. You may also navigate away, as we will send you an email once the payment confirmation is received.', "wordpress-simple-paypal-shopping-cart" ) . '</p>';
 			$output .= '</div>';
 			echo $output;
-
 			return;
 		}
 
@@ -47,8 +46,9 @@ class WPSC_Thank_You {
 		}
 
 		?>
+
         <div>
-            <h2><?php _e( "Thank You: Your order has been received.", "wordpress-simple-paypal-shopping-cart" ); ?></h2>
+            <h4><?php _e( "Thank you. Your order has been received.", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
             <div class="wpsc-order-data-box">
                 <div class="wpsc-order-data-box-col">
                     <div><?php _e( "Order ID", "wordpress-simple-paypal-shopping-cart" ); ?></div>
@@ -59,12 +59,12 @@ class WPSC_Thank_You {
                     <div><?php echo esc_attr( $purchase_data ) ?></div>
                 </div>
                 <div class="wpsc-order-data-box-col">
-                    <div><?php _e( "Email", "wordpress-simple-paypal-shopping-cart" ); ?></div>
-                    <div><?php echo esc_attr( $email ) ?></div>
-                </div>
-                <div class="wpsc-order-data-box-col">
                     <div><?php _e( "Total", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( print_payment_currency( $total_amount, WP_CART_CURRENCY_SYMBOL ) ) ?></div>
+                </div>
+                <div class="wpsc-order-data-box-col">
+                    <div><?php _e( "Email", "wordpress-simple-paypal-shopping-cart" ); ?></div>
+                    <div><?php echo esc_attr( $email ) ?></div>
                 </div>
                 <div class="wpsc-order-data-box-col">
                     <div><?php _e( "Payment Gateway", "wordpress-simple-paypal-shopping-cart" ); ?></div>
@@ -84,19 +84,20 @@ class WPSC_Thank_You {
                 <tbody>
 				<?php foreach ( $cart_items_array as $item ) { ?>
                     <tr>
-                        <td><?php echo esc_attr( $item['product_name'] ); ?>
-                            x<?php echo esc_attr( $item['quantity'] ); ?></td>
+                        <td>
+                            <?php echo esc_attr( $item['product_name'] ); ?> x <?php echo esc_attr( $item['quantity'] ); ?>
+                        </td>
                         <td style="text-align: end"><?php echo esc_attr( $item['unit_price'] ); ?></td>
                     </tr>
 				<?php } ?>
 				<?php if ( ! empty( intval( $shipping_amount ) ) ) { ?>
                     <tr>
-                        <th style="text-align: end"><?php _e( "Shipping Amount", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th style="text-align: start"><?php _e( "Shipping Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td style="text-align: end"><?php echo esc_attr( print_payment_currency( $shipping_amount, WP_CART_CURRENCY_SYMBOL ) ); ?></td>
                     </tr>
 				<?php } ?>
                 <tr>
-                    <th style="text-align: end"><?php _e( "Total Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                    <th style="text-align: start"><?php _e( "Total Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                     <td style="text-align: end"><?php echo esc_attr( print_payment_currency( $total_amount, WP_CART_CURRENCY_SYMBOL ) ); ?></td>
                 </tr>
                 </tbody>
@@ -127,27 +128,27 @@ class WPSC_Thank_You {
 			<?php if ( ! empty( $shipping_address ) ) { ?>
                 <div>
                     <h4><?php _e( "Shipping Address", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
-                    <p>
+                    <div class="wpsc-order-shipping-address">
 						<?php echo esc_attr( $shipping_address ); ?>
-                    </p>
+                    </div>
                 </div>
 			<?php } ?>
 
 			<?php if ( ! empty( $shipping_region ) ) { ?>
                 <div>
                     <h4><?php _e( "Shipping Region", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
-                    <p>
+                    <div class="wpsc-order-shipping-region">
 						<?php echo esc_attr( $shipping_region ); ?>
-                    </p>
+                    </div>
                 </div>
 			<?php } ?>
 
 			<?php if ( ! empty( $billing_address ) ) { ?>
                 <div>
                     <h4><?php _e( "Billing Address", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
-                    <p>
+                    <div class="wpsc-order-billing-address">
 						<?php echo esc_attr( $billing_address ); ?>
-                    </p>
+                    </div>
                 </div>
 			<?php } ?>
         </div>

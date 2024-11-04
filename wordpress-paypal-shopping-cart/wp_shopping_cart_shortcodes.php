@@ -6,7 +6,7 @@ add_shortcode('wp_cart_button', 'wp_cart_button_handler');
 add_shortcode('wp_cart_display_product', 'wp_cart_display_product_handler');
 add_shortcode('wp_compact_cart', 'wspsc_compact_cart_handler');
 add_shortcode('wp_compact_cart2', 'wspsc_compact_cart2_handler');
-add_shortcode( 'wpsc_thank_you', 'wpsc_thank_you_handler' );
+add_shortcode('wpsc_thank_you', 'wpsc_thank_you_sc_handler');
 
 function wp_cart_button_handler($atts){
 	extract(shortcode_atts(array(
@@ -186,20 +186,18 @@ function wspsc_compact_cart2_handler($args)
     return $output;
 }
 
-function wpsc_thank_you_handler( $atts ) {
+function wpsc_thank_you_sc_handler( $atts ) {
 	$error_message = '';
 
+    $thank_you_page_common_msg = '<p>' . __( 'This page displays the transaction result and the order summary after a customer completes a payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+    $thank_you_page_common_msg .= '<p>' . __( 'When redirected here after a payment, customers will see their order details dynamically.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
 	if ( ! isset( $_GET['order_id'] ) || empty( $_GET['order_id'] ) ) {
-		$error_message .= '<p>' . __( 'This page is used to show the transaction result after a customer makes a payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
-		$error_message .= '<p>' . __( 'It will dynamically show the order details to the customers when they are redirected here after a payment. Do not access this page directly.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
-		$error_message .= '<div>' . __( 'Error! Order ID value is missing in the URL.', 'wordpress-simple-paypal-shopping-cart' ) . '</div>';
+		$error_message .= $thank_you_page_common_msg . '<p>' . __( 'Error! Order ID value is missing in the URL.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
 		return $error_message;
 	}
 
 	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'wpsc_thank_you_nonce_action' ) ) {
-		$error_message .= '<p>' . __( 'This page is used to show the transaction result after a customer makes a payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
-		$error_message .= '<p>' . __( 'It will dynamically show the order details to the customers when they are redirected here after a payment. Do not access this page directly.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
-		$error_message .= '<div>' . __( 'Error! Nonce value is missing in the URL or Nonce verification failed.', 'wordpress-simple-paypal-shopping-cart' ) . '</div>';
+		$error_message .= $thank_you_page_common_msg . '<p>' . __( 'Error! Nonce value is missing in the URL or Nonce verification failed.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
 		return $error_message;
 	}
 
@@ -208,6 +206,6 @@ function wpsc_thank_you_handler( $atts ) {
 	require_once( WP_CART_PATH . '/includes/classes/class.wpsc-thank-you.php' );
 
     ob_start();
-	WPSC_Thank_You::wpsc_ty_order_summary( $order_id );
+	WPSC_Thank_You::wpsc_ty_output_order_summary( $order_id );
     return ob_get_clean();
 }
