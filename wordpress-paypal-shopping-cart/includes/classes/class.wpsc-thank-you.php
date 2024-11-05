@@ -9,6 +9,7 @@ class WPSC_Thank_You {
 		$email            = get_post_meta( $order_id, 'wpsc_email_address', true );
 		$total_amount     = get_post_meta( $order_id, 'wpsc_total_amount', true );
 		$shipping_amount  = get_post_meta( $order_id, 'wpsc_shipping_amount', true );
+		$tax_amount  = get_post_meta( $order_id, 'wpsc_tax_amount', true );
 		$shipping_region  = get_post_meta( $order_id, 'wpsc_shipping_region', true );
 		$shipping_address = get_post_meta( $order_id, 'wpsc_address', true ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
 		$billing_address  = get_post_meta( $order_id, 'wpsc_billing_address', true );
@@ -90,10 +91,16 @@ class WPSC_Thank_You {
                         <td style="text-align: end"><?php echo esc_attr( $item['unit_price'] ); ?></td>
                     </tr>
 				<?php } ?>
-				<?php if ( ! empty( intval( $shipping_amount ) ) ) { ?>
+				<?php if ( ! empty( floatval( $shipping_amount ) ) ) { // Show this row if shipping amount is not 0.0 ?>
                     <tr>
                         <th style="text-align: start"><?php _e( "Shipping Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td style="text-align: end"><?php echo esc_attr( print_payment_currency( $shipping_amount, WP_CART_CURRENCY_SYMBOL ) ); ?></td>
+                    </tr>
+				<?php } ?>
+                <?php if ( ! empty( floatval( $tax_amount ) ) ) { // Show this row if tax amount is not 0.0 ?>
+                    <tr>
+                        <th style="text-align: start"><?php _e( "Tax Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <td style="text-align: end"><?php echo esc_attr( print_payment_currency( $tax_amount, WP_CART_CURRENCY_SYMBOL ) ); ?></td>
                     </tr>
 				<?php } ?>
                 <tr>

@@ -148,6 +148,9 @@ class stripe_ipn_handler {
 		$gateway = isset( $this->ipn_data['gateway'] ) ? $this->ipn_data['gateway'] : '';
         update_post_meta( $post_id, 'wpsc_payment_gateway', $gateway );
 
+		$tax_amount = isset($this->ipn_data['tax_amount']) ? wpspsc_number_format_price($this->ipn_data['tax_amount']) : '0.00';
+		update_post_meta( $post_id, 'wpsc_tax_amount', $tax_amount );
+
 		$product_details = "";
 		$item_counter = 1;
 		$shipping = 0;
@@ -337,8 +340,15 @@ class stripe_ipn_handler {
             
             $pi->custom_metadata = $sess->metadata;
 
+	        $additional_data = array();
+
+	        // Collect the automatic tax amount if there is any.
+	        if (isset($sess['total_details']['amount_tax']) && !empty($sess['total_details']['amount_tax'])){
+		        $additional_data['tax_amount'] = $sess['total_details']['amount_tax'];
+	        }
+
 			//formatting ipn_data
-			 $this->create_ipn_from_stripe($pi);
+			 $this->create_ipn_from_stripe($pi, $additional_data);
 
         }  catch ( Exception $e ) {
 			$error_msg = 'Error occurred: ' . $e->getMessage();
@@ -354,7 +364,7 @@ class stripe_ipn_handler {
 		return true;
 	}
 
-	function create_ipn_from_stripe( $pi_object ) {
+	function create_ipn_from_stripe( $pi_object, $additional_data = array() ) {
 
 		//converting the payment intent object to array
 		$data = json_decode(json_encode($pi_object),TRUE) ;
@@ -452,6 +462,21 @@ class stripe_ipn_handler {
 			$i++;
 		}
 		$ipn['num_cart_items'] = $i - 1;
+
+		// Process additional data if there is any.
+		if (!empty($additional_data)){
+
+			// Process tax amount if there is any
+			if (isset($additional_data['tax_amount'])){
+				$tax_amount_in_cents = intval($additional_data['tax_amount']); // for stripe, amount should always be in integer (cents)
+				if (wpspsc_is_zero_cents_currency($currency_code_payment)) {
+					$ipn['tax_amount'] = $tax_amount_in_cents;
+				} else {
+					$ipn['tax_amount'] = $tax_amount_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
+				}
+			}
+		}
+
 
 		//Debug purpose.
 		//wspsc_log_debug_array( $ipn, true );

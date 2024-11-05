@@ -31,6 +31,7 @@ function show_wp_cart_stripe_settings_page()
         update_option('wpspc_stripe_test_secret_key', $test_secret_key);
         update_option('wpspc_stripe_collect_address', (isset($_POST['wpspc_stripe_collect_address']) && $_POST['wpspc_stripe_collect_address']!='') ? 'checked="checked"':'' );
         update_option('wpsc_stripe_collect_shipping_address', (isset($_POST['wpsc_stripe_collect_shipping_address']) && $_POST['wpsc_stripe_collect_shipping_address']!='') ? 'checked="checked"':'' );
+        update_option('wpsc_enable_stripe_automatic_tax', (isset($_POST['wpsc_enable_stripe_automatic_tax']) && !empty($_POST['wpsc_enable_stripe_automatic_tax'])) ? 'checked="checked"':'' );
         update_option('wpsc_stripe_allowed_shipping_countries', $wpsc_stripe_allowed_shipping_countries );
 
         update_option('wpspc_stripe_button_image_url', $wpspc_stripe_button_image_url);
@@ -54,10 +55,16 @@ function show_wp_cart_stripe_settings_page()
         $wpsc_stripe_collect_shipping_address = '';
     }
 
+	if (get_option('wpsc_enable_stripe_automatic_tax')){
+		$wpsc_enable_stripe_automatic_tax = 'checked="checked"';
+	} else{
+		$wpsc_enable_stripe_automatic_tax = '';
+	}
+
     $wpsc_stripe_allowed_shipping_countries = get_option('wpsc_stripe_allowed_shipping_countries');
 
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();    
+    wpspsc_settings_menu_documentation_msg();
     ?>
 
     <form method="post" action="">
@@ -76,9 +83,9 @@ function show_wp_cart_stripe_settings_page()
                         <th scope="row"><?php _e("Enable Stripe Checkout", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="checkbox" name="wpspc_enable_stripe_checkout" value="1" <?php echo get_option('wpspc_enable_stripe_checkout') ? ' checked' : ''; ?> />
                             <span class="description">
-                                <?php 
+                                <?php
                                 _e("To learn how to enable Stripe, please refer to ", "wordpress-simple-paypal-shopping-cart");
-                                echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . __("the documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.'; 
+                                echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . __("the documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.';
                                 ?>
                             </span>
 
@@ -126,7 +133,13 @@ function show_wp_cart_stripe_settings_page()
                         </div>
                         </td>
                     </tr>
-
+                    <tr valign="top">
+                        <th scope="row"><?php _e("Enable Automatic Tax", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <td>
+                            <input type="checkbox" name="wpsc_enable_stripe_automatic_tax" value="1" <?php esc_attr_e($wpsc_enable_stripe_automatic_tax);?> />
+                            <p class="description"><?php _e("If this option is checked, automatic tax will be applied. Note that, it needs to be enabled from the stripe dashboard.", "wordpress-simple-paypal-shopping-cart")?></p>
+                        </td>
+                    </tr>
                 </table>
 
                 <h4><?php _e("Button Appearance Settings", "wordpress-simple-paypal-shopping-cart"); ?></h4>

@@ -60,6 +60,12 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
 
     $items_ordered = get_post_meta($wpsc_cart_orders->ID, 'wpspsc_items_ordered', true);
     $applied_coupon = get_post_meta($wpsc_cart_orders->ID, 'wpsc_applied_coupon', true);
+
+	$tax_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_tax_amount', true);
+    if (empty($tax_amount)){
+	    $tax_amount = "0.00"; // Show default 0.00 for backward compatibility.
+    }
+
     ?>
     <table class="widefat" style="border: none;">
         <tr>
@@ -95,6 +101,10 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
         <tr>
             <td><?php _e("Total Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_total_amount" value="<?php echo esc_attr($total_amount); ?>" /></td>
+        </tr>
+        <tr>
+            <td><?php _e("Tax Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><input type="text" size="20" name="wpsc_tax_amount" value="<?php echo esc_attr($tax_amount); ?>" /></td>
         </tr>
         <tr>
             <td><?php _e("Shipping Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
@@ -192,6 +202,13 @@ function wpspc_cart_save_orders($order_id, $wpsc_cart_orders) {
                 wp_die('Error! Shipping amount must be a numeric number.');
             }
             update_post_meta($order_id, 'wpsc_shipping_amount', $shipping_amount);
+        }
+        if (isset($_POST['wpsc_tax_amount']) && $_POST['wpsc_tax_amount'] != '') {
+            $tax_amount = sanitize_text_field($_POST['wpsc_tax_amount']);
+            if (!is_numeric($tax_amount)) {
+                wp_die('Error! Tax amount must be a numeric number.');
+            }
+            update_post_meta($order_id, 'wpsc_tax_amount', $tax_amount);
         }
         if (isset($_POST['wpsc_address']) && $_POST['wpsc_address'] != '') {
             $shipping_address = sanitize_text_field($_POST['wpsc_address']);
