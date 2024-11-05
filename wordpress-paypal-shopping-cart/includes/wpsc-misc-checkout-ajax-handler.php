@@ -167,7 +167,7 @@ function wspsc_stripe_create_checkout_session() {
 		}
 
 		// Collect automatic tax if enabled.
-		if (sanitize_text_field(get_option('wpsc_enable_stripe_automatic_tax')) == 'checked="checked"'){
+		if ( get_option('wpsc_enable_stripe_automatic_tax') ){
 			$opts["automatic_tax"] = array(
 				'enabled' => true,
 			);

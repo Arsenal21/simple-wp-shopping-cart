@@ -307,7 +307,7 @@ class WSPSC_Cart {
          *                           context and additional methods/properties if needed.
          * @return float The modified postage cost.
          */
-        $postage_cost = apply_filters('wspsc_custom_postage_cost', $postage_cost, $this);
+        $postage_cost = apply_filters('wpsc_custom_postage_cost', $postage_cost, $this);
 
 		$cart_free_shipping_threshold = get_option( 'cart_free_shipping_threshold' );
 		if ( ! empty( $cart_free_shipping_threshold ) && $sub_total > $cart_free_shipping_threshold ) {

@@ -3,8 +3,8 @@ Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 5.5
-Tested up to: 6.6
-Stable tag: 5.0.6
+Tested up to: 6.7
+Stable tag: 5.0.7
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -39,9 +39,9 @@ WP Simple Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to
 
 For video tutorial, screenshots, detailed documentation, support and updates, please visit:
 
-[WP Simple Cart Details Page](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768)
-or
 [WP Simple Cart Documentation](https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart)
+or
+[WP Simple Cart Details Page](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768)
 
 = Features =
 
@@ -58,11 +58,11 @@ or
 * Option to use the PayPal Commerce Platform Checkout option. You can enable it from the settings menu of the plugin.
 * Option to use the smart payment buttons of PayPal. Allows the customers to checkout in a popup window (using a credit card, paypal or paypal credit).
 * Your customers will be able to use the PayPal' Pay in 4 payment option (Buy Now Pay Later).
-* Collect special instructions from your customers on the PayPal checkout page.
 * You can use PayPal sandbox to do testing if needed (before you go live).
 * Ability to offer the Stripe checkout option. Your customers can conveniently make credit card payments through the secure Stripe payment gateway.
 * You can use Stripe testmode to do testing if needed (before going live).
 * The Stripe checkout will display payment method options based on what you, as the merchant, have enabled in your Stripe account.
+* Ability to display the order summary on the 'Thank You' page. Refer to [this documentation](https://www.tipsandtricks-hq.com/ecommerce/displaying-order-summary-on-the-thank-you-page) for more details.
 * The orders menu will show you all the orders that you have received from your site.
 * Ability to configure an email that will get sent to your buyers after they purchase your product.
 * Ability to configure a sale notification email that gets sent to the site admin when a customer purchase your item(s).
@@ -227,11 +227,11 @@ None
 
 == Changelog ==
 
-= WIP =
-- New filter hook added 'wspsc_custom_postage_cost' to allow custom postage cost calculation.
-- New thank you page shortcode added.
-- Now thank you page gets created automatically.
-- Stripe automatic tax feature added.
+= 5.0.7 =
+- Added a new feature to display the order summary on the 'Thank You' page after checkout. Refer to [this documentation](https://www.tipsandtricks-hq.com/ecommerce/displaying-order-summary-on-the-thank-you-page) for more details.
+- The 'Thank you' page gets created automatically at plugin install time.
+- Added a new feature to use the Stripe automatic tax feature for Stripe checkout.
+- New filter hook added 'wpsc_custom_postage_cost' to allow custom postage cost calculation.
 
 = 5.0.6 =
 - Option to hide the quantity field in the cart. This can be useful for a site selling only digital products where the quantity is always 1.

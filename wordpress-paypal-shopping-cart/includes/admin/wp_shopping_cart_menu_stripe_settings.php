@@ -137,7 +137,7 @@ function show_wp_cart_stripe_settings_page()
                         <th scope="row"><?php _e("Enable Automatic Tax", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td>
                             <input type="checkbox" name="wpsc_enable_stripe_automatic_tax" value="1" <?php esc_attr_e($wpsc_enable_stripe_automatic_tax);?> />
-                            <p class="description"><?php _e("If this option is checked, automatic tax will be applied. Note that, it needs to be enabled from the stripe dashboard.", "wordpress-simple-paypal-shopping-cart")?></p>
+                            <p class="description"><?php _e("If enabled, automatic tax will be applied during Stripe checkout. Ensure that the tax option is enabled and configured in your Stripe account before activating it in our plugin.", "wordpress-simple-paypal-shopping-cart")?></p>
                         </td>
                     </tr>
                 </table>
@@ -148,8 +148,9 @@ function show_wp_cart_stripe_settings_page()
                 <table class="form-table">
                     <tr valign="top">
                         <th scope="row"><?php _e("Checkout Button Image URL", "wordpress-simple-paypal-shopping-cart"); ?></th>
-                        <td><input type="text" name="wpspc_stripe_button_image_url" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_button_image_url')); ?>" />
-                            <span class="description"><?php _e("If you want to customize the look of the button using an image then enter the URL of the image.", "wordpress-simple-paypal-shopping-cart"); ?></span>
+                        <td>
+                            <input type="text" name="wpspc_stripe_button_image_url" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_button_image_url')); ?>" />
+                            <p class="description"><?php _e("If you want to customize the look of the button using an image then enter the URL of the image.", "wordpress-simple-paypal-shopping-cart"); ?></p>
                         </td>
                     </tr>
                 </table>
