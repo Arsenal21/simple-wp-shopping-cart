@@ -91,7 +91,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</h2>';
 	}
 
-	$output .= '<span id="pinfo" style="display: none; font-weight: bold; color: red;">' . ( __( 'Hit enter to submit new Quantity.', 'wordpress-simple-paypal-shopping-cart' ) ) . '</span>';
+	$output .= '<span id="wpsc-cart-qty-change" class="wpsc-cart-change-quantity-msg" style="display: none;">' . ( __( 'Hit enter to submit new Quantity.', 'wordpress-simple-paypal-shopping-cart' ) ) . '</span>';
 	$output .= '<table style="width: 100%;">';
 
 	$show_quantity_column = get_option('wp_shopping_cart_do_not_show_qty_in_cart') != 'checked="checked"' ? true : false;
@@ -164,7 +164,7 @@ function print_wp_shopping_cart( $args = array() ) {
                                 step='1'
                                 size='3'
                                 onchange='document.pcquantity_<?php echo $uniqid ?>.submit();'
-                                onkeypress='document.getElementById("pinfo").style.display = "";'
+                                onkeypress='document.getElementById("wpsc-cart-qty-change").style.display = "";'
                         />
                     </form>
                 </td>

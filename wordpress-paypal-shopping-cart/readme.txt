@@ -227,6 +227,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Added CSS class for the cart change/update quanity message so custom CSS can be applied to it.
+
 = 5.0.7 =
 - Added a new feature to display the order summary on the 'Thank You' page after checkout. Refer to [this documentation](https://www.tipsandtricks-hq.com/ecommerce/displaying-order-summary-on-the-thank-you-page) for more details.
 - The 'Thank you' page gets created automatically at plugin install time.

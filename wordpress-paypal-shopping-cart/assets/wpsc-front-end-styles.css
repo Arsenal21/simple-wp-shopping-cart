@@ -82,6 +82,11 @@ font-weight:bold;
     padding: 15px 20px;
 }
 
+.wpsc-cart-change-quantity-msg{
+    font-weight: bold; 
+    color: red;
+}
+
 /* product box display specific CSS */
 .wp_cart_product_display_box{
 border: 1px solid #E8E5DC;
