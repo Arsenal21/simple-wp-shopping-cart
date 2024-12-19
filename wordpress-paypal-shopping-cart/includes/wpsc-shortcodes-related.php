@@ -74,21 +74,21 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	$replacement .= '<input type="hidden" name="product_tmp" value="' . esc_attr( $name ) . '" />';
 	$replacement .= '<input type="hidden" name="product_tmp_two" value="' . esc_attr( $product_tmp_two ) . '" />';
 	isset( $atts['item_number'] ) ? $item_num = $atts['item_number'] : $item_num = '';
-	$replacement .= '<input type="hidden" name="item_number" value="' . $item_num . '" />';
+	$replacement .= '<input type="hidden" name="item_number" value="' . esc_attr($item_num) . '" />';
 
 	if ( isset( $atts['file_url'] ) ) {
 		$file_url = $atts['file_url'];
 		$file_url = base64_encode( $file_url );
-		$replacement .= '<input type="hidden" name="file_url" value="' . $file_url . '" />';
+		$replacement .= '<input type="hidden" name="file_url" value="' . esc_url($file_url) . '" />';
 	}
 	if ( isset( $atts['thumbnail'] ) ) {
-		$replacement .= '<input type="hidden" name="thumbnail" value="' . $atts['thumbnail'] . '" />';
+		$replacement .= '<input type="hidden" name="thumbnail" value="' . esc_url($atts['thumbnail']) . '" />';
 	}
 	if ( isset( $atts['stamp_pdf'] ) ) {
-		$replacement .= '<input type="hidden" name="stamp_pdf" value="' . $atts['stamp_pdf'] . '" />';
+		$replacement .= '<input type="hidden" name="stamp_pdf" value="' . esc_url( $atts['stamp_pdf'] ) . '" />';
 	}
 	if ( isset( $atts['digital'] ) ) {
-		$replacement .= '<input type="hidden" name="digital" value="' . $atts['digital'] . '" />';
+		$replacement .= '<input type="hidden" name="digital" value="' . esc_attr( $atts['digital'] ). '" />';
 	}
 
 	$p_key = get_option( 'wspsc_private_key_one' );
