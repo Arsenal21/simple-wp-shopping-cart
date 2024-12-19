@@ -79,7 +79,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	if ( isset( $atts['file_url'] ) ) {
 		$file_url = $atts['file_url'];
 		$file_url = base64_encode( $file_url );
-		$replacement .= '<input type="hidden" name="file_url" value="' . esc_url($file_url) . '" />';
+		$replacement .= '<input type="hidden" name="file_url" value="' . esc_attr($file_url) . '" />';
 	}
 	if ( isset( $atts['thumbnail'] ) ) {
 		$replacement .= '<input type="hidden" name="thumbnail" value="' . esc_url($atts['thumbnail']) . '" />';
