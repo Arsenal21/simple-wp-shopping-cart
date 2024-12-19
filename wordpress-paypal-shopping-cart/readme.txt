@@ -228,7 +228,7 @@ None
 == Changelog ==
 
 = 5.0.8 =
-- Added CSS class for the cart change/update quanity message so custom CSS can be applied to it.
+- Added CSS class for the cart change/update quantity message so custom CSS can be applied to it.
 - Added output escaping to some of the shortcode parameters.
 - Language translation POT file updated.
 
