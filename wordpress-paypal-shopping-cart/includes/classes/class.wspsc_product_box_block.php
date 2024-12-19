@@ -103,15 +103,15 @@ class WSPSC_PRODUCT_BOX {
 				'title'           => __( "Cart Button", 'wordpress-simple-paypal-shopping-cart' ),
 				'initialOpen'     => false,
 				'scrollAfterOpen' => true,
-				'description'     => __( "", 'wordpress-simple-paypal-shopping-cart' ),
+				'description'     => '',
 				'fields'          => array(
 					'button_text'  => array(
 						'label'       => __( "Button Text", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 					'button_image' => array(
 						'label'       => __( "Button Image", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 				),
 			),
@@ -124,15 +124,15 @@ class WSPSC_PRODUCT_BOX {
 				'fields'          => array(
 					'var1' => array(
 						'label'       => __( "Variation 1", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 					'var2' => array(
 						'label'       => __( "Variation 2", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 					'var3' => array(
 						'label'       => __( "Variation 3", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 				),
 			)

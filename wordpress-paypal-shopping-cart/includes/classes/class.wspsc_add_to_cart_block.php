@@ -86,15 +86,15 @@ class WSPSC_ADD_TO_CART {
 					),
 //					'item_number'  => array(
 //						'label'       => __( "Item Number", 'wordpress-simple-paypal-shopping-cart' ),
-//						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+//						'description' => '',
 //					),
 //					'thumbnail'    => array(
 //						'label'       => __( "Product Thumbnail", 'wordpress-simple-paypal-shopping-cart' ),
-//						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+//						'description' => '',
 //					),
 //					'stamp_pdf'    => array(
 //						'label'       => __( "Stamp PDF", 'wordpress-simple-paypal-shopping-cart' ),
-//						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+//						'description' => '',
 //					),
 					'digital' => array(
 						'label'       => __( "It's a digital product", 'wordpress-simple-paypal-shopping-cart' ),
@@ -111,15 +111,15 @@ class WSPSC_ADD_TO_CART {
 				'fields'      => array(
 					'var1' => array(
 						'label'       => __( "Variation 1", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 					'var2' => array(
 						'label'       => __( "Variation 2", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 					'var3' => array(
 						'label'       => __( "Variation 3", 'wordpress-simple-paypal-shopping-cart' ),
-						'description' => __( '', 'wordpress-simple-paypal-shopping-cart' ),
+						'description' => '',
 					),
 				),
 			)
