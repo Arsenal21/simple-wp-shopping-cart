@@ -72,10 +72,6 @@ class WSPSC_Cart {
             setcookie('simple_cart_id', $post_id, $cookie_expiration, '/');
             $this->set_cart_id($post_id);
 
-            //Save the cart ID in the session for the customer input addon backwards compatibility.
-            //TODO - Remove this in the next version.
-            $_SESSION['simple_cart_id'] = $post_id;
-
             //Update the post title with the cart ID
             $updated_wpsc_order = array(
                 'ID'         => $this->get_cart_id(),

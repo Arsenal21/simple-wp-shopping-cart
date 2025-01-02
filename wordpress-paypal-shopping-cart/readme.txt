@@ -227,6 +227,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Removed the deprecated function 'wspsc_check_and_start_session'
+
 = 5.0.8 =
 - Added CSS class for the cart change/update quantity message so custom CSS can be applied to it.
 - Added output escaping to some of the shortcode parameters.

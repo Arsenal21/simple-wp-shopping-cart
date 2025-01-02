@@ -60,36 +60,6 @@ function wspsc_clean_incomplete_old_cart_orders() {
     );
 }
 
-function wspsc_check_and_start_session() {
-	//No session needed for admin side. Only use session on front-end
-	if ( is_admin() ) {
-		return false;
-	}
-
-        //No session if wp_doing_ajax()
-	if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
-		return false;
-	}
-
-	//Don't start session if headers are already sent
-	if ( headers_sent() ) {
-		return false;
-	}
-
-	//Don't break Site Health test
-        $request_uri = ! empty( $_SERVER['REQUEST_URI'] ) ? sanitize_url( $_SERVER['REQUEST_URI'] ) : '';
-	if ( ! empty( $request_uri ) && ! empty( strpos( strtolower( $request_uri ), 'wp-site-health/v1/tests/loopback-requests' ) ) ) {
-		return false;
-	}
-
-	//Start session
-        if ( session_status() == PHP_SESSION_NONE ) {
-            session_start();
-        }
-
-    return true;
-}
-
 function wpsc_get_countries(){
     return array (
         'AW' => 'Aruba',

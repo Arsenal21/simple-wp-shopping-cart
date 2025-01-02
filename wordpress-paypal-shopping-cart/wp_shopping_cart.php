@@ -60,8 +60,6 @@ include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php' );
 include_once( WP_CART_PATH . 'includes/classes/class.wspsc_blocks.php' );
 include_once( WP_CART_PATH . 'lib/paypal/class-tthq-paypal-main.php' );
 
-wspsc_check_and_start_session();
-
 function always_show_cart_handler( $atts ) {
 	return print_wp_shopping_cart( $atts );
 }
@@ -527,7 +525,7 @@ function wp_cart_add_custom_field() {
 		$custom_field_val = wpc_append_values_to_custom_field( $name, $value );
 	}
 
-	//Trigger action hook that can be used to append more custom fields value that is saved to the session ($_SESSION[ 'wp_cart_custom_values' ])
+	//Trigger action hook that can be used to append more custom fields values.
 	do_action( 'wspsc_cart_custom_field_appended' );
 
 	$custom_field_val = apply_filters( 'wpspc_cart_custom_field_value', $custom_field_val );
