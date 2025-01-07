@@ -1,4 +1,8 @@
 <?php
+
+//This global variable is used for the cart id to be available on the first page load (when the cookie is set but the server side code doesn't have the cookie value yet).
+$wpsc_global_visitor_cart_id = 0;
+
 class WSPSC_Cart {
     private $items = array();
     private $item;
@@ -68,9 +72,14 @@ class WSPSC_Cart {
         $post_id  = wp_insert_post($wpsc_order);
 
         if ($post_id) {
+            //Set the cookie with the cart ID.
             $cookie_expiration = time() + (86400 * 30); // 30 days
             setcookie('simple_cart_id', $post_id, $cookie_expiration, '/');
             $this->set_cart_id($post_id);
+            
+            //Set the global variable for the cart ID (so for the first page load, addon's can use this cart ID when the cookie is set but the server side code doesn't have the cookie value yet).
+            global $wpsc_global_visitor_cart_id;
+            $wpsc_global_visitor_cart_id = $post_id;
 
             //Update the post title with the cart ID
             $updated_wpsc_order = array(

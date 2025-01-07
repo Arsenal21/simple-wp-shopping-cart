@@ -229,6 +229,7 @@ None
 
 = WIP =
 - Removed the deprecated function 'wspsc_check_and_start_session'
+- Added the global cart_id variable to the cart class.
 
 = 5.0.8 =
 - Added CSS class for the cart change/update quantity message so custom CSS can be applied to it.
