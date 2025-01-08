@@ -1,5 +1,5 @@
 <?php
-class WSPSC_Cart_Item {
+class WPSC_Cart_Item {
 
     protected $name;
     protected $price;

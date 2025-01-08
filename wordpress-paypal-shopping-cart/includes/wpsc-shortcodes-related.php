@@ -104,7 +104,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 
 	$replacement .= '</form>';
 
-	$cart_id = WSPSC_Cart::get_instance()->get_cart_id();
+	$cart_id = WPSC_Cart::get_instance()->get_cart_id();
 	if (!empty($cart_id)){
 		$persistent_msg = WPSC_Persistent_Msg::get_instance();
 		$persistent_msg->set_cart_id($cart_id);

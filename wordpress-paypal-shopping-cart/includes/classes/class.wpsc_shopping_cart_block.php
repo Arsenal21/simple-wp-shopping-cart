@@ -3,7 +3,7 @@
  * Shopping Cart block.
  */
 
-class WSPSC_SHOPPING_CART {
+class WPSC_SHOPPING_CART {
 
 	protected $deps;
 
@@ -26,7 +26,7 @@ class WSPSC_SHOPPING_CART {
 	protected function register() {
 		wp_register_script(
 			$this->block_script_handler,
-			WP_CART_URL . '/assets/js/block/wspsc-shopping-cart.js',
+			WP_CART_URL . '/assets/js/block/wpsc-shopping-cart.js',
 			$this->deps,
 			WP_CART_VERSION,
 			true

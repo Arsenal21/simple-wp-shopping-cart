@@ -248,7 +248,7 @@ class paypal_ipn_handler {
 			}
 		}
 
-		$orig_cart_postmeta = WSPSC_Cart::get_cart_from_postmeta($post_id);
+		$orig_cart_postmeta = WPSC_Cart::get_cart_from_postmeta($post_id);
 
 		/**
 		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
@@ -503,7 +503,7 @@ class paypal_ipn_handler {
 			$address_street .= ", " . $data['payer']['payer_info']['shipping_address']['line2'];
 		}
 
-		$wspsc_cart =  WSPSC_Cart::get_instance();
+		$wspsc_cart =  WPSC_Cart::get_instance();
 		$cart_id = $wspsc_cart->get_cart_id();
 		$custom_field_values = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );
 		$ipn['custom'] = $custom_field_values;

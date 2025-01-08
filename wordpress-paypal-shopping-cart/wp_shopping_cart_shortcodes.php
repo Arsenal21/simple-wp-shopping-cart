@@ -1,14 +1,26 @@
 <?php
 
-add_shortcode('show_wp_shopping_cart', 'show_wp_shopping_cart_handler');
-add_shortcode('always_show_wp_shopping_cart', 'always_show_cart_handler');
-add_shortcode('wp_cart_button', 'wp_cart_button_handler');
-add_shortcode('wp_cart_display_product', 'wp_cart_display_product_handler');
-add_shortcode('wp_compact_cart', 'wspsc_compact_cart_handler');
-add_shortcode('wp_compact_cart2', 'wspsc_compact_cart2_handler');
+add_shortcode('wpsc_show_wp_shopping_cart', 'wpsc_show_wp_shopping_cart_handler' );
+add_shortcode('show_wp_shopping_cart', 'wpsc_show_wp_shopping_cart_handler' );
+
+add_shortcode('wpsc_always_show_wp_shopping_cart', 'wpsc_always_show_cart_handler' );
+add_shortcode('always_show_wp_shopping_cart', 'wpsc_always_show_cart_handler' );
+
+add_shortcode('wpsc_cart_button', 'wpsc_cart_button_handler' );
+add_shortcode('wp_cart_button', 'wpsc_cart_button_handler' );
+
+add_shortcode('wpsc_cart_display_product', 'wpsc_cart_display_product_handler' );
+add_shortcode('wp_cart_display_product', 'wpsc_cart_display_product_handler' );
+
+add_shortcode('wpsc_compact_cart', 'wpsc_compact_cart_handler');
+add_shortcode('wp_compact_cart', 'wpsc_compact_cart_handler');
+
+add_shortcode('wpsc_compact_cart2', 'wpsc_compact_cart2_handler');
+add_shortcode('wp_compact_cart2', 'wpsc_compact_cart2_handler');
+
 add_shortcode('wpsc_thank_you', 'wpsc_thank_you_sc_handler');
 
-function wp_cart_button_handler($atts){
+function wpsc_cart_button_handler($atts){
 	extract(shortcode_atts(array(
 		'name' => '',
         'item_number' =>'',
@@ -46,7 +58,7 @@ function wp_cart_button_handler($atts){
 	return print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
 }
 
-function wp_cart_display_product_handler($atts)
+function wpsc_cart_display_product_handler($atts)
 {
     extract(shortcode_atts(array(
         'name' => '',
@@ -130,9 +142,9 @@ function wp_cart_display_product_handler($atts)
     return $display_code;
 }
 
-function wspsc_compact_cart_handler($args)
+function wpsc_compact_cart_handler($args)
 {
-    $wspsc_cart = WSPSC_Cart::get_instance();
+    $wspsc_cart = WPSC_Cart::get_instance();
     $num_items = $wspsc_cart->get_total_cart_qty();
     $curSymbol = WP_CART_CURRENCY_SYMBOL;
     $checkout_url = get_option('cart_checkout_page_url');
@@ -160,9 +172,9 @@ function wspsc_compact_cart_handler($args)
     return $output;
 }
 
-function wspsc_compact_cart2_handler($args)
+function wpsc_compact_cart2_handler($args)
 {
-    $wspsc_cart = WSPSC_Cart::get_instance();
+    $wspsc_cart = WPSC_Cart::get_instance();
     $num_items = $wspsc_cart->get_total_cart_qty();
     $checkout_url = get_option('cart_checkout_page_url');
 

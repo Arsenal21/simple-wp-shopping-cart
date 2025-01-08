@@ -3,7 +3,7 @@
 //This global variable is used for the cart id to be available on the first page load (when the cookie is set but the server side code doesn't have the cookie value yet).
 $wpsc_global_visitor_cart_id = 0;
 
-class WSPSC_Cart {
+class WPSC_Cart {
     private $items = array();
     private $item;
     private $cart_id = 0;
@@ -116,7 +116,7 @@ class WSPSC_Cart {
      * Retrieve the cart object from postmeta to get the cart related data.
      * Useful if page reload occurs.
      *
-     * @return object The WSPSC_Cart class object.
+     * @return object The WPSC_Cart class object.
      */
     public static function get_cart_from_postmeta($cart_id){
         $serialized_cart_object = get_post_meta($cart_id, 'wpsc_cart_object', true);
@@ -302,15 +302,16 @@ class WSPSC_Cart {
          * Custom hook to allow modification of the postage cost.
          *
          * This filter allows developers to provide their own custom postage cost calculation routine.
-         * It gives access to the WSPSC_Cart class instance which can be used for additional context
+         * It gives access to the WPSC_Cart class instance which can be used for additional context
          * or logic when calculating the postage cost.
          *
-         * @since 5.0.7
-         *
          * @param float        $postage_cost The default postage cost calculated by the plugin.
-         * @param WSPSC_Cart   $this The instance of the WSPSC_Cart class, providing
+         * @param WPSC_Cart   $this The instance of the WPSC_Cart class, providing
          *                           context and additional methods/properties if needed.
+         *
          * @return float The modified postage cost.
+         *@since 5.0.7
+         *
          */
         $postage_cost = apply_filters('wpsc_custom_postage_cost', $postage_cost, $this);
 

@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * TODO: Need to refactor this class name.
+ */
+
 class WPSPSC_Coupons_Collection
 {
     var $coupon_items = array();
@@ -156,7 +161,7 @@ class WPSPSC_COUPON_ITEM
 
 function wpspsc_apply_cart_discount($coupon_code)
 {
-    $wspsc_cart = WSPSC_Cart::get_instance();
+    $wspsc_cart = WPSC_Cart::get_instance();
     $collection_obj = WPSPSC_Coupons_Collection::get_instance();
     $coupon_item = $collection_obj->find_coupon_by_code($coupon_code);
     if(!isset($coupon_item->id)){
@@ -208,7 +213,7 @@ function wpspsc_apply_cart_discount($coupon_code)
 function wpspsc_reapply_discount_coupon_if_needed()
 {
     $collection_obj = WPSPSC_Coupons_Collection::get_instance();
-    $wspsc_cart=WSPSC_Cart::get_instance();
+    $wspsc_cart=WPSC_Cart::get_instance();
     
     //Re-apply coupon to the cart if necessary (meaning a coupon was already applied to the cart when this item was modified.    
     if ($collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) && $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) == '1'){                        

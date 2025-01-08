@@ -79,7 +79,7 @@ class WPSC_Post_Payment_Related
 
 		$ipn_data['cart_items'] = $orig_cart_items;
 
-		$orig_cart_postmeta = WSPSC_Cart::get_cart_from_postmeta($ipn_data['post_id']);
+		$orig_cart_postmeta = WPSC_Cart::get_cart_from_postmeta($ipn_data['post_id']);
 		
 		/**
 		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
@@ -260,7 +260,7 @@ class WPSC_Post_Payment_Related
 		wspsc_clean_incomplete_old_cart_orders();
 
 		//Full reset the cart to clean it up.
-		$wpsc_cart = WSPSC_Cart::get_instance();
+		$wpsc_cart = WPSC_Cart::get_instance();
 		//Pass the cart id to so that it can reset the cart without calling the get_cart_id() function again.
 		$cart_id = isset($ipn_data['cart_id']) ? $ipn_data['cart_id'] : '';
 		$wpsc_cart->reset_cart_after_txn( $cart_id );

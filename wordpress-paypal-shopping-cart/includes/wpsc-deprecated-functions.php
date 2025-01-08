@@ -5,7 +5,7 @@
  * Please use the shortcode.
  */
 function shopping_cart_show_deprecated( $content ) {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	if ( strpos( $content, "<!--show-wp-shopping-cart-->" ) !== FALSE ) {
 		if ( $wspsc_cart->cart_not_empty() ) {
 			$content = preg_replace( '/<p>\s*<!--(.*)-->\s*<\/p>/i', "<!--$1-->", $content );
