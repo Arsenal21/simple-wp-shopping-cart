@@ -207,16 +207,16 @@ function wspsc_show_general_settings_page ()
     <h3 class="hndle"><label for="title"><?php _e("Quick Usage Guide", "wordpress-simple-paypal-shopping-cart"); ?></label></h3>
     <div class="inside">
 
-        <p><strong><?php _e("Step 1) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php _e("To add an 'Add to Cart' button for a product simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [wpsc_cart_button name="<?php _e("PRODUCT-NAME", "wordpress-simple-paypal-shopping-cart"); ?>" price="<?php _e("PRODUCT-PRICE", "wordpress-simple-paypal-shopping-cart"); ?>"] <?php _e("to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price of your product.", "wordpress-simple-paypal-shopping-cart"); ?></p>
+        <p><strong><?php _e("Step 1) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php _e("To add an 'Add to Cart' button for a product simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [wp_cart_button name="<?php _e("PRODUCT-NAME", "wordpress-simple-paypal-shopping-cart"); ?>" price="<?php _e("PRODUCT-PRICE", "wordpress-simple-paypal-shopping-cart"); ?>"] <?php _e("to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price of your product.", "wordpress-simple-paypal-shopping-cart"); ?></p>
         <p>
             <?php _e("Example add to cart button shortcode usage:", "wordpress-simple-paypal-shopping-cart"); ?>
-            <input type="text" name="wspsc_shortcode" class="large-text code" onfocus="this.select();" readonly value="[wpsc_cart_button name=&quot;Test Product&quot; price=&quot;29.95&quot;]">
+            <input type="text" name="wspsc_shortcode" class="large-text code" onfocus="this.select();" readonly value="[wp_cart_button name=&quot;Test Product&quot; price=&quot;29.95&quot;]">
         </p>
         
 	<p><strong><?php _e("Step 2) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php _e("To add the shopping cart to a post or page (example: a checkout page) simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [show_wp_shopping_cart] <?php _e("to a post or page or use the sidebar widget to add the shopping cart to the sidebar.", "wordpress-simple-paypal-shopping-cart"); ?></p>
         <p>
             <?php _e("Example shopping cart shortcode usage:", "wordpress-simple-paypal-shopping-cart");?>
-            <input type="text" name="wspsc_shortcode" class="large-text code" onfocus="this.select();" readonly value="[wpsc_show_wp_shopping_cart]">
+            <input type="text" name="wspsc_shortcode" class="large-text code" onfocus="this.select();" readonly value="[show_wp_shopping_cart]">
         </p>
     </div></div>
 
