@@ -20,7 +20,7 @@ function wspsc_show_addons_menu_page() {
 
     $addon_1 = array(
         "name"		 => __( "Collect Customer Input", 'wordpress-simple-paypal-shopping-cart' ),
-        "thumbnail"	 => WP_CART_URL . "/includes/admin/images/wspsc-customer-input.png",
+        "thumbnail"	 => WP_CART_URL . "/includes/admin/images/wpsc-customer-input.png",
         "description"	 => __( "This addon allows you to collect customer input in the shopping cart at the time of checkout.", 'wordpress-simple-paypal-shopping-cart' ),
         "page_url"	 => "https://www.tipsandtricks-hq.com/ecommerce/wp-simple-cart-collect-customer-input-in-the-shopping-cart-4396",
     );
@@ -28,7 +28,7 @@ function wspsc_show_addons_menu_page() {
 
     $addon_2 = array(
         "name"		 => __( "Mailchimp Integration", 'wordpress-simple-paypal-shopping-cart' ),
-        "thumbnail"	 => WP_CART_URL . "/includes/admin/images/wspsc-mailchimp-integration.png",
+        "thumbnail"	 => WP_CART_URL . "/includes/admin/images/wpsc-mailchimp-integration.png",
         "description"	 => __( "This addon allows you to add users to your Mailchimp list after they purchase an item.", 'wordpress-simple-paypal-shopping-cart' ),
         "page_url"	 => "https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart-and-mailchimp-integration-3442",
     );

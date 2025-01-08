@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * TODO: Need to refactor this class name.
+ */
+
 class WPSPSC_Coupons_Collection
 {
     var $coupon_items = array();

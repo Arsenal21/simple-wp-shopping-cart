@@ -39,7 +39,7 @@ class WPSC_Blocks {
 		 */
 		wp_register_script(
             'wspsc_block_script_dependencies',
-            WP_CART_URL . '/assets/js/block/wspsc-block-dependencies.js',
+            WP_CART_URL . '/assets/js/block/wpsc-block-dependencies.js',
 			$this->deps,
             WP_CART_VERSION,
 			true

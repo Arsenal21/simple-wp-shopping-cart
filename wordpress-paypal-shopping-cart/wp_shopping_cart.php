@@ -652,7 +652,7 @@ function wspsc_admin_side_enqueue_scripts() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'wspsc-discounts' ) { //simple paypal shopping cart discount page
 		wp_enqueue_style( 'jquery-ui-style', WP_CART_URL . '/assets/jquery.ui.min.css', array(), WP_CART_VERSION );
 
-		wp_register_script( 'wpspsc-admin', WP_CART_URL . '/lib/wpspsc_admin_side.js', array( 'jquery', 'jquery-ui-datepicker' ) );
+		wp_register_script( 'wpspsc-admin', WP_CART_URL . '/lib/wpsc_admin_side.js', array( 'jquery', 'jquery-ui-datepicker' ) );
 		wp_enqueue_script( 'wpspsc-admin' );
 	}
 }
@@ -675,10 +675,10 @@ function wspsc_front_side_enqueue_scripts() {
 	$stripe_js_obj = "wspsc_stripe_js_obj";
 	wp_add_inline_script( "wspsc.stripe", "var " . $stripe_js_obj . " = Stripe('" . esc_js( $publishable_key ) . "'); var wspsc_ajax_url='" . esc_js( admin_url( 'admin-ajax.php' ) ) . "';" );
 
-	wp_register_script( "wspsc-checkout-stripe", WP_CART_URL . "/assets/js/wspsc-checkout-stripe.js", array( "jquery", "wspsc.stripe"), WP_CART_VERSION);
+	wp_register_script( "wspsc-checkout-stripe", WP_CART_URL . "/assets/js/wpsc-checkout-stripe.js", array( "jquery", "wspsc.stripe"), WP_CART_VERSION);
 
 	//General scripts
-	wp_register_script( "wspsc-checkout-cart-script", WP_CART_URL . "/assets/js/wspsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
+	wp_register_script( "wspsc-checkout-cart-script", WP_CART_URL . "/assets/js/wpsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
 	$is_tnc_enabled = empty(get_option('wp_shopping_cart_enable_tnc')) ? 'false' : 'true' ;
 	wp_add_inline_script("wspsc-checkout-cart-script", "const wspscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
 	

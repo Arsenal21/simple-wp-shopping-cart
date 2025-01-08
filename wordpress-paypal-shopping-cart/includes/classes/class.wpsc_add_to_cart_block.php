@@ -26,7 +26,7 @@ class WPSC_ADD_TO_CART {
 	protected function register() {
 		wp_register_script(
 			$this->block_script_handler,
-			WP_CART_URL . '/assets/js/block/wspsc-add-to-cart-btn.js',
+			WP_CART_URL . '/assets/js/block/wpsc-add-to-cart-btn.js',
 			$this->deps,
 			WP_CART_VERSION,
 			true

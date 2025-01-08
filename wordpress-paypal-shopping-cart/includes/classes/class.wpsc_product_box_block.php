@@ -26,7 +26,7 @@ class WPSC_PRODUCT_BOX {
 	protected function register() {
 		wp_register_script(
 			$this->block_script_handler,
-			WP_CART_URL . '/assets/js/block/wspsc-product-box.js',
+			WP_CART_URL . '/assets/js/block/wpsc-product-box.js',
 			$this->deps,
 			WP_CART_VERSION,
 			true
