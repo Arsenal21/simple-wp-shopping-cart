@@ -3,7 +3,7 @@
  * Product Box block.
  */
 
-class WSPSC_PRODUCT_BOX {
+class WPSC_PRODUCT_BOX {
 
 	protected $deps;
 

@@ -3,7 +3,7 @@
  * Add to Cart block.
  */
 
-class WSPSC_ADD_TO_CART {
+class WPSC_ADD_TO_CART {
 
 	protected $deps;
 

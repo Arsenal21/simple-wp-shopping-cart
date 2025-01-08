@@ -3,7 +3,7 @@
  * Shopping Cart block.
  */
 
-class WSPSC_SHOPPING_CART {
+class WPSC_SHOPPING_CART {
 
 	protected $deps;
 
