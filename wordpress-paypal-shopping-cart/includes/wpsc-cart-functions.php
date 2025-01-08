@@ -3,7 +3,7 @@
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 
 function print_wp_shopping_cart( $args = array() ) {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	$wspsc_cart->calculate_cart_totals_and_postage();
 
 	//Get the on page cart div ID. This will increment the count so we start from 1.
@@ -61,7 +61,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	}
 
 	$return_url = add_query_arg( 'reset_wp_cart', '1', $return );
-	$return_url = add_query_arg( 'order_id', WSPSC_Cart::get_instance()->get_cart_id(), $return_url );
+	$return_url = add_query_arg( 'order_id', WPSC_Cart::get_instance()->get_cart_id(), $return_url );
 	$return_url = add_query_arg('_wpnonce', wp_create_nonce('wpsc_thank_you_nonce_action'), $return_url);
 
 	$urls .= '<input type="hidden" name="return" value="' . $return_url . '" />';
@@ -625,7 +625,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		//---  Start of Stripe checkout --- 
 		if ( get_option( 'wpspc_enable_stripe_checkout' ) ) {
-			$wspsc_Cart = WSPSC_Cart::get_instance();
+			$wspsc_Cart = WPSC_Cart::get_instance();
 
 			wp_enqueue_script( "wspsc.stripe" );
 			wp_enqueue_script( "wspsc-checkout-stripe" );

@@ -75,7 +75,7 @@ class PayPal_Button_Ajax_Hander {
 		$description = substr($description, 0, 127);//Limit the item name to 127 characters (PayPal limit)
 
 		//Get the payment amount
-		$wspsc_cart = \WSPSC_Cart::get_instance();
+		$wspsc_cart = \WPSC_Cart::get_instance();
 		$wspsc_cart->calculate_cart_totals_and_postage();
 		$formatted_sub_total = $wspsc_cart->get_sub_total_formatted();
 		$formatted_postage_cost = $wspsc_cart->get_postage_cost_formatted();

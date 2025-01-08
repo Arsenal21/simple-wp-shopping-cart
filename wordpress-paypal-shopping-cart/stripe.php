@@ -27,7 +27,7 @@ class stripe_ipn_handler {
         //Check Product Name, Price, Currency, Receiver email
 		$this->debug_log( 'Executing validate_and_dispatch_product()', true );
 		
-        $wspsc_cart = WSPSC_Cart::get_instance();
+        $wspsc_cart = WPSC_Cart::get_instance();
         
 		$txn_id = $this->ipn_data["txn_id"];
         $transaction_type='cart';
@@ -173,7 +173,7 @@ class stripe_ipn_handler {
 			}
 		}
 
-		$orig_cart_postmeta = WSPSC_Cart::get_cart_from_postmeta($post_id);
+		$orig_cart_postmeta = WPSC_Cart::get_cart_from_postmeta($post_id);
 		
 		/**
 		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
@@ -425,7 +425,7 @@ class stripe_ipn_handler {
 		}
 
 
-		$wspsc_cart =  WSPSC_Cart::get_instance();
+		$wspsc_cart =  WPSC_Cart::get_instance();
 
 		$cart_id = $wspsc_cart->get_cart_id();
 		$custom_field_values = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );
@@ -621,7 +621,7 @@ function wpc_handle_stripe_ipn() {
 	}
 
 	//Check if cart items are empty
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	$cart_items = $wspsc_cart->get_items();
 	if( empty($cart_items)){
 		$ipn_handler_instance->debug_log( 'Stripe IPN hook was accessed with empty cart items array.', true );

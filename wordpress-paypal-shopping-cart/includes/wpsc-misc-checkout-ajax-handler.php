@@ -15,7 +15,7 @@ function wspsc_stripe_create_checkout_session() {
 	//When the Stripe checkout button is clicked in the cart, it sends an AJAX request to the server. 
 	//We handle this request and create a Stripe checkout session in this function.
 
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	$wspsc_cart->calculate_cart_totals_and_postage();
 
 	$cart_id = $wspsc_cart->get_cart_id();

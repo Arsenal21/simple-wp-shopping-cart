@@ -76,7 +76,7 @@ function wspsc_strip_char_from_price_amount($price_amount)
 
 function wpc_append_values_to_custom_field($name,$value)
 {
-    $wspsc_cart = WSPSC_Cart::get_instance();
+    $wspsc_cart = WPSC_Cart::get_instance();
     $custom_field_val = $wspsc_cart->get_cart_custom_values(); 
 
     $new_val = $name.'='.$value;
@@ -124,25 +124,25 @@ function wp_cart_ngg_template_handler($arg1,$arg2)
 /**
  * @deprecated: Adds new cart record in the database.
  *
- * This function is deprecated and should no longer be used. Please use the 'WSPSC_Cart' class and its 'create_cart()'
+ * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'create_cart()'
  * method to create a new.
  */
 function wpspc_insert_new_record()
 {
     //First time adding to the cart
-    $wspsc_cart = WSPSC_Cart::get_instance();
+    $wspsc_cart = WPSC_Cart::get_instance();
     $wspsc_cart->create_cart();
 }
 
 /**
  * @deprecated: Update the cart items record in the database using the 'wpsc_cart_items' post meta.
  *
- * This function is deprecated and should no longer be used. Please use the 'WSPSC_Cart' class and its 'add_items()'
+ * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'add_items()'
  * method to add items to the cart and update the cart items record in the database.
  */
 function wpspc_update_cart_items_record()
 {
-    $wspsc_cart = WSPSC_Cart::get_instance();
+    $wspsc_cart = WPSC_Cart::get_instance();
     $items = $wspsc_cart->get_items();
     $wspsc_cart->add_items($items);
 }

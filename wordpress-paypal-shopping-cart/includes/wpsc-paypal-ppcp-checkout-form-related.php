@@ -79,7 +79,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     $wp_nonce = wp_create_nonce($on_page_embed_button_id);
 
     //Cart specific data
-    $wspsc_cart = WSPSC_Cart::get_instance();
+    $wspsc_cart = WPSC_Cart::get_instance();
     $cart_id = $wspsc_cart->get_cart_id();
 
     //Some number formatting (before it is used in JS code.

@@ -44,8 +44,8 @@ include_once( WP_CART_PATH . 'includes/wpsc-utility-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-functions.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-wpsc-persistent-msg.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-coupon.php' );
-include_once( WP_CART_PATH . 'includes/class-wspsc-cart.php' );
-include_once( WP_CART_PATH . 'includes/class-wspsc-cart-item.php' );
+include_once( WP_CART_PATH . 'includes/class-wpsc-cart.php' );
+include_once( WP_CART_PATH . 'includes/class-wpsc-cart-item.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-checkout-ajax-handler.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-paypal-ppcp-checkout-form-related.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-post-payment-related.php' );
@@ -65,7 +65,7 @@ function always_show_cart_handler( $atts ) {
 }
 
 function show_wp_shopping_cart_handler( $atts ) {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	$output = "";
 	if ( $wspsc_cart->cart_not_empty() ) {
 		$output = print_wp_shopping_cart( $atts );
@@ -75,7 +75,7 @@ function show_wp_shopping_cart_handler( $atts ) {
 
 // Reset cart option
 if ( isset( $_REQUEST["reset_wp_cart"] ) && ! empty( $_REQUEST["reset_wp_cart"] ) ) {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 
 	//resets cart and cart_id after payment is made.
 	$wspsc_cart->reset_cart_after_txn();
@@ -89,7 +89,7 @@ if ( isset( $_REQUEST["reset_wp_cart"] ) && ! empty( $_REQUEST["reset_wp_cart"] 
 if ( get_option( 'wp_shopping_cart_reset_after_redirection_to_return_page' ) ) {
 	//TODO - remove this field altogether later. Cart will always be reset using query prameter on the thank you page.
 	if ( get_option( 'cart_return_from_paypal_url' ) == cart_current_page_url() ) {
-		$wspsc_cart = WSPSC_Cart::get_instance();
+		$wspsc_cart = WPSC_Cart::get_instance();
 		$wspsc_cart->reset_cart_after_txn();
 	}
 }
@@ -111,16 +111,16 @@ function process_allowed_shipping_countries($countries_str){
 
 /**
  * @deprecated: Reset the WPSC cart and associated session variables.
- * This function is deprecated and should no longer be used. Please use the 'WSPSC_Cart' class and its 'reset_cart()'
+ * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'reset_cart()'
  * method to reset the cart and associated variables.
  */
 function reset_wp_cart() {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	$wspsc_cart->reset_cart();
 }
 
 function wpspc_cart_actions_handler() {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	$wspsc_cart->clear_cart_action_msg();
 
 	if ( isset( $_POST['addcart'] ) ) { 
@@ -253,7 +253,7 @@ function wpspc_cart_actions_handler() {
 
 		if ( $count == 1 ) {
 			//This is the first quantity of this item.
-			$wspsc_cart_item = new WSPSC_Cart_Item();
+			$wspsc_cart_item = new WPSC_Cart_Item();
 			$wspsc_cart_item->set_name( $post_wspsc_product );
 			$wspsc_cart_item->set_price( $price );
 			$wspsc_cart_item->set_price_orig( $price );
@@ -401,7 +401,7 @@ function wpspc_cart_actions_handler() {
 
 		$selected_shipping_region_str = isset( $_POST['wpsc_shipping_region'] ) ? sanitize_text_field( stripslashes($_POST['wpsc_shipping_region'] )) : '';
 
-		$wspsc_cart = WSPSC_Cart::get_instance();
+		$wspsc_cart = WPSC_Cart::get_instance();
 
 		// Check to make sure selected shipping region option is not tempered.
 		if (!check_shipping_region_str($selected_shipping_region_str)) {
@@ -483,7 +483,7 @@ function wpsc_get_current_page_url() {
 }
 
 function wp_cart_add_custom_field() {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	$collection_obj = WPSPSC_Coupons_Collection::get_instance();
 
 	$cart_id = $wspsc_cart->get_cart_id();
@@ -573,11 +573,11 @@ function wp_cart_add_read_form_javascript() {
 }
 
 /**
- * @deprecated This method has been DEPRECATED. Use cart_not_empty() from WSPSC_Cart instead.
+ * @deprecated This method has been DEPRECATED. Use cart_not_empty() from WPSC_Cart instead.
  * @return int Returns the total number of items in the cart.
  */
 function cart_not_empty() {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	return $wspsc_cart->cart_not_empty();
 }
 
@@ -621,10 +621,10 @@ function cart_current_page_url() {
 }
 
 /**
- * @deprecated This method has been deprecated. Use simple_cart_total() from WSPSC_Cart instead.
+ * @deprecated This method has been deprecated. Use simple_cart_total() from WPSC_Cart instead.
  */
 function simple_cart_total() {
-	$wspsc_cart = WSPSC_Cart::get_instance();
+	$wspsc_cart = WPSC_Cart::get_instance();
 	return $wspsc_cart->simple_cart_total();
 }
 
