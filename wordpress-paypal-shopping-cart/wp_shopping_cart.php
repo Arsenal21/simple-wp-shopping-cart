@@ -60,11 +60,11 @@ include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php' );
 include_once( WP_CART_PATH . 'includes/classes/class.wpsc_blocks.php' );
 include_once( WP_CART_PATH . 'lib/paypal/class-tthq-paypal-main.php' );
 
-function always_show_cart_handler( $atts ) {
+function wpsc_always_show_cart_handler( $atts ) {
 	return print_wp_shopping_cart( $atts );
 }
 
-function show_wp_shopping_cart_handler( $atts ) {
+function wpsc_show_wp_shopping_cart_handler( $atts ) {
 	$wspsc_cart = WPSC_Cart::get_instance();
 	$output = "";
 	if ( $wspsc_cart->cart_not_empty() ) {
