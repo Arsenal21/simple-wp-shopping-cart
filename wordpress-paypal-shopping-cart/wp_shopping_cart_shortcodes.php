@@ -1,11 +1,23 @@
 <?php
 
+add_shortcode('wpsc_show_wp_shopping_cart', 'show_wp_shopping_cart_handler');
 add_shortcode('show_wp_shopping_cart', 'show_wp_shopping_cart_handler');
+
+add_shortcode('wpsc_always_show_wp_shopping_cart', 'always_show_cart_handler');
 add_shortcode('always_show_wp_shopping_cart', 'always_show_cart_handler');
+
+add_shortcode('wpsc_cart_button', 'wp_cart_button_handler');
 add_shortcode('wp_cart_button', 'wp_cart_button_handler');
+
+add_shortcode('wpsc_cart_display_product', 'wp_cart_display_product_handler');
 add_shortcode('wp_cart_display_product', 'wp_cart_display_product_handler');
+
+add_shortcode('wpsc_compact_cart', 'wspsc_compact_cart_handler');
 add_shortcode('wp_compact_cart', 'wspsc_compact_cart_handler');
+
+add_shortcode('wpsc_compact_cart2', 'wspsc_compact_cart2_handler');
 add_shortcode('wp_compact_cart2', 'wspsc_compact_cart2_handler');
+
 add_shortcode('wpsc_thank_you', 'wpsc_thank_you_sc_handler');
 
 function wp_cart_button_handler($atts){
