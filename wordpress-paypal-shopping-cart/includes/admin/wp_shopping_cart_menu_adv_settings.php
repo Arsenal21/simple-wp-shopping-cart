@@ -69,7 +69,7 @@ function show_wp_cart_adv_settings_page() {
     }
 
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();	
+    wpsc_settings_menu_documentation_msg();
     ?>
 
     <form method="post" action="">
@@ -140,7 +140,7 @@ function show_wp_cart_adv_settings_page() {
     			<select name="wpspc_pp_smart_checkout_btn_size">
 				<?php
 				$btn_size	 = get_option( 'wpspc_pp_smart_checkout_btn_size' );
-				echo WPSPCAdminUtils::gen_options( array(
+				echo WPSC_Admin_Utils::gen_options( array(
 				    array( 'medium', __( "Medium", "wordpress-simple-paypal-shopping-cart" ) ),
 				    array( 'large', __( "Large", "wordpress-simple-paypal-shopping-cart" ) ),
 				    array( 'responsive', __( "Repsonsive", "wordpress-simple-paypal-shopping-cart" ) ),
@@ -156,7 +156,7 @@ function show_wp_cart_adv_settings_page() {
     			<select name="wpspc_pp_smart_checkout_btn_color">
 				<?php
 				$btn_color	 = get_option( 'wpspc_pp_smart_checkout_btn_color' );
-				echo WPSPCAdminUtils::gen_options( array(
+				echo WPSC_Admin_Utils::gen_options( array(
 				    array( 'gold', __( "Gold", "wordpress-simple-paypal-shopping-cart" ) ),
 				    array( 'blue', __( "Blue", "wordpress-simple-paypal-shopping-cart" ) ),
 				    array( 'silver', __( "Silver", "wordpress-simple-paypal-shopping-cart" ) ),
@@ -174,16 +174,16 @@ function show_wp_cart_adv_settings_page() {
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Shape", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="rect"<?php WPSPCAdminUtils::e_checked( $btn_shape, 'rect', true ); ?>> <?php _e( "Rectangular ", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="pill"<?php WPSPCAdminUtils::e_checked( $btn_shape, 'pill' ); ?>> <?php _e( "Pill", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="rect"<?php WPSC_Admin_Utils::e_checked( $btn_shape, 'rect', true ); ?>> <?php _e( "Rectangular ", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_shape" value="pill"<?php WPSC_Admin_Utils::e_checked( $btn_shape, 'pill' ); ?>> <?php _e( "Pill", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select button shape.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
     		    </td>
     		</tr>
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Layout", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="vertical"<?php WPSPCAdminUtils::e_checked( $btn_layout, 'vertical', true ); ?>> <?php _e( "Vertical", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
-    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="horizontal"<?php WPSPCAdminUtils::e_checked( $btn_layout, 'horizontal' ); ?>> <?php _e( "Horizontal", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="vertical"<?php WPSC_Admin_Utils::e_checked( $btn_layout, 'vertical', true ); ?>> <?php _e( "Vertical", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="radio" name="wpspc_pp_smart_checkout_btn_layout" value="horizontal"<?php WPSC_Admin_Utils::e_checked( $btn_layout, 'horizontal' ); ?>> <?php _e( "Horizontal", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select button layout.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
     		    </td>
     		</tr>
@@ -199,8 +199,8 @@ function show_wp_cart_adv_settings_page() {
     		<tr valign="top">
     		    <th scope="row"><?php _e( "Payment Methods", "wordpress-simple-paypal-shopping-cart" ); ?></th>
     		    <td>
-    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_credit" value="1"<?php WPSPCAdminUtils::e_checked( $pm_credit ); ?>> <?php _e( "PayPal Credit", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
-    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_elv" value="1"<?php WPSPCAdminUtils::e_checked( $pm_elv ); ?>> <?php _e( "ELV", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_credit" value="1"<?php WPSC_Admin_Utils::e_checked( $pm_credit ); ?>> <?php _e( "PayPal Credit", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
+    			<p><label><input type="checkbox" name="wpspc_pp_smart_checkout_payment_method_elv" value="1"<?php WPSC_Admin_Utils::e_checked( $pm_elv ); ?>> <?php _e( "ELV", "wordpress-simple-paypal-shopping-cart" ); ?></label></p>
     			<p class="description"><?php _e( "Select payment methods that could be used by customers. Note that payment with cards is always enabled.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
     		    </td>
     		</tr>
@@ -215,5 +215,5 @@ function show_wp_cart_adv_settings_page() {
     </form>
 
     <?php
-    wpspsc_settings_menu_footer();
+    wpsc_settings_menu_footer();
 }

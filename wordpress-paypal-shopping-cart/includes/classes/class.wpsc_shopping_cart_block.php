@@ -10,7 +10,7 @@ class WPSC_SHOPPING_CART {
 	/**
 	 * @var string Gutenberg block script handler.
 	 */
-	protected $block_script_handler = 'wspsc_shopping_cart_block_script';
+	protected $block_script_handler = 'wpsc_shopping_cart_block_script';
 
 	/**
 	 * Block Constructor.
@@ -37,7 +37,7 @@ class WPSC_SHOPPING_CART {
 			'name'        => 'wp-shopping-cart/shopping-cart',
 			'description' => __( 'Displays the shopping cart for the Simple Shopping Cart plugin', 'wordpress-simple-paypal-shopping-cart' ),
 		);
-		$wspsc_sc_block_meta = 'const wspsc_sc_block_block_meta = ' . wp_json_encode( $block_meta );
+		$wspsc_sc_block_meta = 'const wpsc_sc_block_block_meta = ' . wp_json_encode( $block_meta );
 
 		wp_add_inline_script(
 			$this->block_script_handler,

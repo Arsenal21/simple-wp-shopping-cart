@@ -3,7 +3,7 @@
 /**
  * Asking users for their experience with the plugin.
  */
-class WSPSC_Admin_User_Feedback {
+class WPSC_Admin_User_Feedback {
 
 	/**
 	 * The wp option for notice dismissal data.

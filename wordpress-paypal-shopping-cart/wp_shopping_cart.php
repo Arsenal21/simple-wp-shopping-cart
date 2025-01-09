@@ -119,7 +119,7 @@ function reset_wp_cart() {
 	$wspsc_cart->reset_cart();
 }
 
-function wpspc_cart_actions_handler() {
+function wpsc_cart_actions_handler() {
 	$wspsc_cart = WPSC_Cart::get_instance();
 	$wspsc_cart->clear_cart_action_msg();
 
@@ -282,7 +282,7 @@ function wpspc_cart_actions_handler() {
 
 		//if cart is not yet created, save the returned products
 		//so it can be saved when cart is created
-		$products_discount = wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary	
+		$products_discount = wpsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
 		if ( is_array( $products_discount ) ) {
 			$products = $products_discount;
 		}
@@ -336,7 +336,7 @@ function wpspc_cart_actions_handler() {
 		sort( $products );
 		$wspsc_cart->add_items( $products );
 
-		wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
+		wpsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
 
 		if ( $wspsc_cart->get_cart_id() ) {
 			$wspsc_cart->add_items( $products );
@@ -363,7 +363,7 @@ function wpspc_cart_actions_handler() {
 		}
 
 		//update the products in database after apply coupon
-		wpspsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
+		wpsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
 
 		if ( ! $wspsc_cart->get_items() ) {
 			$wspsc_cart->reset_cart();
@@ -389,7 +389,7 @@ function wpspc_cart_actions_handler() {
 		}
 		$coupon_code = isset( $_POST['wpspsc_coupon_code'] ) ? sanitize_text_field( $_POST['wpspsc_coupon_code'] ) : '';
 		//Apply discount and update cart products in database
-		wpspsc_apply_cart_discount( $coupon_code );
+		wpsc_apply_cart_discount( $coupon_code );
 		//Redirect to the anchor if the anchor option is enabled. This redirect needs to be handled using JS.
 		wpsc_js_redirect_if_using_anchor();
 	} else if ( isset( $_POST['wpsc_shipping_region_submit'] ) ) {
@@ -648,20 +648,20 @@ function show_wp_simple_cart_widget( $args ) {
 	echo $after_widget;
 }
 
-function wspsc_admin_side_enqueue_scripts() {
-	if ( isset( $_GET['page'] ) && $_GET['page'] == 'wspsc-discounts' ) { //simple paypal shopping cart discount page
+function wpsc_admin_side_enqueue_scripts() {
+	if ( isset( $_GET['page'] ) && $_GET['page'] == 'wspsc-discounts' ) { // wp simple shopping cart discount page
 		wp_enqueue_style( 'jquery-ui-style', WP_CART_URL . '/assets/jquery.ui.min.css', array(), WP_CART_VERSION );
 
-		wp_register_script( 'wpspsc-admin', WP_CART_URL . '/lib/wpsc_admin_side.js', array( 'jquery', 'jquery-ui-datepicker' ) );
-		wp_enqueue_script( 'wpspsc-admin' );
+		wp_register_script( 'wpsc-admin', WP_CART_URL . '/lib/wpsc_admin_side.js', array( 'jquery', 'jquery-ui-datepicker' ) );
+		wp_enqueue_script( 'wpsc-admin' );
 	}
 }
 
-function wspsc_admin_side_styles() {
+function wpsc_admin_side_styles() {
 	wp_enqueue_style( 'wpsc-admin-style', WP_CART_URL . '/assets/wpsc-admin-styles.css', array(), WP_CART_VERSION );
 }
 
-function wspsc_front_side_enqueue_scripts() {
+function wpsc_front_side_enqueue_scripts() {
 	//jQuery
 	wp_enqueue_script( 'jquery' );
 	
@@ -695,11 +695,11 @@ function wspsc_front_side_enqueue_scripts() {
 	}
 }
 
-function wpspc_plugin_install() {
-	wpspc_run_activation();
+function wpsc_plugin_install() {
+	wpsc_run_activation();
 }
 
-register_activation_hook( __FILE__, 'wpspc_plugin_install' );
+register_activation_hook( __FILE__, 'wpsc_plugin_install' );
 
 // Add the settings link
 function wp_simple_cart_add_settings_link( $links, $file ) {
@@ -722,6 +722,6 @@ if ( ! is_admin() ) {
 }
 
 add_action( 'wp_head', 'wp_cart_add_read_form_javascript' );
-add_action( 'wp_enqueue_scripts', 'wspsc_front_side_enqueue_scripts' );
-add_action( 'admin_enqueue_scripts', 'wspsc_admin_side_enqueue_scripts' );
-add_action( 'admin_print_styles', 'wspsc_admin_side_styles' );
+add_action( 'wp_enqueue_scripts', 'wpsc_front_side_enqueue_scripts' );
+add_action( 'admin_enqueue_scripts', 'wpsc_admin_side_enqueue_scripts' );
+add_action( 'admin_print_styles', 'wpsc_admin_side_styles' );

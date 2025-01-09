@@ -10,7 +10,7 @@ class WPSC_ADD_TO_CART {
 	/**
 	 * @var string Gutenberg block script handler.
 	 */
-	protected $block_script_handler = 'wspsc_add_to_cart_btn_block_script';
+	protected $block_script_handler = 'wpsc_add_to_cart_btn_block_script';
 
 	/**
 	 * Block Constructor.
@@ -45,7 +45,7 @@ class WPSC_ADD_TO_CART {
 			'name'        => 'wp-shopping-cart/add-to-cart-btn',
 			'description' => __( "Inserts an 'add to cart' button for a product/item.", 'wordpress-simple-paypal-shopping-cart' )
 		);
-		$wspsc_cb_block_meta = 'const wspsc_cb_block_block_meta = ' . wp_json_encode( $block_meta );
+		$wspsc_cb_block_meta = 'const wpsc_cb_block_block_meta = ' . wp_json_encode( $block_meta );
 
 		wp_add_inline_script(
 			$this->block_script_handler,
@@ -124,7 +124,7 @@ class WPSC_ADD_TO_CART {
 				),
 			)
 		);
-		$wspsc_cb_attrs_meta = 'const wspsc_cb_block_attrs_meta = ' . wp_json_encode( $attrs_meta );
+		$wspsc_cb_attrs_meta = 'const wpsc_cb_block_attrs_meta = ' . wp_json_encode( $attrs_meta );
 
 		wp_add_inline_script(
 			$this->block_script_handler,

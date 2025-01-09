@@ -4,45 +4,48 @@
  * @package wordpress-simple-paypal-shopping-cart
  */
 
-wspsc_register_block_type(
-    wspsc_sc_block_block_meta.name,
+/* global wpsc_sc_block_block_meta, wspsc_sc_block_display_option_meta */
+
+wpsc_register_block_type(
+    wpsc_sc_block_block_meta.name,
     {
-        title: wspsc_sc_block_block_meta.title,
-        description: wspsc_sc_block_block_meta.description,
+        title: wpsc_sc_block_block_meta.title,
+        description: wpsc_sc_block_block_meta.description,
         icon: 'cart',
         category: 'common',
 
         edit: function (props) {
 
             return [
-                wspsc_element(
-                    wspsc_serverSideRender,
+                wpsc_element(
+                    wpsc_serverSideRender,
                     {
-                        key: 'wspsc-shopping-cart-block-serverSideRenderer_key', // unique key.
-                        block: wspsc_sc_block_block_meta.name,
+                        key: 'wpsc-shopping-cart-block-serverSideRenderer_key', // unique key.
+                        block: wpsc_sc_block_block_meta.name,
                         attributes: props.attributes,
                     }
                 ),
 
-                wspsc_element(
-                    wspsc_inspector_controls,
+                wpsc_element(
+                    wpsc_inspector_controls,
                     {
-                        key: "wspsc-shopping-cart-block-inspectorControl-key", // unique key.
+                        key: "wpsc-shopping-cart-block-inspectorControl-key", // unique key.
                     },
-                    wspsc_element(
+                    wpsc_element(
                         'div',
                         {
-                            key: "wspsc-shopping-cart-block-div-key", // unique key.
+                            key: "wpsc-shopping-cart-block-div-key", // unique key.
                             style: {padding: "16px",}
                         },
-                        wspsc_element(
-                            wspsc_select_control,
+                        wpsc_element(
+                            wpsc_select_control,
                             {
-                                key: "wspsc-shopping-cart-block-selectControl-key", // unique key.
+                                key: "wpsc-shopping-cart-block-selectControl-key", // unique key.
                                 label: wspsc_sc_block_display_option_meta.label,
                                 value: props.attributes.display_option,
                                 help: wspsc_sc_block_display_option_meta.description,
                                 options: wspsc_sc_block_display_option_meta.options,
+                                __nextHasNoMarginBottom: true,
                                 onChange: (value) => {
                                     props.setAttributes({display_option: value});
                                     },

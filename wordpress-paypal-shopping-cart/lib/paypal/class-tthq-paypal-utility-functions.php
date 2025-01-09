@@ -631,7 +631,7 @@ class PayPal_Utility_Functions{
 				"name" => $item->get_name(),
 				"quantity" => $item->get_quantity(),
 				"unit_amount" => [
-					"value" => wpspsc_number_format_price($item->get_price()),
+					"value" => wpsc_number_format_price($item->get_price()),
 					"currency_code" => $currency,
 				],
 				"category" => $category,

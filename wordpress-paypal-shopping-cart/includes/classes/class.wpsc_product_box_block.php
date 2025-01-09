@@ -10,7 +10,7 @@ class WPSC_PRODUCT_BOX {
 	/**
 	 * @var string Gutenberg block script handler.
 	 */
-	protected $block_script_handler = 'wspsc_product_box_block_script';
+	protected $block_script_handler = 'wpsc_product_box_block_script';
 
 	/**
 	 * Block Constructor.
@@ -45,7 +45,7 @@ class WPSC_PRODUCT_BOX {
 			'name'        => 'wp-shopping-cart/product-box',
 			'description' => __( "Renders a product box with the item name, description, price and an 'add to cart' button.", 'wordpress-simple-paypal-shopping-cart' )
 		);
-		$wspsc_pb_block_meta = 'const wspsc_pb_block_block_meta = ' . wp_json_encode( $block_meta );
+		$wspsc_pb_block_meta = 'const wpsc_pb_block_block_meta = ' . wp_json_encode( $block_meta );
 
 		wp_add_inline_script(
 			$this->block_script_handler,
@@ -137,7 +137,7 @@ class WPSC_PRODUCT_BOX {
 				),
 			)
 		);
-		$wspsc_pb_attrs_meta = 'const wspsc_pb_block_attrs_meta = ' . wp_json_encode( $attrs_meta );
+		$wspsc_pb_attrs_meta = 'const wpsc_pb_block_attrs_meta = ' . wp_json_encode( $attrs_meta );
 
 		wp_add_inline_script(
 			$this->block_script_handler,

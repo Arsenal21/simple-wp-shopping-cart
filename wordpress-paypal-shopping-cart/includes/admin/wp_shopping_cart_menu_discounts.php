@@ -1,6 +1,6 @@
 <?php
 
-function wspsc_show_coupon_discount_settings_page()
+function wpsc_show_coupon_discount_settings_page()
 {
     if(!current_user_can('manage_options')){
         wp_die('You do not have permission to access this settings page.');
@@ -57,7 +57,7 @@ function wspsc_show_coupon_discount_settings_page()
     }
 
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();    
+    wpsc_settings_menu_documentation_msg();
     ?>
     
     <form method="post" action="">
@@ -190,7 +190,7 @@ function wspsc_show_coupon_discount_settings_page()
     </table>';
 
     echo $output;
-    wpspsc_settings_menu_footer();
+    wpsc_settings_menu_footer();
     
     echo '</div></div>';//End of poststuff and post-body
     echo '</div>';//End of wrap

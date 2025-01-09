@@ -70,7 +70,7 @@ function show_wp_cart_shipping_settings_page()
     $wpsc_shipping_variations_arr  = get_option('wpsc_shipping_region_variations');
 
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();    
+    wpsc_settings_menu_documentation_msg();
     ?>
     <style>
         #wpsc-shipping-region-variations-add-btn{
@@ -302,5 +302,5 @@ function show_wp_cart_shipping_settings_page()
     </form>
 
     <?php
-    wpspsc_settings_menu_footer();
+    wpsc_settings_menu_footer();
 }

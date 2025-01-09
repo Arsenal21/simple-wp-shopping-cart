@@ -146,7 +146,7 @@ class WPSC_PPCP_settings_page
 		//End of the payment settings menu tab.
 		do_action('wpsc_ppcp_settings_menu_tab_end');
 
-		wpspsc_settings_menu_footer();
+		wpsc_settings_menu_footer();
 	}
 
 	/**
@@ -235,7 +235,7 @@ class WPSC_PPCP_settings_page
 		?>
 		<!-- PayPal PPCP API credentials settings postbox -->
 		<div class="postbox">
-			<h2><?php _e("PayPal API Credentials for PPCP", 'wordpress-simple-paypal-shopping-cart'); ?></h3>
+			<h2><?php _e("PayPal API Credentials for PPCP", 'wordpress-simple-paypal-shopping-cart'); ?></h2>
 				<div class="inside">
 
 					<?php

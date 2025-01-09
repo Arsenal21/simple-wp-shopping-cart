@@ -5,15 +5,15 @@ use TTHQ\WPSC\Lib\PayPal\PayPal_Bearer;
 /*
  * General settings menu page
  */
-function wspsc_show_general_settings_page ()
+function wpsc_show_general_settings_page ()
 {
     if(!current_user_can('manage_options')){
         wp_die('You do not have permission to access this settings page.');
     }
 
-    if(isset($_POST['wspsc_reset_logfile'])) {
+    if(isset($_POST['wpsc_reset_logfile'])) {
         // Reset the debug log file
-        if(wspsc_reset_logfile()){
+        if(wpsc_reset_logfile()){
             echo '<div id="message" class="updated fade"><p><strong>Debug log file has been reset!</strong></p></div>';
         }
         else{
@@ -72,7 +72,7 @@ function wspsc_show_general_settings_page ()
         $new_sandbox_enable_status =  sanitize_text_field(get_option('wp_shopping_cart_enable_sandbox'));
         if ( $new_sandbox_enable_status  !== $saved_sandbox_enable_status) {
             PayPal_Bearer::delete_cached_token();
-            wspsc_log_payment_debug('Live/Test mode settings updated. Deleted the PayPal access token cache so a new one is generated.', true);
+            wpsc_log_payment_debug('Live/Test mode settings updated. Deleted the PayPal access token cache so a new one is generated.', true);
         }
     }
 
@@ -200,7 +200,7 @@ function wspsc_show_general_settings_page ()
     }
 
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();
+    wpsc_settings_menu_documentation_msg();
     ?>
 
     <div class="postbox">
@@ -467,7 +467,7 @@ echo '<tr valign="top">
                 </li>
             </ul>
         </p>
-        <input type="submit" name="wspsc_reset_logfile" class="button" style="font-weight:bold; color:red" value="Reset Debug Log file"/>
+        <input type="submit" name="wpsc_reset_logfile" class="button" style="font-weight:bold; color:red" value="Reset Debug Log file"/>
         <p class="description">It will reset the debug log file and timestamp it with a log file reset message.</a>
     </td></tr>
 
@@ -489,5 +489,5 @@ echo '<tr valign="top">
  ';
     echo (__("Like the Simple WordPress Shopping Cart Plugin?", "wordpress-simple-paypal-shopping-cart")).' <a href="https://wordpress.org/support/plugin/wordpress-simple-paypal-shopping-cart/reviews/?filter=5" target="_blank">'.(__("Give it a good rating", "wordpress-simple-paypal-shopping-cart")).'</a>';
     _e ( ". It will help us keep the plugin free & maintained.", "wordpress-simple-paypal-shopping-cart" );
-    wpspsc_settings_menu_footer();
+    wpsc_settings_menu_footer();
 }

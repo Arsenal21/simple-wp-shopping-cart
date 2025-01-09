@@ -1,17 +1,17 @@
 <?php 
 
 if ( wp_doing_ajax() ) {
-	add_action( 'wp_ajax_wpspsc_process_pp_smart_checkout', 'wpspsc_process_pp_smart_checkout' );
-	add_action( 'wp_ajax_nopriv_wpspsc_process_pp_smart_checkout', 'wpspsc_process_pp_smart_checkout' );
+	add_action( 'wp_ajax_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
+	add_action( 'wp_ajax_nopriv_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
 
-	add_action( 'wp_ajax_wspsc_stripe_create_checkout_session', 'wspsc_stripe_create_checkout_session' );
-	add_action( 'wp_ajax_nopriv_wspsc_stripe_create_checkout_session', 'wspsc_stripe_create_checkout_session' );
+	add_action( 'wp_ajax_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
+	add_action( 'wp_ajax_nopriv_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
 }
 
 /**
  * Create a Stripe checkout session (when the Stripe checkout button is clicked in the cart).
  */
-function wspsc_stripe_create_checkout_session() {
+function wpsc_stripe_create_checkout_session() {
 	//When the Stripe checkout button is clicked in the cart, it sends an AJAX request to the server. 
 	//We handle this request and create a Stripe checkout session in this function.
 
@@ -37,19 +37,19 @@ function wspsc_stripe_create_checkout_session() {
 	// 	//At least one item is not digital. Get the customer to provide shipping address on the Stripe checkout page.
 	// 	$shipping_preference = 'required';
 	// }
-	//wspsc_log_payment_debug("Shipping preference based on the 'all items digital' flag: " . $shipping_preference, true);
+	//wpsc_log_payment_debug("Shipping preference based on the 'all items digital' flag: " . $shipping_preference, true);
 
 	//Custom field data. 
 	//Decode the custom field before sanitizing.
 	$custom_input = isset( $_POST['custom'] ) ? $_POST['custom'] : '';
 	$decoded_custom = urldecode( $custom_input );
 	$decoded_custom = sanitize_text_field( stripslashes( $decoded_custom ) );
-	//wspsc_log_payment_debug('Stripe custom field input value: ' . $decoded_custom, true);
+	//wpsc_log_payment_debug('Stripe custom field input value: ' . $decoded_custom, true);
 
 	$postage_cost = $wspsc_cart->get_postage_cost();
 
-	if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
-		$postage_cost = wpspsc_amount_in_cents( $postage_cost );
+	if ( ! wpsc_is_zero_cents_currency( $currency ) ) {
+		$postage_cost = wpsc_amount_in_cents( $postage_cost );
 	}else{
 		$postage_cost = round( $postage_cost ); // To make sure there is no decimal place number for zero cents currency.
 	}
@@ -69,7 +69,7 @@ function wspsc_stripe_create_checkout_session() {
 	$query_args = array( 'simple_cart_stripe_ipn' => '1', 'ref_id' => $wspsc_cart->get_cart_id() );
 	$stripe_ipn_url = add_query_arg( $query_args, WP_CART_SITE_URL );
 
-	wpspsc_load_stripe_lib();
+	wpsc_load_stripe_lib();
 
 	try {
 
@@ -128,8 +128,8 @@ function wspsc_stripe_create_checkout_session() {
 		foreach ( $wspsc_cart->get_items() as $item ) {
 			$item_price = $item->get_price();
 
-			if ( ! wpspsc_is_zero_cents_currency( $currency ) ) {
-				$item_price = wpspsc_amount_in_cents( $item_price );
+			if ( ! wpsc_is_zero_cents_currency( $currency ) ) {
+				$item_price = wpsc_amount_in_cents( $item_price );
 			}else{
 				$item_price = round( $item_price ); // To make sure there is no decimal place number for zero cents currency.
 			}
@@ -187,7 +187,7 @@ function wspsc_stripe_create_checkout_session() {
 /**
  * Process the payment data received from the smart checkout.
  */
-function wpspsc_process_pp_smart_checkout() {
+function wpsc_process_pp_smart_checkout() {
 	if ( isset( $_POST['wpspsc_payment_data'] ) ) {
 		$data = $_POST['wpspsc_payment_data'];
 	}

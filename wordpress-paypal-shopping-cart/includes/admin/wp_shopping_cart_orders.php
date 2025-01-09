@@ -3,9 +3,9 @@
  * This page handles the orders menu page in the admin dashboard
  */
 
-add_action('save_post', 'wpspc_cart_save_orders', 10, 2);
+add_action('save_post', 'wpsc_cart_save_orders', 10, 2);
 
-function wpspc_create_orders_page() {
+function wpsc_create_orders_page() {
     register_post_type('wpsc_cart_orders', array(
         'labels' => array(
             'name' => __("Cart Orders", "wordpress-simple-paypal-shopping-cart"),
@@ -32,12 +32,12 @@ function wpspc_create_orders_page() {
     );
 }
 
-function wpspc_add_meta_boxes() {
-    add_meta_box('order_review_meta_box', __("Order Review", "wordpress-simple-paypal-shopping-cart"), 'wpspc_order_review_meta_box', 'wpsc_cart_orders', 'normal', 'high'
+function wpsc_add_meta_boxes() {
+    add_meta_box('order_review_meta_box', __("Order Review", "wordpress-simple-paypal-shopping-cart"), 'wpsc_order_review_meta_box', 'wpsc_cart_orders', 'normal', 'high'
     );
 }
 
-function wpspc_order_review_meta_box($wpsc_cart_orders) {
+function wpsc_order_review_meta_box($wpsc_cart_orders) {
     $order_id = $wpsc_cart_orders->ID;
     $payment_gateway =  get_post_meta($wpsc_cart_orders->ID, 'wpsc_payment_gateway', true);
     $first_name = get_post_meta($wpsc_cart_orders->ID, 'wpsc_first_name', true);
@@ -169,7 +169,7 @@ function wpspc_order_review_meta_box($wpsc_cart_orders) {
  * This function is hooked to save_post action. so it only gets executed for a logged in wp user
  */
 
-function wpspc_cart_save_orders($order_id, $wpsc_cart_orders) {
+function wpsc_cart_save_orders($order_id, $wpsc_cart_orders) {
     // Check post type for movie reviews
     if ($wpsc_cart_orders->post_type == 'wpsc_cart_orders') {
         // Store data in post meta table if present in post data
@@ -229,9 +229,9 @@ function wpspc_cart_save_orders($order_id, $wpsc_cart_orders) {
     }
 }
 
-add_filter('manage_edit-wpsc_cart_orders_columns', 'wpspc_orders_display_columns');
+add_filter('manage_edit-wpsc_cart_orders_columns', 'wpsc_orders_display_columns' );
 
-function wpspc_orders_display_columns($columns) {
+function wpsc_orders_display_columns($columns) {
     //unset( $columns['title'] );
     unset($columns['comments']);
     unset($columns['date']);
@@ -246,9 +246,9 @@ function wpspc_orders_display_columns($columns) {
 }
 
 //add_action( 'manage_posts_custom_column', 'wpsc_populate_order_columns' , 10, 2);
-add_action('manage_wpsc_cart_orders_posts_custom_column', 'wpspc_populate_order_columns', 10, 2);
+add_action('manage_wpsc_cart_orders_posts_custom_column', 'wpsc_populate_order_columns', 10, 2);
 
-function wpspc_populate_order_columns($column, $post_id) {
+function wpsc_populate_order_columns($column, $post_id) {
     if ('wpsc_first_name' == $column) {
         $first_name = get_post_meta($post_id, 'wpsc_first_name', true);
         echo esc_attr($first_name);
@@ -267,9 +267,9 @@ function wpspc_populate_order_columns($column, $post_id) {
     }
 }
 
-add_filter('post_type_link', "wpspsc_customize_order_link", 10, 2);
+add_filter('post_type_link', "wpsc_customize_order_link", 10, 2);
 
-function wpspsc_customize_order_link($permalink, $post) {
+function wpsc_customize_order_link($permalink, $post) {
     if ($post->post_type == 'wpsc_cart_orders') { //The post type is cart orders
         $permalink = get_admin_url() . 'post.php?post=' . $post->ID . '&action=edit';
     }
