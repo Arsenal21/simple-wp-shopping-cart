@@ -220,7 +220,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 	if ( $count ) {
 
-		wp_enqueue_script( "wspsc-checkout-cart-script" );
+		wp_enqueue_script( "wpsc-checkout-cart-script" );
 
 		//The sub-totals and shipping cost row
 		if ( $postage_cost != 0 ) {
@@ -627,8 +627,8 @@ function print_wp_shopping_cart( $args = array() ) {
 		if ( get_option( 'wpspc_enable_stripe_checkout' ) ) {
 			$wspsc_Cart = WPSC_Cart::get_instance();
 
-			wp_enqueue_script( "wspsc.stripe" );
-			wp_enqueue_script( "wspsc-checkout-stripe" );
+			wp_enqueue_script( "wpsc-stripe" );
+			wp_enqueue_script( "wpsc-checkout-stripe" );
 
 			$output .= '<form class="wspsc-stripe-payment-form" >';
 			$stripe_checkout_button_img_src = WP_CART_URL . '/images/' . ( __( 'stripe_checkout_EN.gif', 'wordpress-simple-paypal-shopping-cart' ) );

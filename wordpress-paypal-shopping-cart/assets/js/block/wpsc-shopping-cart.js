@@ -4,7 +4,7 @@
  * @package wordpress-simple-paypal-shopping-cart
  */
 
-/* global wpsc_sc_block_block_meta, wspsc_sc_block_display_option_meta */
+/* global wpsc_sc_block_block_meta, wpsc_sc_block_display_option_meta */
 
 wpsc_register_block_type(
     wpsc_sc_block_block_meta.name,
@@ -41,10 +41,10 @@ wpsc_register_block_type(
                             wpsc_select_control,
                             {
                                 key: "wpsc-shopping-cart-block-selectControl-key", // unique key.
-                                label: wspsc_sc_block_display_option_meta.label,
+                                label: wpsc_sc_block_display_option_meta.label,
                                 value: props.attributes.display_option,
-                                help: wspsc_sc_block_display_option_meta.description,
-                                options: wspsc_sc_block_display_option_meta.options,
+                                help: wpsc_sc_block_display_option_meta.description,
+                                options: wpsc_sc_block_display_option_meta.options,
                                 __nextHasNoMarginBottom: true,
                                 onChange: (value) => {
                                     props.setAttributes({display_option: value});

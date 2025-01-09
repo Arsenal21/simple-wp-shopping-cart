@@ -34,7 +34,7 @@ class WPSC_ADD_TO_CART {
 
 		//block styles for cart button
 		wp_register_style(
-			'wspsc_cart_block_styles',
+			'wpsc_cart_block_styles',
 			WP_CART_URL . '/assets/wpsc-front-end-styles.css',
 			null,
 			WP_CART_VERSION
@@ -45,11 +45,11 @@ class WPSC_ADD_TO_CART {
 			'name'        => 'wp-shopping-cart/add-to-cart-btn',
 			'description' => __( "Inserts an 'add to cart' button for a product/item.", 'wordpress-simple-paypal-shopping-cart' )
 		);
-		$wspsc_cb_block_meta = 'const wpsc_cb_block_block_meta = ' . wp_json_encode( $block_meta );
+		$wpsc_cb_block_meta = 'const wpsc_cb_block_block_meta = ' . wp_json_encode( $block_meta );
 
 		wp_add_inline_script(
 			$this->block_script_handler,
-			$wspsc_cb_block_meta,
+			$wpsc_cb_block_meta,
 			'before'
 		);
 
@@ -124,11 +124,11 @@ class WPSC_ADD_TO_CART {
 				),
 			)
 		);
-		$wspsc_cb_attrs_meta = 'const wpsc_cb_block_attrs_meta = ' . wp_json_encode( $attrs_meta );
+		$wpsc_cb_attrs_meta = 'const wpsc_cb_block_attrs_meta = ' . wp_json_encode( $attrs_meta );
 
 		wp_add_inline_script(
 			$this->block_script_handler,
-			$wspsc_cb_attrs_meta,
+			$wpsc_cb_attrs_meta,
 			'before'
 		);
 
@@ -192,7 +192,7 @@ class WPSC_ADD_TO_CART {
 			array(
 				'attributes'      => $attributes,
 				'editor_script'   => $this->block_script_handler,
-				'editor_style'    => 'wspsc_cart_block_styles',
+				'editor_style'    => 'wpsc_cart_block_styles',
 				'render_callback' => array( $this, 'render_block' )
 			)
 		);
