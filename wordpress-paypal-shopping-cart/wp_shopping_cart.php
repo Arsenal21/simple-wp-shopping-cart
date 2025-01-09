@@ -628,26 +628,6 @@ function simple_cart_total() {
 	return $wspsc_cart->simple_cart_total();
 }
 
-function wp_paypal_shopping_cart_load_widgets() {
-	$widget_options = array( 'classname' => 'wp_paypal_shopping_cart_widgets', 'description' => __( "WP Paypal Shopping Cart Widget" ) );
-	wp_register_sidebar_widget( 'wp_paypal_shopping_cart_widgets', __( 'WP Paypal Shopping Cart' ), 'show_wp_simple_cart_widget', $widget_options );
-}
-
-function show_wp_simple_cart_widget( $args ) {
-	// outputs the content of the widget
-	extract( $args );
-
-	$cart_title = get_option( 'wp_cart_title' );
-	if ( empty( $cart_title ) ) {
-		$cart_title = __( "Shopping Cart", "wordpress-simple-paypal-shopping-cart" );
-	}
-
-	echo $before_widget;
-	echo $before_title . $cart_title . $after_title;
-	echo print_wp_shopping_cart();
-	echo $after_widget;
-}
-
 function wpsc_admin_side_enqueue_scripts() {
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'wspsc-discounts' ) { // wp simple shopping cart discount page
 		wp_enqueue_style( 'jquery-ui-style', WP_CART_URL . '/assets/jquery.ui.min.css', array(), WP_CART_VERSION );
@@ -711,8 +691,6 @@ function wp_simple_cart_add_settings_link( $links, $file ) {
 }
 
 add_filter( 'plugin_action_links', 'wp_simple_cart_add_settings_link', 10, 2 );
-
-add_action( 'widgets_init', 'wp_paypal_shopping_cart_load_widgets' );
 
 add_action( 'init', 'wp_cart_init_handler' );
 add_action( 'admin_init', 'wp_cart_admin_init_handler' );
