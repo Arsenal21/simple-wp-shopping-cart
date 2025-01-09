@@ -81,6 +81,16 @@ function wpsc_log_payment_debug( $message, $success, $end = false ) {
 	fclose( $fp );
 }
 
+/**
+ * TODO: Need to remove this.
+ *
+ * Wrapper for 'wpsc_log_payment_debug' function.
+ * Used for backward compatibility of addons.
+ */
+function wspsc_log_payment_debug( $message, $success, $end = false ) {
+	wpsc_log_payment_debug($message, $success, $end);
+}
+
 function wpsc_log_debug_array( $array_to_write, $success, $end = false ) {
 	$logfile = wpsc_get_log_file();
 	$debug   = get_option( 'wp_shopping_cart_enable_debug' );
@@ -102,6 +112,16 @@ function wpsc_log_debug_array( $array_to_write, $success, $end = false ) {
 	$fp = fopen( $logfile, 'a' );
 	fwrite( $fp, $text );
 	fclose( $fp ); // close filee
+}
+
+/**
+ * TODO: Need to remove this.
+ *
+ * Wrapper for 'wpsc_log_debug_array' function.
+ * Used for backward compatibility of addons.
+ */
+function wspsc_log_debug_array($array_to_write, $success, $end = false) {
+	wpsc_log_debug_array($array_to_write, $success, $end);
 }
 
 /**
