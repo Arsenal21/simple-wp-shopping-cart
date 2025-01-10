@@ -130,7 +130,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		foreach ( $wspsc_cart->get_items() as $item ) {
 			//Let's form JS array of items for Smart Checkout
-			$number_formatted_item_price = wpspsc_number_format_price( $item->get_price() );
+			$number_formatted_item_price = wpsc_number_format_price( $item->get_price() );
 			$items_list .= sprintf( $item_tpl, esc_js( $item->get_name() ), esc_js( $item->get_quantity() ), esc_js( $number_formatted_item_price ) ) . ',';
 
 			$output .= '<tr class="wspsc_cart_item_thumb"><td class="wspsc_cart_item_name_td" style="overflow: hidden;">';
@@ -191,7 +191,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 			$form .= "
 	            <input type=\"hidden\" name=\"item_name_$count\" value=\"" . esc_attr( $item->get_name() ) . "\" />
-	            <input type=\"hidden\" name=\"amount_$count\" value='" . wpspsc_number_format_price( $item->get_price() ) . "' />
+	            <input type=\"hidden\" name=\"amount_$count\" value='" . wpsc_number_format_price( $item->get_price() ) . "' />
 	            <input type=\"hidden\" name=\"quantity_$count\" value=\"" . esc_attr( $item->get_quantity() ) . "\" />
 	            <input type='hidden' name='item_number_$count' value='" . esc_attr( $item->get_item_number() ) . "' />
 	        ";
@@ -200,7 +200,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$items_list = rtrim( $items_list, ',' );
 		if ( ! get_option( 'wp_shopping_cart_use_profile_shipping' ) ) {
 			//Not using profile based shipping
-			$postage_cost = wpspsc_number_format_price( $postage_cost );
+			$postage_cost = wpsc_number_format_price( $postage_cost );
 			$form .= "<input type=\"hidden\" name=\"shipping_1\" value='" . esc_attr( $postage_cost ) . "' />"; //You can also use "handling_cart" variable to use shipping and handling here
 		}
 
@@ -220,7 +220,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 	if ( $count ) {
 
-		wp_enqueue_script( "wspsc-checkout-cart-script" );
+		wp_enqueue_script( "wpsc-checkout-cart-script" );
 
 		//The sub-totals and shipping cost row
 		if ( $postage_cost != 0 ) {
@@ -293,13 +293,13 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		if ( $is_shipping_by_region_enabled ) {
 			$selected_shipping_region_variant = $wspsc_cart->get_selected_shipping_region();
-			$output .= wspsc_generate_shipping_region_section($carts_cnt, $selected_shipping_region_variant);
+			$output .= wpsc_generate_shipping_region_section($carts_cnt, $selected_shipping_region_variant);
 		}
 
 		// Check if terms and conditions are enabled or not.
 		$is_tnc_enabled = get_option( 'wp_shopping_cart_enable_tnc' ) != '';
 		if ( $is_tnc_enabled ) {
-			$output .= wspsc_generate_tnc_section( $carts_cnt );
+			$output .= wpsc_generate_tnc_section( $carts_cnt );
 		}
 		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . ' class="wspsc_checkout_form_standard">';
 		$output .= $form;
@@ -361,10 +361,10 @@ function print_wp_shopping_cart( $args = array() ) {
 			$output .= '<form action="" method="POST" class="wpspc_pp_smart_checkout_form">';
 
 			//Some number formatting (before it is used in JS code.
-			$formatted_total = wpspsc_number_format_price( $total );
-			$formatted_postage_cost = wpspsc_number_format_price( $postage_cost );
+			$formatted_total = wpsc_number_format_price( $total );
+			$formatted_postage_cost = wpsc_number_format_price( $postage_cost );
 			$totalpluspostage = ( $total + $postage_cost );
-			$formatted_totalpluspostage = wpspsc_number_format_price( $totalpluspostage );
+			$formatted_totalpluspostage = wpsc_number_format_price( $totalpluspostage );
 
 			//check mode and if client ID is set for it
 			$client_id = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_pp_test_client_id' ) : get_option( 'wpspc_pp_live_client_id' );
@@ -374,7 +374,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			} else {
 				//checkout script should be inserted only once, otherwise it would produce JS error
 				//Load the JS SDK on footer so it only loads once per page (if the cart is present)
-				add_action( 'wp_footer', 'wspsc_load_paypal_smart_checkout_js' );
+				add_action( 'wp_footer', 'wpsc_load_paypal_smart_checkout_js' );
 
 				$btn_layout = get_option( 'wpspc_pp_smart_checkout_btn_layout' );
 				$btn_layout = empty( $btn_layout ) ? 'vertical' : $btn_layout;
@@ -627,8 +627,8 @@ function print_wp_shopping_cart( $args = array() ) {
 		if ( get_option( 'wpspc_enable_stripe_checkout' ) ) {
 			$wspsc_Cart = WPSC_Cart::get_instance();
 
-			wp_enqueue_script( "wspsc.stripe" );
-			wp_enqueue_script( "wspsc-checkout-stripe" );
+			wp_enqueue_script( "wpsc-stripe" );
+			wp_enqueue_script( "wpsc-checkout-stripe" );
 
 			$output .= '<form class="wspsc-stripe-payment-form" >';
 			$stripe_checkout_button_img_src = WP_CART_URL . '/images/' . ( __( 'stripe_checkout_EN.gif', 'wordpress-simple-paypal-shopping-cart' ) );
@@ -657,7 +657,7 @@ function print_wp_shopping_cart( $args = array() ) {
  * Loads the checkout.js script from PayPal that is used for PayPal Smart Checkout.
  * Then it triggers the wspsc_paypal_smart_checkout_sdk_loaded event.
  */
-function wspsc_load_paypal_smart_checkout_js() {
+function wpsc_load_paypal_smart_checkout_js() {
 	$script_url = 'https://www.paypalobjects.com/api/checkout.js';
 	?>
     <script type="text/javascript">
@@ -680,7 +680,7 @@ function wspsc_load_paypal_smart_checkout_js() {
  *
  * @return string HTML output.
  */
-function wspsc_generate_tnc_section( $carts_cnt ) {
+function wpsc_generate_tnc_section( $carts_cnt ) {
 	$html = '';
 
 	$wspsc_default_tnc_text = __( 'I accept the <a href="https://example.com/terms-and-conditions/" target="_blank">Terms and Conditions</a>', "wordpress-simple-paypal-shopping-cart" );
@@ -708,7 +708,7 @@ function wspsc_generate_tnc_section( $carts_cnt ) {
  *
  * @return string HTML output.
  */
-function wspsc_generate_shipping_region_section($carts_cnt, $selected_option) {
+function wpsc_generate_shipping_region_section($carts_cnt, $selected_option) {
 	$wpsc_shipping_variations_settings_arr  = get_option('wpsc_shipping_region_variations');
 
 	$html = '';

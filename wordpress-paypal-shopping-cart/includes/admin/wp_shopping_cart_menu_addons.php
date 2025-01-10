@@ -1,6 +1,6 @@
 <?php
 
-function wspsc_show_addons_menu_page() {
+function wpsc_show_addons_menu_page() {
     if (!current_user_can('manage_options')) {
         wp_die('You do not have permission to access this settings page.');
     }
@@ -12,7 +12,7 @@ function wspsc_show_addons_menu_page() {
     echo '<div id="poststuff"><div id="post-body">';
 
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();    
+    wpsc_settings_menu_documentation_msg();
     ?>
 
     <?php

@@ -52,8 +52,8 @@ function wpsc_cart_button_handler($atts){
 	if(empty($price)){
             return '<div style="color:red;">'.(__("Error! You must specify a price for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
 	}
-    $price = wspsc_strip_char_from_price_amount($price);
-    $shipping = wspsc_strip_char_from_price_amount($shipping);
+    $price = wpsc_strip_char_from_price_amount($price);
+    $shipping = wpsc_strip_char_from_price_amount($shipping);
 
 	return print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
 }
@@ -102,8 +102,8 @@ function wpsc_cart_display_product_handler($atts)
         $thumb_alt = $name;
     }
 
-    $price = wspsc_strip_char_from_price_amount($price);
-    $shipping = wspsc_strip_char_from_price_amount($shipping);
+    $price = wpsc_strip_char_from_price_amount($price);
+    $shipping = wpsc_strip_char_from_price_amount($shipping);
     $thumbnail_code = '<img src="'.esc_url_raw($thumbnail).'" alt="'.esc_attr( $thumb_alt ).'">';
     if(!empty($thumb_target) && preg_match("/http/", $thumb_target)){
         $thumbnail_code = '<a href="'.esc_url_raw($thumb_target).'"><img src="'.esc_url_raw($thumbnail).'" alt="'.esc_attr( $thumb_alt ).'"></a>';

@@ -5,7 +5,7 @@
  *
  * @return string File name suffix.
  */
-function wspsc_get_log_file_suffix() {
+function wpsc_get_log_file_suffix() {
 	$suffix = get_option( 'wspsc_logfile_suffix' );
 	if ( $suffix ) {
 		return $suffix;
@@ -22,8 +22,8 @@ function wspsc_get_log_file_suffix() {
  *
  * @return string Log file name.
  */
-function wspsc_get_log_file_name() {
-	return WP_CART_LOG_FILENAME . '-' . wspsc_get_log_file_suffix() . '.txt';
+function wpsc_get_log_file_name() {
+	return WP_CART_LOG_FILENAME . '-' . wpsc_get_log_file_suffix() . '.txt';
 }
 
 /**
@@ -31,8 +31,8 @@ function wspsc_get_log_file_name() {
  *
  * @return string Debug log file.
  */
-function wspsc_get_log_file() {
-	return WP_CART_PATH . wspsc_get_log_file_name();
+function wpsc_get_log_file() {
+	return WP_CART_PATH . wpsc_get_log_file_name();
 }
 
 /**
@@ -40,11 +40,11 @@ function wspsc_get_log_file() {
  *
  * @return void
  */
-function wspsc_read_log_file() {
-	if ( ! file_exists( wspsc_get_log_file() ) ) {
-		wspsc_reset_logfile();
+function wpsc_read_log_file() {
+	if ( ! file_exists( wpsc_get_log_file() ) ) {
+		wpsc_reset_logfile();
 	}
-	$logfile = fopen( wspsc_get_log_file(), 'rb' );
+	$logfile = fopen( wpsc_get_log_file(), 'rb' );
 	if ( ! $logfile ) {
 		wp_die( __( 'Log file dosen\'t exists.', 'wordpress-simple-paypal-shopping-cart' ) );
 	}
@@ -62,8 +62,8 @@ function wspsc_read_log_file() {
  *
  * @return void
  */
-function wspsc_log_payment_debug( $message, $success, $end = false ) {
-	$logfile = wspsc_get_log_file();
+function wpsc_log_payment_debug( $message, $success, $end = false ) {
+	$logfile = wpsc_get_log_file();
 	$debug   = get_option( 'wp_shopping_cart_enable_debug' );
 	if ( ! $debug ) {
 		//Debug is not enabled.
@@ -81,8 +81,18 @@ function wspsc_log_payment_debug( $message, $success, $end = false ) {
 	fclose( $fp );
 }
 
-function wspsc_log_debug_array( $array_to_write, $success, $end = false ) {
-	$logfile = wspsc_get_log_file();
+/**
+ * TODO: Need to remove this.
+ *
+ * Wrapper for 'wpsc_log_payment_debug' function.
+ * Used for backward compatibility of addons.
+ */
+function wspsc_log_payment_debug( $message, $success, $end = false ) {
+	wpsc_log_payment_debug($message, $success, $end);
+}
+
+function wpsc_log_debug_array( $array_to_write, $success, $end = false ) {
+	$logfile = wpsc_get_log_file();
 	$debug   = get_option( 'wp_shopping_cart_enable_debug' );
 	if ( ! $debug ) {
 		//Debug is not enabled.
@@ -105,13 +115,23 @@ function wspsc_log_debug_array( $array_to_write, $success, $end = false ) {
 }
 
 /**
+ * TODO: Need to remove this.
+ *
+ * Wrapper for 'wpsc_log_debug_array' function.
+ * Used for backward compatibility of addons.
+ */
+function wspsc_log_debug_array($array_to_write, $success, $end = false) {
+	wpsc_log_debug_array($array_to_write, $success, $end);
+}
+
+/**
  * Resets debug log file. Create log file if not present.
  *
  * @return bool Reset successful
  */
-function wspsc_reset_logfile() {
+function wpsc_reset_logfile() {
 	$log_reset = true;
-	$logfile   = wspsc_get_log_file();
+	$logfile   = wpsc_get_log_file();
 	$text      = '[' . date( 'm/d/Y g:i A' ) . '] - SUCCESS : Log file reset';
 	$text      .= "\n------------------------------------------------------------------\n\n";
 	$fp        = fopen( $logfile, 'w' );

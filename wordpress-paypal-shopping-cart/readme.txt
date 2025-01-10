@@ -1,7 +1,7 @@
 === WordPress Simple Shopping Cart ===
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
-Tags: cart, shopping cart, WordPress shopping cart, Paypal shopping cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
+Tags: cart, shopping cart, WordPress shopping cart, WP Simple Shopping Cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 5.5
 Tested up to: 6.7
 Stable tag: 5.0.9
@@ -648,8 +648,8 @@ https://www.tipsandtricks-hq.com/ecommerce/adding-shopping-cart-to-the-sidebar-o
 = 3.9.3 =
 - Added a new feature to show a compact shopping cart. You can show the compact shopping cart anywhere on your site (example: sidebar, header etc).
 - Language translation strings updated. Translation instruction here - http://www.tipsandtricks-hq.com/ecommerce/translating-the-wp-simple-shopping-cart-plugin-2627
-- Added a new function for getting the total cart item quantity (wpspc_get_total_cart_qty).
-- Added a new function to get the sub total amount of the cart (wpspc_get_total_cart_sub_total).
+- Added a new function for getting the total cart item quantity (wpsc_get_total_cart_qty).
+- Added a new function to get the sub total amount of the cart (wpsc_get_total_cart_sub_total).
 
 = 3.9.2 =
 - Added an option to specify a custom button image for the add to cart buttons. You can use the "button_image" parameter in the shortcode to customize the add to cart button image.

@@ -2,8 +2,8 @@
 
 status_header( 200 );
 
-//Alternatively, we can use the wspsc_log_payment_debug() function directly.
-$debug_log = wspsc_get_log_file_name(); // Debug log file name
+//Alternatively, we can use the wpsc_log_payment_debug() function directly.
+$debug_log = wpsc_get_log_file_name(); // Debug log file name
 
 class paypal_ipn_handler {
 
@@ -20,7 +20,7 @@ class paypal_ipn_handler {
 	function __construct() {
 		$this->paypal_url = 'https://www.paypal.com/cgi-bin/webscr';
 		$this->last_error = '';
-		$this->ipn_log_file = wspsc_get_log_file();
+		$this->ipn_log_file = wpsc_get_log_file();
 		$this->ipn_response = '';
 	}
 
@@ -166,7 +166,7 @@ class paypal_ipn_handler {
 		}
 
 		if (! get_post_status( $post_id )) {
-			$this->debug_log( 'Order ID: ' . $post_id . ', does not exist in the database. This is not a Simple PayPal Shopping Cart order', false );
+			$this->debug_log( 'Order ID: ' . $post_id . ', does not exist in the database. This is not a WP Simple Shopping Cart order', false );
 			return;
 		}
 
@@ -236,7 +236,7 @@ class paypal_ipn_handler {
 					$product_details .= "\n";
 				}
 				$item_total = $item->get_price() * $item->get_quantity();
-				$product_details .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpspsc_number_format_price( $item_total ) . "\n";
+				$product_details .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpsc_number_format_price( $item_total ) . "\n";
 				if ($item->get_file_url()) {
 					$file_url = base64_decode( $item->get_file_url() );
 					$product_details .= "Download Link: " . $file_url . "\n";
@@ -257,8 +257,8 @@ class paypal_ipn_handler {
 		$this->ipn_data['shipping_region'] = '';
 		$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
 		if ($selected_shipping_region) {
-			wspsc_log_payment_debug('Selected shipping region option: ', true);
-			wspsc_log_debug_array($selected_shipping_region, true);
+			wpsc_log_payment_debug('Selected shipping region option: ', true);
+			wpsc_log_debug_array($selected_shipping_region, true);
 
 			$this->ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
 			$this->ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
@@ -269,9 +269,9 @@ class paypal_ipn_handler {
 		} else {
 			$baseShipping = get_option( 'cart_base_shipping_cost' );
 			$shipping = floatval( $shipping ) + floatval( $baseShipping ) + floatval( $this->ipn_data['regional_shipping_cost'] );
-			$shipping = wpspsc_number_format_price( $shipping );
+			$shipping = wpsc_number_format_price( $shipping );
 		}
-		wspsc_log_payment_debug('Total shipping cost: '.$shipping, true);
+		wpsc_log_payment_debug( 'Total shipping cost: ' . $shipping, true);
 
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->ipn_data['shipping_region'] );
@@ -286,11 +286,11 @@ class paypal_ipn_handler {
 
 		$from_email = get_option( 'wpspc_buyer_from_email' );
 		$subject = get_option( 'wpspc_buyer_email_subj' );
-		$subject = wpspc_apply_dynamic_tags_on_email( $subject, $this->ipn_data, $args );
+		$subject = wpsc_apply_dynamic_tags_on_email( $subject, $this->ipn_data, $args );
 
 		$body = get_option( 'wpspc_buyer_email_body' );
 		$args['email_body'] = $body;
-		$body = wpspc_apply_dynamic_tags_on_email( $body, $this->ipn_data, $args );
+		$body = wpsc_apply_dynamic_tags_on_email( $body, $this->ipn_data, $args );
 
 		$is_html_content_type = get_option('wpsc_email_content_type') == 'html' ? true : false;
 
@@ -312,11 +312,11 @@ class paypal_ipn_handler {
 		}
 		$notify_email = get_option( 'wpspc_notify_email_address' );
 		$seller_email_subject = get_option( 'wpspc_seller_email_subj' );
-		$seller_email_subject = wpspc_apply_dynamic_tags_on_email( $seller_email_subject, $this->ipn_data, $args );
+		$seller_email_subject = wpsc_apply_dynamic_tags_on_email( $seller_email_subject, $this->ipn_data, $args );
 
 		$seller_email_body = get_option( 'wpspc_seller_email_body' );
 		$args['email_body'] = $seller_email_body;
-		$seller_email_body = wpspc_apply_dynamic_tags_on_email( $seller_email_body, $this->ipn_data, $args );
+		$seller_email_body = wpsc_apply_dynamic_tags_on_email( $seller_email_body, $this->ipn_data, $args );
 
 		$this->debug_log( 'Applying filter - wspsc_seller_notification_email_body', true );
 		$seller_email_body = apply_filters( 'wspsc_seller_notification_email_body', $seller_email_body, $this->ipn_data, $cart_items );
@@ -353,7 +353,7 @@ class paypal_ipn_handler {
 		do_action( 'wpspc_paypal_ipn_processed', $this->ipn_data, $this );
 
 		//Empty any incomplete old cart orders.
-		wspsc_clean_incomplete_old_cart_orders();
+		wpsc_clean_incomplete_old_cart_orders();
 
 		return true;
 	}
@@ -396,7 +396,7 @@ class paypal_ipn_handler {
 			'httpversion' => '1.1',
 			'compress' => false,
 			'decompress' => false,
-			'user-agent' => 'Simple PayPal Shopping Cart/' . WP_CART_VERSION
+			'user-agent' => 'WP Simple Shopping Cart/' . WP_CART_VERSION
 		);
 
 		// Post back to get a response.
@@ -613,7 +613,7 @@ class paypal_ipn_handler {
 
 // Start of IPN handling (script execution)
 function wpc_handle_paypal_ipn() {
-	$debug_log = wspsc_get_log_file_name(); // Debug log file name
+	$debug_log = wpsc_get_log_file_name(); // Debug log file name
 	$ipn_handler_instance = new paypal_ipn_handler();
 
 	$debug_enabled = false;
@@ -625,7 +625,7 @@ function wpc_handle_paypal_ipn() {
 	if ($debug_enabled) {
 		echo 'Debug is enabled. Check the log file for debug output.';
 		$ipn_handler_instance->ipn_log = true;
-		//Alternatively, can use the wspsc_log_payment_debug() function.
+		//Alternatively, can use the wpsc_log_payment_debug() function.
 	}
 	$sandbox = get_option( 'wp_shopping_cart_enable_sandbox' );
 	if ($sandbox) { // Enable sandbox testing

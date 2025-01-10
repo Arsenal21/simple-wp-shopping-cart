@@ -1,6 +1,6 @@
 <?php
 
-function wspsc_show_tools_menu_page() {
+function wpsc_show_tools_menu_page() {
     if (!current_user_can('manage_options')) {
         wp_die('You do not have permission to access this settings page.');
     }
@@ -11,7 +11,7 @@ function wspsc_show_tools_menu_page() {
     echo '<div id="poststuff"><div id="post-body">';
     
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();    
+    wpsc_settings_menu_documentation_msg();
     ?>
 
     <div class="postbox">
@@ -30,14 +30,14 @@ function wspsc_show_tools_menu_page() {
     </div>
     <?php
     
-    wpspsc_settings_menu_footer();
+    wpsc_settings_menu_footer();
     
     echo '</div></div>';//End of poststuff and post-body
     echo '</div>';//End of wrap
     
 }
 
-function wspsc_check_and_handle_csv_export(){
+function wpsc_check_and_handle_csv_export(){
     if (isset($_POST['wspsc_export_orders_data'])) {
         //CSV export form submitted. handle the CSV export.
         
@@ -47,11 +47,11 @@ function wspsc_check_and_handle_csv_export(){
         }
 
         //Export and stream the file to the browser.
-        wspsc_export_orders_data_to_csv();
+        wpsc_export_orders_data_to_csv();
     }
 }
 
-function wspsc_export_orders_data_to_csv(){
+function wpsc_export_orders_data_to_csv(){
     // No point in creating the export file on the file-system. We'll stream
     // it straight to the browser. Much nicer.
 

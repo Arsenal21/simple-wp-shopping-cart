@@ -229,7 +229,7 @@ class WPSC_Cart {
     public function get_sub_total_formatted() {
         //This function will return the sub total of the cart items after calculate_cart_totals_and_postage() is called.
         $sub_total = $this->sub_total;
-        return wpspsc_number_format_price($sub_total);
+        return wpsc_number_format_price($sub_total);
     }
 
     public function get_postage_cost() {
@@ -241,7 +241,7 @@ class WPSC_Cart {
     public function get_postage_cost_formatted() {
         //This function will return the formatted postage cost of the cart items after calculate_cart_totals_and_postage() is called.
         $postage_cost = $this->postage_cost;
-        return wpspsc_number_format_price($postage_cost);
+        return wpsc_number_format_price($postage_cost);
     }
     
     /**
@@ -257,7 +257,7 @@ class WPSC_Cart {
     public function get_grand_total_formatted() {
         //This function will return the grand total of the cart items after calculate_cart_totals_and_postage() is called.
         $grand_total = $this->grand_total;
-        return wpspsc_number_format_price($grand_total);
+        return wpsc_number_format_price($grand_total);
     }
 
     /**
@@ -349,7 +349,7 @@ class WPSC_Cart {
             $grand_total = $total + $item_total_shipping;
         }
 
-        return wpspsc_number_format_price($grand_total);
+        return wpsc_number_format_price($grand_total);
     }
 
     //Scanerio: User gets back after 2 days, he has cart order id: 123 in his cookie
@@ -367,7 +367,7 @@ class WPSC_Cart {
             $status = get_post_meta($post_id, 'wpsc_order_status', true);
             if (strcasecmp($status, "paid") == 0) {
                 //This cart transaction already completed. Need to create a new one.
-                wspsc_log_payment_debug('The transaction status for this cart ID (' . $this->cart_id . ') is paid. Need to create a new cart ID. It will create a new cart ID when an item is added to the cart.', true);
+                wpsc_log_payment_debug( 'The transaction status for this cart ID (' . $this->cart_id . ') is paid. Need to create a new cart ID. It will create a new cart ID when an item is added to the cart.', true);
                 return false;
             }
             //Use the cart ID.
@@ -508,7 +508,7 @@ class WPSC_Cart {
 
         $grand_total=$total + $postage_cost;
 
-        return wpspsc_number_format_price($grand_total);
+        return wpsc_number_format_price($grand_total);
     }
 
     /**

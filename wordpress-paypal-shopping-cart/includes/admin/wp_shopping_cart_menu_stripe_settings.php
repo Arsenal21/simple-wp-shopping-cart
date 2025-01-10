@@ -64,7 +64,7 @@ function show_wp_cart_stripe_settings_page()
     $wpsc_stripe_allowed_shipping_countries = get_option('wpsc_stripe_allowed_shipping_countries');
 
     //Show the documentation message
-    wpspsc_settings_menu_documentation_msg();
+    wpsc_settings_menu_documentation_msg();
     ?>
 
     <form method="post" action="">
@@ -169,5 +169,5 @@ function show_wp_cart_stripe_settings_page()
     </form>
 
 <?php
-    wpspsc_settings_menu_footer();
+    wpsc_settings_menu_footer();
 }

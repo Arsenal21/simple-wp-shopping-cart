@@ -1,6 +1,6 @@
 <?php
 
-class WPSPCAdminUtils {
+class WPSC_Admin_Utils {
 
     static function e_checked( $a, $b = "1", $empty_means_checked = false ) {
 	if ( $a == $b || ($empty_means_checked && empty( $a )) ) {

@@ -159,7 +159,7 @@ class WPSPSC_COUPON_ITEM
     }
 }
 
-function wpspsc_apply_cart_discount($coupon_code)
+function wpsc_apply_cart_discount($coupon_code)
 {
     $wspsc_cart = WPSC_Cart::get_instance();
     $collection_obj = WPSPSC_Coupons_Collection::get_instance();
@@ -210,7 +210,7 @@ function wpspsc_apply_cart_discount($coupon_code)
     return $products;
 }
 
-function wpspsc_reapply_discount_coupon_if_needed()
+function wpsc_reapply_discount_coupon_if_needed()
 {
     $collection_obj = WPSPSC_Coupons_Collection::get_instance();
     $wspsc_cart=WPSC_Cart::get_instance();
@@ -219,7 +219,7 @@ function wpspsc_reapply_discount_coupon_if_needed()
     if ($collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) && $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) == '1'){                        
         $coupon_code = $collection_obj->get_applied_coupon_code($wspsc_cart->get_cart_id());
         $collection_obj->clear_discount_applied_once($wspsc_cart->get_cart_id());        
-        return wpspsc_apply_cart_discount($coupon_code);
+        return wpsc_apply_cart_discount($coupon_code);
     }
 
     return false;

@@ -113,8 +113,8 @@ new PayPal_Main(
     array(
         'plugin_shortname' => 'wpsc',
         'api_connection_settings_page' => 'admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection', // REPACE: Need to change this across different plugins.
-        'log_text_method' => 'wspsc_log_payment_debug',
-        'log_array_method' => 'wspsc_log_debug_array',
+        'log_text_method' => 'wpsc_log_payment_debug',
+        'log_array_method' => 'wpsc_log_debug_array',
         'ppcp_settings_key' => 'wpsc_paypal_ppcp_settings',
 		'enable_sandbox_settings_key' => 'wp_shopping_cart_enable_sandbox',
     )

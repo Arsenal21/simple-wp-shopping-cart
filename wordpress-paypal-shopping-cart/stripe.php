@@ -17,7 +17,7 @@ class stripe_ipn_handler {
 	function __construct() {
 		$this->secret_key = get_option("wpspc_stripe_live_secret_key");
 		$this->last_error = '';
-		$this->ipn_log_file = wspsc_get_log_file();
+		$this->ipn_log_file = wpsc_get_log_file();
 		$this->ipn_response = '';
         $this->order_id=0;
 	}
@@ -138,7 +138,7 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_last_name', $last_name );
 		update_post_meta( $post_id, 'wpsc_email_address', $buyer_email );
 		update_post_meta( $post_id, 'wpsc_txn_id', $txn_id );
-		$formatted_payment_amount = wpspsc_number_format_price( $payment_amount );
+		$formatted_payment_amount = wpsc_number_format_price( $payment_amount );
 		update_post_meta( $post_id, 'wpsc_total_amount', $formatted_payment_amount );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $shipping_address ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
@@ -148,7 +148,7 @@ class stripe_ipn_handler {
 		$gateway = isset( $this->ipn_data['gateway'] ) ? $this->ipn_data['gateway'] : '';
         update_post_meta( $post_id, 'wpsc_payment_gateway', $gateway );
 
-		$tax_amount = isset($this->ipn_data['tax_amount']) ? wpspsc_number_format_price($this->ipn_data['tax_amount']) : '0.00';
+		$tax_amount = isset($this->ipn_data['tax_amount']) ? wpsc_number_format_price($this->ipn_data['tax_amount']) : '0.00';
 		update_post_meta( $post_id, 'wpsc_tax_amount', $tax_amount );
 
 		$product_details = "";
@@ -161,7 +161,7 @@ class stripe_ipn_handler {
 					$product_details .= "\n";
 				}
 				$item_total = $item->get_price() * $item->get_quantity();
-				$product_details .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpspsc_number_format_price( $item_total ) . "\n";
+				$product_details .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpsc_number_format_price( $item_total ) . "\n";
 				if ($item->get_file_url()) {
 					$file_url = base64_decode( $item->get_file_url() );
 					$product_details .= "Download Link: " . $file_url . "\n";
@@ -182,8 +182,8 @@ class stripe_ipn_handler {
 		$this->ipn_data['shipping_region'] = '';
 		$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
 		if ($selected_shipping_region) {
-			wspsc_log_payment_debug('Selected shipping region option: ', true);
-			wspsc_log_debug_array($selected_shipping_region, true);
+			wpsc_log_payment_debug('Selected shipping region option: ', true);
+			wpsc_log_debug_array($selected_shipping_region, true);
 
 			$this->ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
 			$this->ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
@@ -194,10 +194,10 @@ class stripe_ipn_handler {
 		} else {
 			$baseShipping = get_option( 'cart_base_shipping_cost' );
 			$shipping = floatval( $shipping ) + floatval( $baseShipping ) + floatval( $this->ipn_data['regional_shipping_cost'] );
-			$shipping = wpspsc_number_format_price( $shipping );
+			$shipping = wpsc_number_format_price( $shipping );
 		}
 
-		wspsc_log_payment_debug('Total shipping cost: '.$shipping, true);
+		wpsc_log_payment_debug( 'Total shipping cost: ' . $shipping, true);
 
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->ipn_data['shipping_region'] );
@@ -214,11 +214,11 @@ class stripe_ipn_handler {
 
 		$from_email = get_option( 'wpspc_buyer_from_email' );
 		$subject = get_option( 'wpspc_buyer_email_subj' );
-		$subject = wpspc_apply_dynamic_tags_on_email( $subject, $this->ipn_data, $args );
+		$subject = wpsc_apply_dynamic_tags_on_email( $subject, $this->ipn_data, $args );
 
 		$body = get_option( 'wpspc_buyer_email_body' );
 		$args['email_body'] = $body;
-		$body = wpspc_apply_dynamic_tags_on_email( $body, $this->ipn_data, $args );
+		$body = wpsc_apply_dynamic_tags_on_email( $body, $this->ipn_data, $args );
 
 		$is_html_content_type = get_option('wpsc_email_content_type') == 'html' ? true : false;
 
@@ -240,11 +240,11 @@ class stripe_ipn_handler {
 		}
 		$notify_email = get_option( 'wpspc_notify_email_address' );
 		$seller_email_subject = get_option( 'wpspc_seller_email_subj' );
-		$seller_email_subject = wpspc_apply_dynamic_tags_on_email( $seller_email_subject, $this->ipn_data, $args );
+		$seller_email_subject = wpsc_apply_dynamic_tags_on_email( $seller_email_subject, $this->ipn_data, $args );
 
 		$seller_email_body = get_option( 'wpspc_seller_email_body' );
 		$args['email_body'] = $seller_email_body;
-		$seller_email_body = wpspc_apply_dynamic_tags_on_email( $seller_email_body, $this->ipn_data, $args );
+		$seller_email_body = wpsc_apply_dynamic_tags_on_email( $seller_email_body, $this->ipn_data, $args );
 
 		$this->debug_log( 'Applying filter - wspsc_seller_notification_email_body', true );
 		$seller_email_body = apply_filters( 'wspsc_seller_notification_email_body', $seller_email_body, $this->ipn_data, $cart_items );
@@ -280,7 +280,7 @@ class stripe_ipn_handler {
 		do_action( 'wpspc_stripe_ipn_processed', $this->ipn_data, $this );
 
 		//Empty any incomplete old cart orders.
-		wspsc_clean_incomplete_old_cart_orders();
+		wpsc_clean_incomplete_old_cart_orders();
 
 		//Reset/clear the cart.
 		$wspsc_cart->reset_cart_after_txn();
@@ -304,7 +304,7 @@ class stripe_ipn_handler {
 	function validate_ipn_using_client_reference_id() {
 		$this->debug_log( 'Checking if Stripe Checkout session is valid & completed by matching client_reference_id', true );
 
-		wpspsc_load_stripe_lib();
+		wpsc_load_stripe_lib();
         try {
             \Stripe\Stripe::setApiKey( $this->secret_key );
 
@@ -370,13 +370,13 @@ class stripe_ipn_handler {
 		$data = json_decode(json_encode($pi_object),TRUE) ;
 		$ipn = array();
 
-		//wspsc_log_payment_debug( 'Stripe Payment Intent Data: ', true );
-		//wspsc_log_debug_array( $data, true );
+		//wpsc_log_payment_debug( 'Stripe Payment Intent Data: ', true );
+		//wpsc_log_debug_array( $data, true );
 
 		//Get the charge object based on the Stripe API version used in the payment intents object.
 		if( isset ( $pi_object->latest_charge ) ){
 			//Using the new Stripe API version 2022-11-15 or later
-			wspsc_log_payment_debug( 'Using the Stripe API version 2022-11-15 or later for Payment Intents object. Need to retrieve the charge object.', true );
+			wpsc_log_payment_debug( 'Using the Stripe API version 2022-11-15 or later for Payment Intents object. Need to retrieve the charge object.', true );
 			$charge_id = $pi_object->latest_charge;
 			//For Stripe API version 2022-11-15 or later, the charge object is not included in the payment intents object. It needs to be retrieved using the charge ID.
 			try {
@@ -384,20 +384,20 @@ class stripe_ipn_handler {
 				$charge = \Stripe\Charge::retrieve($charge_id);
 			} catch (\Stripe\Exception\ApiErrorException $e) {
 				// Handle the error
-				wspsc_log_payment_debug( 'Stripe error occurred trying to retrieve the charge object using the charge ID. ' . $e->getMessage(), false );
+				wpsc_log_payment_debug( 'Stripe error occurred trying to retrieve the charge object using the charge ID. ' . $e->getMessage(), false );
 				exit;
 			}
 		} else {
 			//Using OLD Stripe API version. Log an error and exit.
 			$error_msg = 'Error! You are using the OLD Stripe API version. This version is not supported. Please update the Stripe API version to 2022-11-15 or later from your Stripe account.';
-			wspsc_log_payment_debug( $error_msg, false );
+			wpsc_log_payment_debug( $error_msg, false );
 			wp_die($error_msg);
 		}
 
 		//Conver the charge object to array
 		$charge_array = json_decode(json_encode($charge),TRUE) ;
-		//wspsc_log_payment_debug( 'Stripe Charge Data: ', true );
-		//wspsc_log_debug_array( $charge_array, true );
+		//wpsc_log_payment_debug( 'Stripe Charge Data: ', true );
+		//wpsc_log_debug_array( $charge_array, true );
 
 		/**
 		 * Retrieve Customer info from the charge object.
@@ -418,7 +418,7 @@ class stripe_ipn_handler {
 
 		$payment_amount = 0;
 		
-		if (wpspsc_is_zero_cents_currency($currency_code_payment)) {
+		if (wpsc_is_zero_cents_currency($currency_code_payment)) {
 			$payment_amount = $price_in_cents;
 		} else {
 			$payment_amount = $price_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
@@ -469,7 +469,7 @@ class stripe_ipn_handler {
 			// Process tax amount if there is any
 			if (isset($additional_data['tax_amount'])){
 				$tax_amount_in_cents = intval($additional_data['tax_amount']); // for stripe, amount should always be in integer (cents)
-				if (wpspsc_is_zero_cents_currency($currency_code_payment)) {
+				if (wpsc_is_zero_cents_currency($currency_code_payment)) {
 					$ipn['tax_amount'] = $tax_amount_in_cents;
 				} else {
 					$ipn['tax_amount'] = $tax_amount_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
@@ -479,7 +479,7 @@ class stripe_ipn_handler {
 
 
 		//Debug purpose.
-		//wspsc_log_debug_array( $ipn, true );
+		//wpsc_log_debug_array( $ipn, true );
 
 		//Save the IPN data in the class variable
 		$this->ipn_data = $ipn;
@@ -617,7 +617,7 @@ function wpc_handle_stripe_ipn() {
 	if ($debug) {
 		$debug_enabled = true;
 		$ipn_handler_instance->ipn_log = true;
-		//Alternatively, can use the wspsc_log_payment_debug() function.
+		//Alternatively, can use the wpsc_log_payment_debug() function.
 	}
 
 	//Check if cart items are empty

@@ -7,11 +7,11 @@ function wp_cart_init_handler()
     //Add any common init hook handing code
     if( is_admin() && current_user_can($orders_menu_permission)) //Init hook handing code for wp-admin
     {
-        wpspc_create_orders_page();
+        wpsc_create_orders_page();
     }
     else//Init hook handling code for front end
     {
-        wpspc_cart_actions_handler();
+        wpsc_cart_actions_handler();
         add_filter('ngg_render_template','wp_cart_ngg_template_handler',10,2);
         if(isset($_REQUEST['simple_cart_ipn']))
         {
@@ -29,7 +29,7 @@ function wp_cart_init_handler()
     if (is_admin()) {
         add_action('admin_init', 'wp_cart_add_tinymce_button');
         
-        wspsc_check_and_handle_csv_export();
+        wpsc_check_and_handle_csv_export();
 
 	//TODO - can be removed at a later version.
 	if (isset($_GET['page']) && $_GET['page'] == 'wordpress-paypal-shopping-cart') {
@@ -45,28 +45,28 @@ function wp_cart_init_handler()
 * This function gets called when admin_init hook is executed
 */
 function wp_cart_admin_init_handler() {
-    wpspc_add_meta_boxes();
+    wpsc_add_meta_boxes();
 
     //Handle feedback in the admin area.
 	include_once WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_user_feedback.php';
-	$user_feedback = new WSPSC_Admin_User_Feedback();
+	$user_feedback = new WPSC_Admin_User_Feedback();
 	$user_feedback->init();
 
     // View log file if requested.
     $action = isset( $_GET['wspsc-action'] ) ? sanitize_text_field( stripslashes ( $_GET['wspsc-action'] ) ) : '';
 	if ( ! empty( $action ) && $action === 'view_log' ) {
         check_admin_referer( 'wspsc_view_log_nonce' );
-        wspsc_read_log_file();
+        wpsc_read_log_file();
 	}
 }
 
-function wpspsc_number_format_price($price)
+function wpsc_number_format_price($price)
 {
     $formatted_num = number_format($price,2,'.','');
     return $formatted_num;
 }
 
-function wspsc_strip_char_from_price_amount($price_amount)
+function wpsc_strip_char_from_price_amount($price_amount)
 {
     if(!is_numeric($price_amount)){
         $price_amount = preg_replace("/[^0-9\.]/", "",$price_amount);
@@ -127,7 +127,7 @@ function wp_cart_ngg_template_handler($arg1,$arg2)
  * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'create_cart()'
  * method to create a new.
  */
-function wpspc_insert_new_record()
+function wpsc_insert_new_record()
 {
     //First time adding to the cart
     $wspsc_cart = WPSC_Cart::get_instance();
@@ -140,14 +140,14 @@ function wpspc_insert_new_record()
  * This function is deprecated and should no longer be used. Please use the 'WPSC_Cart' class and its 'add_items()'
  * method to add items to the cart and update the cart items record in the database.
  */
-function wpspc_update_cart_items_record()
+function wpsc_update_cart_items_record()
 {
     $wspsc_cart = WPSC_Cart::get_instance();
     $items = $wspsc_cart->get_items();
     $wspsc_cart->add_items($items);
 }
 
-function wpspc_apply_dynamic_tags_on_email($text, $ipn_data, $args)
+function wpsc_apply_dynamic_tags_on_email($text, $ipn_data, $args)
 {
     $order_id = $args['order_id'];
     $purchase_amount = get_post_meta( $order_id, 'wpsc_total_amount', true );
@@ -159,7 +159,7 @@ function wpspc_apply_dynamic_tags_on_email($text, $ipn_data, $args)
     return $body;
 }
 
-function wpspc_run_activation()
+function wpsc_run_activation()
 {
     //General options
     add_option('wp_cart_title', __("Your Shopping Cart", "wordpress-simple-paypal-shopping-cart"));
@@ -231,7 +231,7 @@ function wpsc_check_and_create_thank_you_page() {
 	update_option( 'cart_return_from_paypal_url', get_permalink($post_id) );
 }
 
-function wpspsc_settings_menu_documentation_msg()
+function wpsc_settings_menu_documentation_msg()
 {
     ?>
     <div class="wpsc-grey-box">
@@ -244,7 +244,7 @@ function wpspsc_settings_menu_documentation_msg()
     <?php
 }
 
-function wpspsc_settings_menu_footer()
+function wpsc_settings_menu_footer()
 {
     ?>
     <div class="wpsc-yellow-box">
@@ -276,7 +276,7 @@ function wpsc_settings_output_sandbox_mode_msg(){
  * 
  * @return int Price in cents
  */
-function wpspsc_amount_in_cents($amount) {
+function wpsc_amount_in_cents($amount) {
     $amountFormatted = round( $amount, 2 );
 	$amountFormatted = number_format( $amountFormatted, 2 );
 
@@ -296,12 +296,12 @@ function wpspsc_amount_in_cents($amount) {
 }
 
 
-function wpspsc_is_zero_cents_currency($payment_currency){
+function wpsc_is_zero_cents_currency($payment_currency){
     $zero_cents_currencies= array( 'JPY', 'MGA', 'VND', 'KRW' ) ;
     return in_array( $payment_currency, $zero_cents_currencies ) ;
 }
 
-function wpspsc_load_stripe_lib() {
+function wpsc_load_stripe_lib() {
     //this function loads Stripe PHP SDK and ensures only once instance is loaded
     if ( ! class_exists( '\Stripe\Stripe' ) ) {
         require_once WP_CART_PATH . 'lib/stripe-gateway/init.php';        
