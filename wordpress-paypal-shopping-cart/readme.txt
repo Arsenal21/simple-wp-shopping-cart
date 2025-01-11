@@ -229,6 +229,8 @@ None
 
 = 5.1.0 =
 - This release focuses on code cleanup and optimization improvements.
+- If you see any issue with this update, please roll back to the previous version and let us know.
+- Here is a download link to the previous version: [Download Version 5.0.9](https://downloads.wordpress.org/plugin/wordpress-simple-paypal-shopping-cart.5.0.9.zip)
 - Refactored the cart class name to make it match the plugin's shortname.
 - Refactored the static JavaScript filename to match the plugin's shortname.
 - Refactored the static CSS filename to match the plugin's shortname.
