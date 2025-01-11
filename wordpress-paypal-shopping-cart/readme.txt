@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, WP Simple Shopping Cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 5.5
 Tested up to: 6.7
-Stable tag: 5.0.9
+Stable tag: 5.1.0
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -226,6 +226,12 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
+= 5.1.0 =
+- This release focuses on code cleanup and optimization improvements.
+- Refactored the cart class name to make it match the plugin's shortname.
+- Refactored the static JavaScript filename to match the plugin's shortname.
+- Refactored the static CSS filename to match the plugin's shortname.
 
 = 5.0.9 =
 - Removed the deprecated function 'wspsc_check_and_start_session'
