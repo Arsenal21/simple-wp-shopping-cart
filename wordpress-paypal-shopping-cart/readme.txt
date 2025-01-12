@@ -21,10 +21,12 @@ The plugin offers the newest/latest PayPal Commerce Platform (PPCP) checkout opt
 
 = Checkout Process Demonstration =
 It offers a simple and seamless checkout process for your customers. To see a demonstration of how the checkout process works, please refer to the following video:
+
 https://www.youtube.com/watch?v=JM8dQojDUI0
 
 = Easily Create Products =
 You will be able to create products by using shortcodes dynamically.
+
 https://www.youtube.com/watch?v=dJgGdD-tZW4
 
 If you have a responsive theme, the shopping cart's output will adapt seamlessly to ensure a mobile-friendly shopping experience.
@@ -38,7 +40,8 @@ Designed as a lightweight solution with minimal lines of code and a streamlined 
 
 WP Simple Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to allow for testing.
 
-For video tutorial, screenshots, detailed documentation, support and updates, please visit:
+= Documentation =
+For documentation, video tutorials, screenshots, support, and updates, please visit:
 
 [WP Simple Cart Documentation](https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart)
 or
