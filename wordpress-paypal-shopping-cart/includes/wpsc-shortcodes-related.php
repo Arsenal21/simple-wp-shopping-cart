@@ -43,7 +43,12 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	}
 
 	$replacement = '<div class="wp_cart_button_wrapper">';
-	$replacement .= '<form method="post" class="wp-cart-button-form" action="" style="display:inline" onsubmit="return ReadForm(this, true);" ' . apply_filters( "wspsc_add_cart_button_form_attr", "" ) . '>';
+
+	$add_cart_button_form_attr = "";
+	$add_cart_button_form_attr = apply_filters( "wspsc_add_cart_button_form_attr", $add_cart_button_form_attr ); // TODO: Old hook. Need to remove this.
+	$add_cart_button_form_attr = apply_filters( "wpsc_add_cart_button_form_attr", $add_cart_button_form_attr );
+
+	$replacement .= '<form method="post" class="wp-cart-button-form" action="" style="display:inline" onsubmit="return ReadForm(this, true);" ' . $add_cart_button_form_attr . '>';
 	$replacement .= wp_nonce_field( 'wspsc_addcart', '_wpnonce', true, false );
 	if ( ! empty( $var_output ) ) { //Show variation
 		$replacement .= '<div class="wp_cart_variation_section">' . $var_output . '</div>';
@@ -54,7 +59,11 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$replacement .= '<input type="image" src="' . esc_url_raw( $atts['button_image'] ) . '" class="wp_cart_button" alt="' . ( __( "Add to Cart", "wordpress-simple-paypal-shopping-cart" ) ) . '"/>';
 	} else if ( isset( $atts['button_text'] ) && ! empty( $atts['button_text'] ) ) {
 		//Use the custom button text specified in the shortcode
-		$replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . apply_filters( 'wspsc_add_cart_submit_button_value', esc_attr( $atts['button_text'] ), $price ) . '" />';
+		$wpsc_add_cart_submit_button_value = esc_attr( $atts['button_text'] );
+		$wpsc_add_cart_submit_button_value = apply_filters( 'wspsc_add_cart_submit_button_value', $wpsc_add_cart_submit_button_value, $price ); // TODO: Old hook. Need to remove this.
+		$wpsc_add_cart_submit_button_value = apply_filters( 'wpsc_add_cart_submit_button_value', $wpsc_add_cart_submit_button_value, $price );
+
+		$replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . $wpsc_add_cart_submit_button_value . '" />';
 	} else {
 		//Use the button text or image value from the settings
 		if ( preg_match( "/http:/", $addcart ) || preg_match( "/https:/", $addcart ) ) {
@@ -62,7 +71,11 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 			$replacement .= '<input type="image" src="' . esc_url_raw( $addcart ) . '" class="wp_cart_button" alt="' . ( __( "Add to Cart", "wordpress-simple-paypal-shopping-cart" ) ) . '"/>';
 		} else {
 			//Use plain text add to cart button
-			$replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . apply_filters( 'wspsc_add_cart_submit_button_value', esc_attr( $addcart ), $price ) . '" />';
+			$wpsc_add_cart_submit_button_value = esc_attr( $addcart );
+			$wpsc_add_cart_submit_button_value = apply_filters( 'wspsc_add_cart_submit_button_value', $wpsc_add_cart_submit_button_value, $price ); // TODO: Old hook. Need to remove this.
+			$wpsc_add_cart_submit_button_value = apply_filters( 'wpsc_add_cart_submit_button_value', $wpsc_add_cart_submit_button_value, $price );
+
+			$replacement .= '<input type="submit" class="wspsc_add_cart_submit" name="wspsc_add_cart_submit" value="' . $wpsc_add_cart_submit_button_value . '" />';
 		}
 	}
 

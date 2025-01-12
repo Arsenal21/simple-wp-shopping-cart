@@ -182,7 +182,9 @@ class WPSC_Post_Payment_Related
 		$is_html_content_type = get_option('wpsc_email_content_type') == 'html' ? true : false;
 
 		wpsc_log_payment_debug('Applying filter - wspsc_buyer_notification_email_body', true);
-		$body = apply_filters('wspsc_buyer_notification_email_body', $body, $ipn_data, $ipn_data['cart_items']);
+
+		$body = apply_filters('wspsc_buyer_notification_email_body', $body, $ipn_data, $ipn_data['cart_items']); // TODO: Old hook. Need to remove this.
+		$body = apply_filters('wpsc_buyer_notification_email_body', $body, $ipn_data, $ipn_data['cart_items']);
 
 		$buyer_email = $ipn_data['payer_email'];
 
@@ -208,7 +210,9 @@ class WPSC_Post_Payment_Related
 		$seller_email_body = wpsc_apply_dynamic_tags_on_email($seller_email_body, $ipn_data, $args);
 
 		wpsc_log_payment_debug('Applying filter - wspsc_seller_notification_email_body', true);
-		$seller_email_body = apply_filters('wspsc_seller_notification_email_body', $seller_email_body, $ipn_data, $ipn_data['cart_items']);
+
+		$seller_email_body = apply_filters('wspsc_seller_notification_email_body', $seller_email_body, $ipn_data, $ipn_data['cart_items']); // TODO: Old hook. Need to remove this.
+		$seller_email_body = apply_filters('wpsc_seller_notification_email_body', $seller_email_body, $ipn_data, $ipn_data['cart_items']);
 
 		if ( $is_html_content_type ) {
 			$seller_email_body = nl2br( $seller_email_body );

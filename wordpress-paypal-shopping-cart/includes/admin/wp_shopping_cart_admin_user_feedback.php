@@ -20,7 +20,8 @@ class WPSC_Admin_User_Feedback {
 	 */
 	public function init() {
 		add_action( 'admin_notices', array( $this, 'maybe_display' ) );
-		add_action( 'wp_ajax_wspsc_feedback_notice_dismiss', array( $this, 'feedback_notice_dismiss' ) );
+		add_action( 'wp_ajax_wspsc_feedback_notice_dismiss', array( $this, 'feedback_notice_dismiss' ) );  // TODO: Old hook. Need to remove this.
+		add_action( 'wp_ajax_wpsc_feedback_notice_dismiss', array( $this, 'feedback_notice_dismiss' ) );
 	}
 
 	/**

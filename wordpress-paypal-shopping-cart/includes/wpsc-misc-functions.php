@@ -3,7 +3,9 @@
 /* This function gets called when init is executed */
 function wp_cart_init_handler()
 {
-    $orders_menu_permission = apply_filters('wspsc_orders_menu_permission', 'manage_options');
+    $orders_menu_permission = apply_filters('wspsc_orders_menu_permission', 'manage_options'); // TODO: Old hook. Need to remove this.
+    $orders_menu_permission = apply_filters('wpsc_orders_menu_permission', 'manage_options');
+
     //Add any common init hook handing code
     if( is_admin() && current_user_can($orders_menu_permission)) //Init hook handing code for wp-admin
     {

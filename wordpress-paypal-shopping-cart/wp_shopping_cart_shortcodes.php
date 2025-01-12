@@ -108,7 +108,10 @@ function wpsc_cart_display_product_handler($atts)
     if(!empty($thumb_target) && preg_match("/http/", $thumb_target)){
         $thumbnail_code = '<a href="'.esc_url_raw($thumb_target).'"><img src="'.esc_url_raw($thumbnail).'" alt="'.esc_attr( $thumb_alt ).'"></a>';
     }
-    $thumbnail_code = apply_filters('wspsc_product_box_thumbnail_code', $thumbnail_code, $atts);
+
+    $thumbnail_code = apply_filters('wspsc_product_box_thumbnail_code', $thumbnail_code, $atts);// TODO: Old hook. Need to remove this.
+    $thumbnail_code = apply_filters('wpsc_product_box_thumbnail_code', $thumbnail_code, $atts);
+
     $currency_symbol = WP_CART_CURRENCY_SYMBOL;
     $formatted_price = print_payment_currency($price, $currency_symbol);
     $button_code = print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);

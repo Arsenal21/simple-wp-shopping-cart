@@ -223,7 +223,9 @@ class stripe_ipn_handler {
 		$is_html_content_type = get_option('wpsc_email_content_type') == 'html' ? true : false;
 
 		$this->debug_log( 'Applying filter - wspsc_buyer_notification_email_body', true );
-		$body = apply_filters( 'wspsc_buyer_notification_email_body', $body, $this->ipn_data, $cart_items );
+
+		$body = apply_filters( 'wspsc_buyer_notification_email_body', $body, $this->ipn_data, $cart_items );// TODO: Old hook. Need to remove this.
+		$body = apply_filters( 'wpsc_buyer_notification_email_body', $body, $this->ipn_data, $cart_items );
 
 		$headers = array();
 		$headers[] = 'From: ' . $from_email . "\r\n";
@@ -247,7 +249,9 @@ class stripe_ipn_handler {
 		$seller_email_body = wpsc_apply_dynamic_tags_on_email( $seller_email_body, $this->ipn_data, $args );
 
 		$this->debug_log( 'Applying filter - wspsc_seller_notification_email_body', true );
-		$seller_email_body = apply_filters( 'wspsc_seller_notification_email_body', $seller_email_body, $this->ipn_data, $cart_items );
+
+		$seller_email_body = apply_filters( 'wspsc_seller_notification_email_body', $seller_email_body, $this->ipn_data, $cart_items ); // TODO: Old hook. Need to remove this.
+		$seller_email_body = apply_filters( 'wpsc_seller_notification_email_body', $seller_email_body, $this->ipn_data, $cart_items );
 
 		if ( $is_html_content_type ) {
 			$seller_email_body = nl2br( $seller_email_body );
@@ -277,7 +281,8 @@ class stripe_ipn_handler {
 			$this->debug_log( 'Not Using the WP Affiliate Platform Plugin.', true );
 		}
 
-		do_action( 'wpspc_stripe_ipn_processed', $this->ipn_data, $this );
+		do_action( 'wpspc_stripe_ipn_processed', $this->ipn_data, $this );  // TODO: Old hook. Need to remove this.
+		do_action( 'wpsc_stripe_ipn_processed', $this->ipn_data, $this );
 
 		//Empty any incomplete old cart orders.
 		wpsc_clean_incomplete_old_cart_orders();

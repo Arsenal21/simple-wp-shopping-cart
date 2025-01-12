@@ -1,11 +1,15 @@
 <?php 
 
 if ( wp_doing_ajax() ) {
-	add_action( 'wp_ajax_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
-	add_action( 'wp_ajax_nopriv_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
+	add_action( 'wp_ajax_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );  // TODO: Old hook. Need to remove this.
+	add_action( 'wp_ajax_wpsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
+	add_action( 'wp_ajax_nopriv_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' ); // TODO: Old hook. Need to remove this.
+	add_action( 'wp_ajax_nopriv_wpsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
 
-	add_action( 'wp_ajax_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
-	add_action( 'wp_ajax_nopriv_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
+	add_action( 'wp_ajax_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );  // TODO: Old hook. Need to remove this.
+	add_action( 'wp_ajax_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
+	add_action( 'wp_ajax_nopriv_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' ); // TODO: Old hook. Need to remove this.
+	add_action( 'wp_ajax_nopriv_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
 }
 
 /**
@@ -173,7 +177,8 @@ function wpsc_stripe_create_checkout_session() {
 			);
 		}
 
-		$opts = apply_filters( 'wpspsc_stripe_sca_session_opts', $opts, $cart_id );
+		$opts = apply_filters( 'wpspsc_stripe_sca_session_opts', $opts, $cart_id );// TODO: Old hook. Need to remove this.
+		$opts = apply_filters( 'wpsc_stripe_sca_session_opts', $opts, $cart_id );
 
 		$session = \Stripe\Checkout\Session::create( $opts );
 	} catch (Exception $e) {

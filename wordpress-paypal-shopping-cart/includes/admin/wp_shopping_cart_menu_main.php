@@ -23,7 +23,8 @@ function wpsc_handle_admin_menu() {
     add_options_page(__("WP Simple Shopping Cart", "wordpress-simple-paypal-shopping-cart"), __("WP Simple Shopping Cart", "wordpress-simple-paypal-shopping-cart"), WP_CART_MANAGEMENT_PERMISSION, 'wordpress-paypal-shopping-cart', 'wpsc_settings_interface' );
     
     $menu_parent_slug = WP_CART_MAIN_MENU_SLUG;
-    do_action('wspsc_after_main_admin_menu', $menu_parent_slug);
+    do_action('wspsc_after_main_admin_menu', $menu_parent_slug);  // TODO: Old hook. Need to remove this.
+    do_action('wpsc_after_main_admin_menu', $menu_parent_slug);
 }
 
 /*

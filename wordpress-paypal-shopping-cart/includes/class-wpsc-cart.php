@@ -39,6 +39,9 @@ class WPSC_Cart {
                     $this->$property = $value;
                 }
             }
+        } else {
+			// The saved cart class object is not valid. So delete that cart and other related values.
+	        $this->delete_cart_and_related_data($this->get_cart_id());
         }
     }
 
@@ -203,6 +206,18 @@ class WPSC_Cart {
         setcookie('simple_cart_id', '', time() - 3600, '/');
         $this->set_cart_id(0);
     }
+
+	public function delete_cart_and_related_data($cart_id) {
+		// Delete the corresponding order post.
+		wp_delete_post($cart_id);
+		// Delete the cart and related data.
+		$this->clear_cart_action_msg();
+		$this->items = array();
+		$this->set_cart_id(0);
+		if (!headers_sent()){
+			setcookie("simple_cart_id", "", time() - 3600, "/");
+		}
+	}
 
     public function get_total_cart_qty() {
         $total_items = 0;
