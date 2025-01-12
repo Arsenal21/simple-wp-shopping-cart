@@ -11,15 +11,21 @@ Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling produc
 
 == Description ==
 
-The WordPress Simple Shopping Cart plugin allows you to create 'Add to Cart' buttons for your products or services on your site. This simple shopping cart plugin lets you sell products and services directly from your own WordPress site and turns your WP blog into an e-commerce site.
+The WordPress Simple Shopping Cart plugin enables you to effortlessly add 'Add to Cart' buttons for your products or services directly on your website. This lightweight plugin transforms your WordPress site into a fully functional e-commerce platform, allowing you to sell products and services with ease.
 
 With this plugin, your customers have the convenience of paying for their selected items using popular payment gateways such as PayPal and/or Stripe.
 
-It allows you to add/display the shopping cart on any post, page or sidebar easily. The shopping cart shows the user what they currently have in the cart and allows them to change quantity or remove the items. 
+You can easily display the shopping cart on any post, page, or sidebar. The cart provides users with a clear view of their selected items, allowing them to adjust quantities or remove items effortlessly.
 
-https://www.youtube.com/watch?v=dJgGdD-tZW4
+The plugin offers the newest/latest PayPal Commerce Platform (PPCP) checkout option. You can enable it in the settings menu of the plugin.
 
+= Checkout Process demonstration =
+It offers a simple and seamless checkout process for your customers. To see a demonstration of how the checkout process works, please refer to the following video:
+https://www.youtube.com/watch?v=JM8dQojDUI0
+
+= Easily Create Products =
 You will be able to create products by using shortcodes dynamically.
+https://www.youtube.com/watch?v=dJgGdD-tZW4
 
 If you have a responsive theme, the shopping cart's output will adapt seamlessly to ensure a mobile-friendly shopping experience.
 
@@ -27,13 +33,8 @@ Furthermore, this plugin provides a simple solution for selling digital products
 
 https://www.youtube.com/watch?v=gPvXac_j_lI
 
+= Engineered for a Lightweight Solution =
 Designed as a lightweight solution with minimal lines of code and a streamlined set of options, this plugin ensures optimal site performance. Moreover, it is designed to be a low maintenance solution, minimizing the likelihood of frequent site disruptions caused by upgrades. With this plugin, you can enjoy a stable and hassle-free shopping cart functionality while maintaining the overall stability of your website.
-
-It offers the newest/latest PayPal Commerce Platform (PPCP) checkout option. You can enable it in the settings menu of the plugin.
-
-The plugin also has an option to use the smart PayPal payment buttons. The following video shows a checkout demo using PayPal smart button.
-
-https://www.youtube.com/watch?v=m0yDWDmtpKI
 
 WP Simple Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to allow for testing.
 
