@@ -227,6 +227,9 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+= WIP =
+- Previously saved cart related issue fixed.
+- Hook names refactored.
 
 = 5.1.0 =
 - This release focuses on code cleanup and optimization improvements.

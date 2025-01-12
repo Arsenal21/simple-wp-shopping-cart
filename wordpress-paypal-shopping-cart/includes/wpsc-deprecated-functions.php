@@ -91,7 +91,12 @@ function print_wp_cart_button_deprecated( $content ) {
 		$pieces = explode( ':', $m );
 
 		$replacement = '<div class="wp_cart_button_wrapper">';
-		$replacement .= '<form method="post" class="wp-cart-button-form" action="" style="display:inline" onsubmit="return ReadForm(this, true);" ' . apply_filters( "wspsc_add_cart_button_form_attr", "" ) . '>';
+
+		$wpsc_add_cart_button_form_attr = '';
+		$wpsc_add_cart_button_form_attr = apply_filters( "wspsc_add_cart_button_form_attr", $wpsc_add_cart_button_form_attr ); // TODO: Old hook. Need to remove this.
+		$wpsc_add_cart_button_form_attr = apply_filters( "wpsc_add_cart_button_form_attr", $wpsc_add_cart_button_form_attr );
+
+		$replacement .= '<form method="post" class="wp-cart-button-form" action="" style="display:inline" onsubmit="return ReadForm(this, true);" ' . $wpsc_add_cart_button_form_attr . '>';
 		$replacement .= wp_nonce_field( 'wspsc_addcart', '_wpnonce', true, false ); //nonce value
 
 		if ( ! empty( $var_output ) ) {

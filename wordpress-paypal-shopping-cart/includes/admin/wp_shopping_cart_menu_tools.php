@@ -59,8 +59,10 @@ function wpsc_export_orders_data_to_csv(){
     $fh = fopen('php://output', 'w');
     
     $header_names = array("Order ID", "Transaction ID", "Date", "First Name", "Last Name", "Email", "IP Address", "Total", "Shipping", "Coupon Code", "Address", "Items Orders");
-    $header_names = apply_filters( 'wpspc_export_csv_header', $header_names );
-    
+
+    $header_names = apply_filters( 'wpspc_export_csv_header', $header_names ); // TODO: Old hook. Need to remove this.
+    $header_names = apply_filters( 'wpsc_export_csv_header', $header_names );
+
     // Start output buffering (to capture stream contents)
     ob_start();
     
@@ -93,8 +95,9 @@ function wpsc_export_orders_data_to_csv(){
 
         $fields = array($order_id, $txn_id, $order_date, $first_name, $last_name, $email, $ip_address, $total_amount, $shipping_amount, $applied_coupon, $address, $items_ordered);
 	
-	$fields = apply_filters( 'wpspc_export_csv_data', $fields, $order_id );
-	
+        $fields = apply_filters( 'wpspc_export_csv_data', $fields, $order_id ); // TODO: Old hook. Need to remove this.
+        $fields = apply_filters( 'wpsc_export_csv_data', $fields, $order_id );
+
         fputcsv($fh, $fields);
 
     }

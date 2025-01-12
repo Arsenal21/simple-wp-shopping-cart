@@ -526,9 +526,12 @@ function wp_cart_add_custom_field() {
 	}
 
 	//Trigger action hook that can be used to append more custom fields values.
-	do_action( 'wspsc_cart_custom_field_appended' );
+	do_action( 'wspsc_cart_custom_field_appended' );  // TODO: Old hook. Need to remove this.
+	do_action( 'wpsc_cart_custom_field_appended' );
 
-	$custom_field_val = apply_filters( 'wpspc_cart_custom_field_value', $custom_field_val );
+	$custom_field_val = apply_filters( 'wpspc_cart_custom_field_value', $custom_field_val ); // TODO: Old hook. Need to remove this.
+	$custom_field_val = apply_filters( 'wpsc_cart_custom_field_value', $custom_field_val );
+
 	//Save the custom field values to the order post meta.
 	update_post_meta( $cart_id, 'wpsc_cart_custom_values', $custom_field_val );
 
@@ -583,8 +586,10 @@ function cart_not_empty() {
 
 function print_payment_currency( $price, $symbol, $decimal = '.' ) {
 	$formatted_price = '';
-	$formatted_price = apply_filters( 'wspsc_print_formatted_price', $formatted_price, $price, $symbol );
-	if ( ! empty( $formatted_price ) ) {
+	$formatted_price = apply_filters( 'wspsc_print_formatted_price', $formatted_price, $price, $symbol ); // TODO: Old hook. Need to remove this.
+	$formatted_price = apply_filters( 'wpsc_print_formatted_price', $formatted_price, $price, $symbol );
+
+    if ( ! empty( $formatted_price ) ) {
 		return $formatted_price;
 	}
 	$formatted_price = $symbol . number_format( $price, 2, $decimal, ',' );
@@ -616,7 +621,8 @@ function cart_current_page_url() {
 			$pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 		}
 	}
-	$pageURL = apply_filters( 'wspsc_cart_current_page_url', $pageURL );
+	$pageURL = apply_filters( 'wspsc_cart_current_page_url', $pageURL ); // TODO: Old hook. Need to remove this.
+	$pageURL = apply_filters( 'wpsc_cart_current_page_url', $pageURL );
 	return $pageURL;
 }
 

@@ -72,8 +72,11 @@ function print_wp_shopping_cart( $args = array() ) {
 	}
 
 	$notify = WP_CART_SITE_URL . '/?simple_cart_ipn=1';
-	$notify = apply_filters( 'wspsc_paypal_ipn_notify_url', $notify );
-	$urls .= '<input type="hidden" name="notify_url" value="' . $notify . '" />';
+
+    $notify = apply_filters( 'wspsc_paypal_ipn_notify_url', $notify ); // TODO: Old hook. Need to remove this.
+	$notify = apply_filters( 'wpsc_paypal_ipn_notify_url', $notify );
+
+    $urls .= '<input type="hidden" name="notify_url" value="' . $notify . '" />';
 
 	$title = get_option( 'wp_cart_title' );
 
@@ -82,8 +85,11 @@ function print_wp_shopping_cart( $args = array() ) {
 	$output .= '<a name="wpsc_cart_anchor"></a>';
 	if ( ! get_option( 'wp_shopping_cart_image_hide' ) ) {
 		$cart_icon_img_src = WP_CART_URL . '/images/shopping_cart_icon.png';
-		$cart_icon_img_src = apply_filters( 'wspsc_cart_icon_image_src', $cart_icon_img_src );
-		$output .= "<img src='" . $cart_icon_img_src . "' class='wspsc_cart_header_image' value='" . ( __( 'Cart', 'wordpress-simple-paypal-shopping-cart' ) ) . "' alt='" . ( __( 'Cart', 'wordpress-simple-paypal-shopping-cart' ) ) . "' />";
+
+        $cart_icon_img_src = apply_filters( 'wspsc_cart_icon_image_src', $cart_icon_img_src ); // TODO: Old hook. Need to remove this.
+		$cart_icon_img_src = apply_filters( 'wpsc_cart_icon_image_src', $cart_icon_img_src );
+
+        $output .= "<img src='" . $cart_icon_img_src . "' class='wspsc_cart_header_image' value='" . ( __( 'Cart', 'wordpress-simple-paypal-shopping-cart' ) ) . "' alt='" . ( __( 'Cart', 'wordpress-simple-paypal-shopping-cart' ) ) . "' />";
 	}
 	if ( ! empty( $title ) ) {
 		$output .= '<h2 class="wpsc_cart_title">';
@@ -138,8 +144,12 @@ function print_wp_shopping_cart( $args = array() ) {
 			if ( isset( $args['show_thumbnail'] ) && ! empty( $item->get_thumbnail() ) ) {
 				$output .= '<span class="wp_cart_item_thumbnail"><img src="' . esc_url( $item->get_thumbnail() ) . '" class="wp_cart_thumb_image" alt="' . esc_attr( $item->get_name() ) . '" ></span>';
 			}
-			$item_info = apply_filters( 'wspsc_cart_item_name', '<a href="' . esc_url( $item->get_cart_link() ) . '">' . esc_attr( $item->get_name() ) . '</a>', $item );
-			$output .= '<span class="wp_cart_item_name">' . $item_info . '</span>';
+
+			$item_info = '<a href="' . esc_url( $item->get_cart_link() ) . '">' . esc_attr( $item->get_name() ) . '</a>';
+            $item_info = apply_filters( 'wspsc_cart_item_name', $item_info , $item ); // TODO: Old hook. Need to remove this.
+			$item_info = apply_filters( 'wpsc_cart_item_name', $item_info , $item );
+
+            $output .= '<span class="wp_cart_item_name">' . $item_info . '</span>';
 			$output .= '<span class="wp_cart_clear_float"></span>';
 			$output .= '</div>';
 			$output .= '</td>';
@@ -285,7 +295,8 @@ function print_wp_shopping_cart( $args = array() ) {
 			$form_target_code = 'target="_blank"';
 		}
 
-		$output = apply_filters( 'wpspsc_before_checkout_form', $output );
+		$output = apply_filters( 'wpspsc_before_checkout_form', $output ); // TODO: Old hook. Need to remove this.
+		$output = apply_filters( 'wpsc_before_checkout_form', $output );
 
 		$output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
 
@@ -306,7 +317,10 @@ function print_wp_shopping_cart( $args = array() ) {
 		$style = get_option( 'wpspc_disable_standard_checkout' ) ? 'display:none !important" data-wspsc-hidden="1' : '';
 		if ( $count ) {
 			$checkout_button_img_src = WP_CART_URL . '/images/' . ( __( 'paypal_checkout_EN.png', 'wordpress-simple-paypal-shopping-cart' ) );
-			$output .= '<input type="image" src="' . apply_filters( 'wspsc_cart_checkout_button_image_src', $checkout_button_img_src ) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" style="' . $style . '" alt="' . ( __( "Make payments with PayPal - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
+			$checkout_button_img_src = apply_filters( 'wspsc_cart_checkout_button_image_src', $checkout_button_img_src ); // TODO: Old hook. Need to remove this.
+			$checkout_button_img_src = apply_filters( 'wpsc_cart_checkout_button_image_src', $checkout_button_img_src );
+
+			$output .= '<input type="image" src="' . $checkout_button_img_src . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" style="' . $style . '" alt="' . ( __( "Make payments with PayPal - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
 		}
 
 		$output .= $urls . '
@@ -324,7 +338,9 @@ function print_wp_shopping_cart( $args = array() ) {
 		}
 		$output .= wp_cart_add_custom_field();
 
-		$extra_pp_fields = apply_filters( 'wspsc_cart_extra_paypal_fields', '' ); //Can be used to add extra PayPal hidden input fields for the cart checkout
+		$extra_pp_fields = '';
+		$extra_pp_fields = apply_filters( 'wspsc_cart_extra_paypal_fields', $extra_pp_fields ); // TODO: Old hook. Need to remove this.
+		$extra_pp_fields = apply_filters( 'wpsc_cart_extra_paypal_fields', $extra_pp_fields ); //Can be used to add extra PayPal hidden input fields for the cart checkout
 		$output .= $extra_pp_fields;
 
 		$output .= '</form>';
@@ -636,11 +652,18 @@ function print_wp_shopping_cart( $args = array() ) {
 			if ( get_option( 'wpspc_stripe_button_image_url' ) ) {
 				$stripe_checkout_button_img_src = get_option( 'wpspc_stripe_button_image_url' );
 			}
-			$output .= '<input class="wspsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . apply_filters( 'wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src ) . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" alt="' . ( __( "Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
+
+			$stripe_checkout_button_img_src = apply_filters( 'wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src );  // TODO: Old hook. Need to remove this.
+			$stripe_checkout_button_img_src = apply_filters( 'wpsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src );
+			$output .= '<input class="wspsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . $stripe_checkout_button_img_src . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" alt="' . ( __( "Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
 
 			$output .= wp_cart_add_custom_field();
-			$extra_stripe_fields = apply_filters( 'wspsc_cart_extra_stripe_fields', '' ); //Can be used to add extra PayPal hidden input fields for the cart checkout
-			$output .= $extra_stripe_fields;
+
+			$extra_stripe_fields = '';
+			$extra_stripe_fields = apply_filters( 'wspsc_cart_extra_stripe_fields', $extra_stripe_fields ); // TODO: Old hook. Need to remove this.
+			$extra_stripe_fields = apply_filters( 'wpsc_cart_extra_stripe_fields', $extra_stripe_fields ); //Can be used to add extra PayPal hidden input fields for the cart checkout
+
+            $output .= $extra_stripe_fields;
 			$output .= '<div class="wpspsc-spinner-cont" id="wpspsc_spinner_' . esc_js( $wspsc_Cart->get_cart_id() ) . '">
 						<div class="wpspsc-spinner"></div>
 					</div>';
@@ -649,7 +672,8 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</td></input>';
 	}
 	$output .= '</table></div>';
-	$output = apply_filters( 'wpspsc_after_cart_output', $output );
+	$output = apply_filters( 'wpspsc_after_cart_output', $output ); // TODO: Old hook. Need to remove this.
+	$output = apply_filters( 'wpsc_after_cart_output', $output );
 	return $output;
 }
 
