@@ -46,7 +46,7 @@ jQuery(document).ready(function(){
         jQuery(this).hide();
                 
         var payload = {
-            'action': 'wspsc_stripe_create_checkout_session'
+            'action': 'wpsc_stripe_create_checkout_session'
         };
 
         var custom_field= form.find('input[name="custom"]');					

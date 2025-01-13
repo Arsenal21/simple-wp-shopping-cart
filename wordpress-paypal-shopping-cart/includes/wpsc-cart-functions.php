@@ -554,7 +554,7 @@ function print_wp_shopping_cart( $args = array() ) {
                                 jQuery('.wpspsc-spinner-cont').css('display', 'inline-block');
                                 return actions.payment.execute().then(function (data) {
                                     jQuery.post('<?php echo get_admin_url(); ?>admin-ajax.php',
-                                        { 'action': 'wpspsc_process_pp_smart_checkout', 'wpspsc_payment_data': data })
+                                        { 'action': 'wpsc_process_pp_smart_checkout', 'wpspsc_payment_data': data })
                                         .done(function (result) {
                                             if (result.success) {
                                                 window.location.href = '<?php echo esc_js( $return_url ); ?>';

@@ -230,6 +230,8 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+= WIP =
+- Some old ajax handler hook with old plugin prefix has removed.
 
 = 5.1.1 =
 - Refactored the hook names to make it match the plugin's shortname.

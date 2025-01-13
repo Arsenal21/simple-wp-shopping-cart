@@ -27,7 +27,7 @@ class paypal_ipn_handler {
 	/*
 	 * This function gets called for both the following scenarios.
 	 * 1) Standard PayPal checkout IPN
-	 * 2) Smart checkout (from the wpspsc_process_pp_smart_checkout() function).
+	 * 2) Smart checkout (from the wpsc_process_pp_smart_checkout() function).
 	 */
 	function validate_and_dispatch_product() {
 		//Check Product Name, Price, Currency, Receiver email
