@@ -1,14 +1,10 @@
 <?php 
 
 if ( wp_doing_ajax() ) {
-	add_action( 'wp_ajax_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );  // TODO: Old hook. Need to remove this.
 	add_action( 'wp_ajax_wpsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
-	add_action( 'wp_ajax_nopriv_wpspsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' ); // TODO: Old hook. Need to remove this.
 	add_action( 'wp_ajax_nopriv_wpsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
 
-	add_action( 'wp_ajax_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );  // TODO: Old hook. Need to remove this.
 	add_action( 'wp_ajax_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
-	add_action( 'wp_ajax_nopriv_wspsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' ); // TODO: Old hook. Need to remove this.
 	add_action( 'wp_ajax_nopriv_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
 }
 
