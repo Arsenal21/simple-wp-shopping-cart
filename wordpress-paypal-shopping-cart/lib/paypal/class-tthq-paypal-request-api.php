@@ -274,20 +274,25 @@ class PayPal_Request_API {
 
 		$headers = $this->get_headers_using_bearer_token();
 
+		//The request URL.
 		$api_base_url = $this->get_api_base_url();
 		$request_url = $api_base_url . $endpoint; //Example: https://api-m.sandbox.paypal.com/v1/catalogs/products
 
 		//Add the request URL to the additional args so it can be logged (if needed).
 		$additional_args['request_url'] = $request_url;
 
-		$res = wp_remote_request(
-			$request_url,
-			array(
-				'method' => 'DELETE',
-				'headers' => $headers,
-				'body' => json_encode( $params ),
-			)
+		//Create the arguments for the request.
+		$args = array(
+			'method' => 'DELETE',
+			'headers' => $headers,
+			'body' => json_encode( $params ),
 		);
+
+		//Set the default timeout to 60 seconds.
+		$args['timeout'] = apply_filters( PayPal_Utility_Functions::hook('paypal_api_request_timeout'), 60 );
+
+		//Execute the request.
+		$res = wp_remote_request( $request_url, $args );
 
 		//Check if we need to return the body or raw response
 		if( isset($additional_args['return_raw_response']) && $additional_args['return_raw_response'] ){
