@@ -166,19 +166,24 @@ class PayPal_Request_API {
 		//$headers = $this->get_headers();//This can be used for Basic auth headers
 		$headers = $this->get_headers_using_bearer_token();
 
+		//The request URL.
 		$api_base_url = $this->get_api_base_url();
 		$request_url = $api_base_url . $endpoint; //Example: https://api-m.sandbox.paypal.com/v1/billing/plans
 
 		//Add the request URL to the additional args so it can be logged (if needed).
 		$additional_args['request_url'] = $request_url;
 
-		$res = wp_remote_get(
-			$request_url,
-			array(
-				'headers' => $headers,
-				'body' => $this->encode_params( $params ),
-			)
+		//Create the arguments for the request.
+		$args = array(
+			'headers' => $headers,
+			'body' => $this->encode_params( $params ),
 		);
+
+		//Set the default timeout to 60 seconds.
+		$args['timeout'] = apply_filters( PayPal_Utility_Functions::hook('paypal_api_request_timeout'), 60 );
+
+		//Execute the request.
+		$res = wp_remote_get( $request_url, $args );
 
 		//Check if we need to return the body or raw response
 		if( isset($additional_args['return_raw_response']) && $additional_args['return_raw_response'] ){
@@ -225,17 +230,21 @@ class PayPal_Request_API {
 		//Add the request URL to the additional args so it can be logged (if needed).
 		$additional_args['request_url'] = $request_url;
 
-		$payload = array(
+		//Create the arguments for the request.
+		$args = array(
 			'headers' => $headers,
 			'body' => json_encode( $params ),
 		);
 
+		//Set the default timeout to 60 seconds.
+		$args['timeout'] = apply_filters( PayPal_Utility_Functions::hook('paypal_api_request_timeout'), 60 );
+
 		//=== Debug purposes (Useful for PayPal Tech Support) ===
-		// PayPal_Utility_Functions::log_array( $payload, true);
+		// PayPal_Utility_Functions::log_array( $args, true);
 		//=== End of debug purposes ===
 
 		//Make the request
-		$res = wp_remote_post( $request_url, $payload );
+		$res = wp_remote_post( $request_url, $args );
 
 		//Check if we need to return the body or raw response
 		if( isset($additional_args['return_raw_response']) && $additional_args['return_raw_response'] ){
@@ -372,8 +381,8 @@ class PayPal_Request_API {
 	 * Performs a direct request to the PayPal API using URL and arguments.
 	 */
 	public static function send_request_by_url_and_args( $url, $args ) {
-
-		$args['timeout'] = 30;
+		//Set the default timeout to 60 seconds.
+		$args['timeout'] = apply_filters( PayPal_Utility_Functions::hook('paypal_api_request_timeout'), 60 );
 
 		/**
 		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
