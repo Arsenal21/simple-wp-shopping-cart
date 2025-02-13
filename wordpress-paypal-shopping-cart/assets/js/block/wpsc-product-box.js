@@ -125,21 +125,6 @@ wpsc_register_block_type(
                                             wpsc_element(
                                                 wpsc_text_control,
                                                 {
-                                                    key: "wpsc-product-box-block-text-control-general-file_url-key", // unique key.
-                                                    label: wpsc_pb_block_attrs_meta['general']['fields']['file_url'].label,
-                                                    help: wpsc_pb_block_attrs_meta['general']['fields']['file_url'].description,
-                                                    value: props.attributes['file_url'],
-                                                    __nextHasNoMarginBottom: true,
-                                                    onChange: (value) => {
-                                                        let prop_attrs = {};
-                                                        prop_attrs['file_url'] = value;
-                                                        props.setAttributes(prop_attrs);
-                                                    },
-                                                }
-                                            ),
-                                            wpsc_element(
-                                                wpsc_text_control,
-                                                {
                                                     key: "wpsc-product-box-block-text-control-general-thumbnail-key", // unique key.
                                                     label: wpsc_pb_block_attrs_meta['general']['fields']['thumbnail'].label,
                                                     help: wpsc_pb_block_attrs_meta['general']['fields']['thumbnail'].description,
@@ -178,6 +163,21 @@ wpsc_register_block_type(
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['thumb_target'] = value;
+                                                        props.setAttributes(prop_attrs);
+                                                    },
+                                                }
+                                            ),
+                                            wpsc_element(
+                                                wpsc_text_control,
+                                                {
+                                                    key: "wpsc-product-box-block-text-control-general-file_url-key", // unique key.
+                                                    label: wpsc_pb_block_attrs_meta['general']['fields']['file_url'].label,
+                                                    help: wpsc_pb_block_attrs_meta['general']['fields']['file_url'].description,
+                                                    value: props.attributes['file_url'],
+                                                    __nextHasNoMarginBottom: true,
+                                                    onChange: (value) => {
+                                                        let prop_attrs = {};
+                                                        prop_attrs['file_url'] = value;
                                                         props.setAttributes(prop_attrs);
                                                     },
                                                 }

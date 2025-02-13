@@ -235,6 +235,7 @@ None
 - Some old ajax handler hook with old plugin prefix has removed.
 - Updated the timeout value of the PayPal PPCP token creation API request to 60 seconds.
 - Added a filter hook 'wpsc_paypal_api_request_timeout' to allow customization of the PayPal PPCP API request timeout value.
+- File url option of Product Box block was repositioned.
 
 = 5.1.1 =
 - Refactored the hook names to make it match the plugin's shortname.
