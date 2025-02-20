@@ -52,6 +52,7 @@ include_once( WP_CART_PATH . 'includes/wpsc-paypal-ppcp-checkout-form-related.ph
 include_once( WP_CART_PATH . 'includes/wpsc-post-payment-related.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-cart-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-deprecated-functions.php' );
+include_once( WP_CART_PATH . 'includes/wpsc-manual-checkout-form-related.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_orders.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_main.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_tinymce.php' );
@@ -676,7 +677,8 @@ function wpsc_front_side_enqueue_scripts() {
 	
 	$is_shipping_region_enabled = empty(get_option('enable_shipping_by_region')) ? 'false' : 'true' ;
 	wp_add_inline_script("wpsc-checkout-cart-script", "const wspscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
-	
+	wp_add_inline_script("wpsc-checkout-cart-script", 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
+
 	if ($is_shipping_region_enabled) {
 		$configured_shipping_region_options  = get_option('wpsc_shipping_region_variations', array() );
 		$region_options  = array();
@@ -685,6 +687,8 @@ function wpsc_front_side_enqueue_scripts() {
 		}
 		wp_add_inline_script("wpsc-checkout-cart-script", "const wpscShippingRegionOptions = " . json_encode( $region_options ) .";" , 'before');
 	}
+
+	wp_register_script( "wpsc-checkout-manual", WP_CART_URL . "/assets/js/wpsc-checkout-manual.js", array( "wpsc-checkout-cart-script" ), WP_CART_VERSION);
 }
 
 function wpsc_plugin_install() {

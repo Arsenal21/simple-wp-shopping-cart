@@ -1,6 +1,4 @@
-/**
- * global wpsc_ajaxUrl
- */
+/* global wpsc_ajaxUrl */
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -39,5 +37,44 @@ document.addEventListener('DOMContentLoaded', function () {
             alert(error.message);
         }
     })
-    
+
+
+
+    const wpscMarkOrderConfirmedBtn = document.getElementById("wpsc-mark-order-confirm-btn");
+    wpscMarkOrderConfirmedBtn?.addEventListener('click', async function ( e ){
+        e.preventDefault();
+        if(!confirm('Do you really want to Resend Sale Notification Email?')){
+            return;
+        }
+
+        const order_id = wpscMarkOrderConfirmedBtn.getAttribute("data-order-id");
+        const nonce = wpscMarkOrderConfirmedBtn.getAttribute("data-nonce");
+
+        try {
+            const response = await fetch(wpsc_ajaxUrl, {
+                method: "post",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    action: 'wpsc_mark_order_confirm',
+                    order_id,
+                    nonce,
+                })
+            });
+
+            const result = await response.json();
+
+            if ( ! result.success){
+                throw new Error(result.data.message);
+            }
+
+            alert(result.data.message);
+
+            window.location.replace(window.location.href) // Reload current page.
+        } catch (error) {
+            console.error(error);
+            alert(error.message);
+        }
+    })
 })

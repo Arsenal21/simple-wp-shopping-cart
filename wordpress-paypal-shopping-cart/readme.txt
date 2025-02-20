@@ -237,6 +237,7 @@ None
 - Added a filter hook 'wpsc_paypal_api_request_timeout' to allow customization of the PayPal PPCP API request timeout value.
 - File url option of Product Box block was repositioned.
 - 'Resend Sale Notification Email' feature added in order details page.
+- Manual Checkout feature added.
 
 = 5.1.1 =
 - Refactored the hook names to make it match the plugin's shortname.

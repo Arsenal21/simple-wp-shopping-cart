@@ -6,6 +6,9 @@ if ( wp_doing_ajax() ) {
 
 	add_action( 'wp_ajax_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
 	add_action( 'wp_ajax_nopriv_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
+
+	add_action( 'wp_ajax_wpsc_manual_payment_checkout', 'wpsc_manual_payment_checkout' );
+	add_action( 'wp_ajax_nopriv_wpsc_manual_payment_checkout', 'wpsc_manual_payment_checkout' );
 }
 
 /**
@@ -237,3 +240,56 @@ function wpsc_process_pp_smart_checkout() {
 	}
 }
 
+function wpsc_manual_payment_checkout(){
+
+	$json = file_get_contents('php://input');
+
+	$post = json_decode($json, true);
+
+	if ( !isset($post['nonce']) || !wp_verify_nonce( $post['nonce'], 'wpsc_manual_payment_form_nonce_action') ){
+		wp_send_json_error(array(
+			"message" => __( 'Nonce verification failed!', 'wordpress-simple-paypal-shopping-cart' ),
+			"data" => $post
+		));
+	}
+
+	// Check if manual checkout is enabled or not.
+	$is_manual_checkout_enabled = get_option( 'wpsc_enable_manual_checkout' );
+	if ( empty($is_manual_checkout_enabled) ){
+		wp_send_json_error(array(
+			"message" => __( 'Manual Checkout is not enabled!', 'wordpress-simple-paypal-shopping-cart' ),
+		));
+	}
+
+	include_once( WP_CART_PATH . 'manual-checkout.php');
+
+	if ( ! WPSC_Manual_checkout::validate_checkout_form($post) ){
+		wp_send_json_error(array(
+			"message" => __( 'Checkout form validation error!', 'wordpress-simple-paypal-shopping-cart' ),
+		));
+	}
+
+	// Process and place order
+	try {
+		$wpsc_manual_checkout = new WPSC_Manual_Checkout();
+		$wpsc_manual_checkout->process_and_create_order($post);
+	} catch (\Exception $e){
+		wp_send_json_error(array(
+			"message" => $e->getMessage(),
+		));
+	}
+
+	$return_url = get_option('cart_return_from_paypal_url');
+	$return_url = add_query_arg(
+		array(
+			'order_id' => $wpsc_manual_checkout->data['post_id'],
+			'_wpnonce' => wp_create_nonce('wpsc_thank_you_nonce_action'),
+		),
+		$return_url
+	);
+
+	wp_send_json_success(array(
+		"message" => __( 'Order Placed Successfully!', 'wordpress-simple-paypal-shopping-cart' ),
+		'redirect_to' => $return_url,
+	));
+}
