@@ -96,3 +96,22 @@ i.mce-i-wp-cart-tinymce::before {
     color: #FFF;
 }
 /*----- END Addons Listing ----- */
+
+
+/* ---- Order actions */
+.wpsc-order-action-wrap{
+    margin: 6px 0;
+}
+
+.wpsc-order-action-btn{
+    margin-top: 12px;
+    display: flex !important;
+    align-items: center;
+    justify-content:center;
+    width: 100%;
+}
+
+.wpsc-order-action-btn-icon{
+    margin-right: 4px;
+}
+/* ---- End of order actions */

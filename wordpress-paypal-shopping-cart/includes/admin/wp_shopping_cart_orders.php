@@ -33,8 +33,8 @@ function wpsc_create_orders_page() {
 }
 
 function wpsc_add_meta_boxes() {
-    add_meta_box('order_review_meta_box', __("Order Review", "wordpress-simple-paypal-shopping-cart"), 'wpsc_order_review_meta_box', 'wpsc_cart_orders', 'normal', 'high'
-    );
+    add_meta_box('order_review_meta_box', __("Order Review", "wordpress-simple-paypal-shopping-cart"), 'wpsc_order_review_meta_box', 'wpsc_cart_orders', 'normal', 'high');
+    add_meta_box('order_actions_meta_box', __("Order Actions", "wordpress-simple-paypal-shopping-cart"), 'wpsc_order_actions_meta_box', 'wpsc_cart_orders', 'side', 'high');
 }
 
 function wpsc_order_review_meta_box($wpsc_cart_orders) {
@@ -162,6 +162,26 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
         do_action('wpsc_edit_order_pre_table_end', $order_id);
         ?>
     </table>
+    <?php
+}
+
+function wpsc_order_actions_meta_box( $wpsc_cart_orders ) {
+    $order_id = $wpsc_cart_orders->ID;
+    ?>
+    <div class="wpsc-order-actions">
+        <div class="wpsc-order-action-wrap">
+            <a 
+                href="#"
+                id="wpsc-resend-sale-notification-email-btn"    
+                class="button wpsc-order-action-btn"
+                data-order-id="<?php esc_attr_e($order_id) ?>"
+                data-nonce="<?php echo wp_create_nonce( "wpsc_resend_sale_notification_email" ) ?>"
+            >
+                <span class="dashicons dashicons-email wpsc-order-action-btn-icon"></span> 
+                <span><?php _e("Resend Sale Notification Email", "wordpress-simple-paypal-shopping-cart") ?></span>
+            </a>
+        </div>
+    </div>
     <?php
 }
 
