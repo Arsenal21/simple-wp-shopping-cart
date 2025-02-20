@@ -44,6 +44,7 @@ include_once( WP_CART_PATH . 'includes/wpsc-utility-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-functions.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-wpsc-persistent-msg.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-coupon.php' );
+include_once( WP_CART_PATH . 'includes/classes/class.wpsc-email-handler.php' );
 include_once( WP_CART_PATH . 'includes/class-wpsc-cart.php' );
 include_once( WP_CART_PATH . 'includes/class-wpsc-cart-item.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-checkout-ajax-handler.php' );
@@ -55,6 +56,7 @@ include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_orders.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_main.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_tinymce.php' );
 require_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_utils.php');
+require_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_admin_ajax.php');
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_discounts.php' );
 include_once( WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tools.php' );
 include_once( WP_CART_PATH . 'includes/classes/class.wpsc_blocks.php' );
@@ -641,6 +643,10 @@ function wpsc_admin_side_enqueue_scripts() {
 		wp_register_script( 'wpsc-admin', WP_CART_URL . '/lib/wpsc_admin_side.js', array( 'jquery', 'jquery-ui-datepicker' ) );
 		wp_enqueue_script( 'wpsc-admin' );
 	}
+	
+	wp_register_script( 'wpsc-admin-scripts', WP_CART_URL . '/assets/js/wpsc-admin-scripts.js', array(), WP_CART_VERSION);
+	wp_add_inline_script('wpsc-admin-scripts', 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
+	wp_enqueue_script( 'wpsc-admin-scripts' );
 }
 
 function wpsc_admin_side_styles() {
