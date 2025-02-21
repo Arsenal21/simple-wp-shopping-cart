@@ -167,17 +167,34 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
 
 function wpsc_order_actions_meta_box( $wpsc_cart_orders ) {
     $order_id = $wpsc_cart_orders->ID;
+	$order_status = get_post_meta($wpsc_cart_orders->ID, 'wpsc_order_status', true);
     ?>
     <div class="wpsc-order-actions">
+        <?php if (strtolower($order_status) != 'paid') { ?>
+            <div class="wpsc-order-action-wrap">
+                <a
+                    href="#"
+                    id="wpsc-mark-order-confirm-btn"
+                    class="button wpsc-order-action-btn"
+                    data-order-id="<?php esc_attr_e($order_id) ?>"
+                    data-nonce="<?php echo wp_create_nonce( "wpsc_mark_order_confirm" ) ?>"
+                >
+                    <span class="dashicons dashicons-yes wpsc-order-action-btn-icon"></span>
+                    <span ><?php _e("Mark This Order Confirmed", "wordpress-simple-paypal-shopping-cart") ?></span>
+                </a>
+            </div>
+        <?php } ?>
+
         <div class="wpsc-order-action-wrap">
-            <a 
+            <a
                 href="#"
-                id="wpsc-resend-sale-notification-email-btn"    
+                id="wpsc-resend-sale-notification-email-btn"
                 class="button wpsc-order-action-btn"
                 data-order-id="<?php esc_attr_e($order_id) ?>"
                 data-nonce="<?php echo wp_create_nonce( "wpsc_resend_sale_notification_email" ) ?>"
+                title="<?php _e( "Mark this order as confirmed and send purchase notification email to buyer.", "wordpress-simple-paypal-shopping-cart") ?>"
             >
-                <span class="dashicons dashicons-email wpsc-order-action-btn-icon"></span> 
+                <span class="dashicons dashicons-email wpsc-order-action-btn-icon"></span>
                 <span><?php _e("Resend Sale Notification Email", "wordpress-simple-paypal-shopping-cart") ?></span>
             </a>
         </div>
@@ -351,6 +368,7 @@ function wpsc_get_formatted_payment_gateway_name($payment_gateway){
         'paypal_ppcp' => 'PayPal PPCP',
         'paypal_standard' => 'PayPal Standard',
         'paypal_smart_checkout' => 'PayPal Smart Checkout',
+        'manual' => 'Manual Checkout',
     );
 
     if (array_key_exists($payment_gateway, $gateways)) {

@@ -23,6 +23,7 @@ class WPSC_Cart {
     public static $on_page_cart_div_ids = array();
     public $item_shipping_total = 0;
     public $sub_total = 0;
+	public $shipping_cost = 0;
     public $postage_cost = 0;
     public $tax = 0;
     public $grand_total = 0;
@@ -247,6 +248,16 @@ class WPSC_Cart {
         return wpsc_number_format_price($sub_total);
     }
 
+	/**
+	 * This includes:
+	 * - product item's shipping cost
+	 * - base shipping cost
+	 * - regional shipping cost
+	 */
+	public function get_total_shipping_cost() {
+		return $this->shipping_cost;
+	}
+
     public function get_postage_cost() {
         //This function will return the postage cost amount of the cart items after calculate_cart_totals_and_postage() is called.
         $postage_cost = $this->postage_cost;
@@ -290,6 +301,7 @@ class WPSC_Cart {
         $sub_total = 0;
         $postage_cost = 0;
         $item_total_shipping = 0;
+        $total_shipping = 0;
         $total_items = 0;
 
         foreach ( $this->get_items() as $item ) {
@@ -310,7 +322,10 @@ class WPSC_Cart {
                     $regional_shipping_amount = $region['amount'];
                 }
             }
-			$postage_cost = (float) $item_total_shipping + (float) $baseShipping + (float) $regional_shipping_amount;
+
+			$total_shipping = (float) $item_total_shipping + (float) $baseShipping + (float) $regional_shipping_amount;
+
+			$postage_cost += $total_shipping;
 		}
 
         /**
@@ -343,6 +358,7 @@ class WPSC_Cart {
         //Set the values in the class variables
         $this->sub_total = $sub_total;
         $this->item_shipping_total = $item_total_shipping;
+		$this->shipping_cost = $total_shipping;
         $this->postage_cost = $postage_cost;
         $this->tax = $tax;
         $this->grand_total = $grand_total;

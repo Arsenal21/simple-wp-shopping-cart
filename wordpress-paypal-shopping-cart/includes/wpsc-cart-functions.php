@@ -669,6 +669,11 @@ function print_wp_shopping_cart( $args = array() ) {
 					</div>';
 			$output .= '</form>';
 		}
+
+        if ( get_option( 'wpsc_enable_manual_checkout' ) ){
+            $output .= wpsc_render_manual_checkout_form();
+        }
+
 		$output .= '</td></input>';
 	}
 	$output .= '</table></div>';

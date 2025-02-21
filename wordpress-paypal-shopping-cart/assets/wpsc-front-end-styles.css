@@ -238,3 +238,54 @@ text-decoration: none;
     padding: 15px;
     border: 1px solid lightgray;
 }
+
+
+/* Manual Checkout related */
+.wpsc-manual-payment-form-instructions{
+    white-space: pre-line;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.wpsc-manual-payment-form-fields{
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    grid-template-areas:
+                        "fname lname"
+                        "email email";
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+.wpsc-manual-payment-form-fields .wpsc-manual-payment-form-field:nth-child(1){ grid-area: fname;}
+.wpsc-manual-payment-form-fields .wpsc-manual-payment-form-field:nth-child(2){ grid-area: lname;}
+.wpsc-manual-payment-form-fields .wpsc-manual-payment-form-field:nth-child(3){ grid-area: email;}
+
+.wpsc-manual-payment-address-form-fields{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    grid-template-areas:
+                        "street city"
+                        "country state"
+                        "postalcode postalcode";
+    column-gap: 10px;
+    row-gap: 10px;
+}
+.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(4){ grid-area: street;}
+.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(5){ grid-area: city;}
+.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(6){ grid-area: country;}
+.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(7){ grid-area: state;}
+.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(8){ grid-area: postalcode;}
+
+.wpsc-manual-payment-form-field input,
+.wpsc-manual-payment-form-field select {
+    width: 100%;
+}
+
+.wpsc-manual-checkout-field-error {
+    color: #cc0000;
+    font-size: smaller;
+    margin-top: 4px
+}
+
+/* End of Manual Checkout related */
