@@ -1,3 +1,5 @@
+/* global wp, wspscIsTncEnabled, wspscIsShippingRegionEnabled, wpscShippingRegionOptions*/
+
 /**
  * NOTE: The following variables will be added by a wp_add_inline_script when certain conditions are met.
  * 
@@ -7,6 +9,7 @@
  * @var {array} wpscShippingRegionOptions Available shipping region options if shipping region is enabled or empty array.
  */
 
+const { __ } = wp.i18n;
 
 var wspscPaypalStandardCheckoutForms = document.querySelectorAll('.wspsc_checkout_form_standard');
 var wspscTncCheckboxes = document.querySelectorAll('.wp_shopping_cart_tnc_input');
@@ -103,7 +106,7 @@ function wspsc_handleTncErrorMsg(tncContainer) {
 	if (tncCheckbox.checked) {
 		tncErrorDiv.innerText = "";
 	} else {
-		tncErrorDiv.innerText = wp.i18n.__("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart");
+		tncErrorDiv.innerText = __("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart");
 	}
 }
 
@@ -173,7 +176,7 @@ function wspsc_handleShippingRegionErrorMsg(shippingRegionContainer) {
 	const wpscShippingRegionInputMeta = wpscShippingRegionInputElementsMeta[wpscShippingRegionInputElement.id]
 
 	if (!wpscShippingRegionOptions.includes(wpscShippingRegionInputMeta.value)) {
-		shippingRegionErrorDiv.innerText = wp.i18n.__("You must select a shipping region before you can proceed.", "wordpress-simple-paypal-shopping-cart");
+		shippingRegionErrorDiv.innerText = __("You must select a shipping region before you can proceed.", "wordpress-simple-paypal-shopping-cart");
 	} else {
 		shippingRegionErrorDiv.innerText = "";
 	}

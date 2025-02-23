@@ -12,13 +12,14 @@ function wpsc_render_manual_checkout_form() {
 	$output .= '<div class="wpsc-manual-checkout-section">';
 	$output .= '<div class="wpsc-manual-payment-form-wrap">';
 	$output .= '<form class="wpsc-manual-payment-form" style="display: none">';
-
 	$manual_checkout_form_instruction = get_option( 'wpsc_manual_checkout_form_instruction' , '');
 	if (!empty($manual_checkout_form_instruction)){
 		$output .= '<div class="wpsc-manual-payment-form-instructions">' . wp_kses_post($manual_checkout_form_instruction) . '</div>';
 	}
 
 	$output .= '<div class="wpsc-manual-payment-form-fields">';
+
+	$output .= '<div class="wpsc-manual-payment-form-basic-fields">';
 
 	$output .= '<div class="wpsc-manual-payment-form-field">';
 	$output .= '<label class="wpsc-manual-payment-form-label">'. __('First Name','wordpress-simple-paypal-shopping-cart') . '<br>';
@@ -38,10 +39,12 @@ function wpsc_render_manual_checkout_form() {
 	$output .= '</label>';
 	$output .= '</div>';
 
-	$output .= '</div>'; // end of 'wpsc-manual-payment-form-fields'
+	$output .= '</div>'; // end of 'wpsc-manual-payment-form-basic-fields'
 
 	if ( !$is_all_cart_items_digital ) {
-	    $output .= '<div class="wpsc-manual-payment-address-form-fields">';
+	    $output .= '<div class="wpsc-manual-payment-address-section-label">'. __('Shipping Address', 'wordpress-simple-paypal-shopping-cart') .'</div>';
+
+	    $output .= '<div class="wpsc-manual-payment-form-address-fields">';
 
 		$output .= '<div class="wpsc-manual-payment-form-field">';
 		$output .= '<label class="wpsc-manual-payment-form-label">' . __( 'Street Address', 'wordpress-simple-paypal-shopping-cart' ) . '<br>';
@@ -79,17 +82,24 @@ function wpsc_render_manual_checkout_form() {
 		$output .= '</div>'; // enf of 'wpsc-manual-payment-address-form-fields'
 	}
 
+	$output .= '</div>'; // enf of 'wpsc-manual-payment-form-fields'
+
 	$output .= wp_nonce_field('wpsc_manual_payment_form_nonce_action', 'wpsc_manual_payment_form_nonce');
     $output .= '<input type="hidden" name="wpsc_manual_payment_form_card_id" value="'.esc_attr($cart_id).'" />';
 
-	$output .= '<p class="submit">';
+	$output .= '<p class="submit wpsc-manual-payment-form-submit-section">';
 	$output .= '<input type="submit" class="wpsc-manual-payment-form-submit" value="'. __('Place Order','wordpress-simple-paypal-shopping-cart') .'" />';
+	$output .= '<input type="reset" class="wpsc-manual-payment-form-cancel" value="'. __('Cancel','wordpress-simple-paypal-shopping-cart') .'" />';
 	$output .= '</p>';
 
+	$output .= '<div class="wpsc-manual-payment-form-loader"></div>';
+
 	$output .= '</form>';
+
 	$output .= '</div>'; // end of 'wpsc-manual-payment-form-wrap'
 
-	$output .= '<button  class="wpsc-manual-payment-proceed-to-checkout-btn" >'. get_option( 'wpsc_manual_checkout_btn_text' , '') .'</button>';
+	$output .= '<button type="button" class="wpsc-manual-payment-proceed-to-checkout-btn" >'. get_option( 'wpsc_manual_checkout_btn_text' , '') .'</button>';
+
 	$output .= '</div>'; // end of 'wpsc-manual-checkout-section'
 
 	return $output;
