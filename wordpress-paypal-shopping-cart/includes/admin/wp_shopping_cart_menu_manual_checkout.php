@@ -14,7 +14,7 @@ function show_wp_cart_manual_checkout_settings_page() {
 
 		$enable_manual_checkout = filter_input( INPUT_POST, 'wpsc_enable_manual_checkout', FILTER_SANITIZE_NUMBER_INT );
 		$manual_checkout_form_instruction = isset($_POST['wpsc_manual_checkout_form_instruction']) ? wp_kses_post($_POST['wpsc_manual_checkout_form_instruction']) : '';
-		$manual_checkout_btn_text = isset($_POST['wpsc_manual_checkout_btn_text']) && !empty(trim($_POST['wpsc_manual_checkout_btn_text'])) ? sanitize_text_field($_POST['wpsc_manual_checkout_btn_text']) : __("Proceed to Checkout", "wordpress-simple-paypal-shopping-cart");
+		$manual_checkout_btn_text = isset($_POST['wpsc_manual_checkout_btn_text']) && !empty(trim($_POST['wpsc_manual_checkout_btn_text'])) ? sanitize_text_field($_POST['wpsc_manual_checkout_btn_text']) : __("Proceed to Manual Checkout", "wordpress-simple-paypal-shopping-cart");
 
         $send_buyer_payment_instruction_email = filter_input( INPUT_POST, 'wpsc_send_buyer_payment_instruction_email', FILTER_SANITIZE_NUMBER_INT );
 		$buyer_payment_instruction_email_subject = isset($_POST['wpsc_buyer_payment_instruction_email_subject']) ? stripslashes(sanitize_text_field($_POST['wpsc_buyer_payment_instruction_email_subject'])) : '';
@@ -46,29 +46,32 @@ function show_wp_cart_manual_checkout_settings_page() {
 	$send_buyer_payment_instruction_email = get_option( 'wpsc_send_buyer_payment_instruction_email' ) ? 'checked="checked"' : '';
     $buyer_payment_instruction_email_subject = get_option( 'wpsc_buyer_payment_instruction_email_subject' , '');
     if (empty($buyer_payment_instruction_email_subject)){
-	    $buyer_payment_instruction_email_subject = "Manual Checkout Payment Instruction";
+	    $buyer_payment_instruction_email_subject = "Payment Instructions for Your Order";
     }
 
     $buyer_payment_instruction_email_body = get_option( 'wpsc_buyer_payment_instruction_email_body' , '');
     if (empty($buyer_payment_instruction_email_body)){
-	    $buyer_payment_instruction_email_body = "Dear Customer\n".
-	                                      "\nThis mail is to give you instruction of payment.\n".
-	                                      "\nPlease send amount of {purchase_amt} to this bank account: XXXX-XXXX-XXXX-XXXX.\n".
-	                                      "\n\nThanks"; // TODO: Need to fix this text
+	    $buyer_payment_instruction_email_body = "Dear {first_name}\n".
+	                                      "\nThank you for your purchase. Please follow the instructions below to complete your payment.\n".
+	                                      "\nKindly transfer the amount of {purchase_amt} to the following bank account:".
+                                          "\nAccount Number: XXXX-XXXX-XXXX-XXXX\n".
+                                          "\nOnce the payment is made, please let me know.\n".
+	                                      "\nThanks";
     }
 
 	$send_manual_checkout_notification_email_to_seller = get_option( 'wpsc_send_seller_manual_checkout_notification_email' ) ? 'checked="checked"' : '';
 	$seller_manual_checkout_notification_email_subject = get_option( 'wpsc_seller_manual_checkout_notification_email_subject' , '');
 	if (empty($seller_manual_checkout_notification_email_subject)){
-		$seller_manual_checkout_notification_email_subject = "Manual Checkout Payment Notification";
+		$seller_manual_checkout_notification_email_subject = "New Manual Checkout Sale Notification";
 	}
 
 	$seller_manual_checkout_notification_email_body = get_option( 'wpsc_seller_manual_checkout_notification_email_body' , '');
 	if (empty($seller_manual_checkout_notification_email_body)){
 		$seller_manual_checkout_notification_email_body = "Dear Seller\n".
-		                                  "\nThere is a new sale via manual checkout.\n".
+		                                  "\nA new sale has been completed via manual checkout.".
 		                                  "\nTransaction ID: {transaction_id}\n".
-		                                  "\n\nThanks"; // TODO: Need to fix this text
+                                          "\nPlease review the order details in your dashboard.\n".
+		                                  "\nThanks"; // TODO: Need to fix this text
 	}
 
 	$wpsc_email_content_type = get_option('wpsc_email_content_type');
@@ -85,7 +88,8 @@ function show_wp_cart_manual_checkout_settings_page() {
             <h3 class="hndle"><?php _e( "Manual Checkout Settings", "wordpress-simple-paypal-shopping-cart" ); ?></h3>
             <div class="inside">
                 <p>
-		            <?php _e("Need to add a description here", "wordpress-simple-paypal-shopping-cart") ?>
+		            <?php _e("For instructions on enabling Manual Checkout, please refer to ", "wordpress-simple-paypal-shopping-cart") ?>
+                    <?php echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-manual-offline-checkout" target="_blank">' . __("this documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.'; ?>
                 </p>
                 <table class="form-table">
                     <tr valign="top">
@@ -94,8 +98,7 @@ function show_wp_cart_manual_checkout_settings_page() {
                             <input type="checkbox" name="wpsc_enable_manual_checkout" value="1" <?php esc_attr_e($enable_manual_checkout); ?> />
                             <p class="description">
                                 <?php
-									_e( "To learn how to enable Manual Checkout, please refer to ", "wordpress-simple-paypal-shopping-cart" );
-									echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . __( "the documentation", "wordpress-simple-paypal-shopping-cart" ) . '</a>.';
+									_e( "Select this option to enable manual or offline checkout in the cart.", "wordpress-simple-paypal-shopping-cart" );
                                 ?>
                             </p>
                         </td>
@@ -103,16 +106,16 @@ function show_wp_cart_manual_checkout_settings_page() {
                     <tr valign="top">
                         <th scope="row"><?php _e( "Manual Checkout Button Text", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td>
-                            <input type="text" name="wpsc_manual_checkout_btn_text" value="<?php esc_attr_e($manual_checkout_btn_text); ?>"/>
+                            <input type="text" name="wpsc_manual_checkout_btn_text" value="<?php esc_attr_e($manual_checkout_btn_text); ?>" size="50" />
                             <p class="description">
                                 <?php
-									_e( "Default is 'Proceed to Checkout'", "wordpress-simple-paypal-shopping-cart" );
+									_e( "Customize the manual checkout button text in the cart. The default text is 'Proceed to Manual Checkout'.", "wordpress-simple-paypal-shopping-cart" );
                                 ?>
                             </p>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e( "Manual Checkout Instruction on Checkout Form", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th scope="row"><?php _e( "Manual Checkout Instructions on Checkout Form", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td>
                             <?php
 //                            add_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
@@ -131,19 +134,19 @@ function show_wp_cart_manual_checkout_settings_page() {
                             ?>
 
                             <p class="description">
-                                <?php _e( "Add manual payment instruction for customer. This will be rendered above payment form", "wordpress-simple-paypal-shopping-cart" );?>
+                                <?php _e( "Add manual checkout instructions here to display them above the form.", "wordpress-simple-paypal-shopping-cart" );?>
                             </p>
                         </td>
                     </tr>
 
                     <tr valign="top">
-                        <th scope="row"><?php _e( "Send Manual Checkout Payment Instruction Email to Buyer", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th scope="row"><?php _e( "Send Manual Checkout Payment Instructions to Buyer via Email", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td>
                             <input type="checkbox"
                                    name="wpsc_send_buyer_payment_instruction_email"
                                    value="1" <?php esc_attr_e($send_buyer_payment_instruction_email); ?>
                             />
-                            <p class="description"><?php _e( "If checked the plugin will send an email to the buyer after manual checkout", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+                            <p class="description"><?php _e( "If enabled, the plugin will send an email to the buyer after completing a manual checkout.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
                         </td>
                     </tr>
 
@@ -156,7 +159,7 @@ function show_wp_cart_manual_checkout_settings_page() {
                                    size="50"
                             />
                             <br/>
-                            <p class="description"><?php _e( "This is the subject of the email that will be sent to the buyer.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+                            <p class="description"><?php _e( "This is the subject line for the email sent to the buyer.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
                         </td>
                     </tr>
 
@@ -183,13 +186,13 @@ function show_wp_cart_manual_checkout_settings_page() {
                     </tr>
 
                     <tr valign="top">
-                        <th scope="row"><?php _e( "Send Manual Checkout Payment Notification Email to Seller", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th scope="row"><?php _e( "Send Manual Checkout Notification to Seller via Email", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td>
                             <input type="checkbox"
                                    name="wpsc_send_seller_manual_checkout_notification_email"
                                    value="1" <?php esc_attr_e($send_manual_checkout_notification_email_to_seller); ?>
                             />
-                            <p class="description"><?php _e( "If checked the plugin will send an email to the seller after manual checkout", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+                            <p class="description"><?php _e( "If checked, the plugin will send an email to the seller after a manual checkout.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
                         </td>
                     </tr>
 
@@ -202,7 +205,7 @@ function show_wp_cart_manual_checkout_settings_page() {
                                    size="50"
                             />
                             <br/>
-                            <p class="description"><?php _e( "This is the subject of the email that will be sent to the buyer.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+                            <p class="description"><?php _e( "This is the subject of the email that will be sent to the seller.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
                         </td>
                     </tr>
 

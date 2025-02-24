@@ -71,7 +71,7 @@ function wpsc_log_payment_debug( $message, $success, $end = false ) {
 	}
 
 	// Timestamp
-	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . $message . "\n";
+	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS: ' : 'FAILURE: ' ) . $message . "\n";
 	if ( $end ) {
 		$text .= "\n------------------------------------------------------------------\n\n";
 	}
@@ -98,7 +98,7 @@ function wpsc_log_debug_array( $array_to_write, $success, $end = false ) {
 		//Debug is not enabled.
 		return;
 	}
-	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . "\n";
+	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS: ' : 'FAILURE: ' ) . "\n";
 	ob_start();
 	print_r( $array_to_write );
 	$var = ob_get_contents();
@@ -132,7 +132,7 @@ function wspsc_log_debug_array($array_to_write, $success, $end = false) {
 function wpsc_reset_logfile() {
 	$log_reset = true;
 	$logfile   = wpsc_get_log_file();
-	$text      = '[' . date( 'm/d/Y g:i A' ) . '] - SUCCESS : Log file reset';
+	$text      = '[' . date( 'm/d/Y g:i A' ) . '] - SUCCESS: Log file reset';
 	$text      .= "\n------------------------------------------------------------------\n\n";
 	$fp        = fopen( $logfile, 'w' );
 	if ( $fp != false ) {

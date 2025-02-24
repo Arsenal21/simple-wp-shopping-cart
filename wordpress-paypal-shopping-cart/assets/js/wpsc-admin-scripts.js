@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const wpscMarkOrderConfirmedBtn = document.getElementById("wpsc-mark-order-confirm-btn");
     wpscMarkOrderConfirmedBtn?.addEventListener('click', async function ( e ){
         e.preventDefault();
-        if(!confirm(__("Do you really want to mark this order as 'Confirmed'?", "wordpress-simple-paypal-shopping-cart"))){
+        if(!confirm(__("Are you sure you want to mark this order as 'Confirmed'? This indicates that payment has been received for the order.", "wordpress-simple-paypal-shopping-cart"))){
             return;
         }
 

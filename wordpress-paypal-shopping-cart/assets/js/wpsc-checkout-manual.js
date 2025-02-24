@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Initiate WpscManualCheckout class.
         const manualCheckout = new WpscManualCheckout(paymentForm);
 
-        // If visitor click the 'Proceed to Checkout' button, then show the manual checkout form.
+        // If visitor click the 'Proceed to Manual Checkout' button, then show the manual checkout form.
         proceedBtn.addEventListener('click', () => {
             if (manualCheckout.toggleForm()) {
                 proceedBtn.style.display = 'none';

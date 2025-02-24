@@ -65,7 +65,7 @@ class WPSC_Admin_Ajax {
 		}
 
 		wp_send_json_success(array(
-			"message" => __( 'The order is confirmed, and a notification email has been sent to the buyer successfully!', 'wordpress-simple-paypal-shopping-cart' ),
+			"message" => __( 'The order has been confirmed, and a notification email has been successfully sent to the buyer!', 'wordpress-simple-paypal-shopping-cart' ),
 		));
 	}
 

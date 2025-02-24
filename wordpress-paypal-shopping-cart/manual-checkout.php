@@ -79,7 +79,7 @@ class WPSC_Manual_Checkout {
 		$this->data['first_name'] = sanitize_text_field($post_data['first_name']);
 		$this->data['last_name'] = sanitize_text_field($post_data['last_name']);
 		$this->data['buyer_email'] = sanitize_email($post_data['email']);
-		$this->data['txn_id'] = uniqid('manual_', true);
+		$this->data['txn_id'] = uniqid('manual_');
 		$this->data['payment_amount'] = $cart_obj->get_grand_total_formatted();
 
 		$this->data['ip_address'] = $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
