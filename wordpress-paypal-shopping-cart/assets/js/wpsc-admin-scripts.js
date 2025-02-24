@@ -1,11 +1,11 @@
-/* global wpsc_ajaxUrl */
+/* global wpsc_ajaxUrl, wp */
 
 document.addEventListener('DOMContentLoaded', function () {
-
+    const {__} = wp.i18n;
     const wpscResendEmailBtn = document.getElementById("wpsc-resend-sale-notification-email-btn");
     wpscResendEmailBtn?.addEventListener('click', async function ( e ){
         e.preventDefault();
-        if(!confirm('Do you really want to Resend Sale Notification Email?')){
+        if(!confirm(__('Do you really want to resend sale notification email?', 'wordpress-simple-paypal-shopping-cart'))){
             return;
         }
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const result = await response.json();
 
-            if ( ! result.success){
+            if ( ! result.success ){
                 throw new Error(result.data.message);
             }
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const wpscMarkOrderConfirmedBtn = document.getElementById("wpsc-mark-order-confirm-btn");
     wpscMarkOrderConfirmedBtn?.addEventListener('click', async function ( e ){
         e.preventDefault();
-        if(!confirm('Do you really want to Resend Sale Notification Email?')){
+        if(!confirm(__("Do you really want to mark this order as 'Confirmed'?", "wordpress-simple-paypal-shopping-cart"))){
             return;
         }
 

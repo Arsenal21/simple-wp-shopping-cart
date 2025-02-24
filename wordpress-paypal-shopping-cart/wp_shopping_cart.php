@@ -645,7 +645,7 @@ function wpsc_admin_side_enqueue_scripts() {
 		wp_enqueue_script( 'wpsc-admin' );
 	}
 	
-	wp_register_script( 'wpsc-admin-scripts', WP_CART_URL . '/assets/js/wpsc-admin-scripts.js', array(), WP_CART_VERSION);
+	wp_register_script( 'wpsc-admin-scripts', WP_CART_URL . '/assets/js/wpsc-admin-scripts.js', array('wp-i18n'), WP_CART_VERSION);
 	wp_add_inline_script('wpsc-admin-scripts', 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
 	wp_enqueue_script( 'wpsc-admin-scripts' );
 }

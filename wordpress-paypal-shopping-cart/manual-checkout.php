@@ -28,9 +28,7 @@ class WPSC_Manual_Checkout {
 
 		//Check if cart items are empty
 		if(empty($cart_items)){
-			wp_send_json_error(array(
-				"message" => __( 'No cart items found. Cannot place this order!', 'wordpress-simple-paypal-shopping-cart' ),
-			));
+			throw new \Exception(__( 'No cart items found. Cannot place this order!', 'wordpress-simple-paypal-shopping-cart' ));
 		}
 
 		// Process payment data.
@@ -89,17 +87,23 @@ class WPSC_Manual_Checkout {
 			$this->data['ip_address'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		}
 
-		$address = $post_data['address'];
-		$street = isset($address['street']) ? $address['street'] : '';
-		$city = isset($address['city']) ? $address['city'] : '';
-		$country = isset($address['country']) ? wpsc_get_country_name_by_country_code($address['country']) : '';
-		$state = isset($address['state']) ? $address['state'] : '';
-		$postal_code = isset($address['postal_code']) ? $address['postal_code'] : '';
+		$this->data['address'] = '';
 
-		// Get full address.
-		$this->data['address'] = implode(", ", array(
-			$street , $city , $state , $postal_code , $country
-		));
+		if (isset($post_data['address']) && is_array($post_data['address'])){
+			// Sanitize all address fields.
+			$address = array_map('sanitize_text_field', $post_data['address']);
+
+			$street = isset($address['street']) ? $address['street'] : '';
+			$city = isset($address['city']) ? $address['city'] : '';
+			$country = isset($address['country']) ? wpsc_get_country_name_by_country_code($address['country']) : '';
+			$state = isset($address['state']) ? $address['state'] : '';
+			$postal_code = isset($address['postal_code']) ? $address['postal_code'] : '';
+
+			$address_fields = array_filter(array( $street , $city , $state , $postal_code , $country )); // Removes empty fields
+
+			// Get full address.
+			$this->data['address'] = implode(", ", $address_fields);
+		}
 
 		$this->data['billing_address'] = ''; // TODO
 		$this->data['phone'] = '';
@@ -112,9 +116,15 @@ class WPSC_Manual_Checkout {
 
 		$currency_symbol = get_option( 'cart_currency_symbol' );
 
-		$this->data['shipping_region'] = $cart_obj->get_selected_shipping_region();
+		$this->data['shipping_region'] = '';
+		$selected_shipping_region = check_shipping_region_str($cart_obj->get_selected_shipping_region());
+		if ($selected_shipping_region) {
+			$this->data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+		}
+
 		$this->data['product_details'] = '';
 
+		$item_counter = 1;
 		if ($cart_items) {
 			foreach ( $cart_items as $item ) {
 				if ($item_counter != 1) {

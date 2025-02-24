@@ -36,7 +36,7 @@ function show_wp_cart_manual_checkout_settings_page() {
 		update_option( 'wpsc_seller_manual_checkout_notification_email_subject', $seller_manual_checkout_notification_email_subject );
 		update_option( 'wpsc_seller_manual_checkout_notification_email_body', $seller_manual_checkout_notification_email_body );
 
-		echo '<div id="message" class="updated fade"><p><b>' . __("Manual Checkout Settings Updated!", "wordpress-simple-paypal-shopping-cart") . '</b></p></div>';
+		echo '<div id="message" class="updated fade"><p>' . __("Manual Checkout Settings Updated!", "wordpress-simple-paypal-shopping-cart") . '</p></div>';
 	}
 
 	$enable_manual_checkout = get_option( 'wpsc_enable_manual_checkout' ) ? 'checked="checked"' : '';
