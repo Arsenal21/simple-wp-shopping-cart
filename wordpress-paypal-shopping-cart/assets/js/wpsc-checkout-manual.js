@@ -1,55 +1,86 @@
 /* global wpsc_ajaxUrl */
 
-document.addEventListener('DOMContentLoaded', function (){
+document.addEventListener('DOMContentLoaded', function () {
     const wpscManualCheckoutProceedBtns = document.querySelectorAll('.wpsc-manual-payment-proceed-to-checkout-btn');
 
-    wpscManualCheckoutProceedBtns.forEach(function (proceedButton){
-        proceedButton.addEventListener('click', function (e){
-            const proceedToManualCheckoutBtn = e.target
-            const paymentFormWrap = wspsc_getClosestElement( proceedToManualCheckoutBtn , '.wpsc-manual-payment-form-wrap');
+    wpscManualCheckoutProceedBtns?.forEach(function (proceedBtn) {
 
-            const paymentForm = paymentFormWrap?.querySelector('.wpsc-manual-payment-form');
+        const paymentFormWrap = wspsc_getClosestElement(proceedBtn, '.wpsc-manual-payment-form-wrap');
+        const paymentForm = paymentFormWrap?.querySelector('.wpsc-manual-payment-form');
 
-            const isPaymentFormVisible = wpscToggleManualCheckoutForm(paymentForm);
+        // Initiate WpscManualCheckout class.
+        const manualCheckout = new WpscManualCheckout(paymentForm);
 
-            if (isPaymentFormVisible){
-                paymentForm.addEventListener('submit', wpscManualCheckoutFormSubmitHandler)
-                proceedToManualCheckoutBtn.style.display = 'none';
-            } else {
-                paymentForm.removeEventListener('submit', wpscManualCheckoutFormSubmitHandler);
-                proceedToManualCheckoutBtn.style.display = 'inline';
+        // If visitor click the 'Proceed to Checkout' button, then show the manual checkout form.
+        proceedBtn.addEventListener('click', () => {
+            if (manualCheckout.toggleForm()) {
+                proceedBtn.style.display = 'none';
             }
         })
+
+        // If visitor click the 'Cancel' button of checkout form, then reset and hide the form.
+        paymentForm?.addEventListener('reset', () => {
+            manualCheckout.toggleForm();
+            proceedBtn.style.display = 'inline';
+        })
+
+        paymentForm.querySelector('.wpsc-manual-payment-form-submit')?.addEventListener('click', function (e){
+            // Emitting custom event for addons.
+            document.dispatchEvent( new CustomEvent('wpsc-manual-checkout-submit-button-clicked', {
+                detail: {
+                    paymentForm,
+                    paymentFormButtonEvent: e
+                }
+            }));
+        })
+
     })
 
+})
 
-    async function wpscManualCheckoutFormSubmitHandler(e){
+class WpscManualCheckout {
+
+    validationRules = {
+        'input.wpsc-manual-payment-form-fname': 'required',
+        'input.wpsc-manual-payment-form-email': 'email',
+        'input.wpsc-manual-payment-form-street': 'required',
+        'input.wpsc-manual-payment-form-city': 'required',
+        'input.wpsc-manual-payment-form-state': 'required',
+    };
+
+    constructor(paymentForm) {
+        this.paymentForm = paymentForm;
+    }
+
+    onSubmit = async (e) => {
         e.preventDefault();
+
         const paymentForm = e.currentTarget;
         const formData = new FormData(paymentForm);
 
         let isValidationSuccess = true;
 
         // Validate Manual Checkout Form
-        if(! wpsc_validatePaymentFormFields(paymentForm) ){
+        if (!this.validateForm(paymentForm)) {
             isValidationSuccess = false;
         }
 
         // Validate Terms and conditions
-        if(! wspsc_validateTnc(paymentForm) ){
+        if (!wspsc_validateTnc(paymentForm)) {
             isValidationSuccess = false;
         }
 
         // Validate Shipping Region
-        if(! wspsc_validateShippingRegion(paymentForm) ){
+        if (!wspsc_validateShippingRegion(paymentForm)) {
             isValidationSuccess = false;
         }
 
-        if ( ! isValidationSuccess ){
-            // There is validation errors, don't continue payment processing.
+        // Check if there is any validation error,
+        if (!isValidationSuccess){
             return;
         }
 
+        // Get checkout form input values.
         const payload = JSON.stringify({
             nonce: formData.get('wpsc_manual_payment_form_nonce'),
             first_name: formData.get('wpsc_manual_payment_form_fname'),
@@ -66,8 +97,10 @@ document.addEventListener('DOMContentLoaded', function (){
 
         const ajaxUrl = wpsc_ajaxUrl + '?action=wpsc_manual_payment_checkout';
 
+        this.toggleLoading(); // Turn on loading animation.
+
         try {
-            const response = await fetch( ajaxUrl, {
+            const response = await fetch(ajaxUrl, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,50 +114,58 @@ document.addEventListener('DOMContentLoaded', function (){
                 throw new Error(result.data.message);
             }
 
-            alert(result.data.message)
+            this.toggleForm();
 
-            if (result.data.redirect_to){
-                window.location.href = result.data.redirect_to;
+            // alert(result.data.message)
+            console.log(result.data.message);
+
+            if (result.data.redirect_to) {
+                window.location.href = result.data.redirect_to; // Redirect to target url.
+            } else {
+                window.location.replace(window.location.href); // Reload current page without history.
             }
 
         } catch (error) {
             console.log(error);
             alert(error.message);
+            this.toggleLoading(); // Turn off loading animation.
         }
 
     }
 
-    function wpscToggleManualCheckoutForm(paymentForm){
-        if ( paymentForm.style.display !== 'none' ) {
-            paymentForm.style.display = 'none';
+    toggleForm = () => {
+        if (this.paymentForm.style.display !== 'none') {
+            this.paymentForm.style.display = 'none';
+            this.paymentForm.removeEventListener('submit', this.onSubmit);
             return false;
         }
 
-        paymentForm.style.display = 'block';
+        this.paymentForm.style.display = 'block';
+        this.paymentForm.addEventListener('submit', this.onSubmit);
         return true;
     }
 
-    function wpsc_validatePaymentFormFields(paymentForm){
-        let isValidationSuccess = true;
+    toggleLoading = () => {
+        this.paymentForm.classList.toggle('loading');
+    }
+
+    /**
+     * Validation checkout form.
+     */
+    validateForm = (paymentForm) => {
+        let isSuccess = true;
 
         const fields = paymentForm.querySelector('.wpsc-manual-payment-form-fields');
 
-        const fieldValidationRules = {
-            'input.wpsc-manual-payment-form-fname': 'required',
-            'input.wpsc-manual-payment-form-email': 'email',
-            'input.wpsc-manual-payment-form-street': 'required',
-            'input.wpsc-manual-payment-form-city': 'required',
-            'input.wpsc-manual-payment-form-state': 'required',
-        }
-
         // Adding 'change' event listener to payment form field.
         // Here, instead of attaching event listeners to every individual input elements, we are utilizing javascript 'event delegation' feature.
-        fields.addEventListener('change', function(e){
+        fields.addEventListener('change', (e) => {
             const field = e.target;
 
-            for (const [fieldSelector, fieldRule] of Object.entries(fieldValidationRules)) {
-                if (field.matches(fieldSelector) && !wpsc_validate(field, fieldRule)){
-                    isValidationSuccess = false;
+            // Validate each of the form fields using specified roles for them.
+            for (const [fieldSelector, fieldRule] of Object.entries(this.validationRules)) {
+                if (field.matches(fieldSelector) && !this.validateField(field, fieldRule)) {
+                    isSuccess = false;
                 }
             }
         })
@@ -132,43 +173,49 @@ document.addEventListener('DOMContentLoaded', function (){
         // Trigger a 'change' event initially after form submission.
         // This helps to validate the form if user directly clicks the submit button without touching any field.
         fields.querySelectorAll('input,select')?.forEach(function (field) {
-            field.dispatchEvent(new Event("change", {bubbles: true} ));
+            field.dispatchEvent(new Event("change", {bubbles: true}));
         })
 
-        return isValidationSuccess;
+        return isSuccess;
     }
 
-    function wpsc_validate(field, rule){
+    /**
+     * Validation form fields for specific rule.
+     */
+    validateField(field, rule) {
         const fieldContainer = field.parentElement;
 
-        // first remove existing error div if exists.
+        // First remove existing error if exists.
         fieldContainer.querySelector('.wpsc-manual-checkout-field-error')?.remove();
 
-        const fieldValue = field.value.trim();
+        const fieldValue = field.value.trim(); // Make sure input value does not consist only white spaces.
+
         let isError = false;
         let message = '';
 
-        switch (rule){
+        switch (rule) {
             case 'required':
                 isError = fieldValue === '';
-                message = 'This field is required';
+                message = __("This field is required", "wordpress-simple-paypal-shopping-cart");
                 break;
             case 'email':
                 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 isError = !emailRegex.test(fieldValue);
-                message = 'The email address is not valid';
+                message = __("The email address is not valid", "wordpress-simple-paypal-shopping-cart");
                 break;
         }
 
-        if (isError){
+        // If error found, then create new error div element and attach that to target field.
+        if (isError) {
             const errorMsg = document.createElement('div');
             errorMsg.className = 'wpsc-manual-checkout-field-error';
             errorMsg.textContent = message;
             fieldContainer.appendChild(errorMsg);
+
             return false;
         }
 
         return true;
     }
 
-})
+}

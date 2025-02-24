@@ -241,12 +241,17 @@ text-decoration: none;
 
 
 /* Manual Checkout related */
+.wpsc-manual-payment-form{
+    position: relative;
+}
+
 .wpsc-manual-payment-form-instructions{
     white-space: pre-line;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
 }
-.wpsc-manual-payment-form-fields{
+
+.wpsc-manual-payment-form-basic-fields{
     display: grid;
     grid-template-columns: repeat(2, min-content);
     grid-template-areas:
@@ -256,11 +261,11 @@ text-decoration: none;
     row-gap: 10px;
 }
 
-.wpsc-manual-payment-form-fields .wpsc-manual-payment-form-field:nth-child(1){ grid-area: fname;}
-.wpsc-manual-payment-form-fields .wpsc-manual-payment-form-field:nth-child(2){ grid-area: lname;}
-.wpsc-manual-payment-form-fields .wpsc-manual-payment-form-field:nth-child(3){ grid-area: email;}
+.wpsc-manual-payment-form-basic-fields div:nth-child(1){ grid-area: fname;}
+.wpsc-manual-payment-form-basic-fields div:nth-child(2){ grid-area: lname;}
+.wpsc-manual-payment-form-basic-fields div:nth-child(3){ grid-area: email;}
 
-.wpsc-manual-payment-address-form-fields{
+.wpsc-manual-payment-form-address-fields{
     margin-top: 10px;
     display: grid;
     grid-template-columns: repeat(2, min-content);
@@ -271,15 +276,29 @@ text-decoration: none;
     column-gap: 10px;
     row-gap: 10px;
 }
-.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(4){ grid-area: street;}
-.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(5){ grid-area: city;}
-.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(6){ grid-area: country;}
-.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(7){ grid-area: state;}
-.wpsc-manual-payment-address-form-fields .wpsc-manual-payment-form-field:nth-child(8){ grid-area: postalcode;}
+
+.wpsc-manual-payment-form-address-fields div:nth-child(1){ grid-area: street;}
+.wpsc-manual-payment-form-address-fields div:nth-child(2){ grid-area: city;}
+.wpsc-manual-payment-form-address-fields div:nth-child(3){ grid-area: country;}
+.wpsc-manual-payment-form-address-fields div:nth-child(4){ grid-area: state;}
+.wpsc-manual-payment-form-address-fields div:nth-child(5){ grid-area: postalcode;}
+
+.wpsc-manual-payment-address-section-label{
+    font-size: larger;
+    margin: 16px 0 12px;
+}
 
 .wpsc-manual-payment-form-field input,
 .wpsc-manual-payment-form-field select {
     width: 100%;
+}
+
+.wpsc-manual-payment-form-submit-section{
+    margin-top: 24px;
+}
+
+.wpsc-manual-payment-form-cancel{
+    margin-left: 8px !important;
 }
 
 .wpsc-manual-checkout-field-error {
@@ -288,4 +307,37 @@ text-decoration: none;
     margin-top: 4px
 }
 
+.wpsc-manual-payment-form-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*background-color: rgba(255, 255, 255, 0.705);*/
+    backdrop-filter: blur(2px);
+    visibility: hidden;
+    transition: opacity 500ms, visibility 500ms;
+}
+
+.wpsc-manual-payment-form-loader::after {
+    content: '';
+    box-sizing: border-box;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 5px solid #ccc;
+    border-top-color: #0070ba;
+    animation: wpspsc-spinner .6s linear infinite;
+}
+@keyframes wpspsc-spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+.wpsc-manual-payment-form.loading .wpsc-manual-payment-form-loader{
+    visibility: visible !important;
+}
 /* End of Manual Checkout related */
