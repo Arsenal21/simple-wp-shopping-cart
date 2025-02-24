@@ -1,8 +1,6 @@
 <?php
 
-
 class WPSC_Email_Handler {
-
 
     public static function process_order_data_for_email( $order_id ){
         $post_obj = get_post($order_id);
@@ -17,7 +15,7 @@ class WPSC_Email_Handler {
             "transaction_id" => get_post_meta($order_id, 'wpsc_txn_id', true),
             "order_id" => $order_id,
             "purchase_amt" => get_post_meta($order_id, 'wpsc_total_amount', true),
-            "purchase_date" => $post_date, // TODO: Need to decide which date to use
+            "purchase_date" => $post_date, // The date when order was placed by customer.
             "coupon_code" => get_post_meta($order_id, 'wpsc_applied_coupon', true),
         );
     }
@@ -25,82 +23,85 @@ class WPSC_Email_Handler {
     public static function apply_dynamic_tags($text, $data){
         $tags = array_map('WPSC_Email_Handler::create_tags', array_keys($data));
         
-        $vals = array_values($data);
+        $values = array_values($data);
         
-        return stripslashes(str_replace($tags, $vals, $text));
+        return stripslashes(str_replace($tags, $values, $text));
     }
 
     public static function create_tags($key){
         return '{'. $key .'}';
     }
 
-    public static function send_purchase_notification_email_to_boyer($order_id){
+    public static function is_html_content_type() {
+	    return get_option('wpsc_email_content_type') == 'html';
+    }
+
+    public static function get_from_email() {
+	    return get_option( 'wpspc_buyer_from_email' );
+    }
+
+    public static function send_buyer_sale_notification_email($order_id){
         $wpsc_cart = WPSC_Cart::get_instance();
         $wpsc_cart->set_cart_id($order_id);
         $cart_items = $wpsc_cart->get_items();
         
         $order_data = WPSC_Email_Handler::process_order_data_for_email($order_id);
         
-        $from_email = get_option( 'wpspc_buyer_from_email' );
-        $subject = get_option( 'wpspc_buyer_email_subj' );
+        $subject = get_option( 'wpspc_buyer_email_subj', '' );
         $subject = WPSC_Email_Handler::apply_dynamic_tags( $subject, $order_data );
         
-        $body = get_option( 'wpspc_buyer_email_body' );
-        $args['email_body'] = $body;
+        $body = get_option( 'wpspc_buyer_email_body', '' );
         $body = WPSC_Email_Handler::apply_dynamic_tags( $body, $order_data );
-        
-        $is_html_content_type = get_option('wpsc_email_content_type') == 'html' ? true : false;
-        
+
         wpsc_log_payment_debug( 'Applying filter - wpsc_buyer_notification_email_body', true );
         $body = apply_filters( 'wpsc_buyer_notification_email_body', $body, $order_data, $cart_items );
         
         $headers = array();
-        $headers[] = 'From: ' . $from_email . "\r\n";
-        if ( $is_html_content_type ) {
+        $headers[] = 'From: ' . self::get_from_email() . "\r\n";
+        if ( self::is_html_content_type() ) {
             $headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
             $body = nl2br( $body );
         }
-        $buyer_email = $order_data['payer_email'];
+
+        $buyer_email = isset($order_data['payer_email']) ? sanitize_email($order_data['payer_email']) : '';
         if ( is_email( $buyer_email ) ) {
 			wp_mail( $buyer_email, $subject, $body, $headers );
-			wpsc_log_payment_debug( 'Product Email successfully sent to ' . $buyer_email, true );
+			wpsc_log_payment_debug( 'Sale Notification Email successfully sent to ' . $buyer_email, true );
 			update_post_meta( $order_id, 'wpsc_buyer_email_sent', 'Email sent to: ' . $buyer_email );
         } else {
 			wpsc_log_payment_debug( 'Email could not be sent to: '. $buyer_email, false );
+            throw new \Exception(sprintf(__('Invalid email address: %s. Email could not be sent!', 'wordpress-simple-paypal-shopping-cart' ), $buyer_email));
         }
     }
 
 	public static function send_manual_checkout_notification_emails( $order_id ) {
 		$order_data = WPSC_Email_Handler::process_order_data_for_email($order_id);
 
-		$is_html_content_type = get_option('wpsc_email_content_type') == 'html';
-
-		$from_email = get_option( 'wpspc_buyer_from_email' );
+		$buyer_email = isset($order_data['payer_email']) ? sanitize_email($order_data['payer_email']) : '';
 
 		$send_buyer_payment_instruction_email = get_option( 'wpsc_send_buyer_payment_instruction_email' );
 		if ( !empty( $send_buyer_payment_instruction_email ) ) {
 
-			$subject = get_option( 'wpsc_buyer_payment_instruction_email_subject' );
+			$subject = get_option( 'wpsc_buyer_payment_instruction_email_subject', '' );
 			$subject = WPSC_Email_Handler::apply_dynamic_tags( $subject, $order_data );
 
-			$body = get_option( 'wpsc_buyer_payment_instruction_email_body' );
+			$body = get_option( 'wpsc_buyer_payment_instruction_email_body', '' );
 			$body = WPSC_Email_Handler::apply_dynamic_tags( $body, $order_data );
 			// wpsc_log_payment_debug($body, true);
 
 			$headers = array();
-			$headers[] = 'From: ' . $from_email . "\r\n";
-			if ( $is_html_content_type ) {
+			$headers[] = 'From: ' . self::get_from_email() . "\r\n";
+			if ( self::is_html_content_type() ) {
 				$headers = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
 				$body = nl2br( $body );
 			}
 
-			$buyer_email = $order_data['payer_email'];
 			if ( is_email( $buyer_email ) ) {
 				wp_mail( $buyer_email, $subject, $body, $headers );
-				wpsc_log_payment_debug( 'Payment Instruction Email successfully sent to ' . $buyer_email, true );
+				wpsc_log_payment_debug( 'Payment Instruction Email successfully sent to: ' . $buyer_email, true );
 				update_post_meta( $order_id, 'wpsc_buyer_email_sent', 'Email sent to: ' . $buyer_email );
 			} else {
-				wpsc_log_payment_debug( 'Email could not be sent to: '. $buyer_email, false );
+				wpsc_log_payment_debug( 'Payment Instruction Email could not be sent to: '. $buyer_email, false );
 			}
 		}
 
@@ -108,24 +109,24 @@ class WPSC_Email_Handler {
         if ( !empty($send_manual_checkout_notification_email_to_seller) ){
 			$notify_email = get_option( 'wpspc_notify_email_address' );
 
-			$seller_email_subject = get_option( 'wpsc_seller_manual_checkout_notification_email_subject' );
+			$seller_email_subject = get_option( 'wpsc_seller_manual_checkout_notification_email_subject', '' );
 			$seller_email_subject = WPSC_Email_Handler::apply_dynamic_tags( $seller_email_subject, $order_data );
 
-			$seller_email_body = get_option( 'wpsc_seller_manual_checkout_notification_email_body' );
+			$seller_email_body = get_option( 'wpsc_seller_manual_checkout_notification_email_body', '' );
 			$seller_email_body = WPSC_Email_Handler::apply_dynamic_tags( $seller_email_body, $order_data );
 
 	        $headers = array();
-	        $headers[] = 'From: ' . $from_email . "\r\n";
-			if ( $is_html_content_type ) {
+	        $headers[] = 'From: ' . self::get_from_email() . "\r\n";
+			if ( self::is_html_content_type() ) {
 				$headers[] = 'Content-Type: text/html; charset="' . get_bloginfo( 'charset' ) . '"';
 				$seller_email_body = nl2br( $seller_email_body );
 			}
 
 			if ( is_email( $notify_email ) ) {
 				wp_mail( $notify_email, $seller_email_subject, $seller_email_body, $headers );
-				wpsc_log_payment_debug( 'Notify Email successfully sent to ' . $notify_email, true );
+				wpsc_log_payment_debug( 'Manual Checkout seller notification email successfully sent to: ' . $notify_email, true );
 			} else {
-				wpsc_log_payment_debug( 'Email could not be sent to: '. $buyer_email, false );
+				wpsc_log_payment_debug( 'Manual Checkout seller notification email could not be sent to: '. $buyer_email, false );
 			}
 		}
 	}

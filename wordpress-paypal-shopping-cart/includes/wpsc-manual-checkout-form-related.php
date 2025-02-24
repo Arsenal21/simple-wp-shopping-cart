@@ -79,10 +79,10 @@ function wpsc_render_manual_checkout_form() {
 		$output .= '</label>';
 		$output .= '</div>';
 
-		$output .= '</div>'; // enf of 'wpsc-manual-payment-address-form-fields'
+		$output .= '</div>'; // end of 'wpsc-manual-payment-address-form-fields'
 	}
 
-	$output .= '</div>'; // enf of 'wpsc-manual-payment-form-fields'
+	$output .= '</div>'; // end of 'wpsc-manual-payment-form-fields'
 
 	$output .= wp_nonce_field('wpsc_manual_payment_form_nonce_action', 'wpsc_manual_payment_form_nonce');
     $output .= '<input type="hidden" name="wpsc_manual_payment_form_card_id" value="'.esc_attr($cart_id).'" />';

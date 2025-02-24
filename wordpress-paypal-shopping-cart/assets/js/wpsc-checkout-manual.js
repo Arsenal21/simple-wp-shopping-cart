@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const paymentFormWrap = wspsc_getClosestElement(proceedBtn, '.wpsc-manual-payment-form-wrap');
         const paymentForm = paymentFormWrap?.querySelector('.wpsc-manual-payment-form');
+        const paymentFormSubmitBtn = paymentForm?.querySelector('.wpsc-manual-payment-form-submit');
 
         // Initiate WpscManualCheckout class.
         const manualCheckout = new WpscManualCheckout(paymentForm);
@@ -24,16 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             proceedBtn.style.display = 'inline';
         })
 
-        paymentForm.querySelector('.wpsc-manual-payment-form-submit')?.addEventListener('click', function (e){
-            // Emitting custom event for addons.
-            document.dispatchEvent( new CustomEvent('wpsc-manual-checkout-submit-button-clicked', {
-                detail: {
-                    paymentForm,
-                    paymentFormButtonEvent: e
-                }
-            }));
-        })
-
+        paymentFormSubmitBtn?.addEventListener('click', manualCheckout.onClick);
     })
 
 })
@@ -52,6 +44,22 @@ class WpscManualCheckout {
         this.paymentForm = paymentForm;
     }
 
+    /**
+     * Runs when the checkout form submit button is clicked.
+     */
+    onClick = (e) => {
+        // Triggering a custom event. Can be useful for addons.
+        document.dispatchEvent( new CustomEvent('wpsc-manual-checkout-submit-button-clicked', {
+            detail: {
+                paymentForm: this.paymentForm,
+                paymentFormButtonEvent: e
+            }
+        }));
+    }
+
+    /**
+     * Runs when the checkout form gets submitted.
+     */
     onSubmit = async (e) => {
         e.preventDefault();
 

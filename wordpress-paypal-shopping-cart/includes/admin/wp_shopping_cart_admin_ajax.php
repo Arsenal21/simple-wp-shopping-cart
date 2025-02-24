@@ -24,7 +24,7 @@ class WPSC_Admin_Ajax {
 
         try {
             // Send buyer email address.
-            WPSC_Email_Handler::send_purchase_notification_email_to_boyer($order_id);
+            WPSC_Email_Handler::send_buyer_sale_notification_email($order_id);
 
         } catch (\Exception $e) {
             wp_send_json_error(array(
@@ -56,7 +56,7 @@ class WPSC_Admin_Ajax {
 			update_post_meta($order_id, 'wpsc_order_status', 'Paid');
 
 			// Send buyer email address.
-			WPSC_Email_Handler::send_purchase_notification_email_to_boyer($order_id);
+			WPSC_Email_Handler::send_buyer_sale_notification_email($order_id);
 
 		} catch (\Exception $e) {
 			wp_send_json_error(array(
@@ -65,7 +65,7 @@ class WPSC_Admin_Ajax {
 		}
 
 		wp_send_json_success(array(
-			"message" => __( 'Notification emails sent successfully!', 'wordpress-simple-paypal-shopping-cart' ),
+			"message" => __( 'The order is confirmed, and a notification email has been sent to the buyer successfully!', 'wordpress-simple-paypal-shopping-cart' ),
 		));
 	}
 
