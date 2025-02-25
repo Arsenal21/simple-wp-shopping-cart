@@ -307,13 +307,13 @@ function wpsc_populate_order_columns($column, $post_id) {
         echo esc_attr($total_amount);
     } else if ('wpsc_order_status' == $column) {
         $status = get_post_meta($post_id, 'wpsc_order_status', true);
-        echo '<div style="padding-top: 2px;">';
         if (strtolower($status) != 'paid'){
+            echo '<div style="padding-top: 2px;">';
             echo '<span style="background-color: #FFFFE0; padding: 8px 10px; border-radius: 4px;">'. esc_attr($status) .'</span>';
+            echo '</div>';
         } else {
             echo esc_attr($status);
         }
-        echo '</div>';
     }
 }
 
