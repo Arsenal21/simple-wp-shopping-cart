@@ -107,7 +107,9 @@ class WPSC_Email_Handler {
 
 		$send_manual_checkout_notification_email_to_seller = get_option('wpsc_send_seller_manual_checkout_notification_email');
         if ( !empty($send_manual_checkout_notification_email_to_seller) ){
-			$notify_email = get_option( 'wpspc_notify_email_address' );
+            // If the manual checkout notify email is empty, then use the notify email address configured from the 'Email Settings' manu.
+            $default_notify_email = get_option( 'wpspc_notify_email_address' );
+			$notify_email = get_option( 'wpsc_seller_manual_checkout_notification_email_address', $default_notify_email );
 
 			$seller_email_subject = get_option( 'wpsc_seller_manual_checkout_notification_email_subject', '' );
 			$seller_email_subject = WPSC_Email_Handler::apply_dynamic_tags( $seller_email_subject, $order_data );

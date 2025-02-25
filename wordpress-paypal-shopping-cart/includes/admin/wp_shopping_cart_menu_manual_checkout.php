@@ -21,6 +21,7 @@ function show_wp_cart_manual_checkout_settings_page() {
 		$buyer_payment_instruction_email_body = isset($_POST['wpsc_buyer_payment_instruction_email_body']) ? stripslashes(wp_kses_post($_POST['wpsc_buyer_payment_instruction_email_body'])) : '';
 
 		$send_manual_checkout_notification_email_to_seller = filter_input( INPUT_POST, 'wpsc_send_seller_manual_checkout_notification_email', FILTER_SANITIZE_NUMBER_INT );
+		$seller_manual_checkout_notification_email_address = isset($_POST['wpsc_seller_manual_checkout_notification_email_address']) ? sanitize_email($_POST['wpsc_seller_manual_checkout_notification_email_address']) : '';
 		$seller_manual_checkout_notification_email_subject = isset($_POST['wpsc_seller_manual_checkout_notification_email_subject']) ? stripslashes(sanitize_text_field($_POST['wpsc_seller_manual_checkout_notification_email_subject'])) : '';
 		$seller_manual_checkout_notification_email_body = isset($_POST['wpsc_seller_manual_checkout_notification_email_body']) ? stripslashes(wp_kses_post($_POST['wpsc_seller_manual_checkout_notification_email_body'])) : '';
 
@@ -33,6 +34,7 @@ function show_wp_cart_manual_checkout_settings_page() {
 		update_option( 'wpsc_buyer_payment_instruction_email_body', $buyer_payment_instruction_email_body );
 
 		update_option( 'wpsc_send_seller_manual_checkout_notification_email', $send_manual_checkout_notification_email_to_seller );
+		update_option( 'wpsc_seller_manual_checkout_notification_email_address', $seller_manual_checkout_notification_email_address );
 		update_option( 'wpsc_seller_manual_checkout_notification_email_subject', $seller_manual_checkout_notification_email_subject );
 		update_option( 'wpsc_seller_manual_checkout_notification_email_body', $seller_manual_checkout_notification_email_body );
 
@@ -60,6 +62,7 @@ function show_wp_cart_manual_checkout_settings_page() {
     }
 
 	$send_manual_checkout_notification_email_to_seller = get_option( 'wpsc_send_seller_manual_checkout_notification_email' ) ? 'checked="checked"' : '';
+	$seller_manual_checkout_notification_email_address = get_option( 'wpsc_seller_manual_checkout_notification_email_address', '');
 	$seller_manual_checkout_notification_email_subject = get_option( 'wpsc_seller_manual_checkout_notification_email_subject' , '');
 	if (empty($seller_manual_checkout_notification_email_subject)){
 		$seller_manual_checkout_notification_email_subject = "New Manual Checkout Sale Notification";
@@ -197,11 +200,24 @@ function show_wp_cart_manual_checkout_settings_page() {
                     </tr>
 
                     <tr valign="top">
+                        <th scope="row"><?php _e( "Notification Email Address", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <td>
+                            <input type="text"
+                                   name="wpsc_seller_manual_checkout_notification_email_address"
+                                   value="<?php esc_attr_e( $seller_manual_checkout_notification_email_address ); ?>"
+                                   size="50"
+                            />
+                            <br/>
+                            <p class="description"><?php _e( "The email address to send manual checkout notification to. If left empty, the email address from 'Email Settings' menu will be used.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
                         <th scope="row"><?php _e( "Notification Email Subject", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td>
                             <input type="text"
                                    name="wpsc_seller_manual_checkout_notification_email_subject"
-                                   value="<?php echo esc_attr( $seller_manual_checkout_notification_email_subject ); ?>"
+                                   value="<?php esc_attr_e( $seller_manual_checkout_notification_email_subject ); ?>"
                                    size="50"
                             />
                             <br/>
