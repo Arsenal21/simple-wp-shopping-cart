@@ -52,6 +52,7 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
     $billing_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_billing_address', true);
     $phone = get_post_meta($wpsc_cart_orders->ID, 'wpspsc_phone', true);
     $email_sent_value = get_post_meta($wpsc_cart_orders->ID, 'wpsc_buyer_email_sent', true);
+	$order_status = get_post_meta($wpsc_cart_orders->ID, 'wpsc_order_status', true);
 
     $email_sent_field_msg = "No";
     if (!empty($email_sent_value)) {
@@ -65,7 +66,12 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
     if (empty($tax_amount)){
 	    $tax_amount = "0.00"; // Show default 0.00 for backward compatibility.
     }
-
+	if ( strtolower($order_status) != 'paid'){
+		?>
+        <div class="wpsc-yellow-box">
+			<?php echo sprintf(__("NOTE: The current status of this order is '%s'", "wordpress-simple-paypal-shopping-cart"), $order_status) ?>
+        </div>
+	<?php }
     ?>
     <table class="widefat" style="border: none;">
         <tr>
@@ -301,7 +307,13 @@ function wpsc_populate_order_columns($column, $post_id) {
         echo esc_attr($total_amount);
     } else if ('wpsc_order_status' == $column) {
         $status = get_post_meta($post_id, 'wpsc_order_status', true);
-        echo esc_attr($status);
+        if (strtolower($status) != 'paid'){
+            echo '<div style="padding-top: 2px;">';
+            echo '<span style="background-color: #FFFFE0; padding: 8px 10px; border-radius: 4px;">'. esc_attr($status) .'</span>';
+            echo '</div>';
+        } else {
+            echo esc_attr($status);
+        }
     }
 }
 
