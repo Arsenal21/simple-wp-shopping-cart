@@ -69,7 +69,7 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
 	if ( strtolower($order_status) != 'paid'){
 		?>
         <div class="wpsc-yellow-box">
-			<?php echo sprintf(__("NOTE: The current status of this order is '%s'", "wordpress-simple-paypal-shopping-cart"), $order_status) ?>
+			<?php echo sprintf(__("Payment for this order has not been received yet. The current status of this order is: %s", "wordpress-simple-paypal-shopping-cart"), $order_status) ?>
         </div>
 	<?php }
     ?>
@@ -186,7 +186,7 @@ function wpsc_order_actions_meta_box( $wpsc_cart_orders ) {
                     data-nonce="<?php echo wp_create_nonce( "wpsc_mark_order_confirm" ) ?>"
                 >
                     <span class="dashicons dashicons-yes wpsc-order-action-btn-icon"></span>
-                    <span ><?php _e("Mark This Order Confirmed", "wordpress-simple-paypal-shopping-cart") ?></span>
+                    <span ><?php _e("Mark This Order as Paid", "wordpress-simple-paypal-shopping-cart") ?></span>
                 </a>
             </div>
         <?php } ?>
@@ -198,7 +198,7 @@ function wpsc_order_actions_meta_box( $wpsc_cart_orders ) {
                 class="button wpsc-order-action-btn"
                 data-order-id="<?php esc_attr_e($order_id) ?>"
                 data-nonce="<?php echo wp_create_nonce( "wpsc_resend_sale_notification_email" ) ?>"
-                title="<?php _e( "Mark this order as confirmed and send purchase notification email to buyer.", "wordpress-simple-paypal-shopping-cart") ?>"
+                title="<?php _e( "Mark this order as paid and send purchase notification email to buyer.", "wordpress-simple-paypal-shopping-cart") ?>"
             >
                 <span class="dashicons dashicons-email wpsc-order-action-btn-icon"></span>
                 <span><?php _e("Resend Sale Notification Email", "wordpress-simple-paypal-shopping-cart") ?></span>
@@ -308,8 +308,8 @@ function wpsc_populate_order_columns($column, $post_id) {
     } else if ('wpsc_order_status' == $column) {
         $status = get_post_meta($post_id, 'wpsc_order_status', true);
         if (strtolower($status) != 'paid'){
-            echo '<div style="padding-top: 2px;">';
-            echo '<span style="background-color: #FFFFE0; padding: 8px 10px; border-radius: 4px;">'. esc_attr($status) .'</span>';
+            echo '<div style="margin-top: 5px;">';
+            echo '<span style="background-color: #FFFFE0; padding: 5px 10px; border-radius: 4px; border: 1px solid #E6DB55;">'. esc_attr($status) .'</span>';
             echo '</div>';
         } else {
             echo esc_attr($status);

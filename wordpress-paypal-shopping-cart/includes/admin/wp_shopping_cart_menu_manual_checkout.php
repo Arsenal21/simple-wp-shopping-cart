@@ -200,7 +200,7 @@ function show_wp_cart_manual_checkout_settings_page() {
                     </tr>
 
                     <tr valign="top">
-                        <th scope="row"><?php _e( "Notification Email Address", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th scope="row"><?php _e( "Manual Checkout Notification Email Address", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td>
                             <input type="text"
                                    name="wpsc_seller_manual_checkout_notification_email_address"
@@ -208,7 +208,7 @@ function show_wp_cart_manual_checkout_settings_page() {
                                    size="50"
                             />
                             <br/>
-                            <p class="description"><?php _e( "The email address to send manual checkout notification to. If left empty, the email address from 'Email Settings' menu will be used.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
+                            <p class="description"><?php _e( "The email address for receiving manual checkout notifications. If left empty, the email address from the 'Email Settings' menu will be used.", "wordpress-simple-paypal-shopping-cart" ); ?></p>
                         </td>
                     </tr>
 
