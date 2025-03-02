@@ -2,9 +2,9 @@
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, WP Simple Shopping Cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
-Requires at least: 5.5
+Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 5.1.1
+Stable tag: 5.1.2
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -66,6 +66,7 @@ or
 * Ability to offer the Stripe checkout option. Your customers can conveniently make credit card payments through the secure Stripe payment gateway.
 * You can use Stripe testmode to do testing if needed (before going live).
 * The Stripe checkout will display payment method options based on what you, as the merchant, have enabled in your Stripe account.
+* You can offer a manual/offline payment option using the Manual Checkout feature.
 * Ability to display the order summary on the 'Thank You' page. Refer to [this documentation](https://www.tipsandtricks-hq.com/ecommerce/displaying-order-summary-on-the-thank-you-page) for more details.
 * The orders menu will show you all the orders that you have received from your site.
 * Ability to configure an email that will get sent to your buyers after they purchase your product.
@@ -231,8 +232,8 @@ None
 
 == Changelog ==
 
-= WIP =
-- Added Manual/offline Checkout feature.
+= 5.1.2 =
+- Added Manual/offline Checkout feature. [view documentation](https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-manual-offline-checkout)
 - Old/unused ajax handler hook using the old plugin prefix has been removed.
 - Updated the timeout value of the PayPal PPCP token creation API request to 60 seconds.
 - Added a filter hook 'wpsc_paypal_api_request_timeout' to allow customization of the PayPal PPCP API request timeout value.
