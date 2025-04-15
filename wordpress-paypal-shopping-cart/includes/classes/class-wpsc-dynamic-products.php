@@ -40,8 +40,7 @@ class WPSC_Dynamic_Products {
 			return;
 		}
 
-		// Use hashed product name as key.
-		$product_key = md5( stripslashes( sanitize_text_field( $product_name ) ) );
+		$product_key = self::generate_product_key($product_name);
 
 		if (empty($this->products[$product_key])){
 			$this->products[$product_key] = array();
@@ -68,6 +67,13 @@ class WPSC_Dynamic_Products {
 		$product_data = $this->get($product_name);
 
 		return isset($product_data[$product_param]) ? $product_data[$product_param] : null;
+	}
+
+	/**
+	 * Use hashed product name as key.
+	 */
+	public static function generate_product_key($product_name){
+		return md5( stripslashes( sanitize_text_field( $product_name ) ) );
 	}
 
 	private function save() {
