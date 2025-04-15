@@ -232,6 +232,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Updated the German language file. Thanks to Roland Stumpp for submitting the updated file.
+
 = 5.1.2 =
 - Added Manual/offline Checkout feature. [view documentation](https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-manual-offline-checkout)
 - Old/unused ajax handler hook using the old plugin prefix has been removed.

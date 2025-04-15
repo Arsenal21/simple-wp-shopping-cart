@@ -2,849 +2,3027 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wordpress-simple-paypal-shopping-cart v2.8.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-08 15:16+0000\n"
-"PO-Revision-Date: 2017-12-08 18:32+0000\n"
+"POT-Creation-Date: 2025-04-14 21:27+0200\n"
+"PO-Revision-Date: 2025-04-14 21:33+0200\n"
 "Last-Translator: Oliver <oliver.juwig@der-kristall.de>\n"
 "Language-Team: German\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-SearchPath-0: ..\n"
-"Language: de-DE\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
-"X-Generator: Loco - https://localise.biz/"
 
-#: wp_shopping_cart.php:190
-msgid "Error! Your session is out of sync. Please reset your session."
+#: ../assets/js/wpsc-admin-scripts.js:8
+msgid "Do you really want to resend sale notification email?"
 msgstr ""
+"Möchten Sie die E-Mail mit der Verkaufsbenachrichtigung wirklich erneut "
+"senden?"
 
-#: wp_shopping_cart_discounts_menu.php:52 wp_shopping_cart_settings.php:189 
-#: wp_shopping_cart_settings.php:430
+#: ../assets/js/wpsc-admin-scripts.js:46
 msgid ""
-"For more information, updates, detailed documentation and video tutorial, "
-"please visit:"
+"Are you sure you want to mark this order as 'Paid'? This indicates that "
+"payment has been received for the order."
 msgstr ""
+"Möchten Sie diese Bestellung wirklich als „Bezahlt“ markieren? Dies zeigt "
+"an, dass die Zahlung für die Bestellung eingegangen ist."
 
-#: wp_shopping_cart_discounts_menu.php:53 wp_shopping_cart_settings.php:190 
-#: wp_shopping_cart_settings.php:431
-msgid "WP Simple Cart Homepage"
+#: ../assets/js/wpsc-cart-script.js:109
+msgid "You must accept the terms before you can proceed."
+msgstr "Sie müssen die Bedingungen akzeptieren, bevor Sie fortfahren können."
+
+#: ../assets/js/wpsc-cart-script.js:179
+msgid "You must select a shipping region before you can proceed."
+msgstr "Sie müssen eine Versandregion auswählen, bevor Sie fortfahren können."
+
+#: ../assets/js/wpsc-checkout-manual.js:207
+msgid "This field is required"
+msgstr "Bezeichnung der Gebühr benötigt"
+
+#: ../assets/js/wpsc-checkout-manual.js:212
+msgid "The email address is not valid"
+msgstr "Diese E-Mail Adresse ist nicht gültig"
+
+#: ../includes/admin/wp_shopping_cart_admin_ajax.php:14
+#: ../includes/admin/wp_shopping_cart_admin_ajax.php:43
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:251
+msgid "Nonce verification failed!"
+msgstr "Nonce-Verifikation fehlgeschlagen!"
+
+#: ../includes/admin/wp_shopping_cart_admin_ajax.php:21
+#: ../includes/admin/wp_shopping_cart_admin_ajax.php:50
+msgid "Invalid order id provided!"
+msgstr "Ungültige Bestell-ID angegeben!"
+
+#: ../includes/admin/wp_shopping_cart_admin_ajax.php:36
+msgid "Notification emails sent successfully!"
+msgstr "Benachrichtigungs-E-Mails erfolgreich gesendet!"
+
+#: ../includes/admin/wp_shopping_cart_admin_ajax.php:68
+msgid ""
+"The order has been confirmed, and a notification email has been successfully "
+"sent to the buyer!"
 msgstr ""
+"Die Bestellung wurde bestätigt und eine Benachrichtigungs-E-Mail wurde "
+"erfolgreich an den Käufer gesendet!"
 
-#: wp_shopping_cart_discounts_menu.php:61
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:10
+msgid "Simple Shopping Cart Add-ons"
+msgstr "Einfache Warenkorb-Add-ons"
+
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:22
+msgid "Collect Customer Input"
+msgstr "Kundeneingaben erfassen"
+
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:24
+msgid ""
+"This addon allows you to collect customer input in the shopping cart at the "
+"time of checkout."
+msgstr ""
+"Mit diesem Add-on können Sie beim Bezahlvorgang Kundeneingaben im "
+"Einkaufswagen erfassen."
+
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:30
+msgid "Mailchimp Integration"
+msgstr "Mailchimp-Integration"
+
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:32
+msgid ""
+"This addon allows you to add users to your Mailchimp list after they "
+"purchase an item."
+msgstr ""
+"Mit diesem Add-on können Sie Benutzer nach dem Kauf eines Artikels zu Ihrer "
+"Mailchimp-Liste hinzufügen."
+
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:38
+msgid "WP Affiliate Plugin"
+msgstr "WP Affiliate Plugin"
+
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:40
+msgid ""
+"This plugin allows you to award commission to affiliates for referring "
+"customers to your site."
+msgstr ""
+"Mit diesem Plugin können Sie Partnern Provisionen für die Vermittlung von "
+"Kunden an Ihre Site gewähren."
+
+#: ../includes/admin/wp_shopping_cart_menu_addons.php:65
+msgid "View Details"
+msgstr "Details anzeigen"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:81
+msgid "PayPal Smart Checkout Settings"
+msgstr "PayPal Smart Checkout-Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:87
+msgid ""
+"<strong>Note:</strong> PayPal has deprecated the Smart Checkout API and "
+"replaced it with the PayPal Commerce Platform. Configure this new PayPal API "
+"from the"
+msgstr ""
+"<strong>Hinweis:</strong> PayPal hat die Smart Checkout API verworfen und "
+"durch die PayPal Commerce Platform ersetzt. Konfigurieren Sie diese neue "
+"PayPal-API über die"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:89
+msgid "PayPal PPCP Settings"
+msgstr "PayPal PPCP-Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:90
+msgid "tab of our plugin."
+msgstr "Registerkarte unseres Plugins."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:97
+msgid "Enable PayPal Smart Checkout"
+msgstr "Aktivieren Sie PayPal Smart Checkout"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:100
+msgid "Enable PayPal Smart Checkout."
+msgstr "Aktivieren Sie PayPal Smart Checkout."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:101
+msgid "View Documentation"
+msgstr "Dokumentation anzeigen"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:107
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:254
+msgid "Live Client ID"
+msgstr "Live Client ID"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:109
+msgid "Enter your live Client ID."
+msgstr "Geben Sie Ihre Live-Client-ID ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:113
+msgid "Live Secret"
+msgstr "Lebendiges Geheimnis"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:115
+msgid "Enter your live Secret."
+msgstr "Geben Sie Ihr Live-Passwort ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:119
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:280
+msgid "Sandbox Client ID"
+msgstr "Sandbox Kunden ID"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:121
+msgid "Enter your sandbox Client ID."
+msgstr "Geben Sie Ihre Sandbox-Client-ID ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:125
+msgid "Sandbox Secret"
+msgstr "Sandbox Geheimnis"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:127
+msgid "Enter your sandbox Secret."
+msgstr "Geben Sie Ihr Sandbox-Geheimnis ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:133
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:145
+msgid "Button Appearance Settings"
+msgstr "Einstellungen für das Erscheinungsbild der Schaltfläche"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:138
+msgid "Size"
+msgstr "Größe"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:144
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:361
+msgid "Medium"
+msgstr "Medium"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:145
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:362
+msgid "Large"
+msgstr "Groß"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:146
+msgid "Repsonsive"
+msgstr "Repsonsive"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:150
+msgid "Select button size."
+msgstr "Button Größe wählen."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:154
+msgid "Color"
+msgstr "Farbe"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:160
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:379
+msgid "Gold"
+msgstr "Gold"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:161
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:380
+msgid "Blue"
+msgstr "Blau"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:162
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:381
+msgid "Silver"
+msgstr "Silber"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:163
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:383
+msgid "Black"
+msgstr "Schwarz"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:167
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:385
+msgid "Select button color."
+msgstr "Wähle Button-Textfarbe."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:175
+msgid "Shape"
+msgstr "Form"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:177
+msgid "Rectangular "
+msgstr "Rechteckig"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:178
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:344
+msgid "Pill"
+msgstr "Pillenform"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:179
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:345
+msgid "Select button shape."
+msgstr "Button Form auswählen."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:183
+msgid "Layout"
+msgstr "Layout"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:185
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:351
+msgid "Vertical"
+msgstr "Vertikal"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:186
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:352
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:187
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:353
+msgid "Select button layout."
+msgstr "Wählen Sie eine Button Darstellung."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:192
+msgid "Additional Settings"
+msgstr "Zusätzliche Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:200
+msgid "Payment Methods"
+msgstr "Zahlungsarten"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:202
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:392
+msgid "PayPal Credit"
+msgstr "PayPal-Guthaben"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:203
+msgid "ELV"
+msgstr "Elv"
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:204
+msgid ""
+"Select payment methods that could be used by customers. Note that payment "
+"with cards is always enabled."
+msgstr ""
+"Wählen Sie die Zahlungsmethoden aus, die von den Kunden verwendet werden "
+"könnten. Beachten Sie, dass die Zahlung mit Karte immer aktiviert ist."
+
+#: ../includes/admin/wp_shopping_cart_menu_adv_settings.php:213
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:210
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:486
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:300
+msgid "Update Options &raquo;"
+msgstr "Optionen aktualisieren &raquo;"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:10
+msgid "Simple Shopping Cart Coupons/Discounts"
+msgstr "Einfache Einkaufswagen-Gutscheine/Rabatte"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:68
 msgid "Coupon/Discount Settings"
-msgstr ""
+msgstr "Coupon/Rabatt Einstellungen"
 
-#: wp_shopping_cart_discounts_menu.php:68
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:75
 msgid "Enable Discount Coupon Feature"
-msgstr ""
+msgstr "Aktiviere das Discount Coupon Feature"
 
-#: wp_shopping_cart_discounts_menu.php:71
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:78
 msgid ""
 "When checked your customers will be able to enter a coupon code in the "
 "shopping cart before checkout."
 msgstr ""
+"Wenn diese Option aktiviert ist, können Ihre Kunden vor dem Kauf einen "
+"Gutscheincode im Warenkorb eingeben."
 
-#: wp_shopping_cart_discounts_menu.php:78
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:85
 msgid "Update &raquo;"
-msgstr ""
+msgstr "Aktualisieren &raquo;"
 
-#: wp_shopping_cart_discounts_menu.php:179
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:101
+msgid "Add Coupon/Discount"
+msgstr "Coupon/Discount hinzufügen"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:110
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:144
+msgid "Coupon Code"
+msgstr "Gutscheincode"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:115
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:145
+msgid "Discount Rate (%)"
+msgstr "Rabatt (%)"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:120
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:146
+msgid "Expiry Date"
+msgstr "Ablaufdatum"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:126
+msgid "Save Coupon &raquo;"
+msgstr "Coupon &raquo; speichern"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:165
+msgid "No Expiry"
+msgstr "Kein Ablaufdatum"
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:181
+msgid "No Coupons Configured."
+msgstr "Keine Gutscheine konfiguriert."
+
+#: ../includes/admin/wp_shopping_cart_menu_discounts.php:186
 msgid "No Record found"
-msgstr ""
+msgstr "Keine Aufzeichnung gefunden"
 
-#: wp_shopping_cart_misc_functions.php:195
-msgid ""
-"Need a shopping cart plugin with a lot of features and good support? Check "
-"out our "
-msgstr ""
-
-#: wp_shopping_cart_misc_functions.php:196
-msgid "WP eStore Plugin"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:10
-msgid "Cart Orders"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:11
-msgid "Cart Order"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:12
-msgid "Add New"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:13
-msgid "Add New Order"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:14
-msgid "Edit"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:15
-msgid "Edit Order"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:16
-msgid "New Order"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:17
-msgid "View"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:18
-msgid "View Order"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:19
-msgid "Search Order"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:20
-msgid "No order found"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:21
-msgid "No order found in Trash"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:22
-msgid "Parent Order"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:38
-msgid "Order Review"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:70
-msgid "Order ID: #"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:72
-msgid "Transaction ID: #"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:75 wp_shopping_cart_orders.php:165
-msgid "First Name"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:79 wp_shopping_cart_orders.php:166
-msgid "Last Name"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:83
-msgid "Email Address"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:87
-msgid "IP Address"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:99
-msgid "Address"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:103
-msgid "Phone"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:107
-msgid "Buyer Email Sent?"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:111
-msgid "Item(s) Ordered:"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:115
-msgid "Applied Coupon Code:"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:164
-msgid "Order ID"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:167
-msgid "Email"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:169
-msgid "Status"
-msgstr ""
-
-#: wp_shopping_cart_orders.php:170
-msgid "Date"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:186
-msgid "Simple PayPal Shopping Cart Settings"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:194
-msgid "Quick Usage Guide"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:197
-msgid "Step 1) "
-msgstr ""
-
-#: wp_shopping_cart_settings.php:197
-msgid "To add an 'Add to Cart' button for a product simply add the shortcode"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:197
-msgid ""
-"to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-"
-"PRICE with the actual name and price of your product."
-msgstr ""
-
-#: wp_shopping_cart_settings.php:198
-msgid "Example add to cart button shortcode usage:"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:199
-msgid "Step 2) "
-msgstr ""
-
-#: wp_shopping_cart_settings.php:199
-msgid ""
-"To add the shopping cart to a post or page (example: a checkout page) simply "
-"add the shortcode"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:200
-msgid "Example shopping cart shortcode usage:"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:270
-msgid "Cancel URL"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:271
-msgid ""
-"The customer will be redirected to the above page if the payment is "
-"cancelled."
-msgstr ""
-
-#: wp_shopping_cart_settings.php:287
-msgid "Open PayPal Checkout Page in a New Tab"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:289
-msgid ""
-"If checked the PayPal checkout page will be opened in a new tab/window when "
-"the user clicks the checkout button."
-msgstr ""
-
-#: wp_shopping_cart_settings.php:309
-msgid "Customize the Note to Seller Text"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:311
-msgid ""
-"Specify the text that you want to use for the note field on PayPal checkout "
-"page to collect special instruction (leave this field empty if you don't "
-"need to customize it). The default label for the note field is \"Add special "
-"instructions to merchant\"."
-msgstr ""
-
-#: wp_shopping_cart_settings.php:317
-msgid "Custom Checkout Page Style Name"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:319
-msgid ""
-"Specify the page style name here if you want to customize the paypal "
-"checkout page with custom page style otherwise leave this field empty."
-msgstr ""
-
-#: wp_shopping_cart_settings.php:325
-msgid "Use Strict PayPal Email Address Checking"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:326
-msgid ""
-"If checked the script will check to make sure that the PayPal email address "
-"specified is the same as the account where the payment was deposited (Usage "
-"of PayPal Email Alias will fail too)."
-msgstr ""
-
-#: wp_shopping_cart_settings.php:340
-msgid "Testing and Debugging Settings"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:346
-msgid "Enable Debug"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:348
-msgid ""
-"If checked, debug output will be written to the log file. This is useful for "
-"troubleshooting post payment failures"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:359
-msgid "Enable Sandbox Testing"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:361
-msgid ""
-"Check this option if you want to do PayPal sandbox testing. You will need to "
-"create a PayPal sandbox account from PayPal Developer site"
-msgstr ""
-
-#: wp_shopping_cart_settings.php:439
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:70
 msgid "Purchase Confirmation Email Settings"
-msgstr ""
+msgstr "Kaufbestätigungs-E-Mail Einstellungen"
 
-#: wp_shopping_cart_settings.php:442
-msgid ""
-"The following options affect the emails that gets sent to your buyers after "
-"a purchase."
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:73
+msgid "This section allows you to configure general email-related settings."
 msgstr ""
+"In diesem Abschnitt können Sie allgemeine E-Mail-bezogene Einstellungen "
+"konfigurieren."
 
-#: wp_shopping_cart_settings.php:447
-msgid "Send Emails to Buyer After Purchase"
-msgstr ""
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:78
+msgid "Email Content Type"
+msgstr "E-Mail Inhaltstyp"
 
-#: wp_shopping_cart_settings.php:448
-msgid ""
-"If checked the plugin will send an email to the buyer with the sale details. "
-"If digital goods are purchased then the email will contain the download "
-"links for the purchased products."
-msgstr ""
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:82
+msgid "Plain Text"
+msgstr "Einfacher Text"
 
-#: wp_shopping_cart_settings.php:452
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:85
+msgid "HTML"
+msgstr "HTML"
+
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:89
+msgid "Choose which format of email to send."
+msgstr "Format für E-Mail-Versand auswählen"
+
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:95
 msgid "From Email Address"
-msgstr ""
+msgstr "Von E-Mail-Adresse"
 
-#: wp_shopping_cart_settings.php:454
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:97
 msgid ""
 "Example: Your Name &lt;sales@your-domain.com&gt; This is the email address "
 "that will be used to send the email to the buyer. This name and email "
 "address will appear in the from field of the email."
 msgstr ""
+"Beispiel: Ihr Name &lt;sales@your-domain.com&gt; Dies ist die E-Mail-"
+"Adresse, die verwendet wird, um die E-Mail an den Käufer zu senden. Dieser "
+"Name und diese E-Mail-Adresse werden im Feld von der E-Mail angezeigt."
 
-#: wp_shopping_cart_settings.php:458
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:105
+msgid "General Email Settings"
+msgstr "Allgemeine E-Mail-Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:108
+msgid ""
+"The following options affect the emails that gets sent to your buyers after "
+"a purchase."
+msgstr ""
+"Die folgenden Optionen wirken sich auf die E-Mails aus, die nach einem Kauf "
+"an Ihre Käufer gesendet werden."
+
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:113
+msgid "Send Emails to Buyer After Purchase"
+msgstr "Senden Sie nach dem Kauf E-Mails an den Käufer"
+
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:114
+msgid ""
+"If checked the plugin will send an email to the buyer with the sale details. "
+"If digital goods are purchased then the email will contain the download "
+"links for the purchased products."
+msgstr ""
+"Wenn diese Option aktiviert ist, sendet das Plugin dem Käufer eine E-Mail "
+"mit den Verkaufsdetails. Beim Kauf digitaler Güter enthält die E-Mail die "
+"Download-Links für die gekauften Produkte."
+
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:118
 msgid "Buyer Email Subject"
-msgstr ""
+msgstr "Käufer E-Mail Betreff"
 
-#: wp_shopping_cart_settings.php:460
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:120
 msgid "This is the subject of the email that will be sent to the buyer."
-msgstr ""
+msgstr "Dies ist der Betreff der E-Mail, die an den Käufer gesendet wird."
 
-#: wp_shopping_cart_settings.php:464
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:124
 msgid "Buyer Email Body"
-msgstr ""
+msgstr "Inhalt der E-Mail für den Käufer"
 
-#: wp_shopping_cart_settings.php:467
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:142
 msgid ""
 "This is the body of the email that will be sent to the buyer. Do not change "
 "the text within the braces {}. You can use the following email tags in this "
 "email body field:"
 msgstr ""
+"Dies ist der Text der E-Mail, die an den Käufer gesendet wird. Ändern Sie "
+"den Text innerhalb der Klammern {} nicht. Sie können in diesem Textfeld die "
+"folgenden E-Mail-Tags verwenden:"
 
-#: wp_shopping_cart_settings.php:468 wp_shopping_cart_settings.php:502
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:143
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:191
+#: ../includes/classes/class.wpsc-email-handler.php:140
 msgid "First name of the buyer"
-msgstr ""
+msgstr "Vorname des Käufers"
 
-#: wp_shopping_cart_settings.php:469 wp_shopping_cart_settings.php:503
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:144
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:192
+#: ../includes/classes/class.wpsc-email-handler.php:141
 msgid "Last name of the buyer"
-msgstr ""
+msgstr "Nachname des Käufers"
 
-#: wp_shopping_cart_settings.php:470 wp_shopping_cart_settings.php:504
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:145
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:193
+#: ../includes/classes/class.wpsc-email-handler.php:142
 msgid "Email Address of the buyer"
-msgstr ""
+msgstr "E-Mail-Adresse des Käufers"
 
-#: wp_shopping_cart_settings.php:471 wp_shopping_cart_settings.php:505
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:146
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:194
+#: ../includes/classes/class.wpsc-email-handler.php:143
 msgid "Address of the buyer"
-msgstr ""
+msgstr "Adresse des Käufers"
 
-#: wp_shopping_cart_settings.php:472 wp_shopping_cart_settings.php:506
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:147
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:195
+#: ../includes/classes/class.wpsc-email-handler.php:144
 msgid ""
 "The item details of the purchased product (this will include the download "
 "link for digital items)."
 msgstr ""
+"Die Artikeldetails des gekauften Produkts (dies beinhaltet den Download-Link "
+"für digitale Artikel)."
 
-#: wp_shopping_cart_settings.php:473 wp_shopping_cart_settings.php:507
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:148
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:196
+#: ../includes/classes/class.wpsc-email-handler.php:145
 msgid "The unique transaction ID of the purchase"
-msgstr ""
+msgstr "Die eindeutige Transaktions-ID des Kaufs"
 
-#: wp_shopping_cart_settings.php:474 wp_shopping_cart_settings.php:508
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:149
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:197
+#: ../includes/classes/class.wpsc-email-handler.php:146
+msgid "The order ID reference of this transaction in the cart orders menu"
+msgstr "Die Bestellnummer dieser Transaktion im Warenkorb-Menü"
+
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:150
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:198
+#: ../includes/classes/class.wpsc-email-handler.php:147
 msgid "The amount paid for the current transaction"
-msgstr ""
+msgstr "Der für die aktuelle Transaktion gezahlte Betrag"
 
-#: wp_shopping_cart_settings.php:475 wp_shopping_cart_settings.php:509
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:151
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:199
+#: ../includes/classes/class.wpsc-email-handler.php:148
 msgid "The date of the purchase"
-msgstr ""
+msgstr "Datum der Bestellung anzeigen"
 
-#: wp_shopping_cart_settings.php:476 wp_shopping_cart_settings.php:510
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:152
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:200
+#: ../includes/classes/class.wpsc-email-handler.php:149
 msgid "Coupon code applied to the purchase"
-msgstr ""
+msgstr "Gutscheincode für den Kauf"
 
-#: wp_shopping_cart_settings.php:481
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:157
 msgid "Send Emails to Seller After Purchase"
-msgstr ""
+msgstr "Senden von E-Mails an Verkäufer nach dem Kauf"
 
-#: wp_shopping_cart_settings.php:482
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:158
 msgid ""
 "If checked the plugin will send an email to the seller with the sale details"
 msgstr ""
+"Wenn diese Option aktiviert ist, sendet das Plugin eine E-Mail mit den "
+"Verkaufsdetails an den Verkäufer"
 
-#: wp_shopping_cart_settings.php:486
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:162
 msgid "Notification Email Address*"
-msgstr ""
+msgstr "Benachrichtigung E-Mail-Adresse*"
 
-#: wp_shopping_cart_settings.php:488
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:164
 msgid ""
-"This is the email address where the seller will be notified of product sales."
-" You can put multiple email addresses separated by comma (,) in the above "
-"field to send the notification to multiple email addresses."
+"This is the email address where the seller will be notified of product "
+"sales. You can put multiple email addresses separated by comma (,) in the "
+"above field to send the notification to multiple email addresses."
 msgstr ""
+"Dies ist die E-Mail-Adresse, an die der Verkäufer über Produktverkäufe "
+"benachrichtigt wird. Sie können mehrere E-Mail-Adressen durch Kommas (,) "
+"getrennt in das obige Feld eingeben, um die Benachrichtigung an mehrere E-"
+"Mail-Adressen zu senden."
 
-#: wp_shopping_cart_settings.php:492
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:168
 msgid "Seller Email Subject*"
-msgstr ""
+msgstr "Verkäufer Email Betreff *"
 
-#: wp_shopping_cart_settings.php:494
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:170
 msgid ""
 "This is the subject of the email that will be sent to the seller for record."
 msgstr ""
+"Dies ist der Betreff der E-Mail, die dem Verkäufer zur Aufzeichnung gesendet "
+"wird."
 
-#: wp_shopping_cart_settings.php:498
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:174
 msgid "Seller Email Body*"
-msgstr ""
+msgstr "E-Mail-Text des Verkäufers*"
 
-#: wp_shopping_cart_settings.php:501
+#: ../includes/admin/wp_shopping_cart_menu_email_settings.php:190
 msgid ""
 "This is the body of the email that will be sent to the seller for record. Do "
 "not change the text within the braces {}. You can use the following email "
 "tags in this email body field:"
 msgstr ""
+"Dies ist der Text der E-Mail, die zur Dokumentation an den Verkäufer "
+"gesendet wird. Ändern Sie den Text innerhalb der Klammern {} nicht. Sie "
+"können in diesem Textfeld die folgenden E-Mail-Tags verwenden:"
 
-#: wp_shopping_cart_shortcodes.php:19 wp_shopping_cart_shortcodes.php:49
-msgid "Error! You must specify a product name in the shortcode."
-msgstr ""
-
-#: wp_shopping_cart_shortcodes.php:22 wp_shopping_cart_shortcodes.php:52
-msgid "Error! You must specify a price for your product in the shortcode."
-msgstr ""
-
-#: wp_shopping_cart_shortcodes.php:55
-msgid ""
-"Error! You must specify a thumbnail image for your product in the shortcode."
-msgstr ""
-
-#: wp_shopping_cart_shortcodes.php:107
-msgid "View Cart"
-msgstr ""
-
-#: wp_shopping_cart_shortcodes.php:112
-msgid "Cart is empty"
-msgstr ""
-
-#: lib/gallery-wp-cart.php:32
-msgid "[View with PicLens]"
-msgstr ""
-
-#: includes/wspsc-cart-functions.php:159
-msgid "Enter Coupon Code"
-msgstr "Rabatt Code eingeben"
-
-#: includes/wspsc-cart-functions.php:162
-msgid "Apply"
-msgstr "Anwenden"
-
-#: wp_shopping_cart_discounts_menu.php:94
-msgid "Add Coupon/Discount"
-msgstr "Coupon/Rabatt hinzufügen"
-
-#: wp_shopping_cart_discounts_menu.php:119
-msgid "Save Coupon &raquo;"
-msgstr "Coupon speichern"
-
-#: wp_shopping_cart_discounts_menu.php:137
-msgid "Coupon Code"
-msgstr "Rabatt Code"
-
-#: wp_shopping_cart_discounts_menu.php:138
-msgid "Discount Rate (%)"
-msgstr "Rabatt (%)"
-
-#: wp_shopping_cart_discounts_menu.php:139
-msgid "Expiry Date"
-msgstr "Ablaufdatum"
-
-#: wp_shopping_cart_discounts_menu.php:158
-msgid "No Expiry"
-msgstr "Unbegrenzt gültig"
-
-#: wp_shopping_cart_discounts_menu.php:174
-msgid "No Coupons Configured."
-msgstr "Keine Rabatte konfiguriert."
-
-#: class-coupon.php:19
-msgid "Admin needs to configure some discount coupons before it can be used"
-msgstr "Rabatte müssen konfiguriert werden, bevor sie angewendet werden können"
-
-#: class-coupon.php:86
-msgid "Coupon ID: "
-msgstr "Coupon ID:"
-
-#: class-coupon.php:87
-msgid "Coupon Code: "
-msgstr "Rabatt Code:"
-
-#: class-coupon.php:88
-msgid "Discount Amt: "
-msgstr "Rabatt:"
-
-#: class-coupon.php:89
-msgid "Expiry date: "
-msgstr "Ablaufdatum:"
-
-#: class-coupon.php:98
-msgid "Coupon code used does not exist!"
-msgstr "Dieser Rabatt Code existiert nicht!"
-
-#: class-coupon.php:105
-msgid "Coupon code expired!"
-msgstr "Dieser Rabatt Code ist abgelaufen!"
-
-#: class-coupon.php:110
-msgid "Discount can only be applied once per checkout!"
-msgstr "Rabatt Codes können nur einmal angewendet werden!"
-
-#: class-coupon.php:132
-msgid "Discount applied successfully! Total Discount: "
-msgstr "Rabatt Code erfolgreich angewendet. Rabatt total: "
-
-#: wp_shopping_cart.php:198
-msgid ""
-"Shopping Cart Configuration Error! You must specify a value in the 'Checkout "
-"Page URL' field for the automatic redirection feature to work!"
-msgstr ""
-"Fehlerhafte Konfiguration des Warenkorbs! Damit die automatische "
-"Weiterleitung funktioniert, müssen Sie in dem Feld 'Zur Kasse - Seite' eine "
-"URL eintragen."
-
-#: wp_shopping_cart.php:290 wp_shopping_cart.php:365 wp_shopping_cart.php:431 
-#: wp_shopping_cart.php:473 wp_shopping_cart.php:477 
-#: wp_shopping_cart_settings.php:123
-msgid "Add to Cart"
-msgstr "Zum Warenkorb hinzufügen"
-
-#: wp_shopping_cart.php:568
-msgid "WP Paypal Shopping Cart"
-msgstr "WP Paypal Warenkorb"
-
-#: wp_shopping_cart.php:568
-msgid "WP Shopping Cart"
-msgstr "WP Warenkorb"
-
-#: wp_shopping_cart.php:602
-msgid "Shopping Cart"
-msgstr "Warenkorb"
-
-#: wp_shopping_cart.php:635
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: wp_shopping_cart_misc_functions.php:160
-msgid "Your Shopping Cart"
-msgstr "Ihr Warenkorb"
-
-#: wp_shopping_cart_misc_functions.php:161
-msgid "Your cart is empty"
-msgstr "Ihr Warenkorb ist leer"
-
-#: wp_shopping_cart_orders.php:91 wp_shopping_cart_orders.php:168 
-#: includes/wspsc-cart-functions.php:150
-msgid "Total"
-msgstr "Gesamtsumme"
-
-#: wp_shopping_cart_orders.php:95 includes/wspsc-cart-functions.php:147
-msgid "Shipping"
-msgstr "Versand"
-
-#: wp_shopping_cart_settings.php:10
-msgid "WP Paypal Shopping Cart Options"
-msgstr "WP Paypal Warenkorb Einstellungen"
-
-#: wp_shopping_cart_settings.php:101
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:69
 msgid "Options Updated!"
-msgstr "Die Einstellungen wurden aktualisiert!"
+msgstr "Einstellungen aktualisiert!"
 
-#: wp_shopping_cart_settings.php:105 includes/wspsc-cart-functions.php:30
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:80
+#: ../includes/wpsc-cart-functions.php:43
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:65
 msgid "USD"
-msgstr "EUR"
+msgstr "USD"
 
-#: wp_shopping_cart_settings.php:108 includes/wspsc-cart-functions.php:34
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:83
+#: ../includes/wpsc-cart-functions.php:48
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:69
 msgid "$"
 msgstr "€"
 
-#: wp_shopping_cart_settings.php:197
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:91
+#: ../includes/wpsc-deprecated-functions.php:27
+#: ../includes/wpsc-deprecated-functions.php:108
+#: ../includes/wpsc-shortcodes-related.php:6
+#: ../includes/wpsc-shortcodes-related.php:59
+#: ../includes/wpsc-shortcodes-related.php:71
+msgid "Add to Cart"
+msgstr "In den Warenkorb"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:207
+msgid "Quick Usage Guide"
+msgstr "Schnelle Gebrauchsanleitung"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:210
+msgid "Step 1) "
+msgstr "Step 1) "
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:210
+msgid "To add an 'Add to Cart' button for a product simply add the shortcode"
+msgstr ""
+"Um einen \"Add to Cart\" -Button für ein Produkt hinzuzufügen, fügen Sie "
+"einfach den Shortcode hinzu"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:210
 msgid "PRODUCT-NAME"
 msgstr "PRODUKTNAME"
 
-#: wp_shopping_cart_settings.php:197
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:210
 msgid "PRODUCT-PRICE"
 msgstr "PRODUKTPREIS"
 
-#: wp_shopping_cart_settings.php:199
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:210
+msgid ""
+"to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-"
+"PRICE with the actual name and price of your product."
+msgstr ""
+"zu einem Post oder einer Seite neben dem Produkt. Ersetzen Sie PRODUKT-NAME "
+"und PRODUKT-PREIS durch den tatsächlichen Namen und Preis Ihres Produkts."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:212
+msgid "Example add to cart button shortcode usage:"
+msgstr "Beispiel zum Warenkorb Button Shortcode Verwendung:"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:216
+msgid "Step 2) "
+msgstr "Step 2) "
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:216
+msgid ""
+"To add the shopping cart to a post or page (example: a checkout page) simply "
+"add the shortcode"
+msgstr ""
+"Um den Einkaufswagen zu einem Post oder einer Seite hinzuzufügen (Beispiel: "
+"eine Checkout-Seite), fügen Sie einfach den Shortcode hinzu"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:216
 msgid ""
 "to a post or page or use the sidebar widget to add the shopping cart to the "
 "sidebar."
 msgstr ""
-"in einem Artikel oder auf einer Seite. Oder Sie aktivieren das Sidebar "
-"Widget um den Warenkorb in der Sidebar anzuzeigen."
+"zu einem Post oder einer Seite oder verwenden Sie das Sidebar-Widget, um den "
+"Einkaufswagen zur Seitenleiste hinzuzufügen."
 
-#: wp_shopping_cart_settings.php:209
-msgid "PayPal and Shopping Cart Settings"
-msgstr "PayPal und Warenkorb Einstellungen"
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:218
+msgid "Example shopping cart shortcode usage:"
+msgstr "Beispiel shopping card shortcode Vrwendung:"
 
-#: wp_shopping_cart_settings.php:215
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:229
+msgid "PayPal Standard Settings"
+msgstr "PayPal-Standardeinstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:235
 msgid "Paypal Email Address"
-msgstr "Paypal E-Mail Adresse"
+msgstr "Paypal Email Addresse"
 
-#: wp_shopping_cart_settings.php:219
-msgid "Shopping Cart title"
-msgstr "Name des Warenkorbs"
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:239
+msgid "Disable Standard PayPal Checkout"
+msgstr "Standard-PayPal-Checkout deaktivieren"
 
-#: wp_shopping_cart_settings.php:223
-msgid "Text/Image to Show When Cart Empty"
-msgstr "Text/Bild für einen leeren Warenkorb"
-
-#: wp_shopping_cart_settings.php:224
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:241
 msgid ""
-"You can either enter plain text or the URL of an image that you want to show "
-"when the shopping cart is empty"
+"By default the PayPal standard checkout option is always enabled. If you "
+"only want to use the PayPal PPCP or Stripe option then use this checkbox to "
+"disable the standard PayPal checkout option."
 msgstr ""
-"Sie können einfachen Text eintragen oder die URL eines Bildes angeben (wird "
-"bei einem leeren Warenkorb angezeigt)"
+"Standardmäßig ist die PayPal-Standard-Checkout-Option immer aktiviert. Wenn "
+"Sie nur die PayPal-PPCP- oder Stripe-Option verwenden möchten, deaktivieren "
+"Sie diese Option mit diesem Kontrollkästchen."
 
-#: wp_shopping_cart_settings.php:227
-msgid "Currency"
-msgstr "Währung"
-
-#: wp_shopping_cart_settings.php:228 wp_shopping_cart_settings.php:232 
-#: wp_shopping_cart_settings.php:259
-msgid "e.g."
-msgstr "z.B."
-
-#: wp_shopping_cart_settings.php:231
-msgid "Currency Symbol"
-msgstr "Währungssymbol"
-
-#: wp_shopping_cart_settings.php:237
-msgid "Base Shipping Cost"
-msgstr "Basisversandkosten"
-
-#: wp_shopping_cart_settings.php:238
-msgid ""
-"This is the base shipping cost that will be added to the total of individual "
-"products shipping cost. Put 0 if you do not want to charge shipping cost or "
-"use base shipping cost."
-msgstr ""
-"Die Basisversandkosten werden zu der Summer der individuellen Versandkosten "
-"der Produkte addiert. Tragen Sie 0 ein wenn Sie keine Basisversandkosten "
-"oder gar keine Versandkosten berechnen wollen."
-
-#: wp_shopping_cart_settings.php:238
-msgid "Learn More on Shipping Calculation"
-msgstr "Weitere Informationen über die Versandkostenberechnung"
-
-#: wp_shopping_cart_settings.php:242
-msgid "Free Shipping for Orders Over"
-msgstr "Versandkostenfrei für Bestellungen über"
-
-#: wp_shopping_cart_settings.php:243
-msgid ""
-"When a customer orders more than this amount he/she will get free shipping. "
-"Leave empty if you do not want to use it."
-msgstr ""
-"Wenn die Bestellung eines Kunden über diesen Betrag hinausgeht, entfallen "
-"die Versandkosten. Tragen Sie nichts ein, falls Sie diese Funktion nicht "
-"nutzen wollen."
-
-#: wp_shopping_cart_settings.php:247
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:245
 msgid "Must Collect Shipping Address on PayPal"
-msgstr "Der Kunde muss bei PayPal eine Versandadresse angeben"
+msgstr "Muss Versandadresse auf PayPal eintragen"
 
-#: wp_shopping_cart_settings.php:248
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:246
 msgid ""
 "If checked the customer will be forced to enter a shipping address on PayPal "
 "when checking out."
 msgstr ""
-"Wenn diese Option aktiviert ist, müssen Kunden bei dem PayPal-Bestellvorgang "
-"eine Versandadresse angeben."
+"Wenn diese Option aktiviert ist, muss der Kunde beim Auschecken eine "
+"Lieferadresse auf PayPal eingeben."
 
-#: wp_shopping_cart_settings.php:252
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:249
 msgid "Use PayPal Profile Based Shipping"
-msgstr "Die Versandkostenkalkulation von PayPal nutzen"
+msgstr "Verwenden Sie den PayPal-basierten Versand"
 
-#: wp_shopping_cart_settings.php:253
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:250
 msgid "Check this if you want to use"
-msgstr "Aktivieren Sie diese Option für"
+msgstr "Markieren Sie das hier, falls sie dies nutzen möchten"
 
-#: wp_shopping_cart_settings.php:253
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:250
 msgid "PayPal profile based shipping"
-msgstr "von PayPal berechnete Versandkosten"
+msgstr "Versand über die im PayPal Profil hinterlegten Daten"
 
-#: wp_shopping_cart_settings.php:253
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:250
 msgid ""
 "Using this will ignore any other shipping options that you have specified in "
 "this plugin."
 msgstr ""
-"Die Verwendung deaktiviert alle anderen Versandoptionen dieses Plugins."
+"Dadurch werden alle anderen Versandoptionen ignoriert, die Sie in diesem "
+"Plugin angegeben haben."
 
-#: wp_shopping_cart_settings.php:257
-msgid "Add to Cart button text or Image"
-msgstr "Text oder Bild für den 'Zum Warenkorb hinzufügen'-Button"
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:253
+msgid "Open PayPal Checkout Page in a New Tab"
+msgstr "Öffnen der PayPal Checkout Page in einem neuen Tab"
 
-#: wp_shopping_cart_settings.php:259
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:255
+msgid ""
+"If checked the PayPal checkout page will be opened in a new tab/window when "
+"the user clicks the checkout button."
+msgstr ""
+"Wenn diese Option aktiviert ist, wird die PayPal-Checkout-Seite in einem "
+"neuen Tab / Fenster geöffnet, wenn der Benutzer auf die Checkout-"
+"Schaltfläche klickt."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:258
+msgid "Use Strict PayPal Email Address Checking"
+msgstr "Verwenden Sie strenge Überprüfung der PayPal-E-Mail-Adresse"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:259
+msgid ""
+"If checked the script will check to make sure that the PayPal email address "
+"specified is the same as the account where the payment was deposited (Usage "
+"of PayPal Email Alias will fail too)."
+msgstr ""
+"Wenn diese Option aktiviert ist, prüft das Skript, ob die angegebene PayPal-"
+"E-Mail-Adresse mit dem Konto übereinstimmt, in dem die Zahlung eingegangen "
+"ist (die Verwendung von PayPal-E-Mail-Alias wird ebenfalls fehlschlagen)."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:262
+msgid "Customize the Note to Seller Text"
+msgstr "Verkäufer-Text anpassen"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:263
+msgid ""
+"PayPal has removed this feature. We have created an addon so you can still "
+"collect instructions from customers at the time of checking out. "
+msgstr ""
+"PayPal hat diese Funktion entfernt. Wir haben ein Add-on erstellt, damit Sie "
+"beim Bezahlvorgang weiterhin Anweisungen von Kunden einholen können."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:264
+msgid "View the addon details"
+msgstr "Add-on-Details anzeigen"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:267
+msgid "Custom Checkout Page Logo Image"
+msgstr "Benutzerdefiniertes Checkout Logo"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:269
+msgid ""
+"Specify an image URL if you want to customize the paypal checkout page with "
+"a custom logo/image. The image URL must be a 'https' URL otherwise PayPal "
+"will ignore it."
+msgstr ""
+"Geben Sie eine Bild-URL an, wenn Sie die PayPal-Checkout-Seite mit einem "
+"benutzerdefinierten Logo/Bild personalisieren möchten. Die Bild-URL muss "
+"eine https-URL sein, sonst wird sie von PayPal ignoriert."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:280
+msgid "Shopping Cart Settings"
+msgstr "Warenkorbeinstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:286
+msgid "Shopping Cart title"
+msgstr "Einkaufswagen Titel"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:290
+msgid "Text/Image to Show When Cart Empty"
+msgstr "Text / Bild, das bei leerem Warenkorb angezeigt wird"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:291
+msgid ""
+"You can either enter plain text or the URL of an image that you want to show "
+"when the shopping cart is empty"
+msgstr ""
+"Sie können entweder einen einfachen Text oder die URL eines Bildes eingeben, "
+"das angezeigt werden soll, wenn der Einkaufswagen leer ist"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:296
+msgid "Currency"
+msgstr "Währung"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:336
+msgid "Currency Symbol"
+msgstr "Währungssymbol"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:337
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:344
+#: ../includes/admin/wp_shopping_cart_tinymce.php:193
+msgid "Example:"
+msgstr "Beispiel:"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:342
+msgid "Add to Cart button Text or Image"
+msgstr "Schaltfläche „Zum Warenkorb hinzufügen“ – Text oder Bild"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:344
 msgid ""
 "To use a customized image as the button simply enter the URL of the image "
 "file."
 msgstr ""
-"Um ein eigenes Bild für den Button zu verwenden, geben Sie einfach dessen "
-"URL an."
+"Um ein benutzerdefiniertes Bild als Schaltfläche zu verwenden, geben Sie "
+"einfach die URL der Bilddatei ein."
 
-#: wp_shopping_cart_settings.php:265
-msgid "Return URL"
-msgstr "Rückkehr URL"
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:350
+msgid "Return URL (Thank You Page)"
+msgstr "Rücksprung-URL (Danke-Seite)"
 
-#: wp_shopping_cart_settings.php:266
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:351
 msgid ""
-"This is the URL the customer will be redirected to after a successful payment"
+"This is the URL the customers will be redirected to after a successful "
+"payment"
 msgstr ""
-"Zu dieser URL wird ein Kunde weitergeleitet wenn der Bestellvorgang "
-"erfogreich war"
+"Dies ist die URL, zu der die Kunden nach einer erfolgreichen Zahlung "
+"weitergeleitet werden"
 
-#: wp_shopping_cart_settings.php:275
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:355
+msgid "Cancel URL"
+msgstr "Abbrechen URL"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:356
+msgid ""
+"The customers will be sent to the above page if the cancel link is clicked "
+"on the PayPal checkout page."
+msgstr ""
+"Die Kunden werden auf die oben genannte Seite weitergeleitet, wenn sie auf "
+"der PayPal-Checkout-Seite auf den Link „Abbrechen“ klicken."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:360
 msgid "Products Page URL"
-msgstr "URL der Produktseite"
+msgstr "Produkt Seite URL"
 
-#: wp_shopping_cart_settings.php:276
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:361
 msgid ""
 "This is the URL of your products page if you have any. If used, the shopping "
-"cart widget will display a link to this page when cart is empty"
+"cart widget will display a link to this page when the cart is empty"
 msgstr ""
-"Falls Sie eine Produktseite haben, können Sie hier die URL eingeben. Wenn "
-"eine URL eingegeben und der Warenkorb leer ist wird ein Link zu dieser Seite "
-"im Warenkorb angezeigt."
+"Dies ist die URL Ihrer Produktseite, falls vorhanden. Wenn Sie diese Option "
+"verwenden, zeigt das Warenkorb-Widget einen Link zu dieser Seite an, wenn "
+"der Warenkorb leer ist."
 
-#: wp_shopping_cart_settings.php:280
-msgid "Automatic redirection to checkout page"
-msgstr "Automatische Weiterleitung zur 'Bestellung abschließen'-Seite"
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:365
+msgid "Automatic Redirection to Checkout Page"
+msgstr "Automatische Weiterleitung zur Checkout-Seite"
 
-#: wp_shopping_cart_settings.php:282
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:367
 msgid "Checkout Page URL"
-msgstr "URL der 'Bestellung abschließen'-Seite"
+msgstr "Checkout Page URL"
 
-#: wp_shopping_cart_settings.php:283
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:368
 msgid ""
 "If checked the visitor will be redirected to the Checkout page after a "
 "product is added to the cart. You must enter a URL in the Checkout Page URL "
 "field for this to work."
 msgstr ""
-"Wenn diese Option aktiviert ist, werden Besucher zur 'Bestellung "
-"abschließen'-Seite weitergeleitet nachdem sie ein Produkt zum Warenkorb "
-"hinzugefügt haben. Sie müssen eine URL in dem Feld der 'Bestellung "
-"abschließen'-Seite eingeben um diese Funktion zu nutzen."
+"Wenn diese Option aktiviert ist, wird der Besucher nach dem Hinzufügen eines "
+"Produkts zum Warenkorb zur Checkout-Seite weitergeleitet. Sie müssen eine "
+"URL in das Feld URL der Checkout-Seite eingeben, damit dies funktioniert."
 
-#: wp_shopping_cart_settings.php:293
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:372
+msgid "Allow Shopping Cart Anchor"
+msgstr "Warenkorbanker zulassen"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:374
+msgid ""
+"If checked the visitor will be taken to the Shopping cart anchor point "
+"within the page after a product Add, Delete or Quantity Change."
+msgstr ""
+"Wenn diese Option aktiviert ist, wird der Besucher nach dem Hinzufügen, "
+"Löschen oder Ändern der Menge eines Produkts zum Ankerpunkt des "
+"Einkaufswagens innerhalb der Seite weitergeleitet."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:378
 msgid "Reset Cart After Redirection to Return Page"
-msgstr "Warenkorb zurücksetzen nach der Weiterleitung auf die Rückkehr URL"
+msgstr "Einkaufswagen nach der Umleitung auf die Rückgabeseite zurücksetzen"
 
-#: wp_shopping_cart_settings.php:295
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:380
 msgid ""
 "If checked the shopping cart will be reset when the customer lands on the "
 "return URL (Thank You) page."
 msgstr ""
-"Wenn diese Option aktiviert ist, wird der Warenkorb zurückgesetzt wenn ein "
-"Kunde auf die Rückkehr URL (die 'Vielen Dank für Ihren Einkauf'-Seite) "
-"geleitet wird."
+"Wenn diese Option aktiviert ist, wird der Warenkorb zurückgesetzt, wenn der "
+"Kunde auf der Seite mit der Rückgabe-URL (Thank You Page) landet."
 
-#: wp_shopping_cart_settings.php:302
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:384
+msgid "Show Empty Cart Option"
+msgstr "Option „Leeren Einkaufswagen anzeigen“"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:386
+msgid ""
+"Selecting this feature will add an Empty Cart option to the shopping cart, "
+"allowing users to clear all items with a single click."
+msgstr ""
+"Wenn Sie diese Funktion auswählen, wird dem Einkaufswagen die Option "
+"„Einkaufswagen leeren“ hinzugefügt, sodass Benutzer alle Artikel mit einem "
+"einzigen Klick löschen können."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:390
 msgid "Hide Shopping Cart Image"
-msgstr "Bild des Warenkorb nicht anzeigen"
+msgstr "Verstecke Shopping Cart Bild"
 
-#: wp_shopping_cart_settings.php:303
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:391
 msgid "If ticked the shopping cart image will not be shown."
-msgstr "Falls aktiviert, wird das Bild des Warenkorbs nicht angezeigt."
+msgstr ""
+"Wenn diese Option aktiviert ist, wird das Einkaufswagenbild nicht angezeigt."
 
-#: wp_shopping_cart_settings.php:332
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:395
+msgid "Do Not Show Quantity in Cart"
+msgstr "Menge im Warenkorb nicht anzeigen"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:396
+msgid ""
+"Check this option to prevent the shopping cart from displaying product "
+"quantities. Customers will only be able to add one copy of each product to "
+"the cart. This is useful if you are selling digital products and do not want "
+"customers to purchase multiple copies of a single item."
+msgstr ""
+"Aktivieren Sie diese Option, um die Anzeige der Produktmengen im Warenkorb "
+"zu verhindern. Kunden können dann nur ein Exemplar jedes Produkts in den "
+"Warenkorb legen. Dies ist nützlich, wenn Sie digitale Produkte verkaufen und "
+"nicht möchten, dass Kunden mehrere Exemplare eines Artikels kaufen."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:400
+msgid "Disable Nonce Check for Add to Cart"
+msgstr "Deaktivieren Sie die Nonce-Prüfung für „In den Warenkorb“"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:402
+msgid ""
+"Check this option if you are using a caching solution on your site. This "
+"will bypass the nonce check on the add to cart buttons."
+msgstr ""
+"Aktivieren Sie diese Option, wenn Sie auf Ihrer Website eine Caching-Lösung "
+"verwenden. Dadurch wird die Nonce-Prüfung der Schaltflächen zum Hinzufügen "
+"zum Warenkorb umgangen."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:406
+msgid "Disable Price Check for Add to Cart"
+msgstr "Deaktivieren Sie die Preisprüfung für „In den Warenkorb“"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:408
+msgid ""
+"Using complex characters for the product name can trigger the error: The "
+"price field may have been tampered. Security check failed. This option will "
+"stop that check and remove the error."
+msgstr ""
+"Die Verwendung komplexer Zeichen im Produktnamen kann den Fehler auslösen: "
+"Das Preisfeld wurde möglicherweise manipuliert. Die Sicherheitsüberprüfung "
+"ist fehlgeschlagen. Diese Option bricht die Überprüfung ab und behebt den "
+"Fehler."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:412
 msgid "Use WP Affiliate Platform"
-msgstr "Die WP Affiliate Platform benutzen"
+msgstr "WP Affiliate Platform nutzen"
 
-#: wp_shopping_cart_settings.php:334
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:414
 msgid "Check this if using with the"
-msgstr "Markieren für die Verwendung dieses Plugins mit dem"
+msgstr "Anklicken, wenn Sie es verwenden mit dem"
 
-#: wp_shopping_cart_settings.php:334
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:414
 msgid ""
 "This plugin lets you run your own affiliate campaign/program and allows you "
 "to reward (pay commission) your affiliates for referred sales"
 msgstr ""
-"Dieses Plugin ermöglicht Ihnen ein eigenes Affiliate-System zu betreiben und "
-"Ihre Vertriebspartner für an Sie verwiesene Kunden mit Provisionen zu "
-"vergüten"
+"Mit diesem Plugin können Sie Ihre Affiliate-Kampagne / Ihr eigenes Affiliate-"
+"Programm ausführen lassen und Ihre Affiliates belohnen (Provisionen zahlen)"
 
-#: wp_shopping_cart_settings.php:370 wp_shopping_cart_settings.php:519
-msgid "Update Options &raquo;"
-msgstr "Einstellungen speichern &raquo;"
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:422
+msgid "Terms and Conditions Settings"
+msgstr "Bedingungen und Konditionen Einstellungen"
 
-#: wp_shopping_cart_settings.php:374
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:424
+msgid ""
+"This section allows you to configure Terms and Conditions that the customer "
+"must accept before making payment."
+msgstr ""
+"In diesem Abschnitt können Sie die Allgemeinen Geschäftsbedingungen "
+"konfigurieren, die der Kunde vor der Zahlung akzeptieren muss."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:428
+msgid "Enable Terms and Conditions"
+msgstr "Nutzungsbedingungen aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:433
+msgid "Enable Terms and Conditions checkbox."
+msgstr "Aktivieren Sie das Kontrollkästchen „Allgemeine Geschäftsbedingungen“."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:439
+msgid "Checkbox Text"
+msgstr "Kontrollkästchen Text"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:444
+msgid ""
+"Specify the text for the checkbox. It accepts HTML code so you can add a "
+"link to your terms and conditions page."
+msgstr ""
+"Geben Sie den Text für das Kontrollkästchen an. Es akzeptiert HTML-Code, "
+"sodass Sie einen Link zu Ihrer Seite mit den Allgemeinen "
+"Geschäftsbedingungen hinzufügen können."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:452
+msgid "Testing and Debugging Settings"
+msgstr "Test und Fehlererkennung Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:458
+msgid "Enable Debug"
+msgstr "Debug aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:460
+msgid ""
+"If checked, debug output will be written to the log file. This is useful for "
+"troubleshooting post payment failures"
+msgstr ""
+"Wenn aktiviert, wird die Debug-Ausgabe in die Protokolldatei geschrieben. "
+"Dies ist nützlich für die Behebung von Fehlern nach der Zahlung"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:475
+msgid "Enable Sandbox Testing"
+msgstr "PayPal Test Account aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:477
+msgid ""
+"Select this option if you wish to conduct sandbox testing. You will need to "
+"input your sandbox/test mode credentials from your PayPal or Stripe account."
+msgstr ""
+"Wählen Sie diese Option, wenn Sie Sandbox-Tests durchführen möchten. Sie "
+"müssen Ihre Sandbox-/Testmodus-Anmeldeinformationen von Ihrem PayPal- oder "
+"Stripe-Konto eingeben."
+
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:490
 msgid "Like the Simple WordPress Shopping Cart Plugin?"
-msgstr "Gefällt Ihnen das Simple WordPress Shopping Cart Plugin?"
+msgstr "Like the Simple WordPress Shopping Cart Plugin?"
 
-#: wp_shopping_cart_settings.php:374
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:490
 msgid "Give it a good rating"
-msgstr "Bewerten Sie es positiv"
+msgstr "Geben Sie eine 5-Sterne-Bewertung auf WordPress.org."
 
-#: includes/wspsc-cart-functions.php:18
-msgid "Visit The Shop"
-msgstr "Besuchen Sie den Shop"
+#: ../includes/admin/wp_shopping_cart_menu_general_settings.php:491
+msgid ". It will help us keep the plugin free & maintained."
+msgstr ". Es wird uns helfen, das Plugin kostenlos und gepflegt zu halten."
 
-#: includes/wspsc-cart-functions.php:64
-msgid "Cart"
-msgstr "Warenkorb"
+#: ../includes/admin/wp_shopping_cart_menu_main.php:12
+msgid "Simple Cart"
+msgstr "Einfacher Warenkorb"
 
-#: includes/wspsc-cart-functions.php:72
-msgid "Hit enter to submit new Quantity."
-msgstr "Drücken Sie Enter um eine neue Menge festzulegen"
+#: ../includes/admin/wp_shopping_cart_menu_main.php:13
+#: ../wp_shopping_cart.php:703
+msgid "Settings"
+msgstr "Einstellungen"
 
-#: includes/wspsc-cart-functions.php:82
-msgid "Item Name"
-msgstr "Artikel"
+#: ../includes/admin/wp_shopping_cart_menu_main.php:14
+msgid "Coupons"
+msgstr "Gutscheine"
 
-#: includes/wspsc-cart-functions.php:82
-msgid "Quantity"
-msgstr "Menge"
+#: ../includes/admin/wp_shopping_cart_menu_main.php:15
+msgid "Tools"
+msgstr "Tools"
 
-#: includes/wspsc-cart-functions.php:82
+#: ../includes/admin/wp_shopping_cart_menu_main.php:16
+msgid "Add-ons"
+msgstr "Erweiterungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:23
+msgid "WP Simple Shopping Cart"
+msgstr "WP Simple Shopping Cart"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:41
+msgid "General Settings"
+msgstr "Allgemeine Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:42
+msgid "Email Settings"
+msgstr "E-Mail Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:43
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:193
+msgid "Shipping Settings"
+msgstr "Versandeinstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:44
+msgid "PayPal PPCP (New API)"
+msgstr "PayPal PPCP (Neue API)"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:45
+msgid "PayPal Smart Checkout"
+msgstr "PayPal Smart Checkout"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:46
+msgid "Stripe Settings"
+msgstr "Stripe Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:47
+msgid "Manual/Offline Checkout"
+msgstr "Manuelle/Offline-Kaufabwicklung"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:50
+msgid "WP Simple Shopping Cart Settings"
+msgstr "WP Simple Shopping Cart-Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:120
+msgid ""
+"You are using the old PayPal Smart Checkout option in the \"Simple Shopping "
+"Cart\" plugin. Please switch to the new PayPal PPCP option for better "
+"security and functionaliy."
+msgstr ""
+"Sie verwenden die alte PayPal Smart Checkout-Option im Plugin „Simple "
+"Shopping Cart“. Bitte wechseln Sie zur neuen PayPal PPCP-Option für mehr "
+"Sicherheit und Funktionalität."
+
+#: ../includes/admin/wp_shopping_cart_menu_main.php:121
+msgid ""
+"Switch to the new PayPal Commerce Platform API by configuring the API "
+"credentials"
+msgstr ""
+"Wechseln Sie zur neuen PayPal Commerce Platform API, indem Sie die API-"
+"Anmeldeinformationen konfigurieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:17
+msgid "Proceed to Manual Checkout"
+msgstr "Weiter zur manuellen Kaufabwicklung"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:41
+msgid "Manual Checkout Settings Updated!"
+msgstr "Manuelle Checkout-Einstellungen aktualisiert!"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:91
+msgid "Manual Checkout Settings"
+msgstr "Manuelle Checkout-Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:94
+msgid "For instructions on enabling Manual Checkout, please refer to "
+msgstr ""
+"Anweisungen zum Aktivieren der manuellen Kaufabwicklung finden Sie unter"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:95
+msgid "this documentation"
+msgstr "diese Dokumentation"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:99
+msgid "Enable Manual Checkout"
+msgstr "Manuelles Auschecken aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:104
+msgid "Select this option to enable manual or offline checkout in the cart."
+msgstr ""
+"Wählen Sie diese Option, um die manuelle oder Offline-Kaufabwicklung im "
+"Warenkorb zu aktivieren."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:110
+msgid "Manual Checkout Button Text"
+msgstr "Text der Schaltfläche „Manuelle Kaufabwicklung“"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:115
+msgid ""
+"Customize the manual checkout button text in the cart. The default text is "
+"'Proceed to Manual Checkout'."
+msgstr ""
+"Passen Sie den Text der Schaltfläche für die manuelle Kaufabwicklung im "
+"Warenkorb an. Der Standardtext lautet „Zur manuellen Kaufabwicklung "
+"fortfahren“."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:121
+msgid "Manual Checkout Instructions on Checkout Form"
+msgstr "Manuelle Checkout-Anweisungen auf dem Checkout-Formular"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:140
+msgid "Add manual checkout instructions here to display them above the form."
+msgstr ""
+"Fügen Sie hier manuelle Anweisungen zum Bezahlen hinzu, um sie über dem "
+"Formular anzuzeigen."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:146
+msgid "Send Manual Checkout Payment Instructions to Buyer via Email"
+msgstr ""
+"Senden Sie dem Käufer per E-Mail Anweisungen zur manuellen Kaufabwicklung"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:152
+msgid ""
+"If enabled, the plugin will send an email to the buyer after completing a "
+"manual checkout."
+msgstr ""
+"Wenn aktiviert, sendet das Plugin nach Abschluss einer manuellen "
+"Kaufabwicklung eine E-Mail an den Käufer."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:157
+msgid "Payment Instruction Email Subject"
+msgstr "Betreff der E-Mail mit Zahlungsanweisungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:165
+msgid "This is the subject line for the email sent to the buyer."
+msgstr "Dies ist die Betreffzeile der E-Mail, die an den Käufer gesendet wird."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:170
+msgid "Payment Instruction Email Body"
+msgstr "E-Mail-Text mit Zahlungsanweisungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:192
+msgid "Send Manual Checkout Notification to Seller via Email"
+msgstr ""
+"Senden Sie dem Verkäufer per E-Mail eine Benachrichtigung zur manuellen "
+"Kaufabwicklung"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:198
+msgid ""
+"If checked, the plugin will send an email to the seller after a manual "
+"checkout."
+msgstr ""
+"Wenn diese Option aktiviert ist, sendet das Plugin nach einem manuellen "
+"Checkout eine E-Mail an den Verkäufer."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:203
+msgid "Manual Checkout Notification Email Address"
+msgstr "E-Mail-Adresse für manuelle Checkout-Benachrichtigungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:211
+msgid ""
+"The email address for receiving manual checkout notifications. If left "
+"empty, the email address from the 'Email Settings' menu will be used."
+msgstr ""
+"Die E-Mail-Adresse für den Empfang von Benachrichtigungen zum manuellen "
+"Checkout. Wenn dieses Feld leer bleibt, wird die E-Mail-Adresse aus dem Menü "
+"„E-Mail-Einstellungen“ verwendet."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:216
+msgid "Notification Email Subject"
+msgstr "Betreff der Benachrichtigungs-E-Mail"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:224
+msgid "This is the subject of the email that will be sent to the seller."
+msgstr "Dies ist der Betreff der E-Mail, die an den Verkäufer gesendet wird."
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:229
+msgid "Notification Email Body"
+msgstr "Text der Benachrichtigungs-E-Mail"
+
+#: ../includes/admin/wp_shopping_cart_menu_manual_checkout.php:255
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:184
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:304
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:400
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:164
+msgid "Save Changes"
+msgstr "Einstellungen speichern"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:42
+msgid ""
+"Configure the PayPal API credentials and checkout button appearance for the "
+"PayPal Commerce Platform (PPCP)."
+msgstr ""
+"Konfigurieren Sie die PayPal-API-Anmeldeinformationen und das "
+"Erscheinungsbild der Checkout-Schaltfläche für die PayPal Commerce Platform "
+"(PPCP)."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:43
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:245
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:430
+msgid "Read this documentation"
+msgstr "Lesen Sie diese Dokumentation"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:43
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:430
+msgid "to learn how to set up and configure it."
+msgstr "um zu erfahren, wie Sie es einrichten und konfigurieren."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:53
+msgid "PayPal API Connection"
+msgstr "PayPal-API-Verbindung"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:54
+msgid "API Credentials"
+msgstr "API Zugangsdaten"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:55
+msgid "Button Appearance"
+msgstr "Aussehen der Buttons"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:65
+msgid "PayPal checkout settings updated successfully."
+msgstr "Die PayPal-Checkout-Einstellungen wurden erfolgreich aktualisiert."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:79
+msgid "PayPal account disconnected."
+msgstr "PayPal-Konto getrennt."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:88
+msgid "PayPal sandbox account disconnected."
+msgstr "Die Verbindung zum PayPal-Sandbox-Konto wurde getrennt."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:99
+msgid "PayPal API settings updated successfully."
+msgstr "PayPal-API-Einstellungen erfolgreich aktualisiert."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:117
+msgid "PayPal button appearance settings updated successfully."
+msgstr ""
+"Die Einstellungen für das Erscheinungsbild der PayPal-Schaltfläche wurden "
+"erfolgreich aktualisiert."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:129
+msgid "PayPal API access token cache deleted successfully."
+msgstr "Cache des PayPal-API-Zugriffstokens erfolgreich gelöscht."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:160
+msgid "Enable PayPal Commerce Platform Checkout (New API)"
+msgstr "PayPal Commerce Platform Checkout aktivieren (Neue API)"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:166
+msgid "Enable PayPal Commerce Platform Checkout"
+msgstr "PayPal Commerce Platform Checkout aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:174
+msgid ""
+"Enable this to offer the PayPal commerce platform (PPCP) checkout buttons as "
+"an option in the shopping cart."
+msgstr ""
+"Aktivieren Sie diese Option, um die Checkout-Schaltflächen der PayPal "
+"Commerce Platform (PPCP) als Option im Einkaufswagen anzubieten."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:192
+msgid "PayPal Account Connection"
+msgstr "PayPal-Kontoverbindung"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:202
+msgid "Delete PayPal API Access Token Cache"
+msgstr "Cache für PayPal-API-Zugriffstoken löschen"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:207
+msgid "Delete Access Token Cache"
+msgstr "Zugriffstoken-Cache löschen"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:213
+msgid "Delete Token Cache"
+msgstr "Token-Cache löschen"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:214
+msgid ""
+"This will delete the PayPal API access token cache. This is useful if you "
+"are having issues with the PayPal API after changing/updating the API "
+"credentials."
+msgstr ""
+"Dadurch wird der Cache des PayPal-API-Zugriffstokens gelöscht. Dies ist "
+"nützlich, wenn nach dem Ändern/Aktualisieren der API-Anmeldeinformationen "
+"Probleme mit der PayPal-API auftreten."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:238
+msgid "PayPal API Credentials for PPCP"
+msgstr "PayPal-API-Anmeldeinformationen für PPCP"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:244
+msgid ""
+"If you have used the automatic option to connect and get your PayPal API "
+"credentials from the 'PayPal API Connection' tab, they will be displayed "
+"below. The following section also allows for manual entry of your PayPal API "
+"credentials in case the automatic option is non-functional for your PayPal "
+"account."
+msgstr ""
+"Wenn Sie die automatische Verbindung verwendet und Ihre PayPal-API-"
+"Anmeldeinformationen über die Registerkarte „PayPal-API-Verbindung“ "
+"abgerufen haben, werden diese unten angezeigt. Im folgenden Abschnitt können "
+"Sie Ihre PayPal-API-Anmeldeinformationen auch manuell eingeben, falls die "
+"automatische Option für Ihr PayPal-Konto nicht funktioniert."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:245
+msgid "to learn how to manually set up the API credentials."
+msgstr ""
+"um zu erfahren, wie Sie die API-Anmeldeinformationen manuell einrichten."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:260
+msgid "Enter your PayPal Client ID for live mode."
+msgstr "Geben Sie für den Live-Modus Ihre PayPal-Client-ID ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:267
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:101
+msgid "Live Secret Key"
+msgstr "Live Secret Key"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:273
+msgid "Enter your PayPal Secret Key for live mode."
+msgstr "Geben Sie Ihren geheimen PayPal-Schlüssel für den Live-Modus ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:286
+msgid "Enter your PayPal Client ID for sandbox mode."
+msgstr "Geben Sie Ihre PayPal-Client-ID für den Sandbox-Modus ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:293
+msgid "Sandbox Secret Key"
+msgstr "Sandbox Secret Schlüssel"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:299
+msgid "Enter your PayPal Secret Key for sandbox mode."
+msgstr "Geben Sie Ihren geheimen PayPal-Schlüssel für den Sandbox-Modus ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:319
+msgid "PayPal Button Appearance Settings"
+msgstr "Einstellungen für das Erscheinungsbild der PayPal-Schaltfläche"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:322
+msgid ""
+"Configure the button appearance for the PayPal Commerce Platform checkout "
+"option. The default options are optimized for a quick start."
+msgstr ""
+"Konfigurieren Sie die Schaltflächendarstellung für die Checkout-Option der "
+"PayPal Commerce Platform. Die Standardoptionen sind für einen schnellen "
+"Start optimiert."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:328
+msgid "Button Type/Label"
+msgstr "Schaltflächentyp/Beschriftung"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:331
+msgid "Checkout"
+msgstr "Kasse"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:332
+msgid "Pay"
+msgstr "Bezahlen"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:333
+msgid "PayPal"
+msgstr "PayPal"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:334
+msgid "Buy Now"
+msgstr "Kostenpflichtig kaufen"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:335
+msgid "Subscribe"
+msgstr "Abonniere"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:337
+msgid "Select button type/label."
+msgstr "Wählen Sie den Schaltflächentyp/die Schaltflächenbezeichnung aus."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:341
+msgid "Button Shape"
+msgstr "Button Form"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:343
+msgid "Rectangular"
+msgstr "Rechteckig"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:349
+msgid "Button Layout"
+msgstr "Button Layout"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:357
+msgid "Button Height"
+msgstr "Button Höhe"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:360
+msgid "Small"
+msgstr "Klein"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:363
+msgid "Extra Large"
+msgstr "Extra Groß"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:365
+msgid "Select button height."
+msgstr "Wählen Sie die Schaltflächenhöhe aus."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:369
+msgid "Button Width"
+msgstr "Button Breite"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:372
+msgid "Select button width."
+msgstr "Wählen Sie die Schaltflächenbreite aus."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:376
+msgid "Button Color"
+msgstr "Button Farbe"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:382
+msgid "White"
+msgstr "Weiß"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:389
+msgid "Disable Funding"
+msgstr "Finanzierung deaktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:391
+msgid "Credit or debit cards"
+msgstr "Kredit- oder Debitkarten"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:393
+msgid "Venmo"
+msgstr "Venmo"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:394
+msgid ""
+"By default, funding source eligibility is smartly decided based on a variety "
+"of factors. You can force disable funding options by selecting them here."
+msgstr ""
+"Standardmäßig wird die Förderfähigkeit einer Finanzierungsquelle anhand "
+"verschiedener Faktoren ermittelt. Sie können die Finanzierungsoptionen "
+"deaktivieren, indem Sie sie hier auswählen."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:429
+msgid ""
+"Use the buttons below to connect and obtain the necessary PayPal API "
+"credentials automatically to offer the PayPal Commerce Platform checkout "
+"option."
+msgstr ""
+"Verwenden Sie die Schaltflächen unten, um eine Verbindung herzustellen und "
+"automatisch die erforderlichen PayPal-API-Anmeldeinformationen abzurufen, um "
+"die Checkout-Option der PayPal Commerce Platform anzubieten."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:436
+msgid "Live Account Connnection Status"
+msgstr "Live-Konto-Verbindungsstatus"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:449
+msgid ""
+"Live account is connected. If you experience any issues, please disconnect "
+"and reconnect."
+msgstr ""
+"Das Live-Konto ist verbunden. Sollten Probleme auftreten, trennen Sie die "
+"Verbindung und stellen Sie sie erneut her."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:456
+msgid ""
+"Live PayPal account is not connected. Click the button below to authorize "
+"the app and acquire API credentials from your PayPal account."
+msgstr ""
+"Es besteht keine Verbindung zum Live-PayPal-Konto. Klicken Sie auf die "
+"Schaltfläche unten, um die App zu autorisieren und API-Anmeldeinformationen "
+"von Ihrem PayPal-Konto abzurufen."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:466
+msgid "Sandbox Account Connnection Status"
+msgstr "Verbindungsstatus des Sandbox-Kontos"
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:479
+msgid ""
+"Sandbox account is connected. If you experience any issues, please "
+"disconnect and reconnect."
+msgstr ""
+"Das Sandbox-Konto ist verbunden. Sollten Probleme auftreten, trennen Sie die "
+"Verbindung und stellen Sie sie erneut her."
+
+#: ../includes/admin/wp_shopping_cart_menu_ppcp_settings.php:486
+msgid "Sandbox PayPal account is not connected."
+msgstr "Sandbox-PayPal-Konto ist nicht verbunden."
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:121
+msgid "Are you sure you want to delete this variation?"
+msgstr "Möchten Sie diese Variante wirklich löschen?"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:122
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:276
+msgid "Delete variation"
+msgstr "Variation Löschen"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:123
+#: ../includes/wpsc-cart-functions.php:776
+#: ../includes/wpsc-manual-checkout-form-related.php:62
+msgid "Country"
+msgstr "Land"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:124
+#: ../includes/wpsc-cart-functions.php:780
+#: ../includes/wpsc-manual-checkout-form-related.php:71
+msgid "State"
+msgstr "Bundesland"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:125
+#: ../includes/wpsc-cart-functions.php:784
+#: ../includes/wpsc-manual-checkout-form-related.php:56
+msgid "City"
+msgstr "Stadt"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:197
+msgid "Base Shipping Cost"
+msgstr "Grundsätzliche Versandkosten"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:199
+msgid ""
+"This is the base shipping cost that will be added to the total of individual "
+"products shipping cost. Put 0 if you do not want to charge shipping cost or "
+"use base shipping cost."
+msgstr ""
+"Dies sind die Versandkosten, die zu den Versandkosten für die einzelnen "
+"Produkte hinzugefügt werden. Setzen Sie 0, wenn Sie keine Versandkosten "
+"berechnen oder die Basisversandkosten verwenden möchten."
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:200
+msgid "Learn More on Shipping Calculation"
+msgstr "Erfahren Sie mehr über Versandkosten Kalkulation"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:204
+msgid "Free Shipping for Orders Over"
+msgstr "Kostenloser Versand für Bestellungen über"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:208
+msgid ""
+"When a customer orders more than this amount he/she will get free shipping. "
+"Leave empty if you do not want to use it."
+msgstr ""
+"Wenn ein Kunde mehr als diesen Betrag bestellt, erhält er einen kostenlosen "
+"Versand. Lassen Sie das Feld leer, wenn Sie es nicht verwenden möchten."
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:216
+msgid "Regional Shipping Settings"
+msgstr "Regionale Versandeinstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:220
+msgid "Enable Shipping by Region"
+msgstr "Versand nach Region aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:223
+msgid "Select this option to enable region based shipping cost additions."
+msgstr ""
+"Wählen Sie diese Option, um regionsbasierte Versandkostenergänzungen zu "
+"aktivieren."
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:224
+msgid ""
+"You can define shipping regions and allocate extra shipping costs for each. "
+"Customers will choose their region from a list, and the relevant additional "
+"charge will be included in the total shipping cost."
+msgstr ""
+"Sie können Versandregionen definieren und für jede Region zusätzliche "
+"Versandkosten berechnen. Kunden wählen ihre Region aus einer Liste aus, und "
+"die entsprechenden zusätzlichen Kosten werden in die Gesamtversandkosten "
+"eingerechnet."
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:230
+msgid "Shipping Regions"
+msgstr "Versandregionen"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:286
+msgid "Add Shipping Variation"
+msgstr "Versandvariante hinzufügen"
+
+#: ../includes/admin/wp_shopping_cart_menu_shipping_settings.php:289
+msgid "Use this to configure shipping additions on a per-region basis."
+msgstr ""
+"Verwenden Sie dies, um Versandergänzungen auf Regionsbasis zu konfigurieren."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:76
+msgid "Stripe Checkout Settings"
+msgstr "Stripe Kassa Einstellungen"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:83
+msgid "Enable Stripe Checkout"
+msgstr "Stripe Checkout aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:87
+msgid "To learn how to enable Stripe, please refer to "
+msgstr "Um zu erfahren, wie Sie Stripe aktivieren, lesen Sie bitte"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:88
+msgid "the documentation"
+msgstr "Dokumentation"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:95
+msgid "Live Publishable Key"
+msgstr "Live Publishable Key"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:97
+msgid "Enter your live Publishable Key."
+msgstr "Geben Sie Ihren Live-Publishable-Key ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:103
+msgid "Enter your live Secret Key."
+msgstr "Geben Sie Ihren Live-Geheimschlüssel ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:107
+msgid "Test Publishable Key"
+msgstr "Test Publishable Key"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:109
+msgid "Enter your test Publishable Key."
+msgstr "Geben Sie Ihren Publishable Key zum Testen ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:113
+msgid "Test Secret Key"
+msgstr "Test Secret Key"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:115
+msgid "Enter your test Secret Key."
+msgstr "Geben Sie Ihren geheimen Testschlüssel ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:119
+msgid "Collect Billing Address on Stripe Checkout Page"
+msgstr "Rechnungsadresse auf der Stripe-Checkout-Seite erfassen"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:121
+msgid ""
+"If this option is checked, customers will be required to enter their billing "
+"address on Stripe during the checkout process."
+msgstr ""
+"Wenn diese Option aktiviert ist, müssen Kunden während des Bezahlvorgangs "
+"ihre Rechnungsadresse bei Stripe eingeben."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:124
+msgid "Collect Shipping Address on Stripe Checkout Page"
+msgstr "Lieferadresse auf der Stripe-Checkout-Seite erfassen"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:126
+msgid ""
+"If this option is checked, customers will be required to enter their "
+"shipping address on Stripe during the checkout process."
+msgstr ""
+"Wenn diese Option aktiviert ist, müssen Kunden während des Bestellvorgangs "
+"ihre Lieferadresse bei Stripe eingeben."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:129
+msgid "Allowed countries for shipping"
+msgstr "Erlaubte Länder für den Versand"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:132
+msgid ""
+"Enter the countries that are allowed for shipping by specifying their two-"
+"letter ISO country codes separated by comma. For example: US, UK, CA, AU etc."
+msgstr ""
+"Geben Sie die Länder ein, in die versendet werden darf. Geben Sie dazu die "
+"zweistelligen ISO-Ländercodes durch Kommas getrennt an. Beispiel: US, UK, "
+"CA, AU usw."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:132
+msgid "See the list of ISO country codes here."
+msgstr "Die Liste der ISO-Ländercodes finden Sie hier."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:137
+msgid "Enable Automatic Tax"
+msgstr "Automatische Steuer aktivieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:140
+msgid ""
+"If enabled, automatic tax will be applied during Stripe checkout. Ensure "
+"that the tax option is enabled and configured in your Stripe account before "
+"activating it in our plugin."
+msgstr ""
+"Wenn aktiviert, wird beim Bezahlvorgang mit Stripe automatisch eine Steuer "
+"berechnet. Stellen Sie sicher, dass die Steueroption in Ihrem Stripe-Konto "
+"aktiviert und konfiguriert ist, bevor Sie sie in unserem Plugin aktivieren."
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:150
+msgid "Checkout Button Image URL"
+msgstr "Bild-URL der Checkout-Schaltfläche"
+
+#: ../includes/admin/wp_shopping_cart_menu_stripe_settings.php:153
+msgid ""
+"If you want to customize the look of the button using an image then enter "
+"the URL of the image."
+msgstr ""
+"Wenn Sie das Aussehen der Schaltfläche mithilfe eines Bildes anpassen "
+"möchten, geben Sie die URL des Bildes ein."
+
+#: ../includes/admin/wp_shopping_cart_menu_tools.php:9
+msgid "Simple Shopping Cart Tools"
+msgstr "Einfache Einkaufswagen-Tools"
+
+#: ../includes/admin/wp_shopping_cart_menu_tools.php:18
+msgid "Export Cart Orders Data"
+msgstr "Warenkorb-Bestelldaten exportieren"
+
+#: ../includes/admin/wp_shopping_cart_menu_tools.php:23
+msgid ""
+"You can use this option to export all the orders data to a CSV/Excel file."
+msgstr ""
+"Mit dieser Option können Sie alle Bestelldaten in eine CSV-/Excel-Datei "
+"exportieren."
+
+#: ../includes/admin/wp_shopping_cart_menu_tools.php:25
+msgid "Export Data"
+msgstr "Daten exportieren"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:11
+msgid "Cart Orders"
+msgstr "Bestellungen"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:12
+msgid "Cart Order"
+msgstr "Cart Bestellung"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:13
+msgid "Add New"
+msgstr "Erstellen"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:14
+msgid "Add New Order"
+msgstr "Neue Bestellung hinzufügen"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:15
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:16
+msgid "Edit Order"
+msgstr "Bestellung bearbeiten"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:17
+msgid "New Order"
+msgstr "Neue Bestellung"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:18
+msgid "View"
+msgstr "Anzeigen"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:19
+msgid "View Order"
+msgstr "Bestellung ansehen"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:20
+msgid "Search Order"
+msgstr "Bestellung suchen"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:21
+msgid "No order found"
+msgstr "Keine Bestellung gefunden"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:22
+msgid "No order found in Trash"
+msgstr "Keine Bestellung im Papierkorb gefunden"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:23
+msgid "Parent Order"
+msgstr "Übergeordneter Auftrag"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:36
+msgid "Order Review"
+msgstr "Bestellübersicht"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:37
+msgid "Order Actions"
+msgstr "Bestellaktionen"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:72
+#, php-format
+msgid ""
+"Payment for this order has not been received yet. The current status of this "
+"order is: %s"
+msgstr ""
+"Die Zahlung für diese Bestellung ist noch nicht eingegangen. Der aktuelle "
+"Status dieser Bestellung ist: %s"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:78
+#: ../includes/admin/wp_shopping_cart_orders.php:282
+#: ../includes/classes/class.wpsc-thank-you.php:57
+msgid "Order ID"
+msgstr "Bestellnummer"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:82
+msgid "Transaction ID"
+msgstr "Transaktions-ID"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:87
+#: ../includes/classes/class.wpsc-thank-you.php:73
+msgid "Payment Gateway"
+msgstr "Zahlungsart / Bezahl-Gateway"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:92
+#: ../includes/admin/wp_shopping_cart_orders.php:283
+#: ../includes/wpsc-manual-checkout-form-related.php:25
+msgid "First Name"
+msgstr "Vorname"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:96
+#: ../includes/admin/wp_shopping_cart_orders.php:284
+#: ../includes/wpsc-manual-checkout-form-related.php:31
+msgid "Last Name"
+msgstr "Nachname"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:100
+msgid "Email Address"
+msgstr "E-Mail Adresse"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:104
+msgid "IP Address"
+msgstr "IP-Adresse"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:108
+msgid "Total Amount"
+msgstr "Gesamtsumme"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:112
+msgid "Tax Amount"
+msgstr "Steuerbetrag"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:116
+msgid "Shipping Amount"
+msgstr "Versandkostenanteil"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:121
+#: ../includes/classes/class.wpsc-thank-you.php:148
+msgid "Shipping Region"
+msgstr "Versandregion"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:126
+msgid "Address"
+msgstr "Adresse"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:130
+msgid ""
+"An address value is usually provided when the order includes physical items "
+"that require shipping. "
+msgstr ""
+"Ein Adresswert wird normalerweise angegeben, wenn die Bestellung physische "
+"Artikel enthält, die versendet werden müssen."
+
+#: ../includes/admin/wp_shopping_cart_orders.php:136
+#: ../includes/classes/class.wpsc-thank-you.php:157
+msgid "Billing Address"
+msgstr "Rechnungsadresse"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:140
+msgid "The billing address (if available)."
+msgstr "Die Rechnungsadresse (sofern vorhanden)."
+
+#: ../includes/admin/wp_shopping_cart_orders.php:146
+msgid "Phone"
+msgstr "Telefon"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:150
+msgid ""
+"A phone number will only be present if the customer entered one during the "
+"checkout."
+msgstr ""
+"Eine Telefonnummer ist nur dann vorhanden, wenn der Kunde beim Bezahlvorgang "
+"eine eingegeben hat."
+
+#: ../includes/admin/wp_shopping_cart_orders.php:155
+msgid "Buyer Email Sent?"
+msgstr "E-Mail an den Käufer gesendet?"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:159
+msgid "Item(s) Ordered"
+msgstr "Bestellte(r) Artikel"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:163
+msgid "Applied Coupon Code"
+msgstr "Verwendeter Gutscheincode"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:189
+msgid "Mark This Order as Paid"
+msgstr "Diese Bestellung als bezahlt markieren"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:201
+msgid "Mark this order as paid and send purchase notification email to buyer."
+msgstr ""
+"Markieren Sie diese Bestellung als bezahlt und senden Sie dem Käufer eine "
+"Kaufbenachrichtigungs-E-Mail."
+
+#: ../includes/admin/wp_shopping_cart_orders.php:204
+msgid "Resend Sale Notification Email"
+msgstr "E-Mail mit Verkaufsbenachrichtigung erneut senden"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:285
+#: ../includes/classes/class.wpsc-thank-you.php:69
+#: ../includes/wpsc-manual-checkout-form-related.php:37
+msgid "Email"
+msgstr "E-Mail"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:286
+#: ../includes/classes/class.wpsc-thank-you.php:65
+#: ../includes/classes/class.wpsc-thank-you.php:84
+#: ../includes/wpsc-cart-functions.php:244
+msgid "Total"
+msgstr "Gesamtsumme"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:287
+msgid "Status"
+msgstr "Status"
+
+#: ../includes/admin/wp_shopping_cart_orders.php:288
+#: ../includes/classes/class.wpsc-thank-you.php:61
+msgid "Date"
+msgstr "Datum"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:91
+msgid "Please enter product name"
+msgstr "Bitte Produktnamen eingeben"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:99
+msgid "Please enter product price"
+msgstr "Bitte geben Sie den Produktpreis ein"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:148
+msgid "Simple Cart Documentation"
+msgstr "Simple Cart-Dokumentation"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:154
+msgid "Product Name"
+msgstr "Produktname"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:160
+msgid "Example: My Great Product"
+msgstr "Beispiel: Mein großartiges Produkt"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:165
+#: ../includes/wpsc-cart-functions.php:120
 msgid "Price"
 msgstr "Preis"
 
-#: includes/wspsc-cart-functions.php:121
+#: ../includes/admin/wp_shopping_cart_tinymce.php:171
+#: ../includes/admin/wp_shopping_cart_tinymce.php:182
+msgid "Example: 10 or 10.50"
+msgstr "Beispiel: 10 oder 10,50"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:176
+msgid "Shipping (Optional)"
+msgstr "Versand (optional)"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:187
+msgid "File URL (Optional)"
+msgstr "Datei-URL (optional)"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:199
+msgid "Product Variations (Optional)"
+msgstr "Produktvarianten (optional)"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:200
+msgid ""
+"Example: For a T-Shirt product you may want to use a variation with name "
+"\"Size\" and values as \"Small, Medium, Large\""
+msgstr ""
+"Beispiel: Für ein T-Shirt-Produkt möchten Sie möglicherweise eine Variante "
+"mit dem Namen „Größe“ und den Werten „Klein, Mittel, Groß“ verwenden."
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:205
+msgid "Variation 1: Name"
+msgstr "Variante 1: Name"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:210
+#: ../includes/admin/wp_shopping_cart_tinymce.php:221
+#: ../includes/admin/wp_shopping_cart_tinymce.php:232
+msgid "Values"
+msgstr "Werte"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:211
+msgid " Example: Small, Medium, Large"
+msgstr "Beispiel: Klein, Mittel, Groß"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:216
+msgid "Variation 2: Name"
+msgstr "Variante 2: Name"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:222
+msgid " Example: Blue, Red, Black, White"
+msgstr "Beispiel: Blau, Rot, Schwarz, Weiß"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:227
+msgid "Variation 3: Name"
+msgstr "Variante 3: Name"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:233
+msgid " Example: Short, Full"
+msgstr "Beispiel: Kurz, Voll"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:243
+msgid "Insert"
+msgstr "Einfügen"
+
+#: ../includes/admin/wp_shopping_cart_tinymce.php:250
+#: ../includes/wpsc-manual-checkout-form-related.php:92
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: ../includes/classes/class-coupon.php:24
+msgid "Admin needs to configure some discount coupons before it can be used"
+msgstr ""
+"Der Administrator muss einige Rabattcoupons konfigurieren, bevor diese "
+"verwendet werden können"
+
+#: ../includes/classes/class-coupon.php:155
+msgid "Coupon ID: "
+msgstr "Coupon ID:"
+
+#: ../includes/classes/class-coupon.php:156
+msgid "Coupon Code: "
+msgstr "Gutscheincode: "
+
+#: ../includes/classes/class-coupon.php:157
+msgid "Discount Amt: "
+msgstr "Rabattbetrag:"
+
+#: ../includes/classes/class-coupon.php:158
+msgid "Expiry date: "
+msgstr "Ablaufdatum: "
+
+#: ../includes/classes/class-coupon.php:168
+msgid "Coupon code used does not exist!"
+msgstr "unbekannter Coupon Code"
+
+#: ../includes/classes/class-coupon.php:175
+msgid "Coupon code expired!"
+msgstr "Gutscheincode abgelaufen!"
+
+#: ../includes/classes/class-coupon.php:180
+msgid "Discount can only be applied once per checkout!"
+msgstr "Rabatte können nur einmal pro Kauf angewendet werden!"
+
+#: ../includes/classes/class-coupon.php:206
+msgid "Discount applied successfully! Total Discount: "
+msgstr "Rabatt erfolgreich angewendet. Gesamter Preisvorteil:"
+
+#: ../includes/classes/class.wpsc-email-handler.php:73
+#, php-format
+msgid "Invalid email address: %s. Email could not be sent!"
+msgstr "Ungültige E-Mail-Adresse: %s. E-Mail konnte nicht gesendet werden!"
+
+#: ../includes/classes/class.wpsc-email-handler.php:139
+msgid ""
+"This is the body of the email that will be sent. Do not change the text "
+"within the braces {}. You can use the following email tags in this email "
+"body field:"
+msgstr ""
+"Dies ist der Text der E-Mail, die gesendet wird. Ändern Sie den Text "
+"innerhalb der Klammern {} nicht. Sie können die folgenden E-Mail-Tags in "
+"diesem Textfeld verwenden:"
+
+#: ../includes/classes/class.wpsc-thank-you.php:24
+msgid ""
+"Our system is currently awaiting payment confirmation from the payment "
+"gateway. Please wait a few minutes and refresh this page. You may also "
+"navigate away, as we will send you an email once the payment confirmation is "
+"received."
+msgstr ""
+"Unser System wartet derzeit auf die Zahlungsbestätigung vom Zahlungsportal. "
+"Bitte warten Sie einige Minuten und aktualisieren Sie diese Seite. Sie "
+"können die Seite auch verlassen. Wir senden Ihnen eine E-Mail, sobald die "
+"Zahlungsbestätigung eingegangen ist."
+
+#: ../includes/classes/class.wpsc-thank-you.php:54
+msgid "Thank you. Your order has been received."
+msgstr "Vielen Dank. Ihre Bestellung ist eingegangen."
+
+#: ../includes/classes/class.wpsc-thank-you.php:78
+msgid "Order Details"
+msgstr "Bestelldetails"
+
+#: ../includes/classes/class.wpsc-thank-you.php:83
+#: ../includes/classes/class.wpsc-thank-you.php:120
+msgid "Product"
+msgstr "Angebot"
+
+#: ../includes/classes/class.wpsc-thank-you.php:98
+msgid "Shipping Amount: "
+msgstr "Versandkosten: "
+
+#: ../includes/classes/class.wpsc-thank-you.php:104
+msgid "Tax Amount: "
+msgstr "Steuerbetrag"
+
+#: ../includes/classes/class.wpsc-thank-you.php:109
+msgid "Total Amount: "
+msgstr "Gesamtbetrag: "
+
+#: ../includes/classes/class.wpsc-thank-you.php:116
+msgid "Downloads"
+msgstr "Downloads"
+
+#: ../includes/classes/class.wpsc-thank-you.php:121
+msgid "Download Link"
+msgstr "Download Link"
+
+#: ../includes/classes/class.wpsc-thank-you.php:129
+msgid "Download"
+msgstr "Download"
+
+#: ../includes/classes/class.wpsc-thank-you.php:139
+#: ../includes/wpsc-manual-checkout-form-related.php:45
+msgid "Shipping Address"
+msgstr "Lieferadresse"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:46
+msgid "Inserts an 'add to cart' button for a product/item."
+msgstr ""
+"Fügt für ein Produkt/einen Artikel eine Schaltfläche „In den Warenkorb“ ein."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:58
+#: ../includes/classes/class.wpsc_product_box_block.php:58
+msgid "General"
+msgstr "Allgemein"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:61
+msgid "Customize the cart button"
+msgstr "Passen Sie die Warenkorb-Schaltfläche an"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:64
+#: ../includes/classes/class.wpsc_product_box_block.php:64
+msgid "Name (required)"
+msgstr "Name (erforderlich)"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:65
+#: ../includes/classes/class.wpsc_product_box_block.php:65
+msgid "Specify the product name."
+msgstr "Geben Sie den Produktnamen an."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:68
+#: ../includes/classes/class.wpsc_product_box_block.php:68
+msgid "Price (required)"
+msgstr "Preis der Variante (erforderlich)"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:69
+msgid "Specify the price of the product without the currency symbol."
+msgstr "Geben Sie den Preis des Produkts ohne Währungssymbol an."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:72
+#: ../includes/classes/class.wpsc_product_box_block.php:76
+msgid "Shipping Cost"
+msgstr "Versandkosten"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:73
+#: ../includes/classes/class.wpsc_product_box_block.php:77
+msgid "Add a shipping cost for this product if required."
+msgstr "Fügen Sie bei Bedarf Versandkosten für dieses Produkt hinzu."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:76
+#: ../includes/classes/class.wpsc_product_box_block.php:109
+msgid "Button Text"
+msgstr "Button Text"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:77
+msgid "Customize the cart button text."
+msgstr "Passen Sie den Text der Warenkorb-Schaltfläche an."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:80
+msgid "Button Image URL"
+msgstr "Button Image URL"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:81
+msgid "Add image URL for using an image as the cart button."
+msgstr ""
+"Fügen Sie eine Bild-URL hinzu, um ein Bild als Warenkorb-Schaltfläche zu "
+"verwenden."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:84
+#: ../includes/classes/class.wpsc_product_box_block.php:80
+msgid "File URL"
+msgstr "Dateipfad"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:85
+#: ../includes/classes/class.wpsc_product_box_block.php:81
+msgid "Specify the file URL of the item in case it is a digital download."
+msgstr ""
+"Geben Sie die Datei-URL des Artikels an, falls es sich um einen digitalen "
+"Download handelt."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:100
+#: ../includes/classes/class.wpsc_product_box_block.php:96
+msgid "It's a digital product"
+msgstr "Es ist ein digitales Produkt"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:101
+#: ../includes/classes/class.wpsc_product_box_block.php:97
+msgid "Check this if you want to mark it as a digital product."
+msgstr ""
+"Aktivieren Sie dies, wenn Sie es als digitales Produkt kennzeichnen möchten."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:107
+#: ../includes/classes/class.wpsc_product_box_block.php:120
+msgid "Product Variations"
+msgstr "Produktvarianten"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:110
+msgid ""
+"Add multiple variation type using a pattern. For example: Size|small|medium|"
+"large."
+msgstr ""
+"Fügen Sie mithilfe eines Musters mehrere Variantentypen hinzu. Beispiel: "
+"Größe|klein|mittel|groß."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:113
+#: ../includes/classes/class.wpsc_product_box_block.php:126
+msgid "Variation 1"
+msgstr "Variante #%s von %s"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:117
+#: ../includes/classes/class.wpsc_product_box_block.php:130
+msgid "Variation 2"
+msgstr "Variante 2"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:121
+#: ../includes/classes/class.wpsc_product_box_block.php:134
+msgid "Variation 3"
+msgstr "Variante 3"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:217
+#: ../includes/classes/class.wpsc_product_box_block.php:234
+msgid "You must specify the required fields of this block first!"
+msgstr "Sie müssen zuerst die erforderlichen Felder dieses Blocks angeben!"
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:221
+#: ../includes/classes/class.wpsc_product_box_block.php:238
+msgid "Error! You must specify product name."
+msgstr "Fehler! Sie müssen den Produktnamen angeben."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:225
+#: ../includes/classes/class.wpsc_product_box_block.php:242
+msgid "Error! You must specify product price."
+msgstr "Fehler! Sie müssen den Produktpreis angeben."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:228
+#: ../includes/classes/class.wpsc_product_box_block.php:245
+msgid "Error! You must specify a valid product price."
+msgstr "Fehler! Sie müssen einen gültigen Produktpreis angeben."
+
+#: ../includes/classes/class.wpsc_add_to_cart_block.php:233
+#: ../includes/classes/class.wpsc_product_box_block.php:254
+msgid "Error! You must specify a valid shipping cost."
+msgstr "Fehler! Sie müssen gültige Versandkosten angeben."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:46
+msgid ""
+"Renders a product box with the item name, description, price and an 'add to "
+"cart' button."
+msgstr ""
+"Rendert eine Produktbox mit dem Artikelnamen, der Beschreibung, dem Preis "
+"und einer Schaltfläche „In den Warenkorb“."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:61
+msgid "Customize the general product related info"
+msgstr "Passen Sie die allgemeinen produktbezogenen Informationen an"
+
+#: ../includes/classes/class.wpsc_product_box_block.php:69
+msgid "Specify the price of the product without currency symbol."
+msgstr "Geben Sie den Preis des Produkts ohne Währungssymbol an."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:72
+msgid "Description"
+msgstr "Beschreibung"
+
+#: ../includes/classes/class.wpsc_product_box_block.php:73
+msgid "Write a description for the product."
+msgstr "Schreiben Sie eine Beschreibung für das Produkt."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:84
+msgid "Thumbnail URL (required)"
+msgstr "Miniaturansicht-URL (erforderlich)"
+
+#: ../includes/classes/class.wpsc_product_box_block.php:85
+msgid "Specify the image URL for the product thumbnail."
+msgstr "Geben Sie die Bild-URL für die Miniaturansicht des Produkts an."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:88
+msgid "Thumbnail Alt Text"
+msgstr "Alternativtext für Miniaturansichten"
+
+#: ../includes/classes/class.wpsc_product_box_block.php:89
+msgid "Add an alternative text for the thumbnail."
+msgstr "Fügen Sie einen alternativen Text für die Miniaturansicht hinzu."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:92
+msgid "Thumbnail Target URL"
+msgstr "Ziel-URL der Miniaturansicht"
+
+#: ../includes/classes/class.wpsc_product_box_block.php:93
+msgid ""
+"This option enables you to add a target URL to the thumbnail, allowing you "
+"to send customers to the details page of the product."
+msgstr ""
+"Mit dieser Option können Sie der Miniaturansicht eine Ziel-URL hinzufügen, "
+"sodass Sie Kunden auf die Detailseite des Produkts weiterleiten können."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:103
+msgid "Cart Button"
+msgstr "Warenkorb-Button"
+
+#: ../includes/classes/class.wpsc_product_box_block.php:113
+msgid "Button Image"
+msgstr "Button Bild"
+
+#: ../includes/classes/class.wpsc_product_box_block.php:123
+msgid ""
+"Add product variations using a pattern. For example: Size|small|medium|large."
+msgstr ""
+"Fügen Sie Produktvarianten mithilfe eines Musters hinzu. Beispiel: Größe|"
+"klein|mittel|groß."
+
+#: ../includes/classes/class.wpsc_product_box_block.php:249
+msgid "Error! You must specify product thumbnail."
+msgstr "Fehler! Sie müssen eine Produktvorschau angeben."
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:38
+msgid "Displays the shopping cart for the Simple Shopping Cart plugin"
+msgstr "Zeigt den Einkaufswagen für das Simple Shopping Cart Plugin an"
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:49
+msgid "Cart display options"
+msgstr "Warenkorb-Anzeigeoptionen"
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:50
+msgid "Select the template of the cart"
+msgstr "Wählen Sie die Vorlage des Warenkorbs"
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:53
+msgid "Display cart if not empty"
+msgstr "Einkaufswagen anzeigen, wenn nicht leer"
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:57
+msgid "Display cart always"
+msgstr "Warenkorb immer anzeigen"
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:61
+msgid "Display compact cart 1"
+msgstr "Kompaktwagen anzeigen 1"
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:65
+msgid "Display compact cart 2"
+msgstr "Display Kompaktwagen 2"
+
+#: ../includes/classes/class.wpsc_shopping_cart_block.php:107
+msgid "The shopping cart will be rendered here on the front-end."
+msgstr "Der Warenkorb wird hier im Frontend gerendert."
+
+#: ../includes/legacy/gallery-wp-cart.php:32
+msgid "[View with PicLens]"
+msgstr "[Mit PicLens anzeigen]"
+
+#: ../includes/wpsc-cart-functions.php:30
+msgid "Visit The Shop"
+msgstr "Besuche jetzt den Shop!"
+
+#: ../includes/wpsc-cart-functions.php:92
+msgid "Cart"
+msgstr "Warenkorb"
+
+#: ../includes/wpsc-cart-functions.php:100
+msgid "Hit enter to submit new Quantity."
+msgstr "Drücken Sie Enter um eine neue Menge festzulegen."
+
+#: ../includes/wpsc-cart-functions.php:116
+msgid "Item Name"
+msgstr "Artikelbezeichnung"
+
+#: ../includes/wpsc-cart-functions.php:118
+msgid "Quantity"
+msgstr "Anzahl"
+
+#: ../includes/wpsc-cart-functions.php:193
+#: ../includes/wpsc-cart-functions.php:194
 msgid "Remove"
 msgstr "Entfernen"
 
-#: includes/wspsc-cart-functions.php:146
+#: ../includes/wpsc-cart-functions.php:238
 msgid "Subtotal"
 msgstr "Zwischensumme"
 
-#: includes/wspsc-cart-functions.php:182
+#: ../includes/wpsc-cart-functions.php:239
+msgid "Shipping"
+msgstr "Versand"
+
+#: ../includes/wpsc-cart-functions.php:258
+#: ../includes/wpsc-cart-functions.php:259
+msgid "Empty Cart"
+msgstr "Leerer Warenkorb"
+
+#: ../includes/wpsc-cart-functions.php:279
+msgid "Enter Coupon Code"
+msgstr "Gutschein-Code eingeben"
+
+#: ../includes/wpsc-cart-functions.php:282
+#: ../includes/wpsc-cart-functions.php:753
+msgid "Apply"
+msgstr "Übernehmen"
+
+#: ../includes/wpsc-cart-functions.php:319
 msgid "paypal_checkout_EN.png"
 msgstr "paypal_checkout_DE.png"
 
-#: includes/wspsc-cart-functions.php:182
+#: ../includes/wpsc-cart-functions.php:323
 msgid "Make payments with PayPal - it\\'s fast, free and secure!"
-msgstr "Zahlen Sie mit PayPal - Es ist schnell, kostenlos und sicher!"
+msgstr "Zahle mit PayPal - schnell, gratis und sicher!"
+
+#: ../includes/wpsc-cart-functions.php:389
+#, php-format
+msgid ""
+"PayPal Smart Checkout error: %s client ID is not set. Please set it on the "
+"PayPal Smart Checkout Settings tab."
+msgstr ""
+"Fehler bei PayPal Smart Checkout: Die Client-ID %s ist nicht festgelegt. "
+"Bitte legen Sie sie im Reiter „Einstellungen“ von PayPal Smart Checkout fest."
+
+#: ../includes/wpsc-cart-functions.php:549
+msgid "Error occured during PayPal Smart Checkout process."
+msgstr "Fehler aufgetreten während des PayPal Smart Checkout Prozesses."
+
+#: ../includes/wpsc-cart-functions.php:579
+msgid "HTTP error occured during payment process:"
+msgstr "Während des Zahlungsvorgangs ist ein HTTP-Fehler aufgetreten:"
+
+#: ../includes/wpsc-cart-functions.php:650
+msgid "stripe_checkout_EN.gif"
+msgstr "stripe_checkout_EN.gif"
+
+#: ../includes/wpsc-cart-functions.php:658
+msgid "Make payments with Stripe - it\\'s fast, free and secure!"
+msgstr "Tätigen Sie Zahlungen mit Stripe – schnell, kostenlos und sicher!"
+
+#: ../includes/wpsc-cart-functions.php:715
+#: ../includes/wpsc-misc-functions.php:197
+msgid ""
+"I accept the <a href=\"https://example.com/terms-and-conditions/\" "
+"target=\"_blank\">Terms and Conditions</a>"
+msgstr ""
+"Ich akzeptiere die <a href=\"https://example.com/terms-and-conditions/\" "
+"target=\"_blank\">Allgemeinen Geschäftsbedingungen für Händler</a>"
+
+#: ../includes/wpsc-cart-functions.php:747
+msgid "Select Shipping Region"
+msgstr "Versandregion auswählen"
+
+#: ../includes/wpsc-cart-functions.php:749
+msgid "Select a Region"
+msgstr "Region auswählen"
+
+#: ../includes/wpsc-debug-logging-functions.php:49
+msgid "Log file dosen't exists."
+msgstr "Die Protokolldatei existiert nicht."
+
+#: ../includes/wpsc-manual-checkout-form-related.php:50
+msgid "Street Address"
+msgstr "Straße"
+
+#: ../includes/wpsc-manual-checkout-form-related.php:64
+msgid "Select one"
+msgstr "Eines auswählen"
+
+#: ../includes/wpsc-manual-checkout-form-related.php:77
+msgid "Postal Code"
+msgstr "Postleitzahl"
+
+#: ../includes/wpsc-manual-checkout-form-related.php:91
+msgid "Place Order"
+msgstr "Zahlungspflichtig bestellen"
+
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:199
+msgid "Empty payment data received."
+msgstr "Leere Zahlungsdaten erhalten."
+
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:239
+msgid ""
+"Error occured during payment processing. Check debug log for additional "
+"details."
+msgstr ""
+"Bei der Zahlungsabwicklung ist ein Fehler aufgetreten. Weitere Informationen "
+"finden Sie im Debug-Protokoll."
+
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:260
+msgid "Manual Checkout is not enabled!"
+msgstr "Manuelles Auschecken ist nicht aktiviert!"
+
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:268
+msgid "Checkout form validation error!"
+msgstr "Validierungsfehler beim Checkout-Formular!"
+
+#: ../includes/wpsc-misc-checkout-ajax-handler.php:292
+msgid "Order Placed Successfully!"
+msgstr "Bestellung erfolgreich aufgegeben!"
+
+#: ../includes/wpsc-misc-functions.php:167
+msgid "Your Shopping Cart"
+msgstr "Ihr Warenkorb"
+
+#: ../includes/wpsc-misc-functions.php:168
+msgid "Your cart is empty"
+msgstr "Ihr Warenkorb ist leer"
+
+#: ../includes/wpsc-misc-functions.php:241
+msgid ""
+"For more information, updates, detailed documentation and video tutorial, "
+"please visit:"
+msgstr ""
+"Für weitere Informationen, Updates, detaillierte Dokus und Video Tutorials, "
+"besuche bitte:"
+
+#: ../includes/wpsc-misc-functions.php:243
+msgid "WP Simple Cart Documentation"
+msgstr "WP Simple Cart-Dokumentation"
+
+#: ../includes/wpsc-misc-functions.php:254
+msgid ""
+"Need a shopping cart plugin with a lot of features and support? Check out "
+"our "
+msgstr ""
+"Benötigen Sie ein Warenkorb-Plugin mit vielen Funktionen und Support? "
+"Schauen Sie sich unsere"
+
+#: ../includes/wpsc-misc-functions.php:255
+msgid "WP eStore Plugin"
+msgstr "WP eStore Plugin"
+
+#: ../includes/wpsc-misc-functions.php:258
+msgid "You can also try our free"
+msgstr "Sie können auch unser kostenloses"
+
+#: ../includes/wpsc-misc-functions.php:258
+msgid "or"
+msgstr "oder"
+
+#: ../includes/wpsc-misc-functions.php:258
+msgid "plugins to sell your products."
+msgstr "Plugins zum Verkauf Ihrer Produkte."
+
+#: ../includes/wpsc-misc-functions.php:267
+msgid ""
+"Note: the sandbox/test mode is enabled. You can turn off the sandbox mode "
+"(from the general settings menu) when you want to do live transactions."
+msgstr ""
+"Hinweis: Der Sandbox-/Testmodus ist aktiviert. Sie können den Sandbox-Modus "
+"(im Menü „Allgemeine Einstellungen“) deaktivieren, wenn Sie Live-"
+"Transaktionen durchführen möchten."
+
+#: ../includes/wpsc-paypal-ppcp-checkout-form-related.php:44
+msgid "Transaction completed successfully!"
+msgstr "Transaktion erfolgreich abgeschlossen!"
+
+#: ../includes/wpsc-paypal-ppcp-checkout-form-related.php:45
+msgid "Feel free to add more items to your shopping cart for another checkout."
+msgstr ""
+"Sie können Ihrem Einkaufswagen gerne weitere Artikel hinzufügen, um erneut "
+"zur Kasse zu gehen."
+
+#: ../includes/wpsc-paypal-ppcp-checkout-form-related.php:404
+msgid "Error occurred during PayPal checkout process."
+msgstr "Beim Bezahlvorgang mit PayPal ist ein Fehler aufgetreten."
+
+#: ../lib/paypal/class-tthq-paypal-acdc-related.php:38
+msgid ""
+"Note: Merchant ID value is empty so the SDK URL will not include this "
+"parameter."
+msgstr ""
+"Hinweis: Der Händler-ID-Wert ist leer, daher enthält die SDK-URL diesen "
+"Parameter nicht."
+
+#: ../lib/paypal/class-tthq-paypal-acdc-related.php:139
+#: ../lib/paypal/class-tthq-paypal-button-ajax-handler.php:39
+#: ../lib/paypal/class-tthq-paypal-button-ajax-handler.php:167
+#: ../lib/paypal/class-tthq-paypal-onapprove-ipn-handler.php:38
+#: ../lib/paypal/onboarding-related/class-tthq-paypal-onboarding-serverside.php:35
+msgid "Empty data received."
+msgstr "Leere Daten empfangen."
+
+#: ../lib/paypal/class-tthq-paypal-acdc-related.php:158
+#: ../lib/paypal/class-tthq-paypal-acdc-related.php:235
+#: ../lib/paypal/class-tthq-paypal-button-ajax-handler.php:58
+#: ../lib/paypal/class-tthq-paypal-button-ajax-handler.php:198
+#: ../lib/paypal/class-tthq-paypal-onapprove-ipn-handler.php:52
+#: ../lib/paypal/onboarding-related/class-tthq-paypal-onboarding-serverside.php:50
+msgid ""
+"Nonce check failed. The page was most likely cached. Please reload the page "
+"and try again."
+msgstr ""
+"Die Nonce-Prüfung ist fehlgeschlagen. Die Seite wurde höchstwahrscheinlich "
+"zwischengespeichert. Bitte laden Sie die Seite neu und versuchen Sie es "
+"erneut."
+
+#: ../lib/paypal/class-tthq-paypal-acdc-related.php:198
+msgid ""
+"Failed to create the order. Enable the debug logging feature to get more "
+"details."
+msgstr ""
+"Die Bestellung konnte nicht erstellt werden. Aktivieren Sie die Debug-"
+"Protokollierungsfunktion, um weitere Details zu erhalten."
+
+#: ../lib/paypal/class-tthq-paypal-acdc-related.php:221
+#: ../lib/paypal/class-tthq-paypal-button-ajax-handler.php:184
+msgid "Empty order ID received."
+msgstr "Leere Bestell-ID erhalten."
+
+#: ../lib/paypal/class-tthq-paypal-acdc-related.php:251
+#: ../lib/paypal/class-tthq-paypal-button-ajax-handler.php:221
+msgid ""
+"Failed to capture the order. Enable the debug logging feature to get more "
+"details."
+msgstr ""
+"Die Bestellung konnte nicht erfasst werden. Aktivieren Sie die Debug-"
+"Protokollierungsfunktion, um weitere Details zu erhalten."
+
+#: ../lib/paypal/class-tthq-paypal-button-ajax-handler.php:133
+msgid ""
+"Failed to create the order using PayPal API. Enable the debug logging "
+"feature to get more details."
+msgstr ""
+"Die Bestellung konnte nicht über die PayPal-API erstellt werden. Aktivieren "
+"Sie die Debug-Protokollfunktion, um weitere Details zu erhalten."
+
+#: ../lib/paypal/class-tthq-paypal-onapprove-ipn-handler.php:64
+msgid "Empty transaction data received."
+msgstr "Leere Transaktionsdaten empfangen."
+
+#: ../lib/paypal/class-tthq-paypal-onapprove-ipn-handler.php:144
+#: ../lib/paypal/class-tthq-paypal-onapprove-ipn-handler.php:145
+msgid "subscription created"
+msgstr "Abonnement erstellt"
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:310
+msgid ""
+"No webhook found. Use the following Create Webhook button to create a new "
+"webhook automatically in your PayPal account."
+msgstr ""
+"Kein Webhook gefunden. Verwenden Sie die Schaltfläche „Webhook erstellen“, "
+"um automatisch einen neuen Webhook in Ihrem PayPal-Konto zu erstellen."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:314
+#, php-format
+msgid ""
+"PayPal API Credential information is missing in settings. Please enter valid "
+"PayPal API Credentials in the General Settings tab for %s mode."
+msgstr ""
+"In den Einstellungen fehlen die Anmeldeinformationen für die PayPal-API. "
+"Geben Sie im Reiter „Allgemeine Einstellungen“ für den Modus %s gültige "
+"Anmeldeinformationen für die PayPal-API ein."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:316
+#, php-format
+msgid ""
+"Invalid or Missing API Credentials! Check the plugin settings and enter "
+"valid API credentials in the PayPal Credentials section for %s mode."
+msgstr ""
+"Ungültige oder fehlende API-Anmeldeinformationen! Überprüfen Sie die Plugin-"
+"Einstellungen und geben Sie im Abschnitt „PayPal-Anmeldeinformationen“ "
+"gültige API-Anmeldeinformationen für den Modus %s ein."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:326
+msgid ""
+"Webhook exists. If you still have issues with webhooks, you can delete it "
+"and create again."
+msgstr ""
+"Webhook ist vorhanden. Sollten weiterhin Probleme mit Webhooks auftreten, "
+"können Sie ihn löschen und erneut erstellen."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:353
+msgid "Invalid webhook URL."
+msgstr "Ungültige Webhook-URL."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:353
+msgid ""
+"Note that the PayPal subscription API requires your site to use HTTPS URLs. "
+"You must use an SSL certificate with HTTPS URLs to complete the setup of the "
+"subscription addon and use it."
+msgstr ""
+"Beachten Sie, dass die PayPal-Abonnement-API die Verwendung von HTTPS-URLs "
+"auf Ihrer Website erfordert. Sie benötigen ein SSL-Zertifikat mit HTTPS-"
+"URLs, um die Einrichtung des Abonnement-Add-ons abzuschließen und es zu "
+"nutzen."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:362
+msgid "Webhook has been created."
+msgstr "Webhook wurde erstellt."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:386
+msgid "Webhook has been deleted."
+msgstr "Webhook wurde gelöscht."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:399
+msgid "No webhook found. Nothing to delete."
+msgstr "Kein Webhook gefunden. Nichts zu löschen."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:416
+msgid "Live mode credentials are not set. Cannot create webhook."
+msgstr ""
+"Anmeldeinformationen für den Livemodus sind nicht festgelegt. Webhook kann "
+"nicht erstellt werden."
+
+#: ../lib/paypal/class-tthq-paypal-webhook.php:431
+msgid "Sandbox mode credentials are not set. Cannot create webhook."
+msgstr ""
+"Die Anmeldeinformationen für den Sandbox-Modus sind nicht festgelegt. "
+"Webhook kann nicht erstellt werden."
+
+#: ../lib/paypal/onboarding-related/class-tthq-paypal-onboarding-serverside.php:66
+msgid ""
+"Failed to generate access token. check debug log file for any error message."
+msgstr ""
+"Das Generieren des Zugriffstokens ist fehlgeschlagen. Überprüfen Sie die "
+"Debug-Protokolldatei auf Fehlermeldungen."
+
+#: ../lib/paypal/onboarding-related/class-tthq-paypal-onboarding-serverside.php:80
+msgid ""
+"Failed to get seller API credentials. check debug log file for any error "
+"message."
+msgstr ""
+"Die API-Anmeldeinformationen des Verkäufers konnten nicht abgerufen werden. "
+"Überprüfen Sie die Debug-Protokolldatei auf Fehlermeldungen."
+
+#: ../lib/paypal/onboarding-related/class-tthq-paypal-onboarding-serverside.php:101
+msgid ""
+"Failed to get seller account status. check debug log file for any error "
+"message."
+msgstr ""
+"Der Status des Verkäuferkontos konnte nicht abgerufen werden. Überprüfen Sie "
+"die Debug-Protokolldatei auf Fehlermeldungen."
+
+#: ../lib/paypal/onboarding-related/class-tthq-paypal-onboarding-serverside.php:117
+msgid ""
+"Your PayPal account is limited so you cannot accept payment. Contact PaPal "
+"support or check your PayPal account inbox for an email from PayPal for the "
+"next steps to remove the account limit."
+msgstr ""
+"Ihr PayPal-Konto ist eingeschränkt, sodass Sie keine Zahlungen annehmen "
+"können. Wenden Sie sich an den PayPal-Support oder prüfen Sie Ihren PayPal-"
+"Posteingang. Dort finden Sie eine E-Mail von PayPal mit den nächsten "
+"Schritten zur Aufhebung des Kontolimits."
+
+#: ../lib/paypal/onboarding-related/class-tthq-paypal-onboarding-serverside.php:126
+msgid ""
+"Your PayPal account email is not confirmed. Check your PayPal account inbox "
+"for an email from PayPal to confirm your PayPal email address."
+msgstr ""
+"Die E-Mail-Adresse Ihres PayPal-Kontos wurde nicht bestätigt. Überprüfen Sie "
+"den Posteingang Ihres PayPal-Kontos auf eine E-Mail von PayPal zur "
+"Bestätigung Ihrer PayPal-E-Mail-Adresse."
+
+#: ../manual-checkout.php:31
+msgid "No cart items found. Cannot place this order!"
+msgstr ""
+"Es wurden keine Artikel im Warenkorb gefunden. Diese Bestellung kann nicht "
+"aufgegeben werden!"
+
+#: ../paypal.php:461 ../paypal.php:486
+#, php-format
+msgid "Error occured during payment verification. Error code: %d. Message: %s"
+msgstr ""
+"Bei der Zahlungsüberprüfung ist ein Fehler aufgetreten. Fehlercode: %d. "
+"Nachricht: %s"
+
+#: ../paypal.php:499
+#, php-format
+msgid ""
+"Payment check failed: invalid amount received. Expected %s %s, got %s %s."
+msgstr ""
+"Zahlungsprüfung fehlgeschlagen: ungültiger Betrag erhalten. Erwartet %s %s, "
+"erhalten %s %s."
+
+#: ../wp_shopping_cart.php:234
+msgid "This item is already in your cart"
+msgstr "Dieser Artikel befindet sich bereits in Ihrem Warenkorb"
+
+#: ../wp_shopping_cart.php:300
+msgid "Error! Your session is out of sync. Please reset your session."
+msgstr ""
+"Fehler! Ihre Sitzung ist nicht synchronisiert. Setzen Sie Ihre Sitzung "
+"zurück."
+
+#: ../wp_shopping_cart.php:308
+msgid ""
+"Shopping Cart Configuration Error! You must specify a value in the 'Checkout "
+"Page URL' field for the automatic redirection feature to work!"
+msgstr ""
+"Shopping Cart Konfigurations Fehler! Sie müssen einen Wert im Feld 'Checkout "
+"Page URL' angeben, damit die automatische Umleitung funktioniert."
+
+#: ../wp_shopping_cart.php:453
+msgid ""
+"Error! The URL value is empty. Please specify a correct URL value to "
+"redirect to!"
+msgstr "FEHLER: Die URL ist leer. Es muss eine gültige URL eingeben werden!"
+
+#: ../wp_shopping_cart_shortcodes.php:42 ../wp_shopping_cart_shortcodes.php:84
+msgid "Error! You must specify a product name in the shortcode."
+msgstr "Fehler! Sie müssen im Shortcode einen Produktnamen angeben."
+
+#: ../wp_shopping_cart_shortcodes.php:48 ../wp_shopping_cart_shortcodes.php:90
+msgid ""
+"Error! Special characters like [, ], <, > are not supported in the product "
+"name."
+msgstr ""
+"Fehler! Sonderzeichen wie [, ], <, > werden im Produktnamen nicht "
+"unterstützt."
+
+#: ../wp_shopping_cart_shortcodes.php:53 ../wp_shopping_cart_shortcodes.php:95
+msgid "Error! You must specify a price for your product in the shortcode."
+msgstr "Fehler! Sie müssen im Shortcode einen Preis für Ihr Produkt angeben."
+
+#: ../wp_shopping_cart_shortcodes.php:98
+msgid ""
+"Error! You must specify a thumbnail image for your product in the shortcode."
+msgstr ""
+"Fehler! Sie müssen im Shortcode ein Miniaturbild für Ihr Produkt angeben."
+
+#: ../wp_shopping_cart_shortcodes.php:161
+#: ../wp_shopping_cart_shortcodes.php:190
+msgid "Item"
+msgstr "Artikel"
+
+#: ../wp_shopping_cart_shortcodes.php:161
+#: ../wp_shopping_cart_shortcodes.php:190
+msgid "Items"
+msgstr "Positionen"
+
+#: ../wp_shopping_cart_shortcodes.php:165
+msgid "View Cart"
+msgstr "Warenkorb anzeigen"
+
+#: ../wp_shopping_cart_shortcodes.php:170
+msgid "Cart is empty"
+msgstr "Warenkorb ist leer"
+
+#: ../wp_shopping_cart_shortcodes.php:207
+msgid ""
+"This page displays the transaction result and the order summary after a "
+"customer completes a payment."
+msgstr ""
+"Auf dieser Seite werden das Transaktionsergebnis und die Bestellübersicht "
+"angezeigt, nachdem ein Kunde eine Zahlung abgeschlossen hat."
+
+#: ../wp_shopping_cart_shortcodes.php:208
+msgid ""
+"When redirected here after a payment, customers will see their order details "
+"dynamically."
+msgstr ""
+"Wenn Kunden nach einer Zahlung hierher weitergeleitet werden, werden ihnen "
+"ihre Bestelldetails dynamisch angezeigt."
+
+#: ../wp_shopping_cart_shortcodes.php:210
+msgid "Error! Order ID value is missing in the URL."
+msgstr "Fehler! Der Order ID Wert fehlt in der URL."
+
+#: ../wp_shopping_cart_shortcodes.php:215
+msgid "Error! Nonce value is missing in the URL or Nonce verification failed."
+msgstr ""
+"Fehler! In der URL fehlt ein Nonce-Wert oder die Nonce-Verifizierung ist "
+"fehlgeschlagen."
+
+#~ msgid "Are you enjoying the Simple Shopping Cart plugin?"
+#~ msgstr "Gefällt Ihnen das Plugin „Simple Shopping Cart“?"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "Not Really"
+#~ msgstr "Nicht wirklich"
+
+#~ msgid ""
+#~ "We're sorry to hear you aren't enjoying the Simple Shopping Cart plugin. "
+#~ "We would love a chance to improve. Could you take a minute and let us "
+#~ "know what we can do better by using our contact form? "
+#~ msgstr ""
+#~ "Es tut uns leid, dass Ihnen das Simple Shopping Cart Plugin nicht "
+#~ "gefällt. Wir würden uns über eine Chance zur Verbesserung freuen. Könnten "
+#~ "Sie uns kurz über unser Kontaktformular mitteilen, was wir verbessern "
+#~ "können?"
+
+#~ msgid "Give Feedback"
+#~ msgstr "Feedback geben"
+
+#~ msgid "No thanks"
+#~ msgstr "Nein danke"
+
+#~ msgid ""
+#~ "That's great! Could you please do me a big favor and give it a 5-star "
+#~ "rating on WordPress to help us spread the word and boost our motivation?"
+#~ msgstr ""
+#~ "Das ist großartig! Könntest du uns bitte eine 5-Sterne-Bewertung auf "
+#~ "wordpress.org geben?"
+
+#~ msgid "~ Simple Shopping Cart Team"
+#~ msgstr "~ Einfaches Einkaufswagen-Team"
+
+#~ msgid "OK, you deserve it"
+#~ msgstr "Ja, du hast es verdient"
+
+#~ msgid "Nope, maybe later"
+#~ msgstr "Nein, vielleicht später"
+
+#~ msgid "I already did"
+#~ msgstr "Habe ich schon erledigt"
+
+#~ msgid "View Debug Log File"
+#~ msgstr "Debug-Protokolldatei anzeigen"
+
+#~ msgid "WP Paypal Shopping Cart"
+#~ msgstr "WP Paypal Warenkorb"
+
+#~ msgid "WP Shopping Cart"
+#~ msgstr "WP Einkaufswagen"
+
+#~ msgid "Type"
+#~ msgstr "Typ"
+
+#~ msgid "Location"
+#~ msgstr "Veranstaltungsort"
+
+#~ msgid "WP Paypal Shopping Cart Widget"
+#~ msgstr "WP Paypal Warenkorb-Widget"
+
+#~ msgid "Shopping Cart"
+#~ msgstr "Einkaufswagen"
+
+#~ msgid ""
+#~ "https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-"
+#~ "plugin-768"
+#~ msgstr ""
+#~ "https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-"
+#~ "plugin-768"
+
+#~ msgid ""
+#~ "Simple WordPress Shopping Cart Plugin, very easy to use and great for "
+#~ "selling products and services from your blog!"
+#~ msgstr ""
+#~ "Einfaches WordPress-Einkaufswagen-Plugin, sehr benutzerfreundlich und "
+#~ "ideal für den Verkauf von Produkten und Dienstleistungen über Ihr Blog!"
+
+#~ msgid "Tips and Tricks HQ, Ruhul Amin, mra13"
+#~ msgstr "Tipps und Tricks HQ, Ruhul Amin, mra13"
+
+#~ msgid "https://www.tipsandtricks-hq.com/"
+#~ msgstr "https://www.tipsandtricks-hq.com/"
+
+#~ msgid "Order ID: #"
+#~ msgstr "Auftragsnummer: #"
+
+#~ msgid ""
+#~ "Specify the text that you want to use for the note field on PayPal "
+#~ "checkout page to collect special instruction (leave this field empty if "
+#~ "you don't need to customize it). The default label for the note field is "
+#~ "\"Add special instructions to merchant\"."
+#~ msgstr ""
+#~ "Geben Sie den Text an, den Sie für das Notizfeld auf der PayPal-Checkout-"
+#~ "Seite verwenden möchten, um spezielle Anweisungen zu sammeln (lassen Sie "
+#~ "dieses Feld leer, wenn Sie es nicht anpassen müssen). Die "
+#~ "Standardbezeichnung für das Notizfeld lautet \"Add special instructions "
+#~ "to merchant\" (zusätzliche Instruktionen an den Händler hinzufügen)."
+
+#~ msgid "e.g."
+#~ msgstr "z.B."
+
+#~ msgid "Return URL"
+#~ msgstr "Rückgabe URL"
