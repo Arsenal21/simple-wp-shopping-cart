@@ -43,7 +43,7 @@ class WPSC_Thank_You {
 			if ( ! empty( $cart_item->get_file_url() ) ) {
 				$downloadable_items[] = array(
 					'product_name' => $cart_item->get_name(),
-					'file_url'     => base64_decode( $cart_item->get_file_url() ),
+					'file_url'     => $cart_item->get_file_url(),
 				);
 			}
 		}

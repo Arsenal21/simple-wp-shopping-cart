@@ -45,6 +45,7 @@ include_once( WP_CART_PATH . 'includes/wpsc-misc-functions.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-wpsc-persistent-msg.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-coupon.php' );
 include_once( WP_CART_PATH . 'includes/classes/class.wpsc-email-handler.php' );
+include_once( WP_CART_PATH . 'includes/classes/class-wpsc-dynamic-products.php' );
 include_once( WP_CART_PATH . 'includes/class-wpsc-cart.php' );
 include_once( WP_CART_PATH . 'includes/class-wpsc-cart-item.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-checkout-ajax-handler.php' );
@@ -157,7 +158,8 @@ function wpsc_cart_actions_handler() {
 		$post_item_number = isset( $_POST['item_number'] ) ? sanitize_text_field( $_POST['item_number'] ) : '';
 		$post_cart_link = isset( $_POST['cartLink'] ) ? esc_url_raw( sanitize_text_field( urldecode( $_POST['cartLink'] ) ) ) : '';
 		$post_stamp_pdf = isset( $_POST['stamp_pdf'] ) ? sanitize_text_field( $_POST['stamp_pdf'] ) : '';
-		$post_encoded_file_val = isset( $_POST['file_url'] ) ? sanitize_text_field( $_POST['file_url'] ) : '';
+        // $post_encoded_file_val = isset( $_POST['file_url'] ) ? sanitize_text_field( $_POST['file_url'] ) : ''; // TODO: Need to remove this.
+		$post_file_url = WPSC_Dynamic_Products::get_instance()->get_param($post_wspsc_product, 'file_url');
 		$post_thumbnail = isset( $_POST['thumbnail'] ) ? esc_url_raw( sanitize_text_field( $_POST['thumbnail'] ) ) : '';
 		$digital_flag = isset( $_POST['digital'] ) ? esc_url_raw( sanitize_text_field( $_POST['digital'] ) ) : '';
 
@@ -265,8 +267,8 @@ function wpsc_cart_actions_handler() {
 			$wspsc_cart_item->set_cart_link( $post_cart_link );
 			$wspsc_cart_item->set_item_number( $post_item_number );
 			$wspsc_cart_item->set_digital_flag( $digital_flag );
-			if ( ! empty( $post_encoded_file_val ) ) {
-				$wspsc_cart_item->set_file_url( $post_encoded_file_val );
+			if ( ! empty( $post_file_url ) ) {
+				$wspsc_cart_item->set_file_url( $post_file_url );
 			}
 			if ( ! empty( $post_thumbnail ) ) {
 				$wspsc_cart_item->set_thumbnail( $post_thumbnail );

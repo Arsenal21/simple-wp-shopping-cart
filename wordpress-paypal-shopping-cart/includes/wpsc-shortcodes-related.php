@@ -89,11 +89,13 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	isset( $atts['item_number'] ) ? $item_num = $atts['item_number'] : $item_num = '';
 	$replacement .= '<input type="hidden" name="item_number" value="' . esc_attr($item_num) . '" />';
 
-	if ( isset( $atts['file_url'] ) ) {
-		$file_url = $atts['file_url'];
-		$file_url = base64_encode( $file_url );
-		$replacement .= '<input type="hidden" name="file_url" value="' . esc_attr($file_url) . '" />';
-	}
+	// TODO: Need to remove this.
+	//	if ( isset( $atts['file_url'] ) ) {
+	//		$file_url = $atts['file_url'];
+	//		$file_url = base64_encode( $file_url );
+	//		$replacement .= '<input type="hidden" name="file_url" value="' . esc_attr($file_url) . '" />';
+	//	}
+
 	if ( isset( $atts['thumbnail'] ) ) {
 		$replacement .= '<input type="hidden" name="thumbnail" value="' . esc_url($atts['thumbnail']) . '" />';
 	}
@@ -116,6 +118,18 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	$replacement .= '<input type="hidden" name="hash_two" value="' . $hash_two . '" />';
 
 	$replacement .= '</form>';
+
+	// Prepare product data to save in dynamic products.
+	$dynamic_product_data = array(
+		'name' => $name,
+		'price' => $price,
+		'shipping' => $shipping,
+	);
+	if ( isset( $atts['file_url'] ) ) {
+		$dynamic_product_data['file_url'] = $atts['file_url'];
+	}
+
+	WPSC_Dynamic_Products::get_instance()->add($dynamic_product_data);
 
 	$cart_id = WPSC_Cart::get_instance()->get_cart_id();
 	if (!empty($cart_id)){
