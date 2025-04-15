@@ -159,7 +159,7 @@ function wpsc_cart_actions_handler() {
 		$post_cart_link = isset( $_POST['cartLink'] ) ? esc_url_raw( sanitize_text_field( urldecode( $_POST['cartLink'] ) ) ) : '';
 		$post_stamp_pdf = isset( $_POST['stamp_pdf'] ) ? sanitize_text_field( $_POST['stamp_pdf'] ) : '';
         // $post_encoded_file_val = isset( $_POST['file_url'] ) ? sanitize_text_field( $_POST['file_url'] ) : ''; // TODO: Need to remove this.
-		$post_file_url = WPSC_Dynamic_Products::get_instance()->get_param($post_wspsc_product, 'file_url');
+		$post_file_url = WPSC_Dynamic_Products::get_instance()->get_data_by_param($post_wspsc_product, 'file_url');
 		$post_thumbnail = isset( $_POST['thumbnail'] ) ? esc_url_raw( sanitize_text_field( $_POST['thumbnail'] ) ) : '';
 		$digital_flag = isset( $_POST['digital'] ) ? esc_url_raw( sanitize_text_field( $_POST['digital'] ) ) : '';
 
@@ -176,7 +176,9 @@ function wpsc_cart_actions_handler() {
 				//This site has disabled the price check for add cart button.
 				//Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
 			} else {
-				if ( $price != $wpsc_dynamic_products->get_param($post_wspsc_product,'price') ) { //Security check failed. Price field has been tampered. Fail validation.
+				$price_from_db = $wpsc_dynamic_products->get_data_by_param($post_wspsc_product,'price');
+				if ( $price != $price_from_db ) {
+					//Security check failed. Price field may have been tampered. Fail the validation.
 					$error_msg = '<p>Error! The price field may have been tampered. Security check failed.</p>';
 					$error_msg .= '<p>If this site uses any caching, empty the cache then try again.</p>';
 					$error_msg .= "<p>If the issue persists go to the settings menu of the plugin and select/tick the 'Disable Price Check for Add to Cart' checkbox and save it.</p>";
@@ -202,7 +204,7 @@ function wpsc_cart_actions_handler() {
 				//This site has disabled the price check for add cart button.
 				//Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
 			} else {
-				if ( $shipping != $wpsc_dynamic_products->get_param($post_wspsc_product,'shipping') ) { //Shipping validation failed
+				if ( $shipping != $wpsc_dynamic_products->get_data_by_param($post_wspsc_product,'shipping') ) { //Shipping validation failed
 					wp_die( 'Error! The shipping price validation failed.' );
 				}
 			}

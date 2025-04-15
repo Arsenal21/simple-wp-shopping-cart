@@ -12,7 +12,7 @@ class WPSC_Dynamic_Products {
 	private const WPSC_DYNAMIC_PRODUCTS_OPTION = 'wpsc_dynamic_products';
 
 	/**
-	 * @var string[] List of params of essential product shortcode data.
+	 * @var string[] List of params/field-keys of essential product shortcode data.
 	 */
 	private static $product_params = array('name', 'file_url', 'price', 'shipping');
 
@@ -63,7 +63,7 @@ class WPSC_Dynamic_Products {
 		return isset($this->products[$product_key]) ? $this->products[$product_key] : array();
 	}
 
-	public function get_param($product_name, $product_param){
+	public function get_data_by_param($product_name, $product_param){
 		$product_data = $this->get($product_name);
 
 		return isset($product_data[$product_param]) ? $product_data[$product_param] : null;
