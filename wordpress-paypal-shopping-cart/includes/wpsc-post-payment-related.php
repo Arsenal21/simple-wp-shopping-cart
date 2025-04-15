@@ -64,7 +64,7 @@ class WPSC_Post_Payment_Related
 				$item_total = $item->get_price() * $item->get_quantity();
 				$ipn_data['product_details'] .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpsc_number_format_price($item_total) . "\n";
 				if ($item->get_file_url()) {
-					$file_url = base64_decode($item->get_file_url());
+					$file_url = $item->get_file_url();
 					$ipn_data['product_details'] .= "Download Link: " . $file_url . "\n";
 				}
 				if (!empty($item->get_shipping())) {

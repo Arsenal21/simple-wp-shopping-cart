@@ -163,7 +163,7 @@ class stripe_ipn_handler {
 				$item_total = $item->get_price() * $item->get_quantity();
 				$product_details .= $item->get_name() . " x " . $item->get_quantity() . " - " . $currency_symbol . wpsc_number_format_price( $item_total ) . "\n";
 				if ($item->get_file_url()) {
-					$file_url = base64_decode( $item->get_file_url() );
+					$file_url = $item->get_file_url();
 					$product_details .= "Download Link: " . $file_url . "\n";
 				}
 				if (! empty( $item->get_shipping() )) {

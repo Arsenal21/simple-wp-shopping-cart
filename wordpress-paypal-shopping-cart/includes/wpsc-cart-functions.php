@@ -677,6 +677,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</td></input>';
 	}
 	$output .= '</table></div>';
+	$output .= '<pre>'.print_r(get_option('wpsc_dynamic_products'), true).'</pre>';
 	$output = apply_filters( 'wpspsc_after_cart_output', $output ); // TODO: Old hook. Need to remove this.
 	$output = apply_filters( 'wpsc_after_cart_output', $output );
 	return $output;
