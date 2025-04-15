@@ -35,15 +35,13 @@ class WPSC_Dynamic_Products {
 			return;
 		}
 
-		// Use product name as key.
-		$product_key = isset($product_data['name']) ? sanitize_key($product_data['name']) : '';
-		if (empty($product_key)){
+		$product_name = isset($product_data['name']) && !empty($product_data['name']) ? $product_data['name'] : '';
+		if (empty($product_name)){
 			return;
 		}
 
-//		wpsc_log_payment_debug("Key: " . $product_key, true);
-//		wpsc_log_payment_debug('Adding Product Data: ', true);
-//		wpsc_log_debug_array($product_data, true);
+		// Use hashed product name as key.
+		$product_key = md5( stripslashes( sanitize_text_field( $product_name ) ) );
 
 		if (empty($this->products[$product_key])){
 			$this->products[$product_key] = array();
@@ -60,17 +58,14 @@ class WPSC_Dynamic_Products {
 	}
 
 	public function get( $product_name ) {
-		$product_key = sanitize_key($product_name);
+		// Product was saved using hashed product name as key.
+		$product_key = md5($product_name);
 
 		return isset($this->products[$product_key]) ? $this->products[$product_key] : array();
 	}
 
 	public function get_param($product_name, $product_param){
 		$product_data = $this->get($product_name);
-
-//		wpsc_log_payment_debug('Getting Product Data: ', true);
-//		wpsc_log_payment_debug("Product Param: " . $product_param, true);
-//		wpsc_log_debug_array($product_data, true);
 
 		return isset($product_data[$product_param]) ? $product_data[$product_param] : null;
 	}
