@@ -689,6 +689,12 @@ function wpsc_front_side_enqueue_scripts() {
 	wp_register_script( "wpsc-checkout-manual", WP_CART_URL . "/assets/js/wpsc-checkout-manual.js", array( "wpsc-checkout-cart-script" ), WP_CART_VERSION);
 }
 
+//Handle the plugins loaded action
+function wp_cart_handle_plugins_loaded() {
+	wpsc_register_shortcodes();
+}
+
+//Hanlde the activation of the plugin
 function wpsc_plugin_install() {
 	wpsc_run_activation();
 }
@@ -708,10 +714,7 @@ add_filter( 'plugin_action_links', 'wp_simple_cart_add_settings_link', 10, 2 );
 
 add_action( 'init', 'wp_cart_init_handler' );
 add_action( 'admin_init', 'wp_cart_admin_init_handler' );
-
-if ( ! is_admin() ) {
-	add_filter( 'widget_text', 'do_shortcode' );
-}
+add_action( 'plugins_loaded', 'wp_cart_handle_plugins_loaded' );
 
 add_action( 'wp_head', 'wp_cart_add_read_form_javascript' );
 add_action( 'wp_enqueue_scripts', 'wpsc_front_side_enqueue_scripts' );
