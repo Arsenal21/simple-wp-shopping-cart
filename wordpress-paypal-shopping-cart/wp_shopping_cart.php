@@ -165,21 +165,18 @@ function wpsc_cart_actions_handler() {
 
 		//$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
 		//The product name is encoded and decoded to avoid any special characters in the product name creating hashing issues
-		$post_wspsc_tmp_name_two = html_entity_decode($_POST['product_tmp_two']);
-		$post_wspsc_tmp_name_two = stripslashes( sanitize_text_field( $post_wspsc_tmp_name_two ) );
+
+        $wpsc_dynamic_products = WPSC_Dynamic_Products::get_instance();
 
 		//Sanitize and validate price
 		if ( isset( $_POST['price'] ) ) {
 			$price = sanitize_text_field( $_POST['price'] );
-			$hash_once_p = sanitize_text_field( $_POST['hash_one'] );
-			$p_key = get_option( 'wspsc_private_key_one' );
-			$hash_one_cm = md5( $p_key . '|' . $price . '|' . $post_wspsc_tmp_name_two );
 
 			if ( get_option( 'wspsc_disable_price_check_add_cart' ) ) {
 				//This site has disabled the price check for add cart button.
 				//Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
 			} else {
-				if ( $hash_once_p != $hash_one_cm ) { //Security check failed. Price field has been tampered. Fail validation.
+				if ( $price != $wpsc_dynamic_products->get_param($post_wspsc_product,'price') ) { //Security check failed. Price field has been tampered. Fail validation.
 					$error_msg = '<p>Error! The price field may have been tampered. Security check failed.</p>';
 					$error_msg .= '<p>If this site uses any caching, empty the cache then try again.</p>';
 					$error_msg .= "<p>If the issue persists go to the settings menu of the plugin and select/tick the 'Disable Price Check for Add to Cart' checkbox and save it.</p>";
@@ -200,15 +197,12 @@ function wpsc_cart_actions_handler() {
 		//Sanitize and validate shipping price
 		if ( isset( $_POST['shipping'] ) ) {
 			$shipping = sanitize_text_field( $_POST['shipping'] );
-			$hash_two_val = sanitize_text_field( $_POST['hash_two'] );
-			$p_key = get_option( 'wspsc_private_key_one' );
-			$hash_two_cm = md5( $p_key . '|' . $shipping . '|' . $post_wspsc_tmp_name_two );
 
 			if ( get_option( 'wspsc_disable_price_check_add_cart' ) ) {
 				//This site has disabled the price check for add cart button.
 				//Do not perform the price check for this site since the site admin has indicated that he does not want to do it on this site.
 			} else {
-				if ( $hash_two_val != $hash_two_cm ) { //Shipping validation failed
+				if ( $shipping != $wpsc_dynamic_products->get_param($post_wspsc_product,'shipping') ) { //Shipping validation failed
 					wp_die( 'Error! The shipping price validation failed.' );
 				}
 			}
