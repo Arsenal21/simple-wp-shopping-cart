@@ -29,7 +29,7 @@ class WPSC_Dynamic_Products {
 		$this->products = get_option( self::WPSC_DYNAMIC_PRODUCTS_OPTION, array() );
 	}
 
-	public function add( $product_data ) {
+	public function save( $product_data ) {
 
 		if (!is_array($product_data) || empty($product_data)){
 			return;
@@ -53,12 +53,12 @@ class WPSC_Dynamic_Products {
 			}
 		}
 
-		$this->save();
+		update_option( self::WPSC_DYNAMIC_PRODUCTS_OPTION, $this->products );
 	}
 
 	public function get( $product_name ) {
 		// Product was saved using hashed product name as key.
-		$product_key = md5($product_name);
+		$product_key = self::generate_product_key($product_name);
 
 		return isset($this->products[$product_key]) ? $this->products[$product_key] : array();
 	}
@@ -74,9 +74,5 @@ class WPSC_Dynamic_Products {
 	 */
 	public static function generate_product_key($product_name){
 		return md5( stripslashes( sanitize_text_field( $product_name ) ) );
-	}
-
-	private function save() {
-		update_option( self::WPSC_DYNAMIC_PRODUCTS_OPTION, $this->products );
 	}
 }
