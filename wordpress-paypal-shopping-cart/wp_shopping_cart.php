@@ -162,9 +162,12 @@ function wpsc_cart_actions_handler() {
 		$post_thumbnail = isset( $_POST['thumbnail'] ) ? esc_url_raw( sanitize_text_field( $_POST['thumbnail'] ) ) : '';
 		$digital_flag = isset( $_POST['digital'] ) ? esc_url_raw( sanitize_text_field( $_POST['digital'] ) ) : '';
 
+		//Get the product key for the dynamic product.
         $wpsc_dynamic_products = WPSC_Dynamic_Products::get_instance();
-        $wpsc_product_key = $wpsc_dynamic_products::generate_product_key($post_wspsc_product, $_POST['price']);
+		$posted_price = isset( $_POST['price'] ) ? sanitize_text_field( $_POST['price'] ) : '';
+        $wpsc_product_key = $wpsc_dynamic_products::generate_product_key($post_wspsc_product, $posted_price);
 
+		//Get the file url for the dynamic product (if any)
         $post_file_url =$wpsc_dynamic_products->get_data_by_param($wpsc_product_key, 'file_url');
 
 		//$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
