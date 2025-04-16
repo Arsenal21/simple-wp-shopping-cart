@@ -117,7 +117,8 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$dynamic_product_data['file_url'] = $atts['file_url'];
 	}
 
-	WPSC_Dynamic_Products::get_instance()->save($dynamic_product_data);
+	$product_key = WPSC_Dynamic_Products::generate_product_key($name, $price);
+	WPSC_Dynamic_Products::get_instance()->save($product_key, $dynamic_product_data);
 
 	$cart_id = WPSC_Cart::get_instance()->get_cart_id();
 	if (!empty($cart_id)){

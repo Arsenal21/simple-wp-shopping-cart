@@ -29,8 +29,7 @@ class WPSC_Dynamic_Products {
 		$this->products = get_option( self::WPSC_DYNAMIC_PRODUCTS_OPTION, array() );
 	}
 
-	public function save( $product_data ) {
-
+	public function save( $product_key, $product_data ) {
 		if (!is_array($product_data) || empty($product_data)){
 			return;
 		}
@@ -39,8 +38,6 @@ class WPSC_Dynamic_Products {
 		if (empty($product_name)){
 			return;
 		}
-
-		$product_key = self::generate_product_key($product_name);
 
 		if (empty($this->products[$product_key])){
 			$this->products[$product_key] = array();
@@ -56,23 +53,22 @@ class WPSC_Dynamic_Products {
 		update_option( self::WPSC_DYNAMIC_PRODUCTS_OPTION, $this->products );
 	}
 
-	public function get( $product_name ) {
-		// Product was saved using hashed product name as key.
-		$product_key = self::generate_product_key($product_name);
-
+	public function get( $product_key ) {
 		return isset($this->products[$product_key]) ? $this->products[$product_key] : array();
 	}
 
-	public function get_data_by_param($product_name, $product_param){
-		$product_data = $this->get($product_name);
+	public function get_data_by_param($product_key, $product_param){
+		$product_data = $this->get($product_key);
 
 		return isset($product_data[$product_param]) ? $product_data[$product_param] : null;
 	}
 
 	/**
-	 * Use hashed product name as key.
+	 * Use hashed concatenated product name and price as key.
 	 */
-	public static function generate_product_key($product_name){
-		return md5( stripslashes( sanitize_text_field( $product_name ) ) );
+	public static function generate_product_key($product_name, $price){
+		$key = stripslashes( sanitize_text_field( $product_name . '|' . $price ) );
+
+		return md5( $key );
 	}
 }
