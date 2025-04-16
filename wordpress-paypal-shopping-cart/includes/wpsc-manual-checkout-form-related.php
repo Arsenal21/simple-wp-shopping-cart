@@ -38,7 +38,6 @@ function wpsc_render_manual_checkout_form() {
 	$output .= '<input type="text" class="wpsc-manual-payment-form-email" name="wpsc_manual_payment_form_email" value="" />';
 	$output .= '</label>';
 	$output .= '</div>';
-
 	$output .= '</div>'; // end of 'wpsc-manual-payment-form-basic-fields'
 
 	if ( !$is_all_cart_items_digital ) {
@@ -84,8 +83,8 @@ function wpsc_render_manual_checkout_form() {
 
 	$output .= '</div>'; // end of 'wpsc-manual-payment-form-fields'
 
-	$output .= wp_nonce_field('wpsc_manual_payment_form_nonce_action', 'wpsc_manual_payment_form_nonce');
-    $output .= '<input type="hidden" name="wpsc_manual_payment_form_card_id" value="'.esc_attr($cart_id).'" />';
+	$output .= wp_nonce_field('wpsc_manual_payment_form_nonce_action', 'wpsc_manual_payment_form_nonce', true, false);
+	$output .= '<input type="hidden" name="wpsc_manual_payment_form_card_id" value="'.esc_attr($cart_id).'" />';
 
 	$output .= '<p class="submit wpsc-manual-payment-form-submit-section">';
 	$output .= '<input type="submit" class="wpsc-manual-payment-form-submit" value="'. __('Place Order','wordpress-simple-paypal-shopping-cart') .'" />';

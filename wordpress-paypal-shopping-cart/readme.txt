@@ -235,6 +235,7 @@ None
 = WIP =
 - Updated the German language file. Thanks to Roland Stumpp for submitting the updated file.
 - New dynamic product feature added to protect the download file url.
+- A issue in manual checkout fixed.
 
 = 5.1.2 =
 - Added Manual/offline Checkout feature. [view documentation](https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-manual-offline-checkout)
