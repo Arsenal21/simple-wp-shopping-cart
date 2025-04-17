@@ -1,4 +1,4 @@
-/* global wpsc_ajaxUrl */
+/* global wpsc_ajaxUrl, wpscCheckoutManualMsg */
 
 document.addEventListener('DOMContentLoaded', function () {
     const wpscManualCheckoutProceedBtns = document.querySelectorAll('.wpsc-manual-payment-proceed-to-checkout-btn');
@@ -204,12 +204,12 @@ class WpscManualCheckout {
         switch (rule) {
             case 'required':
                 isError = fieldValue === '';
-                message = __("This field is required", "wordpress-simple-paypal-shopping-cart");
+                message = wpscCheckoutManualMsg?.requiredError;
                 break;
             case 'email':
                 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 isError = !emailRegex.test(fieldValue);
-                message = __("The email address is not valid", "wordpress-simple-paypal-shopping-cart");
+                message = wpscCheckoutManualMsg?.emailError;
                 break;
         }
 
