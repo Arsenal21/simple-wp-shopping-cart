@@ -651,6 +651,10 @@ function wpsc_admin_side_enqueue_scripts() {
 	
 	wp_register_script( 'wpsc-admin-scripts', WP_CART_URL . '/assets/js/wpsc-admin-scripts.js', array('wp-i18n'), WP_CART_VERSION);
 	wp_add_inline_script('wpsc-admin-scripts', 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
+	wp_localize_script( 'wpsc-admin-scripts', 'wpscAdminScriptMsg', array(
+         'resendSaleNotificationEmailMsg' => __('Do you really want to resend sale notification email?', 'wordpress-simple-paypal-shopping-cart'),
+        'confirmMarkOrderPaidMsg' => __("Are you sure you want to mark this order as 'Paid'? This indicates that payment has been received for the order.", "wordpress-simple-paypal-shopping-cart"),
+    ));
 	wp_enqueue_script( 'wpsc-admin-scripts' );
 }
 
@@ -678,10 +682,14 @@ function wpsc_front_side_enqueue_scripts() {
 	wp_register_script( "wpsc-checkout-cart-script", WP_CART_URL . "/assets/js/wpsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
 	$is_tnc_enabled = empty(get_option('wp_shopping_cart_enable_tnc')) ? 'false' : 'true' ;
 	wp_add_inline_script("wpsc-checkout-cart-script", "const wspscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
-	
+
 	$is_shipping_region_enabled = empty(get_option('enable_shipping_by_region')) ? 'false' : 'true' ;
 	wp_add_inline_script("wpsc-checkout-cart-script", "const wspscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
 	wp_add_inline_script("wpsc-checkout-cart-script", 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
+	wp_localize_script("wpsc-checkout-cart-script", 'wpscCheckoutCartMsg', array(
+        'tncError' => __("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart"),
+        'shippingRegionError' => __("You must select a shipping region before you can proceed.", "wordpress-simple-paypal-shopping-cart"),
+    ));
 
 	if ($is_shipping_region_enabled) {
 		$configured_shipping_region_options  = get_option('wpsc_shipping_region_variations', array() );
@@ -693,6 +701,10 @@ function wpsc_front_side_enqueue_scripts() {
 	}
 
 	wp_register_script( "wpsc-checkout-manual", WP_CART_URL . "/assets/js/wpsc-checkout-manual.js", array( "wpsc-checkout-cart-script" ), WP_CART_VERSION);
+	wp_localize_script("wpsc-checkout-manual", 'wpscCheckoutManualMsg', array(
+		'requiredError' => __("This field is required", "wordpress-simple-paypal-shopping-cart"),
+        'emailError' => __("The email address is not valid", "wordpress-simple-paypal-shopping-cart"),
+	));
 }
 
 //Handle the plugins loaded action

@@ -111,6 +111,11 @@ i.mce-i-wp-cart-tinymce::before {
     width: 100%;
 }
 
+.wpsc-order-action-btn :nth-child(2){
+    /* move words to new line so it doesn't overflow */
+    white-space: pre-line;
+}
+
 .wpsc-order-action-btn-icon{
     margin-right: 4px;
 }
