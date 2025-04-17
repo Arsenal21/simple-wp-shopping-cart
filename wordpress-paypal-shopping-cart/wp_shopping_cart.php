@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: WP Simple Shopping Cart
-  Version: 5.1.2
+  Version: 5.1.3
   Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
   Author: Tips and Tricks HQ, Ruhul Amin, mra13
   Author URI: https://www.tipsandtricks-hq.com/
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) { //Exit if accessed directly
 	exit;
 }
 
-define( 'WP_CART_VERSION', '5.1.2' );
+define( 'WP_CART_VERSION', '5.1.3' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );
@@ -652,7 +652,7 @@ function wpsc_admin_side_enqueue_scripts() {
 	wp_register_script( 'wpsc-admin-scripts', WP_CART_URL . '/assets/js/wpsc-admin-scripts.js', array('wp-i18n'), WP_CART_VERSION);
 	wp_add_inline_script('wpsc-admin-scripts', 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
 	wp_localize_script( 'wpsc-admin-scripts', 'wpscAdminScriptMsg', array(
-         'resendSaleNotificationEmailMsg' => __('Do you really want to resend sale notification email?', 'wordpress-simple-paypal-shopping-cart'),
+        'resendSaleNotificationEmailMsg' => __('Do you really want to resend sale notification email?', 'wordpress-simple-paypal-shopping-cart'),
         'confirmMarkOrderPaidMsg' => __("Are you sure you want to mark this order as 'Paid'? This indicates that payment has been received for the order.", "wordpress-simple-paypal-shopping-cart"),
     ));
 	wp_enqueue_script( 'wpsc-admin-scripts' );
