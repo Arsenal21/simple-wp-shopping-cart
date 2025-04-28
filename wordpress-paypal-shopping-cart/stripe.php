@@ -12,7 +12,9 @@ class stripe_ipn_handler {
 	var $sandbox_mode = false;
 	var $secret_key = '';
 	var $get_string = '';
-    var $order_id=0;    
+    var $order_id=0;
+
+    private $cart_id = 0;
 
 	function __construct() {
 		$this->secret_key = get_option("wpspc_stripe_live_secret_key");
@@ -67,9 +69,10 @@ class stripe_ipn_handler {
         }
 		
         $payment_amount = floatval( $this->ipn_data["mc_gross"] );
-		$currency_code_payment  = strtoupper( $this->ipn_data["mc_currency"] );		
+		$currency_code_payment  = strtoupper( $this->ipn_data["mc_currency"] );
 
-		$post_id = $custom_values['wp_cart_id'];
+		// $post_id = $custom_values['wp_cart_id']; // TODO: old code.
+		$post_id = $wspsc_cart->get_cart_cpt_id();
 		$orig_cart_items = $wspsc_cart->get_items();
 		
 		$ip_address = isset( $custom_values['ip'] ) ? $custom_values['ip'] : '';
@@ -128,7 +131,7 @@ class stripe_ipn_handler {
 		$updated_wpsc_order = array(
 			'ID' => $post_id,
 			'post_status' => 'publish',
-			'post_type' => 'wpsc_cart_orders',
+			'post_type' => WPSC_Cart::POST_TYPE,
 			'post_date' => current_time('Y-m-d H:i:s')
 		);
 		wp_update_post( $updated_wpsc_order );
@@ -295,8 +298,9 @@ class stripe_ipn_handler {
 
 
 	function validate_ipn() {
-		
-        $this->order_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0;
+
+        // $this->order_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0; // TODO: old code. need to remove
+		$this->cart_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0;
 
 		//IPN validation check
 		if ($this->validate_ipn_using_client_reference_id()) {			
@@ -326,7 +330,7 @@ class stripe_ipn_handler {
             
             foreach ( $events->autoPagingIterator() as $event ) {
 				$session = $event->data->object;
-				if ( isset( $session->client_reference_id ) && $session->client_reference_id === $this->order_id ) {
+				if ( isset( $session->client_reference_id ) && $session->client_reference_id === $this->cart_id ) {
 					$sess = $session;
 					break;
 				}
@@ -334,7 +338,7 @@ class stripe_ipn_handler {
 
             if ( false === $sess ) {
 				// Can't find session.
-				$error_msg = sprintf( "Error! Payment with ref_id %s (Order ID) can't be found. This script should be accessed by Stripe's webhook only.", $this->order_id );
+				$error_msg = sprintf( "Error! Payment with ref_id %s (Cart ID) can't be found. This script should be accessed by Stripe's webhook only.", $this->cart_id );
 				$this->debug_log( $error_msg, false );
 				wp_die(esc_html($error_msg));				
 			}
@@ -353,7 +357,7 @@ class stripe_ipn_handler {
 	        }
 
 			//formatting ipn_data
-			 $this->create_ipn_from_stripe($pi, $additional_data);
+	        $this->create_ipn_from_stripe($pi, $additional_data);
 
         }  catch ( Exception $e ) {
 			$error_msg = 'Error occurred: ' . $e->getMessage();
@@ -433,7 +437,8 @@ class stripe_ipn_handler {
 		$wspsc_cart =  WPSC_Cart::get_instance();
 
 		$cart_id = $wspsc_cart->get_cart_id();
-		$custom_field_values = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );
+		$cart_post_id = $wspsc_cart->get_cart_cpt_id();
+		$custom_field_values = get_post_meta( $cart_post_id, 'wpsc_cart_custom_values', true );
 		// if( is_array($data['custom_metadata'])){
 		// 	//Alternative way to get custom field values for Stripe checkout.
 		// 	$custom_field_values = http_build_query($data['custom_metadata']);
@@ -543,71 +548,41 @@ class stripe_ipn_handler {
 		return rtrim($address, ', ');
 	}
 
-	function log_ipn_results( $success ) {
-		if (! $this->ipn_log)
-			return; // is logging turned off?
-		// Timestamp
-		$text = '[' . date( 'm/d/Y g:i A' ) . '] - ';
-
-		// Success or failure being logged?
-		if ($success)
-			$text .= "SUCCESS!\n";
-		else
-			$text .= 'FAIL: ' . $this->last_error . "\n";
-
-		// Log the POST variables
-		$text .= "IPN POST vars from payment gateway:\n";
-		foreach ( $this->ipn_data as $key => $value ) {
-			$text .= "$key=$value, ";
-		}
-
-		// Log the response
-		$text .= "\nIPN Response from payment gateway Server:\n " . $this->ipn_response;
-
-		// Write to log
-		$fp = fopen( $this->ipn_log_file, 'a' );
-		fwrite( $fp, $text . "\n\n" );
-
-		fclose( $fp ); // close file
-	}
+	// TODO: not used. need to remove this.
+//	function log_ipn_results( $success ) {
+//		if (! $this->ipn_log)
+//			return; // is logging turned off?
+//		// Timestamp
+//		$text = '[' . date( 'm/d/Y g:i A' ) . '] - ';
+//
+//		// Success or failure being logged?
+//		if ($success)
+//			$text .= "SUCCESS!\n";
+//		else
+//			$text .= 'FAIL: ' . $this->last_error . "\n";
+//
+//		// Log the POST variables
+//		$text .= "IPN POST vars from payment gateway:\n";
+//		foreach ( $this->ipn_data as $key => $value ) {
+//			$text .= "$key=$value, ";
+//		}
+//
+//		// Log the response
+//		$text .= "\nIPN Response from payment gateway Server:\n " . $this->ipn_response;
+//
+//		// Write to log
+//		$fp = fopen( $this->ipn_log_file, 'a' );
+//		fwrite( $fp, $text . "\n\n" );
+//
+//		fclose( $fp ); // close file
+//	}
 
 	function debug_log( $message, $success, $end = false ) {
-
-		if (! $this->ipn_log)
-			return; // is logging turned off?
-		// Timestamp
-		//check if need to convert array to string
-		if (is_array( $message )) {
-			$message = json_encode( $message );
-		}
-		$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . $message . "\n";
-
-		if ($end) {
-			$text .= "\n------------------------------------------------------------------\n\n";
-		}
-		// Write to log
-		$fp = fopen( $this->ipn_log_file, 'a' );
-		fwrite( $fp, $text );
-		fclose( $fp ); // close file		
+		wpsc_log_payment_debug($message, $success, $end);
 	}
 
 	function debug_log_array( $array_to_write, $success, $end = false ) {
-		if (! $this->ipn_log)
-			return; // is logging turned off?
-		$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . "\n";
-		ob_start();
-		print_r( $array_to_write );
-		$var = ob_get_contents();
-		ob_end_clean();
-		$text .= $var;
-
-		if ($end) {
-			$text .= "\n------------------------------------------------------------------\n\n";
-		}
-		// Write to log
-		$fp = fopen( $this->ipn_log_file, 'a' );
-		fwrite( $fp, $text );
-		fclose( $fp ); // close filee
+		wpsc_log_debug_array($array_to_write, $success, $end);
 	}
 
 }
@@ -616,14 +591,6 @@ class stripe_ipn_handler {
 function wpc_handle_stripe_ipn() {
 	$ipn_handler_instance = new stripe_ipn_handler();
 	$return_url = get_option('cart_return_from_paypal_url');
-
-	$debug_enabled = false;
-	$debug = get_option( 'wp_shopping_cart_enable_debug' );
-	if ($debug) {
-		$debug_enabled = true;
-		$ipn_handler_instance->ipn_log = true;
-		//Alternatively, can use the wpsc_log_payment_debug() function.
-	}
 
 	//Check if cart items are empty
 	$wspsc_cart = WPSC_Cart::get_instance();
@@ -657,8 +624,8 @@ function wpc_handle_stripe_ipn() {
 		$return_url = WP_CART_SITE_URL . '/';		
 	}	
 
-	$order_id = isset($_GET["ref_id"])?$_GET["ref_id"]:'';
-	$redirect_url = add_query_arg( 'order_id', $order_id, $return_url );
+	$cart_id = isset($_GET["ref_id"])?$_GET["ref_id"]:'';
+	$redirect_url = add_query_arg( 'cart_id', $cart_id, $return_url );
 	$redirect_url = add_query_arg('_wpnonce', wp_create_nonce('wpsc_thank_you_nonce_action'), $redirect_url);
 	if ( ! headers_sent() ) {
 		header( 'Location: ' . $redirect_url );

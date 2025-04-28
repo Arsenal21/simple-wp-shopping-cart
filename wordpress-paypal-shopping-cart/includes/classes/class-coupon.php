@@ -71,19 +71,19 @@ class WPSPSC_Coupons_Collection
         }
     }
 
-    function set_discount_applied_once($cart_id)
+    function set_discount_applied_once($cart_post_id)
     {        
-        if($cart_id)
+        if($cart_post_id)
         {
-            update_post_meta($cart_id,"wpspsc_discount_applied_once","1");
+            update_post_meta($cart_post_id,"wpspsc_discount_applied_once","1");
         }        
     }
 
-    function get_discount_applied_once($cart_id)
+    function get_discount_applied_once($cart_cpt_id)
     {        
-        if($cart_id)
+        if($cart_cpt_id)
         {
-           $wpspsc_discount_applied_once= get_post_meta($cart_id,"wpspsc_discount_applied_once",true);
+           $wpspsc_discount_applied_once= get_post_meta($cart_cpt_id,"wpspsc_discount_applied_once",true);
            
            if($wpspsc_discount_applied_once!="1")
            {
@@ -96,27 +96,27 @@ class WPSPSC_Coupons_Collection
         return false;
     }
 
-    function clear_discount_applied_once($cart_id)
+    function clear_discount_applied_once($cart_cpt_id)
     {
-        if($cart_id)
+        if($cart_cpt_id)
         {
-            delete_post_meta($cart_id,"wpspsc_discount_applied_once");
+            delete_post_meta($cart_cpt_id,"wpspsc_discount_applied_once");
         }  
     }
 
-    function set_applied_coupon_code($cart_id,$coupon_code)
+    function set_applied_coupon_code($cart_cpt_id, $coupon_code)
     {
-        if($cart_id)
+        if($cart_cpt_id)
         {
-            update_post_meta($cart_id,"wpspsc_applied_coupon_code",$coupon_code);
+            update_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code",$coupon_code);
         } 
     }
 
-    function get_applied_coupon_code($cart_id)
+    function get_applied_coupon_code($cart_cpt_id)
     {
-        if($cart_id)
+        if($cart_cpt_id)
         {
-            $coupon_code=get_post_meta($cart_id,"wpspsc_applied_coupon_code",true);
+            $coupon_code=get_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code",true);
             if(!$coupon_code || strlen($coupon_code)==0)
             {
                 return false;
@@ -127,11 +127,11 @@ class WPSPSC_Coupons_Collection
         return false;
     }
 
-    function clear_applied_coupon_code($cart_id)
+    function clear_applied_coupon_code($cart_cpt_id)
     {
-        if($cart_id)
+        if($cart_cpt_id)
         {
-            delete_post_meta($cart_id,"wpspsc_applied_coupon_code");
+            delete_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code");
         } 
     }
 }
@@ -176,7 +176,7 @@ function wpsc_apply_cart_discount($coupon_code)
             return;
         }
     }
-    if ($collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) && $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) == '1'){
+    if ( $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_cpt_id()) && $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_cpt_id()) == '1'){
         $wspsc_cart->set_cart_action_msg('<div class="wpspsc_error_message">'.__("Discount can only be applied once per checkout!", "wordpress-simple-paypal-shopping-cart").'</div>');
         return;
     }
@@ -204,8 +204,8 @@ function wpsc_apply_cart_discount($coupon_code)
     $wspsc_cart->add_items($products);
     $disct_amt_msg = print_payment_currency($discount_total, $curr_symbol);
     $wspsc_cart->set_cart_action_msg('<div class="wpspsc_success_message">'.__("Discount applied successfully! Total Discount: ", "wordpress-simple-paypal-shopping-cart").$disct_amt_msg.'</div>');
-    $collection_obj->set_discount_applied_once($wspsc_cart->get_cart_id());
-    $collection_obj->set_applied_coupon_code($wspsc_cart->get_cart_id(),$coupon_code);
+    $collection_obj->set_discount_applied_once($wspsc_cart->get_cart_cpt_id());
+    $collection_obj->set_applied_coupon_code($wspsc_cart->get_cart_cpt_id(),$coupon_code);
 
     return $products;
 }
@@ -216,9 +216,9 @@ function wpsc_reapply_discount_coupon_if_needed()
     $wspsc_cart=WPSC_Cart::get_instance();
     
     //Re-apply coupon to the cart if necessary (meaning a coupon was already applied to the cart when this item was modified.    
-    if ($collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) && $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_id()) == '1'){                        
-        $coupon_code = $collection_obj->get_applied_coupon_code($wspsc_cart->get_cart_id());
-        $collection_obj->clear_discount_applied_once($wspsc_cart->get_cart_id());        
+    if ( $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_cpt_id()) && $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_cpt_id()) == '1'){
+        $coupon_code = $collection_obj->get_applied_coupon_code($wspsc_cart->get_cart_cpt_id());
+        $collection_obj->clear_discount_applied_once($wspsc_cart->get_cart_cpt_id());
         return wpsc_apply_cart_discount($coupon_code);
     }
 

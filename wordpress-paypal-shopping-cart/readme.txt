@@ -231,6 +231,8 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+= WIP =
+- Cart ID related refactor for improved security.
 
 = 5.1.3 =
 - Updated the German language file. Thanks to Roland Stumpp for submitting the updated file.

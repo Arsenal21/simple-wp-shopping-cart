@@ -32,7 +32,8 @@ class WPSC_Post_Payment_Related
 		wpsc_log_payment_debug( 'Custom field value in the IPN: ' . $custom_value_str, true);
 		$custom_values = wp_cart_get_custom_var_array($custom_value_str);
 
-		$ipn_data['post_id'] = $custom_values['wp_cart_id'];
+		//$ipn_data['post_id'] = $custom_values['wp_cart_id']; // TODO: Maybe no longer need this. post_id already added to ipn_data.
+
 		$ipn_data['applied_coupon_code'] = isset($custom_values['coupon_code']) ? $custom_values['coupon_code'] : '';
 		$ipn_data['ap_id'] = isset($custom_values['ap_id']) ? $custom_values['ap_id'] : '';
 
@@ -127,7 +128,7 @@ class WPSC_Post_Payment_Related
 		$updated_wpsc_order = array(
 			'ID' => $post_id,
 			'post_status' => 'publish',
-			'post_type' => 'wpsc_cart_orders',
+			'post_type' => WPSC_Cart::POST_TYPE,
 		);
 		wp_update_post($updated_wpsc_order);
 
@@ -265,9 +266,9 @@ class WPSC_Post_Payment_Related
 
 		//Full reset the cart to clean it up.
 		$wpsc_cart = WPSC_Cart::get_instance();
-		//Pass the cart id to so that it can reset the cart without calling the get_cart_id() function again.
-		$cart_id = isset($ipn_data['cart_id']) ? $ipn_data['cart_id'] : '';
-		$wpsc_cart->reset_cart_after_txn( $cart_id );
+		//Pass the cart cpt id to so that it can reset the cart without calling the get_cart_cpt_id() function again.
+		$cart_cpt_id = isset($ipn_data['post_id']) ? $ipn_data['post_id'] : '';
+		$wpsc_cart->reset_cart_after_txn( $cart_cpt_id );
 	}
 
 }

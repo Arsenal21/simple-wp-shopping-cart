@@ -24,7 +24,7 @@ class WPSC_Manual_Checkout {
 
 		$cart_items = $wpsc_cart->get_items();
 
-		$post_id = $wpsc_cart->get_cart_id();
+		$post_id = $wpsc_cart->get_cart_cpt_id();
 
 		//Check if cart items are empty
 		if(empty($cart_items)){
@@ -38,7 +38,7 @@ class WPSC_Manual_Checkout {
 		$updated_wpsc_order = array(
 			'ID' => $post_id,
 			'post_status' => 'publish',
-			'post_type' => 'wpsc_cart_orders',
+			'post_type' => WPSC_Cart::POST_TYPE,
 			'post_date' => current_time('Y-m-d H:i:s')
 		);
 		wp_update_post( $updated_wpsc_order );
@@ -73,7 +73,7 @@ class WPSC_Manual_Checkout {
 	public function process_payment_data( $post_data, $cart_obj ){
 		$cart_items = $cart_obj->get_items();
 
-		$post_id = $cart_obj->get_cart_id();
+		$post_id = $cart_obj->get_cart_cpt_id();
 
 		$this->data['post_id'] = $post_id;
 		$this->data['first_name'] = sanitize_text_field($post_data['first_name']);

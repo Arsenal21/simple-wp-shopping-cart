@@ -88,6 +88,8 @@ class PayPal_Utility_IPN_Related {
 		//Phone can be retrieved (if available) from the payer object by making a separate API call to /v2/customer
 		$ipn_data['contact_phone'] = isset($txn_data['contact_phone']) ? $txn_data['contact_phone'] : '';
 
+		$ipn_data['post_id'] = isset($data['cart_cpt_id']) ? $data['cart_cpt_id'] : '';
+
 		return $ipn_data;
 	}
 
@@ -99,6 +101,7 @@ class PayPal_Utility_IPN_Related {
 		//Get the transaction/order details from PayPal API endpoint - /v2/checkout/orders/{$order_id}
 		$pp_orderID = isset($data['order_id']) ? $data['order_id'] : '';
 		$cart_id = isset($data['cart_id']) ? $data['cart_id'] : '';
+		$cart_cpt_id = isset($data['cart_cpt_id']) ? $data['cart_cpt_id'] : '';
 
 		$validation_error_msg = '';
 
@@ -139,7 +142,7 @@ class PayPal_Utility_IPN_Related {
 			//Check that the amount matches with what we expect.
 			$amount = isset($order_details['purchase_units'][0]['amount']['value']) ? $order_details['purchase_units'][0]['amount']['value'] : 0;
 
-			$payment_amount_expected = get_post_meta( $cart_id, 'expected_payment_amount', true );
+			$payment_amount_expected = get_post_meta( $cart_cpt_id, 'expected_payment_amount', true );
 			if( floatval($amount) < floatval($payment_amount_expected) ){
 				//The amount does not match.
 				$validation_error_msg = 'Validation Error! The payment amount does not match. Cart ID: ' . $cart_id . ', PayPal Order ID: ' . $pp_orderID . ', Amount Received: ' . $amount . ', Amount Expected: ' . $payment_amount_expected;
@@ -149,7 +152,7 @@ class PayPal_Utility_IPN_Related {
 
 			//Check that the currency matches with what we expect.
 			$currency = isset($order_details['purchase_units'][0]['amount']['currency_code']) ? $order_details['purchase_units'][0]['amount']['currency_code'] : '';
-			$currency_expected = get_post_meta( $cart_id, 'expected_currency', true );
+			$currency_expected = get_post_meta( $cart_cpt_id, 'expected_currency', true );
 			if( $currency != $currency_expected ){
 				//The currency does not match.
 				$validation_error_msg = 'Validation Error! The payment currency does not match. Cart ID: ' . $cart_id . ', PayPal Order ID: ' . $pp_orderID . ', Currency Received: ' . $currency . ', Currency Expected: ' . $currency_expected;

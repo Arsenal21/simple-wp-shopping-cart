@@ -22,6 +22,7 @@ function wpsc_stripe_create_checkout_session() {
 	$wspsc_cart->calculate_cart_totals_and_postage();
 
 	$cart_id = $wspsc_cart->get_cart_id();
+	$cart_cpt_id = $wspsc_cart->get_cart_cpt_id();
 	$currency = get_option( 'cart_payment_currency' );
 	$symbol = get_option( 'cart_currency_symbol' );
 	$return_url = get_option( 'cart_return_from_paypal_url' );
