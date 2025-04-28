@@ -147,7 +147,9 @@ class paypal_ipn_handler {
 			}
 		}
 
-		$post_id = $custom_values['wp_cart_id'];
+	    $cart_id = $custom_values['wp_cart_id'];
+		$post_id = wpsc_get_cart_cpt_id_by_cart_id( $cart_id );
+
 		$orig_cart_items = get_post_meta( $post_id, 'wpsc_cart_items', true );
 		//$this->debug_log( 'Original cart items from the order post below.', true );
 		//$this->debug_log_array( $orig_cart_items, true );
@@ -208,7 +210,7 @@ class paypal_ipn_handler {
 		$updated_wpsc_order = array(
 			'ID' => $post_id,
 			'post_status' => 'publish',
-			'post_type' => 'wpsc_cart_orders',
+			'post_type' => WPSC_Cart::POST_TYPE,
 		);
 		wp_update_post( $updated_wpsc_order );
 
@@ -510,7 +512,8 @@ class paypal_ipn_handler {
 
 		$wspsc_cart =  WPSC_Cart::get_instance();
 		$cart_id = $wspsc_cart->get_cart_id();
-		$custom_field_values = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );
+		$cart_cpt_id = $wspsc_cart->get_cart_cpt_id();
+		$custom_field_values = get_post_meta( $cart_cpt_id, 'wpsc_cart_custom_values', true );
 		$ipn['custom'] = $custom_field_values;
 
 		$ipn['pay_id'] = $data['id'];

@@ -55,7 +55,7 @@ function wpsc_clean_incomplete_old_cart_orders() {
                  WHERE post_type = %s
                  AND post_status = %s
                  AND post_date < %s
-                ", 'wpsc_cart_orders', 'trash', $specific_time
+                ", WPSC_Cart::POST_TYPE, 'trash', $specific_time
             )
     );
 }
@@ -334,4 +334,28 @@ function check_shipping_region_str($str){
     }
 
     return false;
+}
+
+function wpsc_get_cart_cpt_id_by_cart_id( $cart_id ) {
+	$query = new WP_Query(
+		array(
+			'post_type'      => WPSC_Cart::POST_TYPE,
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'post_status'    => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit', 'trash'), // TODO: this might need a optimization.
+			'meta_query'     => array(
+				array(
+					'key'   => 'wpsc_cart_id',
+					'value' => $cart_id,
+					'compare' => '='
+				)
+			)
+		)
+	);
+
+	if ( ! empty( $query->posts ) ) {
+		return intval( $query->posts[0] );
+	}
+
+	return 0; // Not found
 }

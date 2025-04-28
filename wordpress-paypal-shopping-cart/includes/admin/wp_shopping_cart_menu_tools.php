@@ -69,7 +69,7 @@ function wpsc_export_orders_data_to_csv(){
     fputcsv($fh, $header_names);
     
     $query_args = array(
-        'post_type' => 'wpsc_cart_orders',
+        'post_type' => WPSC_Cart::POST_TYPE,
         'numberposts' => -1, /* to retrieve all posts */
         'orderby' => 'date',
 	'order' => 'DESC',

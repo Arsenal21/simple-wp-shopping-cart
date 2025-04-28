@@ -336,7 +336,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
                         //Redirect to the Thank you page URL if it is set.
                         let return_url = new URL("<?php echo esc_url_raw($return_url); ?>");
-                        return_url.searchParams.set('order_id',  pp_bn_data.cart_id);
+                        return_url.searchParams.set('cart_id',  pp_bn_data.cart_id);
                         return_url.searchParams.set('_wpnonce',  '<?php echo wp_create_nonce('wpsc_thank_you_nonce_action'); ?>');
                         if( return_url ){
                             //redirect to the Thank you page URL.

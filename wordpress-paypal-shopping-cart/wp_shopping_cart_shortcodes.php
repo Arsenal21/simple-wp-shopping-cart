@@ -214,8 +214,8 @@ function wpsc_thank_you_sc_handler( $atts ) {
 
     $thank_you_page_common_msg = '<p>' . __( 'This page displays the transaction result and the order summary after a customer completes a payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
     $thank_you_page_common_msg .= '<p>' . __( 'When redirected here after a payment, customers will see their order details dynamically.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
-	if ( ! isset( $_GET['order_id'] ) || empty( $_GET['order_id'] ) ) {
-		$error_message .= $thank_you_page_common_msg . '<p>' . __( 'Error! Order ID value is missing in the URL.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+	if ( ! isset( $_GET['cart_id'] ) || empty( $_GET['cart_id'] ) ) {
+		$error_message .= $thank_you_page_common_msg . '<p>' . __( 'Error! Cart ID value is missing in the URL.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
 		return $error_message;
 	}
 
@@ -224,7 +224,12 @@ function wpsc_thank_you_sc_handler( $atts ) {
 		return $error_message;
 	}
 
-	$order_id = (int) $_GET['order_id'];
+    $cart_id = $_GET['cart_id']; // here the $_GET['order_id'] is actually cart_id. So get the cpt ID form the cart_id.
+	$order_id = wpsc_get_cart_cpt_id_by_cart_id($cart_id);
+    if(empty($order_id)){
+	    $error_message .= $thank_you_page_common_msg . '<p>' . __( 'Error! failed to retrieve order data.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>';
+	    return $error_message;
+    }
 
 	require_once( WP_CART_PATH . '/includes/classes/class.wpsc-thank-you.php' );
 

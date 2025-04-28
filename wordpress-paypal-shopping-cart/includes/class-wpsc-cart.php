@@ -4,12 +4,12 @@
 $wpsc_global_visitor_cart_id = 0;
 
 class WPSC_Cart {
-    private $items = array();
-    private $item;
-    private $cart_id = 0;
-    private $post_type = "";
-    protected static $instance = null;
-    protected $cart_custom_values = "";
+	const POST_TYPE = "wpsc_cart_orders";
+	private $items = array();
+	private $item;
+	private $cart_id = 0;
+	private static $instance = null;
+	protected $cart_custom_values = "";
 
     /**
      * Having empty string, means the field was never selected. '-1' means, the field was selected once but not proper value was set.
@@ -28,74 +28,87 @@ class WPSC_Cart {
     public $tax = 0;
     public $grand_total = 0;
 
-    public function __construct() {
-        $this->cart_id = isset($_COOKIE['simple_cart_id']) ? $_COOKIE['simple_cart_id'] : 0;
-        $this->post_type = "wpsc_cart_orders";
+	private $post_id_reference = 0;
 
-        // Assign all previously saved properties of WPSC_Cart object.
-        $saved_object = $this->get_cart_from_postmeta($this->get_cart_id());
-        if ($saved_object instanceof self) {
-            foreach ($saved_object as $property => $value) {
-                if (property_exists($this, $property)) {
-                    $this->$property = $value;
-                }
-            }
-        } else {
-			// The saved cart class object is not valid. So delete that cart and other related values.
-	        $this->delete_cart_and_related_data($this->get_cart_id());
-        }
-    }
+	private function __construct() {
+		$this->cart_id = isset( $_COOKIE['simple_cart_id'] ) ? $_COOKIE['simple_cart_id'] : 0;
 
-    public static function get_instance() {
-        // If the single instance hasn't been set, set it now.
-        if ( null === self::$instance ) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+		$cart_cpt_id = wpsc_get_cart_cpt_id_by_cart_id( $this->cart_id );
+		if ( ! empty( $cart_cpt_id ) ) {
+			// Assign all previously saved properties of WPSC_Cart object.
+			$saved_wpsc_cart_object = $this->get_cart_from_postmeta( $cart_cpt_id );
+			if ( $saved_wpsc_cart_object instanceof self ) {
+				foreach ( $saved_wpsc_cart_object as $property => $value ) {
+					if ( property_exists( $this, $property ) ) {
+						$this->$property = $value;
+					}
+				}
 
-    /**
-     * Create a new cart order in the database and set a cookie with the cart ID.
-     *
-     * This method creates a new cart order post in the 'wpsc_cart_orders' post type with the post status set to 'trash',
-     * sets a cookie with the cart ID, and updates the cart object with the new ID. It also updates the cart order post
-     * with the current cart ID as the post title and the order status as 'In Progress'. If any items have been added to the
-     * cart, they will be saved to the database as well.
-     */
-    public function create_cart() {
-        //This is normally used when first time an item is added to the cart. It creates a new cart ID and set the cookie.
-        
-        //Create a new order
-        $wpsc_order = array(
-            'post_title'    => 'WPSC Cart Order',
-            'post_type'     => $this->post_type,
-            'post_content'  => '',
-            'post_status'   => 'trash',
-        );
-        //Insert the post into the database
-        $post_id  = wp_insert_post($wpsc_order);
+				$this->set_cart_cpt_id( $cart_cpt_id );
+				// Found the card cpt id, and the cart object has loaded.
+				return;
+			}
+		}
 
-        if ($post_id) {
-            //Set the cookie with the cart ID.
-            $cookie_expiration = time() + (86400 * 30); // 30 days
-            setcookie('simple_cart_id', $post_id, $cookie_expiration, '/');
-            $this->set_cart_id($post_id);
-            
-            //Set the global variable for the cart ID (so for the first page load, addon's can use this cart ID when the cookie is set but the server side code doesn't have the cookie value yet).
-            global $wpsc_global_visitor_cart_id;
-            $wpsc_global_visitor_cart_id = $post_id;
+		// The saved cart id or the saved cart class object is not valid. So delete that cart and other related values.
+		$this->delete_cart_and_related_data( $cart_cpt_id );
+	}
 
-            //Update the post title with the cart ID
-            $updated_wpsc_order = array(
-                'ID'         => $this->get_cart_id(),
-                'post_title' => $this->get_cart_id(),
-                'post_type'  => $this->post_type,
-            );
-            wp_update_post($updated_wpsc_order);
+	public static function get_instance() {
+		// If the single instance hasn't been set, set it now.
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
 
-            //Update the order status
-            $status = "In Progress";
-            update_post_meta($this->get_cart_id(), 'wpsc_order_status', $status);
+		return self::$instance;
+	}
+
+	/**
+	 * Create a new cart order in the database and set a cookie with the cart ID.
+	 *
+	 * This method creates a new cart order post in the 'wpsc_cart_orders' post type with the post status set to 'trash',
+	 * sets a cookie with the cart ID, and updates the cart object with the new ID. It also updates the cart order post
+	 * with the current cart cpt ID as the post title and the order status as 'In Progress'. If any items have been added to the
+	 * cart, they will be saved to the database as well.
+	 */
+	public function create_cart() {
+		//This is normally used when first time an item is added to the cart. It creates a new cart ID and set the cookie.
+
+		//Create a new order
+		$wpsc_order = array(
+			'post_title'   => 'WPSC Cart Order',
+			'post_type'    => WPSC_Cart::POST_TYPE,
+			'post_content' => '',
+			'post_status'  => 'trash',
+		);
+		//Insert the post into the database
+		$cart_cpt_id = wp_insert_post( $wpsc_order );
+
+		if ( $cart_cpt_id ) {
+			//Set the cookie with unique cart ID.
+			$cart_id           = uniqid();
+			$cookie_expiration = time() + ( 86400 * 30 ); // 30 days
+			setcookie( 'simple_cart_id', $cart_id, $cookie_expiration, '/' );
+
+			$this->set_cart_id( $cart_id );
+			$this->set_cart_cpt_id( $cart_cpt_id );
+
+			//Set the global variable for the cart ID (so for the first page load, addon's can use this cart ID when the cookie is set but the server side code doesn't have the cookie value yet).
+			global $wpsc_global_visitor_cart_id;
+			$wpsc_global_visitor_cart_id = $cart_id;
+
+			//Update the post title with the cart ID
+			$updated_wpsc_order = array(
+				'ID'         => $cart_cpt_id,
+				'post_title' => $cart_cpt_id,
+				'post_type'  => WPSC_Cart::POST_TYPE,
+			);
+			wp_update_post( $updated_wpsc_order );
+
+			//Update the order status
+			$status = "In Progress";
+			update_post_meta( $cart_cpt_id, 'wpsc_order_status', $status );
+			update_post_meta( $cart_cpt_id, 'wpsc_cart_id', $cart_id );
 
             //Save cart items (if items were added to cart)
             $this->save_items();
@@ -105,25 +118,25 @@ class WPSC_Cart {
         }
     }
 
-    /**
-     * Save the cart object to postmeta for persistency.
-     *
-     * @return int|bool
-     */
-    public function save_cart_to_postmeta(){
-        $serialized_cart_object = serialize($this); 
-        
-        return update_post_meta($this->get_cart_id(), 'wpsc_cart_object', $serialized_cart_object);
-    }
+	/**
+	 * Save the cart object to postmeta for persistency.
+	 *
+	 * @return int|bool
+	 */
+	public function save_cart_to_postmeta() {
+		$serialized_cart_object = serialize( $this );
 
-    /**
-     * Retrieve the cart object from postmeta to get the cart related data.
-     * Useful if page reload occurs.
-     *
-     * @return object The WPSC_Cart class object.
-     */
-    public static function get_cart_from_postmeta($cart_id){
-        $serialized_cart_object = get_post_meta($cart_id, 'wpsc_cart_object', true);
+		return update_post_meta( $this->get_cart_cpt_id(), 'wpsc_cart_object', $serialized_cart_object );
+	}
+
+	/**
+	 * Retrieve the cart object from postmeta to get the cart related data.
+	 * Useful if page reload occurs.
+	 *
+	 * @return object The WPSC_Cart class object.
+	 */
+	public static function get_cart_from_postmeta( $cart_cpt_id ) {
+		$serialized_cart_object = get_post_meta( $cart_cpt_id, 'wpsc_cart_object', true );
 
         if ($serialized_cart_object) {
             return unserialize($serialized_cart_object); // Unserialize data to get the object
@@ -151,20 +164,19 @@ class WPSC_Cart {
         $this->set_items($items);
     }
 
-
-    /**
-     * @deprecated This method is deprecated since version 5.0.3. Use 'save_cart_to_postmeta' instead where the entire cart class object is being saved.
-     * 
-     * Save the cart items to the database.
-     *
-     * If the cart ID has been set, update the 'wpsc_cart_items' post meta with
-     * the current items in the cart.
-     */
-    public function save_items() {
-        if ($this->get_cart_id()) {
-            update_post_meta( $this->get_cart_id(), 'wpsc_cart_items', $this->items );
-        }
-    }
+	/**
+	 * @deprecated This method is deprecated since version 5.0.3. Use 'save_cart_to_postmeta' instead where the entire cart class object is being saved.
+	 *
+	 * Save the cart items to the database.
+	 *
+	 * If the cart ID has been set, update the 'wpsc_cart_items' post meta with
+	 * the current items in the cart.
+	 */
+	public function save_items() {
+		if ( $this->get_cart_id() ) {
+			update_post_meta( $this->get_cart_cpt_id(), 'wpsc_cart_items', $this->items );
+		}
+	}
 
     /**
      * Resets the cart items and action messages.
@@ -175,78 +187,83 @@ class WPSC_Cart {
         //Thus keeping only one cart order object for one user
         $this->set_items(array());
 
-        $this->clear_cart_action_msg();
+		$this->clear_cart_action_msg();
 
-        $collection_obj = WPSPSC_Coupons_Collection::get_instance();
-        $collection_obj->clear_discount_applied_once($this->get_cart_id());        
-        $collection_obj->clear_applied_coupon_code($this->get_cart_id());
-    }
+		$collection_obj = WPSPSC_Coupons_Collection::get_instance();
+		$collection_obj->clear_discount_applied_once( $this->get_cart_cpt_id() );
+		$collection_obj->clear_applied_coupon_code( $this->get_cart_cpt_id() );
+	}
 
-    /**
-     * It does a full reset by removing the cart id from cookie.
-     * Recommended to call this function with the $cart_id parameter.
-     */
-    public function reset_cart_after_txn( $cart_id = 0 ) {
-        //This function will get called after the transaction (from the thank you page or post payment processing handler).
-        //This function doesn't empty the items array in the order post (so that the admin can see the order details).
-        $this->items = array();//Set the items to empty array but don't update the order post.
+	/**
+	 * It does a full reset by removing the cart id from cookie.
+	 * Recommended to call this function with the $cart_id parameter.
+	 */
+	public function reset_cart_after_txn( $cart_cpt_id = 0 ) {
+		//This function will get called after the transaction (from the thank you page or post payment processing handler).
+		//This function doesn't empty the items array in the order post (so that the admin can see the order details).
+		$this->items = array();//Set the items to empty array but don't update the order post.
 
-        if ( !empty( $cart_id ) ) {
-            //After the transaction is completed, the order status will be paid. So we don't want to call the get_cart_id() function.
-            //Do these only if a cart ID is passed.
-            $collection_obj = WPSPSC_Coupons_Collection::get_instance();
-            $collection_obj->clear_discount_applied_once($cart_id);        
-            $collection_obj->clear_applied_coupon_code($cart_id);
+		if ( ! empty( $cart_cpt_id ) ) {
+			//After the transaction is completed, the order status will be paid. So we don't want to call the get_cart_id() function.
+			//Do these only if a cart ID is passed.
+			$collection_obj = WPSPSC_Coupons_Collection::get_instance();
+			$collection_obj->clear_discount_applied_once( $cart_cpt_id );
+			$collection_obj->clear_applied_coupon_code( $cart_cpt_id );
 
-            //Delete the cart action msg transient
-            $transient_key = 'wpspsc_cart_action_msg' . $cart_id;
-            delete_transient($transient_key);
-        }
+			//Delete the cart action msg transient
+			$transient_key = 'wpspsc_cart_action_msg' . $cart_cpt_id;
+			delete_transient( $transient_key );
+		}
 
-        //Set cookie in the past to expire it
-        setcookie('simple_cart_id', '', time() - 3600, '/');
-        $this->set_cart_id(0);
-    }
+		//Set cookie in the past to expire it
+		setcookie( 'simple_cart_id', '', time() - 3600, '/' );
+		$this->set_cart_cpt_id( 0 );
+		$this->set_cart_id( 0 );
+	}
 
-	public function delete_cart_and_related_data($cart_id) {
+	public function delete_cart_and_related_data( $cart_cpt_id ) {
 		// Delete the corresponding order post.
-		wp_delete_post($cart_id);
+		wp_delete_post( $cart_cpt_id );
 		// Delete the cart and related data.
 		$this->clear_cart_action_msg();
 		$this->items = array();
-		$this->set_cart_id(0);
-		if (!headers_sent()){
-			setcookie("simple_cart_id", "", time() - 3600, "/");
+		$this->set_cart_cpt_id( 0 );
+		$this->set_cart_id( 0 );
+		if ( ! headers_sent() ) {
+			setcookie( "simple_cart_id", "", time() - 3600, "/" );
 		}
 	}
 
-    public function get_total_cart_qty() {
-        $total_items = 0;
-        if (!$this->get_items()) {
-            return $total_items;
-        }
-        foreach ($this->get_items() as $item) {
-            $total_items += $item->get_quantity();
-        }
-        return $total_items;
-    }
+	public function get_total_cart_qty() {
+		$total_items = 0;
+		if ( ! $this->get_items() ) {
+			return $total_items;
+		}
+		foreach ( $this->get_items() as $item ) {
+			$total_items += $item->get_quantity();
+		}
 
-    public function get_total_cart_sub_total() {
-        $sub_total = 0;
-        if (!$this->get_items()) {
-            return $sub_total;
-        }
-        foreach ($this->get_items() as $item) {
-            $sub_total += $item->get_price() * $item->get_quantity();
-        }
-        return $sub_total;
-    }
+		return $total_items;
+	}
 
-    public function get_sub_total_formatted() {
-        //This function will return the sub total of the cart items after calculate_cart_totals_and_postage() is called.
-        $sub_total = $this->sub_total;
-        return wpsc_number_format_price($sub_total);
-    }
+	public function get_total_cart_sub_total() {
+		$sub_total = 0;
+		if ( ! $this->get_items() ) {
+			return $sub_total;
+		}
+		foreach ( $this->get_items() as $item ) {
+			$sub_total += $item->get_price() * $item->get_quantity();
+		}
+
+		return $sub_total;
+	}
+
+	public function get_sub_total_formatted() {
+		//This function will return the sub total of the cart items after calculate_cart_totals_and_postage() is called.
+		$sub_total = $this->sub_total;
+
+		return wpsc_number_format_price( $sub_total );
+	}
 
 	/**
 	 * This includes:
@@ -258,33 +275,36 @@ class WPSC_Cart {
 		return $this->shipping_cost;
 	}
 
-    public function get_postage_cost() {
-        //This function will return the postage cost amount of the cart items after calculate_cart_totals_and_postage() is called.
-        $postage_cost = $this->postage_cost;
-        return $postage_cost;
-    }
+	public function get_postage_cost() {
+		//This function will return the postage cost amount of the cart items after calculate_cart_totals_and_postage() is called.
+		$postage_cost = $this->postage_cost;
 
-    public function get_postage_cost_formatted() {
-        //This function will return the formatted postage cost of the cart items after calculate_cart_totals_and_postage() is called.
-        $postage_cost = $this->postage_cost;
-        return wpsc_number_format_price($postage_cost);
-    }
-    
-    /**
-     * This function will return the total shipping costs of each cart item.
-     * The total cost is calculated when 'calculate_cart_totals_and_postage' method is called.
-     *
-     * @return float Total shipping costs of each cart item.
-     */
-    public function get_item_shipping_total() {
-        return $this->item_shipping_total;
-    }
+		return $postage_cost;
+	}
 
-    public function get_grand_total_formatted() {
-        //This function will return the grand total of the cart items after calculate_cart_totals_and_postage() is called.
-        $grand_total = $this->grand_total;
-        return wpsc_number_format_price($grand_total);
-    }
+	public function get_postage_cost_formatted() {
+		//This function will return the formatted postage cost of the cart items after calculate_cart_totals_and_postage() is called.
+		$postage_cost = $this->postage_cost;
+
+		return wpsc_number_format_price( $postage_cost );
+	}
+
+	/**
+	 * This function will return the total shipping costs of each cart item.
+	 * The total cost is calculated when 'calculate_cart_totals_and_postage' method is called.
+	 *
+	 * @return float Total shipping costs of each cart item.
+	 */
+	public function get_item_shipping_total() {
+		return $this->item_shipping_total;
+	}
+
+	public function get_grand_total_formatted() {
+		//This function will return the grand total of the cart items after calculate_cart_totals_and_postage() is called.
+		$grand_total = $this->grand_total;
+
+		return wpsc_number_format_price( $grand_total );
+	}
 
     /**
      * Calculates various cart totals and postage cost then sets the values in respective variables. 
@@ -383,29 +403,39 @@ class WPSC_Cart {
         return wpsc_number_format_price($grand_total);
     }
 
-    //Scanerio: User gets back after 2 days, he has cart order id: 123 in his cookie
-    //But site admin has deleted all the trash order posts
-    //So the cart order id: 123 is basically an orphan, which will not save any cart items and throw errors.
-    //Fix: checking if the cart_id is the id of an actual post of `wpsc_cart_orders` post type.
-    public function get_cart_id() {
-        if ($this->cart_id == 0) {
-            return false;
-        }
-        //Check if cart_id has value, check if that post exists & is of correct post type
-        if( get_post_type( $this->cart_id ) === $this->post_type && get_post( $this->cart_id ) ) {
-            //Check if this post status is "paid". If it is paid then a new cart ID need to be issued.
-            $post_id = $this->cart_id;
-            $status = get_post_meta($post_id, 'wpsc_order_status', true);
-            if (strcasecmp($status, "paid") == 0) {
-                //This cart transaction already completed. Need to create a new one.
-                wpsc_log_payment_debug( 'The transaction status for this cart ID (' . $this->cart_id . ') is paid. Need to create a new cart ID. It will create a new cart ID when an item is added to the cart.', true);
-                return false;
-            }
-            //Use the cart ID.
-            return $this->cart_id;
-        }
-        return false;
-    }
+	public function get_cart_cpt_id() {
+		return $this->post_id_reference;
+
+		// TODO: Old code. need to remove
+
+		//	    $cart_cpt_id = wpsc_get_cart_cpt_id_by_cart_id($this->cart_id);
+		//		if (empty($cart_cpt_id) && !is_numeric($cart_cpt_id)){
+		//			return false;
+		//		}
+
+				//Check if cart_id has value, check if that post exists & is of correct post type
+		//        if( get_post_type( $this->post_id_reference ) === $this->post_type && get_post( $this->post_id_reference ) ) {
+		//            //Check if this post status is "paid". If it is paid then a new cart ID need to be issued.
+		//            $post_id = $this->post_id_reference;
+		//            $status = get_post_meta($post_id, 'wpsc_order_status', true);
+		//            if (strcasecmp($status, "paid") == 0) {
+		//                //This cart transaction already completed. Need to create a new one.
+		//                wpsc_log_payment_debug( 'The transaction status for this cart ID (' . $this->cart_id . ') & cart cpt ID (' . $this->post_id_reference . ') is paid. Need to create a new cart ID. It will create a new cart cpt ID when an item is added to the cart.', true);
+		//                return false;
+		//            }
+		//            //Use the cart cpt ID.
+		//            return $this->post_id_reference;
+		//        }
+		//        return false;
+	}
+
+	public function set_cart_cpt_id( $post_id ) {
+		$this->post_id_reference = $post_id;
+	}
+
+	public function get_cart_id() {
+		return $this->cart_id;
+	}
 
     public function set_cart_id( $cart_id ) {
         $this->cart_id = $cart_id;
@@ -419,9 +449,9 @@ class WPSC_Cart {
      *
      * @return array|false An array of cart items or false if the cart ID is not set or invalid.
      */
-    public function get_items() {
-        if ($this->get_cart_id()) {
-            $products = get_post_meta($this->get_cart_id(), 'wpsc_cart_items', true);
+	public function get_items() {
+		if ( $this->get_cart_cpt_id() ) {
+			$products = get_post_meta( $this->get_cart_cpt_id(), 'wpsc_cart_items', true );
 
             if (!is_array($products) || count($products) == 0) {
                 return false;
@@ -433,16 +463,18 @@ class WPSC_Cart {
         return false;
     }
 
-    public function cart_not_empty() {
-        $count = 0;
-        if ($this->get_items()) {
-            foreach ($this->get_items() as $item){
-                $count++;
-            }
-            return $count;
-        } else
-            return 0;
-    }
+	public function cart_not_empty() {
+		$count = 0;
+		if ( $this->get_items() ) {
+			foreach ( $this->get_items() as $item ) {
+				$count ++;
+			}
+
+			return $count;
+		} else {
+			return 0;
+		}
+	}
 
     public function set_items($items) {
         $this->items = $items;
@@ -487,29 +519,30 @@ class WPSC_Cart {
         return $next_cart_div_id;
     }
 
-    public function get_cart_action_msg() {
-        if ( $this->get_cart_id() ) {
-            $transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_id();
-            //$expiration = 3600; // 1 hour
-            $msg = get_transient($transient_key);
-            return $msg;
-        }
-    }
+	public function get_cart_action_msg() {
+		if ( $this->get_cart_cpt_id() ) {
+			$transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_cpt_id();
+			//$expiration = 3600; // 1 hour
+			$msg = get_transient( $transient_key );
 
-    public function set_cart_action_msg( $msg ) {
-        if ($this->get_cart_id()) {
-            $transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_id();
-            $expiration = 3600; // 1 hour
-            set_transient($transient_key, $msg, $expiration);
-        }
-    }
+			return $msg;
+		}
+	}
 
-    public function clear_cart_action_msg() {
-        if ($this->get_cart_id()) {
-            $transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_id();
-            delete_transient($transient_key);
-        }
-    }
+	public function set_cart_action_msg( $msg ) {
+		if ( $this->get_cart_cpt_id() ) {
+			$transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_cpt_id();
+			$expiration    = 3600; // 1 hour
+			set_transient( $transient_key, $msg, $expiration );
+		}
+	}
+
+	public function clear_cart_action_msg() {
+		if ( $this->get_cart_cpt_id() ) {
+			$transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_cpt_id();
+			delete_transient( $transient_key );
+		}
+	}
 
     /**
      * Calculate the total cart value including item prices and shipping costs.

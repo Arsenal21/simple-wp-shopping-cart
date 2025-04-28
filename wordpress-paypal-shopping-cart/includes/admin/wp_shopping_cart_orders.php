@@ -215,7 +215,7 @@ function wpsc_order_actions_meta_box( $wpsc_cart_orders ) {
 
 function wpsc_cart_save_orders($order_id, $wpsc_cart_orders) {
     // Check post type for movie reviews
-    if ($wpsc_cart_orders->post_type == 'wpsc_cart_orders') {
+    if ($wpsc_cart_orders->post_type == WPSC_Cart::POST_TYPE) {
         // Store data in post meta table if present in post data
         if (isset($_POST['wpsc_first_name']) && $_POST['wpsc_first_name'] != '') {
             $first_name = sanitize_text_field($_POST['wpsc_first_name']);
@@ -320,7 +320,7 @@ function wpsc_populate_order_columns($column, $post_id) {
 add_filter('post_type_link', "wpsc_customize_order_link", 10, 2);
 
 function wpsc_customize_order_link($permalink, $post) {
-    if ($post->post_type == 'wpsc_cart_orders') { //The post type is cart orders
+    if ($post->post_type == WPSC_Cart::POST_TYPE) { //The post type is cart orders
         $permalink = get_admin_url() . 'post.php?post=' . $post->ID . '&action=edit';
     }
     return $permalink;
@@ -331,7 +331,7 @@ add_filter('posts_join', 'wp_cart_search_join');
 function wp_cart_search_join($join) {
     // this function joins postmeta table to the search results in order for us to be able to search post meta values as well
     global $pagenow, $wpdb;
-    if (is_admin() && $pagenow == 'edit.php' && (isset($_GET['post_type']) && $_GET['post_type'] == 'wpsc_cart_orders') && (isset($_GET['s']) && $_GET['s'] != '')) {
+    if (is_admin() && $pagenow == 'edit.php' && (isset($_GET['post_type']) && $_GET['post_type'] == WPSC_Cart::POST_TYPE) && (isset($_GET['s']) && $_GET['s'] != '')) {
         $join .= 'LEFT JOIN ' . $wpdb->postmeta . ' ON ' . $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
     }
     return $join;
@@ -341,7 +341,7 @@ add_filter('posts_where', 'wp_cart_search_where');
 
 function wp_cart_search_where($where) {
     global $pagenow, $wpdb;
-    if (is_admin() && $pagenow == 'edit.php' && (isset($_GET['post_type']) && $_GET['post_type'] == 'wpsc_cart_orders') && (isset($_GET['s']) && $_GET['s'] != '')) {
+    if (is_admin() && $pagenow == 'edit.php' && (isset($_GET['post_type']) && $_GET['post_type'] == WPSC_Cart::POST_TYPE) && (isset($_GET['s']) && $_GET['s'] != '')) {
         $where = preg_replace(
                 "/\(\s*" . $wpdb->posts . ".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/", "(" . $wpdb->postmeta . ".meta_key=\"wpsc_first_name\" AND " . $wpdb->postmeta . ".meta_value LIKE $1)"
                 . " OR (" . $wpdb->postmeta . ".meta_key=\"wpsc_last_name\" AND " . $wpdb->postmeta . ".meta_value LIKE $1)"
@@ -357,7 +357,7 @@ function wp_cart_search_distinct($where) {
     // this function removes duplicates in search results
     global $pagenow;
 
-    if (is_admin() && $pagenow == 'edit.php' && (isset($_GET['post_type']) && $_GET['post_type'] == 'wpsc_cart_orders') && (isset($_GET['s']) && $_GET['s'] != '')) {
+    if (is_admin() && $pagenow == 'edit.php' && (isset($_GET['post_type']) && $_GET['post_type'] == WPSC_Cart::POST_TYPE) && (isset($_GET['s']) && $_GET['s'] != '')) {
         return "DISTINCT";
     }
     return $where;
@@ -367,7 +367,7 @@ add_filter('title_save_pre', 'wp_cart_save_title');
 
 function wp_cart_save_title($post_title) {
     //this function replaces title with post_ID in wpsc_cart_orders to avoid WP from assigning "Auto Draft" title to the post
-    if (isset($_POST['post_type']) && $_POST['post_type'] == 'wpsc_cart_orders') {
+    if (isset($_POST['post_type']) && $_POST['post_type'] == WPSC_Cart::POST_TYPE) {
         $post_title = $_POST['post_ID'];
     }
     return $post_title;

@@ -68,14 +68,16 @@ class PayPal_Button_Ajax_Hander {
 
 		//FIXME - Check if we can specify all the cart items in the PayPal API data array.
 
+		$wspsc_cart = \WPSC_Cart::get_instance();
+		$cart_cpt_id = $wspsc_cart->get_cart_cpt_id();
+
 		//Get the cart and item details.
-		$order_cpt = get_post($cart_id); //Retrieve the CPT for this.
-		$description = 'Simple Cart Order ID: ' . $cart_id;//Default description.
+		$order_cpt = get_post($cart_cpt_id); //Retrieve the CPT for this.
+		$description = 'Simple Cart Order ID: ' . $cart_cpt_id;//Default description.
 		$description = htmlspecialchars($description);
 		$description = substr($description, 0, 127);//Limit the item name to 127 characters (PayPal limit)
 
 		//Get the payment amount
-		$wspsc_cart = \WPSC_Cart::get_instance();
 		$wspsc_cart->calculate_cart_totals_and_postage();
 		$formatted_sub_total = $wspsc_cart->get_sub_total_formatted();
 		$formatted_postage_cost = $wspsc_cart->get_postage_cost_formatted();
@@ -139,13 +141,13 @@ class PayPal_Button_Ajax_Hander {
         PayPal_Utility_Functions::log( 'PayPal Order ID: ' . $paypal_order_id, true );
 
 		//Save the grand total and currency in the order CPT (we will match it with the PayPal response later in verification stage).
-		update_post_meta( $cart_id, 'expected_payment_amount', $formatted_grand_total );
-		update_post_meta( $cart_id, 'expected_currency', $currency );
+		update_post_meta( $cart_cpt_id, 'expected_payment_amount', $formatted_grand_total );
+		update_post_meta( $cart_cpt_id, 'expected_currency', $currency );
 
 		//Save the current cart items with the PayPal order ID in the order CPT (we will use this one to process in the IPN processing stage).
-		$cart_items = get_post_meta($cart_id, 'wpsc_cart_items', true);
+		$cart_items = get_post_meta($cart_cpt_id, 'wpsc_cart_items', true);
 		$wpsc_cart_items_pp_order_id_key = 'wpsc_cart_items_' . $paypal_order_id;
-		update_post_meta( $cart_id, $wpsc_cart_items_pp_order_id_key, $cart_items );
+		update_post_meta( $cart_cpt_id, $wpsc_cart_items_pp_order_id_key, $cart_items );
 
 		//If everything is processed successfully, send the success response.
 		wp_send_json( array( 'success' => true, 'order_id' => $paypal_order_id, 'order_data' => $order_data ) );
@@ -228,6 +230,8 @@ class PayPal_Button_Ajax_Hander {
 		// PayPal_Utility_Functions::log_array($data, true);//Debugging purpose.
 		// PayPal_Utility_Functions::log_array($txn_data, true);//Debugging purpose.
 		//--
+
+		$data['cart_cpt_id'] = wpsc_get_cart_cpt_id_by_cart_id($cart_id);
 
 		//Create the IPN data array from the transaction data.
 		//Need to include the following values in the $data array.
