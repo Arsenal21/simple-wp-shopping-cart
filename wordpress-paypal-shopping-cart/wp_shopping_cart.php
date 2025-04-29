@@ -165,13 +165,15 @@ function wpsc_cart_actions_handler() {
 		//Get the product key for the dynamic product.
         $wpsc_dynamic_products = WPSC_Dynamic_Products::get_instance();
 		$posted_price = isset( $_POST['price'] ) ? sanitize_text_field( $_POST['price'] ) : '';
-        $wpsc_product_key = $wpsc_dynamic_products::generate_product_key($post_wspsc_product, $posted_price);
+
+		$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
+		//The product name is encoded and decoded to avoid any special characters in the product name creating hashing issues
+
+        // Generate the key using 'product_tmp' post data instead of 'wspsc_product' post data, because the 'wspsc_product' gets changed for variation products.
+		$wpsc_product_key = $wpsc_dynamic_products::generate_product_key($post_wspsc_tmp_name, $posted_price);
 
 		//Get the file url for the dynamic product (if any)
-        $post_file_url =$wpsc_dynamic_products->get_data_by_param($wpsc_product_key, 'file_url');
-
-		//$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
-		//The product name is encoded and decoded to avoid any special characters in the product name creating hashing issues
+		$post_file_url =$wpsc_dynamic_products->get_data_by_param($wpsc_product_key, 'file_url');
 
 		//Sanitize and validate price
 		if ( isset( $_POST['price'] ) ) {

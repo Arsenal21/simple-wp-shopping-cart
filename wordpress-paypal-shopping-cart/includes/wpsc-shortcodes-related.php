@@ -117,7 +117,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		'shipping' => $shipping,
 	);
 	if ( isset( $atts['file_url'] ) ) {
-		$dynamic_product_data['file_url'] = $atts['file_url'];
+		$dynamic_product_data['file_url'] = sanitize_url($atts['file_url']);
 	}
 
 	$product_key = WPSC_Dynamic_Products::generate_product_key($name, $price);
