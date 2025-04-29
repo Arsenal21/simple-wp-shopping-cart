@@ -233,6 +233,8 @@ None
 == Changelog ==
 = WIP =
 - Cart ID related refactor for improved security.
+- Sanitization functions added to cart button shortcode params.
+- A small issue was fixed for dynamic products.
 
 = 5.1.3 =
 - Updated the German language file. Thanks to Roland Stumpp for submitting the updated file.

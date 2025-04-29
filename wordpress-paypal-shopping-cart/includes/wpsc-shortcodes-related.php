@@ -12,32 +12,35 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 
 	$var_output = "";
 	if ( ! empty( $var1 ) ) {
+		$var1 = sanitize_text_field($var1);
 		$var1_pieces = explode( '|', $var1 );
 		$variation1_name = $var1_pieces[0];
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation1_name . ' : </span>';
 		$var_output .= '<select name="variation1" class="wp_cart_variation1_select" onchange="ReadForm (this.form, false);">';
 		for ( $i = 1; $i < sizeof( $var1_pieces ); $i++ ) {
-			$var_output .= '<option value="' . $var1_pieces[ $i ] . '">' . $var1_pieces[ $i ] . '</option>';
+			$var_output .= '<option value="' . esc_attr($var1_pieces[ $i ]) . '">' . esc_attr($var1_pieces[ $i ]) . '</option>';
 		}
 		$var_output .= '</select><br />';
 	}
 	if ( ! empty( $var2 ) ) {
+		$var2 = sanitize_text_field($var2);
 		$var2_pieces = explode( '|', $var2 );
 		$variation2_name = $var2_pieces[0];
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation2_name . ' : </span>';
 		$var_output .= '<select name="variation2" class="wp_cart_variation2_select" onchange="ReadForm (this.form, false);">';
 		for ( $i = 1; $i < sizeof( $var2_pieces ); $i++ ) {
-			$var_output .= '<option value="' . $var2_pieces[ $i ] . '">' . $var2_pieces[ $i ] . '</option>';
+			$var_output .= '<option value="' . esc_attr($var2_pieces[ $i ]) . '">' . esc_attr($var2_pieces[ $i ]) . '</option>';
 		}
 		$var_output .= '</select><br />';
 	}
 	if ( ! empty( $var3 ) ) {
+		$var3 = sanitize_text_field($var3);
 		$var3_pieces = explode( '|', $var3 );
 		$variation3_name = $var3_pieces[0];
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation3_name . ' : </span>';
 		$var_output .= '<select name="variation3" class="wp_cart_variation3_select" onchange="ReadForm (this.form, false);">';
 		for ( $i = 1; $i < sizeof( $var3_pieces ); $i++ ) {
-			$var_output .= '<option value="' . $var3_pieces[ $i ] . '">' . $var3_pieces[ $i ] . '</option>';
+			$var_output .= '<option value="' . esc_attr($var3_pieces[ $i ]) . '">' . esc_attr($var3_pieces[ $i ]) . '</option>';
 		}
 		$var_output .= '</select><br />';
 	}
@@ -114,7 +117,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		'shipping' => $shipping,
 	);
 	if ( isset( $atts['file_url'] ) ) {
-		$dynamic_product_data['file_url'] = $atts['file_url'];
+		$dynamic_product_data['file_url'] = sanitize_url($atts['file_url']);
 	}
 
 	$product_key = WPSC_Dynamic_Products::generate_product_key($name, $price);
