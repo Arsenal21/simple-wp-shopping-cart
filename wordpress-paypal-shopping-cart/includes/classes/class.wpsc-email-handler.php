@@ -128,7 +128,7 @@ class WPSC_Email_Handler {
 				wp_mail( $notify_email, $seller_email_subject, $seller_email_body, $headers );
 				wpsc_log_payment_debug( 'Manual Checkout seller notification email successfully sent to: ' . $notify_email, true );
 			} else {
-				wpsc_log_payment_debug( 'Manual Checkout seller notification email could not be sent to: '. $buyer_email, false );
+				wpsc_log_payment_debug( 'Manual Checkout seller notification email could not be sent to: '. $notify_email, false );
 			}
 		}
 	}

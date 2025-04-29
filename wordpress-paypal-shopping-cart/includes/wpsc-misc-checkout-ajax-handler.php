@@ -283,7 +283,7 @@ function wpsc_manual_payment_checkout(){
 	$return_url = get_option('cart_return_from_paypal_url');
 	$return_url = add_query_arg(
 		array(
-			'order_id' => $wpsc_manual_checkout->data['post_id'],
+			'cart_id' => $wpsc_manual_checkout->data['cart_id'],
 			'_wpnonce' => wp_create_nonce('wpsc_thank_you_nonce_action'),
 		),
 		$return_url

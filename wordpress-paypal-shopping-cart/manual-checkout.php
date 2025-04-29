@@ -74,8 +74,10 @@ class WPSC_Manual_Checkout {
 		$cart_items = $cart_obj->get_items();
 
 		$post_id = $cart_obj->get_cart_cpt_id();
+		$cart_id = $cart_obj->get_cart_id();
 
 		$this->data['post_id'] = $post_id;
+		$this->data['cart_id'] = $cart_id;
 		$this->data['first_name'] = sanitize_text_field($post_data['first_name']);
 		$this->data['last_name'] = sanitize_text_field($post_data['last_name']);
 		$this->data['buyer_email'] = sanitize_email($post_data['email']);
