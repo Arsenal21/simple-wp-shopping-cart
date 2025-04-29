@@ -329,6 +329,7 @@ function wpsc_cart_actions_handler() {
 
 		$post_wspsc_product = isset( $_POST['wspsc_product'] ) ? stripslashes( sanitize_text_field( $_POST['wspsc_product'] ) ) : '';
 		$post_quantity = isset( $_POST['quantity'] ) ? sanitize_text_field( $_POST['quantity'] ) : '';
+		$post_quantity = absint($post_quantity); // To make sure we only receive positive integer.
 		if ( ! is_numeric( $post_quantity ) ) {
 			wp_die( 'Error! The quantity value must be numeric.' );
 		}
