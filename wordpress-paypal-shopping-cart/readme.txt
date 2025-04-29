@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, WP Simple Shopping Cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 5.1.3
+Stable tag: 5.1.4
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -231,11 +231,12 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
-= WIP =
-- Cart ID related refactor for improved security.
-- Sanitization functions added to cart button shortcode params.
-- A small issue was fixed for dynamic products.
-- A issue with changing cart item quantity has updated.
+
+= 5.1.4 =
+- Refactored Cart ID handling for improved security.
+- Added sanitization for cart button shortcode parameters.
+- Added sanitization to the cart quantity update function to prevent negative quantity values.
+- Improved the dynamic products to be able to handle variations.
 
 = 5.1.3 =
 - Updated the German language file. Thanks to Roland Stumpp for submitting the updated file.
