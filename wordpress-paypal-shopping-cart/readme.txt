@@ -237,6 +237,8 @@ None
 - Added sanitization for cart button shortcode parameters.
 - Added sanitization to the cart quantity update function to prevent negative quantity values.
 - Improved the dynamic products to be able to handle variations.
+- Added a warning message that appears when the Stripe gateway is enabled but the public key is not properly configured.
+- CSS class names for coupon success message updated to be more specific.
 
 = 5.1.3 =
 - Updated the German language file. Thanks to Roland Stumpp for submitting the updated file.

@@ -647,8 +647,17 @@ function print_wp_shopping_cart( $args = array() ) {
 			wp_enqueue_script( "wpsc-checkout-stripe" );
 
 			$output .= '<form class="wspsc-stripe-payment-form" >';
-			$stripe_checkout_button_img_src = WP_CART_URL . '/images/' . ( __( 'stripe_checkout_EN.gif', 'wordpress-simple-paypal-shopping-cart' ) );
 
+			//Ensure the public key has been configured for this mode.
+			$wpsc_stripe_public_key = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_stripe_test_publishable_key' ) : get_option( 'wpspc_stripe_live_publishable_key' );
+			if ( empty( $wpsc_stripe_public_key ) ) {
+				//public key is not set. Show error message.
+				//This prevents the user not knowing that the public key is not configured and the Stripe checkout form is malfunctioning.
+				$output .= '<div class="wpsc-error-message">' . __( 'Error: Stripe public key is not configured. Please set it in the Stripe Settings tab.', 'wordpress-simple-paypal-shopping-cart' ) . '</div>';
+			}
+
+			//Stripe checkout button
+			$stripe_checkout_button_img_src = WP_CART_URL . '/images/' . ( __( 'stripe_checkout_EN.gif', 'wordpress-simple-paypal-shopping-cart' ) );
 			if ( get_option( 'wpspc_stripe_button_image_url' ) ) {
 				$stripe_checkout_button_img_src = get_option( 'wpspc_stripe_button_image_url' );
 			}

@@ -165,19 +165,19 @@ function wpsc_apply_cart_discount($coupon_code)
     $collection_obj = WPSPSC_Coupons_Collection::get_instance();
     $coupon_item = $collection_obj->find_coupon_by_code($coupon_code);
     if(!isset($coupon_item->id)){
-        $wspsc_cart->set_cart_action_msg('<div class="wpspsc_error_message">'.__("Coupon code used does not exist!", "wordpress-simple-paypal-shopping-cart").'</div>');
+        $wspsc_cart->set_cart_action_msg('<div class="wpsc-error-message">'.__("Coupon code used does not exist!", "wordpress-simple-paypal-shopping-cart").'</div>');
         return;
     }
     $coupon_expiry_date = $coupon_item->expiry_date;
     if(!empty($coupon_expiry_date)){
         $current_date = date("Y-m-d");
         if($current_date > $coupon_expiry_date){
-            $wspsc_cart->set_cart_action_msg('<div class="wpspsc_error_message">'.__("Coupon code expired!", "wordpress-simple-paypal-shopping-cart").'</div>');
+            $wspsc_cart->set_cart_action_msg('<div class="wpsc-error-message">'.__("Coupon code expired!", "wordpress-simple-paypal-shopping-cart").'</div>');
             return;
         }
     }
     if ( $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_cpt_id()) && $collection_obj->get_discount_applied_once($wspsc_cart->get_cart_cpt_id()) == '1'){
-        $wspsc_cart->set_cart_action_msg('<div class="wpspsc_error_message">'.__("Discount can only be applied once per checkout!", "wordpress-simple-paypal-shopping-cart").'</div>');
+        $wspsc_cart->set_cart_action_msg('<div class="wpsc-error-message">'.__("Discount can only be applied once per checkout!", "wordpress-simple-paypal-shopping-cart").'</div>');
         return;
     }
 
@@ -203,7 +203,7 @@ function wpsc_apply_cart_discount($coupon_code)
     }
     $wspsc_cart->add_items($products);
     $disct_amt_msg = print_payment_currency($discount_total, $curr_symbol);
-    $wspsc_cart->set_cart_action_msg('<div class="wpspsc_success_message">'.__("Discount applied successfully! Total Discount: ", "wordpress-simple-paypal-shopping-cart").$disct_amt_msg.'</div>');
+    $wspsc_cart->set_cart_action_msg('<div class="wpsc-success-message">'.__("Discount applied successfully! Total Discount: ", "wordpress-simple-paypal-shopping-cart").$disct_amt_msg.'</div>');
     $collection_obj->set_discount_applied_once($wspsc_cart->get_cart_cpt_id());
     $collection_obj->set_applied_coupon_code($wspsc_cart->get_cart_cpt_id(),$coupon_code);
 

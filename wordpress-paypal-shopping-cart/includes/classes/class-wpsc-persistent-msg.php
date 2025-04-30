@@ -127,7 +127,7 @@ class WPSC_Persistent_Msg {
 	 * @return string
 	 */
 	public static function get_formatted_msg($msg) {
-		return '<div class="wpspsc_error_message">' . $msg . '</div>';
+		return '<div class="wpsc-error-message">' . $msg . '</div>';
 	}
 
 	/**
