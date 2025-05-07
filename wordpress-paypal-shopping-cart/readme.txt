@@ -145,7 +145,7 @@ Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price.
 
 Here is an exmaple shortcode that shows you how to use a product display box.
 
-[wp_cart_display_product name="My Awesome Product" price="25.00" thumbnail="http://www.example.com/images/product-image.jpg" description="This is a short description of the product"]
+`[wp_cart_display_product name="My Awesome Product" price="25.00" thumbnail="http://www.example.com/images/product-image.jpg" description="This is a short description of the product"]`
 
 Simply replace the values with your product specific data
 
@@ -153,26 +153,27 @@ Simply replace the values with your product specific data
 
 Add the following shortcode where you want to show the compact shopping cart:
 
-[wp_compact_cart]
+`[wp_compact_cart]`
 
 = Using Shipping =
 
-1. To use shipping cost for your product, use the "shipping" parameter. Here is an example shortcode usage:
-`[wp_cart_button name="Test Product" price="19.95" shipping="4.99"]`
+To apply a shipping cost to your product, use the 'shipping' parameter. Below is an example of how to include it in a shortcode:
 
-or use the following php function from your wordpress template files
-<?php echo print_wp_cart_button_for_product('product name',price,shipping cost); ?>
+`[wp_cart_button name="Test Product" price="19.95" shipping="4.99"]`
 
 Visit the [shipping setup documentation page](https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-how-the-shipping-cost-calculation-works-297) for more details.
 
 = Using Variation Control =
 
-1. To use variation control use the variation parameter in the shortcode:
+To enable variation control, use the variation parameter. Below is an example of how to include it in a shortcode:
+
 `[wp_cart_button name="Test Product" price="25.95" var1="VARIATION-NAME|VARIATION1|VARIATION2|VARIATION3"]`
 
-example usage: `[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large"]`
+Example shortcode usage:
 
-2. To use multiple variation for a product (2nd or 3rd variation), use the following:
+`[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large"]`
+
+To add multiple variations to a product (such as a second or third variation), use the following format:
 
 `[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large" var2="Color|red|green|blue"]`
 
