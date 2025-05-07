@@ -158,7 +158,7 @@ Add the following shortcode where you want to show the compact shopping cart:
 = Using Shipping =
 
 1. To use shipping cost for your product, use the "shipping" parameter. Here is an example shortcode usage:
-[wp_cart_button name="Test Product" price="19.95" shipping="4.99"]
+`[wp_cart_button name="Test Product" price="19.95" shipping="4.99"]`
 
 or use the following php function from your wordpress template files
 <?php echo print_wp_cart_button_for_product('product name',price,shipping cost); ?>
@@ -168,15 +168,15 @@ Visit the [shipping setup documentation page](https://www.tipsandtricks-hq.com/e
 = Using Variation Control =
 
 1. To use variation control use the variation parameter in the shortcode:
-[wp_cart_button name="Test Product" price="25.95" var1="VARIATION-NAME|VARIATION1|VARIATION2|VARIATION3"]
+`[wp_cart_button name="Test Product" price="25.95" var1="VARIATION-NAME|VARIATION1|VARIATION2|VARIATION3"]`
 
-example usage: [wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large"]
+example usage: `[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large"]`
 
 2. To use multiple variation for a product (2nd or 3rd variation), use the following:
 
-[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large" var2="Color|red|green|blue"]
+`[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large" var2="Color|red|green|blue"]`
 
-[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large" var2="Color|red|green|blue" var3="Sleeve|short|full"]
+`[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large" var2="Color|red|green|blue" var3="Sleeve|short|full"]`
 
 == Installation ==
 
@@ -231,6 +231,10 @@ Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypa
 None
 
 == Changelog ==
+
+= WIP =
+- [TODO] Wrapped the example shortcode in readme with the back ticks. Test if it works fine.
+
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.
