@@ -125,11 +125,11 @@ You can translate the plugin using [this documentation](https://www.tipsandtrick
 == Usage ==
 #1) To add an 'Add to Cart' button for a product, simply add the following shortcode to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price.
 
- [wp_cart_button name="PRODUCT-NAME" price="PRODUCT-PRICE"]
+`[wp_cart_button name="PRODUCT-NAME" price="PRODUCT-PRICE"]`
 
 #2) To add the shopping cart to a post or page (eg. checkout page) add the following shortcode to a post or page or use the sidebar widget to add the shopping cart to the sidebar. The shopping cart will only be visible in a post or page when a customer adds a product.
 
-[show_wp_shopping_cart]
+`[show_wp_shopping_cart]`
 
 #3) Alternatively, you have the option to utilize the Gutenberg editor blocks provided by this plugin to conveniently insert the add to cart button and shopping cart in desired locations within your content.
 
