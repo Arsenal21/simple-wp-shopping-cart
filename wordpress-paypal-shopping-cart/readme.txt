@@ -234,8 +234,8 @@ None
 == Changelog ==
 
 = WIP =
-- [TODO] Wrapped the example shortcode in readme with the back ticks. Test if it works fine.
-
+- [TODO][Test if it works fine]. Wrapped the example shortcode in readme with the back ticks. 
+- Added the Turkish language translation file.
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.
