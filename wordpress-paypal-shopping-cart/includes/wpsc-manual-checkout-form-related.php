@@ -85,6 +85,8 @@ function wpsc_render_manual_checkout_form() {
 
 	$output .= wp_nonce_field('wpsc_manual_payment_form_nonce_action', 'wpsc_manual_payment_form_nonce', true, false);
 	$output .= '<input type="hidden" name="wpsc_manual_payment_form_card_id" value="'.esc_attr($cart_id).'" />';
+	
+	$output .= apply_filters('wpsc_before_manual_checkout_form_submit', '', $wpsc_cart);
 
 	$output .= '<p class="submit wpsc-manual-payment-form-submit-section">';
 	$output .= '<input type="submit" class="wpsc-manual-payment-form-submit" value="'. __('Place Order','wordpress-simple-paypal-shopping-cart') .'" />';

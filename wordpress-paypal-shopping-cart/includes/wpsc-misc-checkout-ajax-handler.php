@@ -263,6 +263,8 @@ function wpsc_manual_payment_checkout(){
 	}
 
 	include_once( WP_CART_PATH . 'manual-checkout.php');
+	
+	do_action('wpsc_manual_payment_checkout', $post);
 
 	if ( ! WPSC_Manual_checkout::validate_checkout_form($post) ){
 		wp_send_json_error(array(
