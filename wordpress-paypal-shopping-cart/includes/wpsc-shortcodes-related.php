@@ -10,39 +10,81 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	$product_tmp_two = htmlentities( $name );
 	$name_before_htmlentity = $name;
 
+	$variations = array();
+
 	$var_output = "";
 	if ( ! empty( $var1 ) ) {
 		$var1 = sanitize_text_field($var1);
 		$var1_pieces = explode( '|', $var1 );
 		$variation1_name = $var1_pieces[0];
+
+		$variation_options = array();
+
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation1_name . ' : </span>';
 		$var_output .= '<select name="variation1" class="wp_cart_variation1_select" onchange="ReadForm (this.form, false);">';
+
 		for ( $i = 1; $i < sizeof( $var1_pieces ); $i++ ) {
-			$var_output .= '<option value="' . esc_attr($var1_pieces[ $i ]) . '">' . esc_attr($var1_pieces[ $i ]) . '</option>';
+			$variation_string = $var1_pieces[ $i ];
+			$display_text = wpsc_format_variation_price_string($variation_string);
+
+			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($display_text) . '">' . esc_attr($display_text) . '</option>';
+
+			$variation_options[] = $var1_pieces[ $i ];
 		}
 		$var_output .= '</select><br />';
+
+		$variations['var1'] = array(
+			'name' => $variation1_name,
+			'options' => $variation_options,
+		);
 	}
 	if ( ! empty( $var2 ) ) {
 		$var2 = sanitize_text_field($var2);
 		$var2_pieces = explode( '|', $var2 );
 		$variation2_name = $var2_pieces[0];
+
+		$variation_options = array();
+
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation2_name . ' : </span>';
 		$var_output .= '<select name="variation2" class="wp_cart_variation2_select" onchange="ReadForm (this.form, false);">';
 		for ( $i = 1; $i < sizeof( $var2_pieces ); $i++ ) {
-			$var_output .= '<option value="' . esc_attr($var2_pieces[ $i ]) . '">' . esc_attr($var2_pieces[ $i ]) . '</option>';
+			$variation_string = $var2_pieces[ $i ];
+			$display_text = wpsc_format_variation_price_string($variation_string);
+
+			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($display_text) . '">' . esc_attr($display_text) . '</option>';
+
+			$variation_options[] = $var2_pieces[ $i ];
 		}
 		$var_output .= '</select><br />';
+
+		$variations['var2'] = array(
+			'name' => $variation2_name,
+			'options' => $variation_options,
+		);
 	}
 	if ( ! empty( $var3 ) ) {
 		$var3 = sanitize_text_field($var3);
 		$var3_pieces = explode( '|', $var3 );
 		$variation3_name = $var3_pieces[0];
+
+		$variation_options = array();
+
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation3_name . ' : </span>';
 		$var_output .= '<select name="variation3" class="wp_cart_variation3_select" onchange="ReadForm (this.form, false);">';
 		for ( $i = 1; $i < sizeof( $var3_pieces ); $i++ ) {
-			$var_output .= '<option value="' . esc_attr($var3_pieces[ $i ]) . '">' . esc_attr($var3_pieces[ $i ]) . '</option>';
+			$variation_string = $var3_pieces[ $i ];
+			$display_text = wpsc_format_variation_price_string($variation_string);
+
+			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($display_text) . '">' . esc_attr($display_text) . '</option>';
+
+			$variation_options[] = $var3_pieces[ $i ];
 		}
 		$var_output .= '</select><br />';
+
+		$variations['var3'] = array(
+			'name' => $variation3_name,
+			'options' => $variation_options,
+		);
 	}
 
 	$replacement = '<div class="wp_cart_button_wrapper">';
@@ -115,6 +157,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		'name' => $name,
 		'price' => $price,
 		'shipping' => $shipping,
+		...$variations
 	);
 	if ( isset( $atts['file_url'] ) ) {
 		$dynamic_product_data['file_url'] = esc_url_raw($atts['file_url']);

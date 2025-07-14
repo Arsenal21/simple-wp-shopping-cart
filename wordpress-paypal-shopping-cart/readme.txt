@@ -239,6 +239,7 @@ None
 - New js event listener 'wpscOnManualCheckoutSubmit' added. It triggers on manual checkout form submit.
 - New filter hook 'wpsc_before_manual_checkout_form_submit' added. This will allow adding contents befor the manual checkout submit button.
 - New action hook 'wpsc_manual_payment_checkout' added. It triggeres after manual checkout form submit on server site.
+- New variation product price feature added.
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.

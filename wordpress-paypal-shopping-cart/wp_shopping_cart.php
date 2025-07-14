@@ -166,6 +166,10 @@ function wpsc_cart_actions_handler() {
         $wpsc_dynamic_products = WPSC_Dynamic_Products::get_instance();
 		$posted_price = isset( $_POST['price'] ) ? sanitize_text_field( $_POST['price'] ) : '';
 
+        $applied_variation1 = isset( $_POST['variation1'] ) ? sanitize_text_field( $_POST['variation1'] ) : '';
+		$applied_variation2 = isset( $_POST['variation2'] ) ? sanitize_text_field( $_POST['variation2'] ) : '';
+        $applied_variation3 = isset( $_POST['variation3'] ) ? sanitize_text_field( $_POST['variation3'] ) : '';
+
 		$post_wspsc_tmp_name = isset( $_POST[ 'product_tmp' ] ) ? stripslashes( sanitize_text_field( $_POST[ 'product_tmp' ] ) ) : '';
 		//The product name is encoded and decoded to avoid any special characters in the product name creating hashing issues
 
@@ -198,6 +202,24 @@ function wpsc_cart_actions_handler() {
 			if ( ! is_numeric( $price ) ) { //Price validation failed
 				wp_die( 'Error! The price validation failed. The value must be numeric.' );
 			}
+
+            $variation_price = 0;
+            if (!empty($applied_variation1)){
+	            $variation_price += $wpsc_dynamic_products->get_variation_price($wpsc_product_key, 'var1', $applied_variation1);
+            }
+			if (!empty($applied_variation2)){
+				$variation_price += $wpsc_dynamic_products->get_variation_price($wpsc_product_key, 'var2', $applied_variation2);
+			}
+			if (!empty($applied_variation3)){
+				$variation_price += $wpsc_dynamic_products->get_variation_price($wpsc_product_key, 'var3', $applied_variation3);
+			}
+
+            $price += $variation_price;
+
+            if (floatval($price) < 0){
+                wp_die(__('Error! Product price amount cannot be negative.', "wordpress-simple-paypal-shopping-cart"));
+            }
+
 			//At this stage the price amt has already been sanitized and validated.
 		} else {
 			wp_die( 'Error! Missing price value. The price must be set.' );
@@ -574,7 +596,14 @@ function wp_cart_add_read_form_javascript() {
 	            if (obj.name == "quantity" ||
 	                obj.name == "amount") continue;
 		        pos = obj.selectedIndex;        // which option selected
-		        val = obj.options[pos].value;   // selected value
+		        
+		        const selected_option = obj.options[pos];
+		        
+		        val = selected_option?.value;   // selected value
+		        if (selected_option?.getAttribute("data-display-text")){
+                    val = selected_option?.getAttribute("data-display-text");
+                }
+		        
 		        val_combo = val_combo + " (" + val + ")";
 	        }
 	    }
