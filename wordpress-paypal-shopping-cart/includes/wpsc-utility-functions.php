@@ -359,3 +359,31 @@ function wpsc_get_cart_cpt_id_by_cart_id( $cart_id ) {
 
 	return 0; // Not found
 }
+
+function wpsc_format_variation_price_string($original_input) {
+	$input = preg_replace('/\s+/', '', $original_input);
+	// Split the string into label and value
+	$parts = explode(':', $input, 2);
+
+	// Validate format
+	if (count($parts) !== 2) {
+		return $original_input; // Return original if format is incorrect
+	}
+
+	$label = $parts[0];
+
+	if (!is_numeric($parts[1])) {
+		return $label; // Return only the label if price format is incorrect
+	}
+
+	$price = floatval($parts[1]);
+
+	if ($price == 0){
+		return $label; // Just return the label if price is zero.
+	}
+
+	// Format with + or - sign
+	$formattedPrice =  ($price >= 0 ? '+' : '-') . WP_CART_CURRENCY_SYMBOL . abs($price);
+
+	return "$label $formattedPrice";
+}

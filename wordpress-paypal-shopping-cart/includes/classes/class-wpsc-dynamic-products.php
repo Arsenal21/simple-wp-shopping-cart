@@ -14,7 +14,7 @@ class WPSC_Dynamic_Products {
 	/**
 	 * @var string[] List of params/field-keys of essential product shortcode data.
 	 */
-	private static $product_params = array('name', 'file_url', 'price', 'shipping');
+	private static $product_params = array('name', 'file_url', 'price', 'shipping', 'var1', 'var2', 'var3');
 
 	public static function get_instance() {
 		if ( is_null( self::$instance ) ) {
@@ -61,6 +61,29 @@ class WPSC_Dynamic_Products {
 		$product_data = $this->get($product_key);
 
 		return isset($product_data[$product_param]) ? $product_data[$product_param] : null;
+	}
+
+	public function get_variation_price($product_key, $variation_group, $applied_variation_str) {
+		$var = $this->get_data_by_param($product_key, $variation_group);
+
+		// Check if the submitted price is tampered or not.
+		if (empty($var) || !isset($var['options']) || !in_array($applied_variation_str, $var['options']) ){
+			return 0;
+		}
+
+		// Extract variation price from variation string.
+
+		$applied_variation_arr = explode(':', $applied_variation_str);
+		if(count($applied_variation_arr) !== 2){
+			return 0; // No price modifier part added.
+		}
+
+		$applied_variation_price_amt = $applied_variation_arr[1];
+		if (!is_numeric($applied_variation_price_amt)) {
+			return 0; // Incorrect price format, no price modifier applies.
+		}
+
+		return floatval($applied_variation_price_amt);
 	}
 
 	/**
