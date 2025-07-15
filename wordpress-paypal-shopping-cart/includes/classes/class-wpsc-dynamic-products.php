@@ -68,12 +68,12 @@ class WPSC_Dynamic_Products {
 
 		// Check if the submitted price is tampered or not.
 		if (empty($var) || !isset($var['options']) || !in_array($applied_variation_str, $var['options']) ){
-			return 0;
+			wp_die('Error! Invalid product variation applied.', "wordpress-simple-paypal-shopping-cart");
 		}
 
 		// Extract variation price from variation string.
 
-		$applied_variation_arr = explode(':', $applied_variation_str);
+		$applied_variation_arr = explode( wpsc_variation_price_separator(), $applied_variation_str);
 		if(count($applied_variation_arr) !== 2){
 			return 0; // No price modifier part added.
 		}
