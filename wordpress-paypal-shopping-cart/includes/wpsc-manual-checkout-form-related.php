@@ -40,7 +40,15 @@ function wpsc_render_manual_checkout_form() {
 	$output .= '<input type="text" class="wpsc-manual-payment-form-email" name="wpsc_manual_payment_form_email" value="" />';
 	$output .= '</label>';
 	$output .= '</div>';
-	$output .= '</div>'; // end of 'wpsc-manual-payment-form-basic-fields'
+
+	$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-phone-field">';
+	$output .= '<label class="wpsc-manual-payment-form-label">'. __('Phone','wordpress-simple-paypal-shopping-cart') . '<br>';
+	$output .= '<input type="text" class="wpsc-manual-payment-form-phone" name="wpsc_manual_payment_form_phone" value="" />';
+	$output .= '</label>';
+	$output .= '</div>';
+	$output .= '</div>';
+
+	// end of 'wpsc-manual-payment-form-basic-fields'
 
 	if ( !$is_all_cart_items_digital ) {
 	    $output .= '<div class="wpsc-manual-payment-address-section-label">'. __('Shipping Address', 'wordpress-simple-paypal-shopping-cart') .'</div>';

@@ -241,6 +241,7 @@ None
 - New action hook 'wpsc_manual_payment_checkout' added. It triggeres after manual checkout form submit on server site.
 - New variation product price feature added.
 - New setting added to hide country fields in the manual checkout form.
+- New optional 'Phone' field added to manual checkout form.
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.
