@@ -360,10 +360,14 @@ function wpsc_get_cart_cpt_id_by_cart_id( $cart_id ) {
 	return 0; // Not found
 }
 
+function wpsc_variation_price_separator(){
+	return apply_filters('wpsc_variation_price_separator', '::');
+}
+
 function wpsc_format_variation_price_string($original_input) {
 	$input = preg_replace('/\s+/', '', $original_input);
 	// Split the string into label and value
-	$parts = explode(':', $input, 2);
+	$parts = explode( wpsc_variation_price_separator(), $input, 2);
 
 	// Validate format
 	if (count($parts) !== 2) {
