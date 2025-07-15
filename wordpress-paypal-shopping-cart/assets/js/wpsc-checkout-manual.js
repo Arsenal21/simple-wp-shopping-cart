@@ -94,6 +94,7 @@ class WpscManualCheckout {
             first_name: formData.get('wpsc_manual_payment_form_fname'),
             last_name: formData.get('wpsc_manual_payment_form_lname'),
             email: formData.get('wpsc_manual_payment_form_email'),
+            phone: formData.get('wpsc_manual_payment_form_phone'),
             address: {
                 street: formData.get('wpsc_manual_payment_form_street'),
                 city: formData.get('wpsc_manual_payment_form_city'),
