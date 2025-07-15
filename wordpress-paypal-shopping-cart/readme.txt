@@ -240,6 +240,7 @@ None
 - New filter hook 'wpsc_before_manual_checkout_form_submit' added. This will allow adding contents befor the manual checkout submit button.
 - New action hook 'wpsc_manual_payment_checkout' added. It triggeres after manual checkout form submit on server site.
 - New variation product price feature added.
+- New setting added to hide country fields in the manual checkout form.
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.

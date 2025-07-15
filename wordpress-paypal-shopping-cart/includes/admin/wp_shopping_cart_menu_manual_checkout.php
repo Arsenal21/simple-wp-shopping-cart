@@ -16,6 +16,8 @@ function show_wp_cart_manual_checkout_settings_page() {
 		$manual_checkout_form_instruction = isset($_POST['wpsc_manual_checkout_form_instruction']) ? wp_kses_post($_POST['wpsc_manual_checkout_form_instruction']) : '';
 		$manual_checkout_btn_text = isset($_POST['wpsc_manual_checkout_btn_text']) && !empty(trim($_POST['wpsc_manual_checkout_btn_text'])) ? sanitize_text_field($_POST['wpsc_manual_checkout_btn_text']) : __("Proceed to Manual Checkout", "wordpress-simple-paypal-shopping-cart");
 
+		$manual_checkout_hide_country_field = isset( $_POST['wpsc_manual_checkout_hide_country_field'] ) ? sanitize_text_field($_POST['wpsc_manual_checkout_hide_country_field']) : '';
+
         $send_buyer_payment_instruction_email = filter_input( INPUT_POST, 'wpsc_send_buyer_payment_instruction_email', FILTER_SANITIZE_NUMBER_INT );
 		$buyer_payment_instruction_email_subject = isset($_POST['wpsc_buyer_payment_instruction_email_subject']) ? stripslashes(sanitize_text_field($_POST['wpsc_buyer_payment_instruction_email_subject'])) : '';
 		$buyer_payment_instruction_email_body = isset($_POST['wpsc_buyer_payment_instruction_email_body']) ? stripslashes(wp_kses_post($_POST['wpsc_buyer_payment_instruction_email_body'])) : '';
@@ -28,6 +30,8 @@ function show_wp_cart_manual_checkout_settings_page() {
 		update_option( 'wpsc_enable_manual_checkout', $enable_manual_checkout );
 		update_option( 'wpsc_manual_checkout_form_instruction', $manual_checkout_form_instruction );
 		update_option( 'wpsc_manual_checkout_btn_text', $manual_checkout_btn_text );
+
+		update_option( 'wpsc_manual_checkout_hide_country_field', $manual_checkout_hide_country_field );
 
 		update_option( 'wpsc_send_buyer_payment_instruction_email', $send_buyer_payment_instruction_email );
 		update_option( 'wpsc_buyer_payment_instruction_email_subject', $buyer_payment_instruction_email_subject );
@@ -44,6 +48,8 @@ function show_wp_cart_manual_checkout_settings_page() {
 	$enable_manual_checkout = get_option( 'wpsc_enable_manual_checkout' ) ? 'checked="checked"' : '';
 	$manual_checkout_form_instruction = get_option( 'wpsc_manual_checkout_form_instruction' , '');
 	$manual_checkout_btn_text = get_option( 'wpsc_manual_checkout_btn_text' , '');
+
+	$manual_checkout_hide_country_field = get_option( 'wpsc_manual_checkout_hide_country_field' , false);
 
 	$send_buyer_payment_instruction_email = get_option( 'wpsc_send_buyer_payment_instruction_email' ) ? 'checked="checked"' : '';
     $buyer_payment_instruction_email_subject = get_option( 'wpsc_buyer_payment_instruction_email_subject' , '');
@@ -138,6 +144,18 @@ function show_wp_cart_manual_checkout_settings_page() {
 
                             <p class="description">
                                 <?php _e( "Add manual checkout instructions here to display them above the form.", "wordpress-simple-paypal-shopping-cart" );?>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row"><?php _e( "Hide Country Field", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <td>
+                            <input type="checkbox" name="wpsc_manual_checkout_hide_country_field" value="1" <?php echo empty($manual_checkout_hide_country_field) ? '' : 'checked="checked"'; ?> />
+                            <p class="description">
+				                <?php
+				                _e( "Check this fields if you don't want to show country fields in the address section of manual checkout form.", "wordpress-simple-paypal-shopping-cart" );
+				                ?>
                             </p>
                         </td>
                     </tr>

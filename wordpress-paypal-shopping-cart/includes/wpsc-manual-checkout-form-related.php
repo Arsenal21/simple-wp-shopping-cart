@@ -7,6 +7,8 @@ function wpsc_render_manual_checkout_form() {
 	$cart_id = $wpsc_cart->get_cart_id();
 	$is_all_cart_items_digital = $wpsc_cart->all_cart_items_digital();
 
+	$manual_checkout_hide_country_field = get_option( 'wpsc_manual_checkout_hide_country_field' , false);
+
 	$output = '';
 
 	$output .= '<div class="wpsc-manual-checkout-section">';
@@ -21,19 +23,19 @@ function wpsc_render_manual_checkout_form() {
 
 	$output .= '<div class="wpsc-manual-payment-form-basic-fields">';
 
-	$output .= '<div class="wpsc-manual-payment-form-field">';
+	$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-fname-field">';
 	$output .= '<label class="wpsc-manual-payment-form-label">'. __('First Name','wordpress-simple-paypal-shopping-cart') . '<br>';
 	$output .= '<input type="text" class="wpsc-manual-payment-form-fname" name="wpsc_manual_payment_form_fname" value="" />';
 	$output .= '</label>';
 	$output .= '</div>';
 
-	$output .= '<div class="wpsc-manual-payment-form-field">';
+	$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-lname-field">';
 	$output .= '<label class="wpsc-manual-payment-form-label">'. __('Last Name','wordpress-simple-paypal-shopping-cart') . '<br>';
 	$output .= '<input type="text" class="wpsc-manual-payment-form-lname" name="wpsc_manual_payment_form_lname" value="" />';
 	$output .= '</label>';
 	$output .= '</div>';
 
-	$output .= '<div class="wpsc-manual-payment-form-field">';
+	$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-email-field">';
 	$output .= '<label class="wpsc-manual-payment-form-label">'. __('Email','wordpress-simple-paypal-shopping-cart') . '<br>';
 	$output .= '<input type="text" class="wpsc-manual-payment-form-email" name="wpsc_manual_payment_form_email" value="" />';
 	$output .= '</label>';
@@ -45,19 +47,20 @@ function wpsc_render_manual_checkout_form() {
 
 	    $output .= '<div class="wpsc-manual-payment-form-address-fields">';
 
-		$output .= '<div class="wpsc-manual-payment-form-field">';
+		$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-street-address-field">';
 		$output .= '<label class="wpsc-manual-payment-form-label">' . __( 'Street Address', 'wordpress-simple-paypal-shopping-cart' ) . '<br>';
 		$output .= '<input type="text" class="wpsc-manual-payment-form-street" name="wpsc_manual_payment_form_street" value="" />';
 		$output .= '</label>';
 		$output .= '</div>';
 
-		$output .= '<div class="wpsc-manual-payment-form-field">';
+		$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-city-field">';
 		$output .= '<label class="wpsc-manual-payment-form-label">' . __( 'City', 'wordpress-simple-paypal-shopping-cart' ) . '<br>';
 		$output .= '<input type="text" class="wpsc-manual-payment-form-city" name="wpsc_manual_payment_form_city" value="" />';
 		$output .= '</label>';
 		$output .= '</div>';
 
-		$output .= '<div class="wpsc-manual-payment-form-field">';
+		if (empty($manual_checkout_hide_country_field)){
+		$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-country-field">';
 		$output .= '<label class="wpsc-manual-payment-form-label">' . __( 'Country', 'wordpress-simple-paypal-shopping-cart' ) . '<br>';
 		$output .= '<select class="wpsc-manual-payment-form-country">';
 		$output .= '<option value="">' . __( 'Select one', 'wordpress-simple-paypal-shopping-cart' ) . '</option>';
@@ -65,14 +68,15 @@ function wpsc_render_manual_checkout_form() {
 		$output .= '</select>';
 		$output .= '</label>';
 		$output .= '</div>';
+		}
 
-		$output .= '<div class="wpsc-manual-payment-form-field">';
+		$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-state-field">';
 		$output .= '<label class="wpsc-manual-payment-form-label">' . __( 'State', 'wordpress-simple-paypal-shopping-cart' ) . '<br>';
 		$output .= '<input type="text" class="wpsc-manual-payment-form-state" name="wpsc_manual_payment_form_state" value="" />';
 		$output .= '</label>';
 		$output .= '</div>';
 
-		$output .= '<div class="wpsc-manual-payment-form-field">';
+		$output .= '<div class="wpsc-manual-payment-form-field wpsc-manual-payment-postal-code-field">';
 		$output .= '<label class="wpsc-manual-payment-form-label">' . __( 'Postal Code', 'wordpress-simple-paypal-shopping-cart' ) . '<br>';
 		$output .= '<input type="text" class="wpsc-manual-payment-form-postal-code" name="wpsc_manual_payment_form_postal_code" value="" />';
 		$output .= '</label>';
