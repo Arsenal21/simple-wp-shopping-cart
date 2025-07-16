@@ -163,7 +163,7 @@ To apply a shipping cost to your product, use the 'shipping' parameter. Below is
 
 Visit the [shipping setup documentation page](https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-how-the-shipping-cost-calculation-works-297) for more details.
 
-= Using Variation Control =
+= Using Variation Control (Product Variations) =
 
 To enable variation control, use the variation parameter. Below is an example of how to include it in a shortcode:
 
@@ -177,7 +177,10 @@ To add multiple variations to a product (such as a second or third variation), u
 
 `[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large" var2="Color|red|green|blue"]`
 
-`[wp_cart_button name="Test Product" price="29.95" var1="Size|small|medium|large" var2="Color|red|green|blue" var3="Sleeve|short|full"]`
+To add variations with price modifiers to a product (so the selected variation can update the price), use the following format:
+
+`[wp_cart_button name="Test Product" price="15.00" var1="Size|small|medium::5|large::10" var2="Color|red|green::2|blue::3" var3="Sleeve|short|full::5"]`
+
 
 == Installation ==
 
