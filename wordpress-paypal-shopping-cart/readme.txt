@@ -234,14 +234,14 @@ None
 == Changelog ==
 
 = WIP =
-- [TODO][Test if it works fine]. Wrapped the example shortcode in readme with the back ticks. 
+- [TODO][Test if it works fine]. Wrapped the example shortcode in readme with the back ticks.
+- New feature added to specify price modifications for product variations. This allows you to adjust the base price of a product based on the selected variation option.
 - Added the Turkish language translation file.
 - New js event listener 'wpscOnManualCheckoutSubmit' added. It triggers on manual checkout form submit.
 - New filter hook 'wpsc_before_manual_checkout_form_submit' added. This will allow adding contents befor the manual checkout submit button.
 - New action hook 'wpsc_manual_payment_checkout' added. It triggeres after manual checkout form submit on server site.
-- New variation product price feature added.
-- New setting added to hide country fields in the manual checkout form.
-- New optional 'Phone' field added to manual checkout form.
+- Added a new setting to hide the country field in the manual checkout form.
+- Added an optional phone number field to the manual checkout form.
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.

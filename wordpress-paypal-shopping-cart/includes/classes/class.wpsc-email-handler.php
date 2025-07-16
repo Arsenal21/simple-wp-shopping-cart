@@ -141,7 +141,7 @@ class WPSC_Email_Handler {
 			<br />{first_name} – <?php _e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
 			<br />{last_name} – <?php _e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
 			<br />{payer_email} – <?php _e("Email Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{payer_phone} – <?php _e("Phone no. of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{payer_phone} – <?php _e("Phone number of the buyer", "wordpress-simple-paypal-shopping-cart");?>
 			<br />{address} – <?php _e("Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
 			<br />{product_details} – <?php _e("The item details of the purchased product (this will include the download link for digital items).", "wordpress-simple-paypal-shopping-cart");?>
 			<br />{transaction_id} – <?php _e("The unique transaction ID of the purchase", "wordpress-simple-paypal-shopping-cart");?>

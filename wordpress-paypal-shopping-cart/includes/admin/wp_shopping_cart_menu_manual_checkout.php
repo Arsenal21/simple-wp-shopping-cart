@@ -154,7 +154,7 @@ function show_wp_cart_manual_checkout_settings_page() {
                             <input type="checkbox" name="wpsc_manual_checkout_hide_country_field" value="1" <?php echo empty($manual_checkout_hide_country_field) ? '' : 'checked="checked"'; ?> />
                             <p class="description">
 				                <?php
-				                _e( "Check this fields if you don't want to show country fields in the address section of manual checkout form.", "wordpress-simple-paypal-shopping-cart" );
+                                _e( "Check this option to hide the country field in the manual checkout form's address section.", "wordpress-simple-paypal-shopping-cart" );
 				                ?>
                             </p>
                         </td>
