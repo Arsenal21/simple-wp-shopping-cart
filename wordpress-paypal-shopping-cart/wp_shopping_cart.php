@@ -576,10 +576,9 @@ function wp_cart_add_custom_field() {
 function wp_cart_add_read_form_javascript() {
 	$debug_marker = "<!-- WP Simple Shopping Cart plugin v" . WP_CART_VERSION . " - https://wordpress.org/plugins/wordpress-simple-paypal-shopping-cart/ -->";
 	echo "\n" . $debug_marker . "\n";
-	echo '
+	ob_start();
+    ?>
 	<script type="text/javascript">
-	<!--
-	//
 	function ReadForm (obj1, tst)
 	{
 	    // Read the user form
@@ -611,8 +610,60 @@ function wp_cart_add_read_form_javascript() {
 		val_total = obj1.product_tmp.value + val_combo;
 		obj1.wspsc_product.value = val_total;
 	}
-	//-->
+
+    document.addEventListener('DOMContentLoaded', function (){
+        const addToCartForms = document.querySelectorAll('form.wp-cart-button-form');
+        addToCartForms?.forEach(function(addToCartForm){
+            wpscShowCalculatedProductPrice(addToCartForm);
+        })
+
+        const wpsc_all_variation_select_inputs = document.querySelectorAll('.wp_cart_variation1_select, .wp_cart_variation2_select, .wp_cart_variation3_select');
+        wpsc_all_variation_select_inputs?.forEach(function (selectInput){
+            selectInput.addEventListener('change', function (e){
+                const addToCartForm = e.target.closest("form.wp-cart-button-form");
+
+                wpscShowCalculatedProductPrice(addToCartForm);
+            })
+        })
+    })
+
+    function wpscShowCalculatedProductPrice(form){
+        const productBox = form.closest('.wp_cart_product_display_bottom');
+        if (!productBox){
+            // This is not a product display box shortcode, nothing o do.
+            return;
+        }
+
+        const currentFormVarInputs = form.querySelectorAll('.wp_cart_variation1_select, .wp_cart_variation2_select, .wp_cart_variation3_select');
+        if (!currentFormVarInputs.length){
+            // This product does not have variations. Nothing to do.
+            return;
+        }
+
+        const priceBox = productBox?.querySelector('.wp_cart_product_price');
+
+        const basePriceEl = form?.querySelector('input[name="price"]');
+        const basePrice = basePriceEl?.value;
+        const currencySymbolEl = form?.querySelector('input[name="currency_symbol"]');
+
+        let updatedPrice = parseFloat(basePrice);
+
+        currentFormVarInputs.forEach(function(varInput){
+            const selectedOptionEl = varInput.options[varInput.selectedIndex];
+
+            const varPrice = selectedOptionEl?.getAttribute("data-price");
+            if (varPrice){
+                // Nothing to do if no variation price set.
+                updatedPrice += parseFloat(varPrice);
+            }
+        })
+
+        priceBox.innerText = currencySymbolEl?.value + updatedPrice.toFixed(2);
+    }
+
 	</script>';
+    <?php
+    echo ob_get_clean();
 }
 
 /**

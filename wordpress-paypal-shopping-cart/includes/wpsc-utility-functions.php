@@ -364,30 +364,44 @@ function wpsc_get_variation_price_separator(){
 	return apply_filters('wpsc_variation_price_separator', '::');
 }
 
-function wpsc_format_variation_price_string($original_input) {
+function wpsc_get_variation_string_parts($original_input) {
 	$input = preg_replace('/\s+/', '', $original_input);
 	// Split the string into label and value
 	$parts = explode( wpsc_get_variation_price_separator(), $input, 2);
 
+	$result = array(
+		'label' => '',
+		'price' => 0,
+		'formatted_price' => '',
+		'display_text' => $original_input,
+	);
+
 	// Validate format
+
 	if (count($parts) !== 2) {
-		return $original_input; // Return original if format is incorrect
+		return $result; // Return original if format is incorrect
 	}
 
 	$label = $parts[0];
+	$result['label'] = $label;
+	$result['display_text'] = $label;
 
 	if (!is_numeric($parts[1])) {
-		return $label; // Return only the label if price format is incorrect
+		return $result; // Return only the label if price format is incorrect
 	}
 
 	$price = floatval($parts[1]);
+	$result['price'] = $price;
 
 	if ($price == 0){
-		return $label; // Just return the label if price is zero.
+		return $result; // Just return the label if price is zero.
 	}
 
 	// Format with + or - sign
 	$formattedPrice =  ($price >= 0 ? '+' : '-') . WP_CART_CURRENCY_SYMBOL . abs($price);
 
-	return "$label $formattedPrice";
+	$result['formatted_price'] = $formattedPrice;
+	$result['display_text'] = "$label $formattedPrice";
+
+	return $result;
 }

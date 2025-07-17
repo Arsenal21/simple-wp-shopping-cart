@@ -25,9 +25,9 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 
 		for ( $i = 1; $i < sizeof( $var1_pieces ); $i++ ) {
 			$variation_string = $var1_pieces[ $i ];
-			$display_text = wpsc_format_variation_price_string($variation_string);
+			$variation_parts = wpsc_get_variation_string_parts($variation_string);
 
-			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($display_text) . '">' . esc_attr($display_text) . '</option>';
+			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($variation_parts['display_text']) . '" data-price="'.esc_attr($variation_parts['price']).'">' . esc_attr($variation_parts['display_text']) . '</option>';
 
 			$variation_options[] = $var1_pieces[ $i ];
 		}
@@ -49,9 +49,9 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$var_output .= '<select name="variation2" class="wp_cart_variation2_select" onchange="ReadForm (this.form, false);">';
 		for ( $i = 1; $i < sizeof( $var2_pieces ); $i++ ) {
 			$variation_string = $var2_pieces[ $i ];
-			$display_text = wpsc_format_variation_price_string($variation_string);
+			$variation_parts = wpsc_get_variation_string_parts($variation_string);
 
-			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($display_text) . '">' . esc_attr($display_text) . '</option>';
+			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($variation_parts['display_text']) . '" data-price="'.esc_attr($variation_parts['price']).'">' . esc_attr($variation_parts['display_text']) . '</option>';
 
 			$variation_options[] = $var2_pieces[ $i ];
 		}
@@ -73,9 +73,9 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$var_output .= '<select name="variation3" class="wp_cart_variation3_select" onchange="ReadForm (this.form, false);">';
 		for ( $i = 1; $i < sizeof( $var3_pieces ); $i++ ) {
 			$variation_string = $var3_pieces[ $i ];
-			$display_text = wpsc_format_variation_price_string($variation_string);
+			$variation_parts = wpsc_get_variation_string_parts($variation_string);
 
-			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($display_text) . '">' . esc_attr($display_text) . '</option>';
+			$var_output .= '<option value="' . esc_attr($variation_string) . '" data-display-text="' . esc_attr($variation_parts['display_text']) . '" data-price="'.esc_attr($variation_parts['price']).'">' . esc_attr($variation_parts['display_text']) . '</option>';
 
 			$variation_options[] = $var3_pieces[ $i ];
 		}
@@ -143,6 +143,8 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	if ( isset( $atts['digital'] ) ) {
 		$replacement .= '<input type="hidden" name="digital" value="' . esc_attr( $atts['digital'] ). '" />';
 	}
+
+	$replacement .= '<input type="hidden" name="currency_symbol" value="' . esc_attr( WP_CART_CURRENCY_SYMBOL ) . '" />';
 
 	$p_key = get_option( 'wspsc_private_key_one' );
 	if ( empty( $p_key ) ) {
