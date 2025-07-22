@@ -81,7 +81,7 @@ class WPSC_PRODUCT_BOX {
 						'description' => __( 'Specify the file URL of the item in case it is a digital download.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'thumbnail'    => array(
-						'label'       => __( "Thumbnail URL (required)", 'wordpress-simple-paypal-shopping-cart' ),
+						'label'       => __( "Thumbnail URL", 'wordpress-simple-paypal-shopping-cart' ),
 						'description' => __( 'Specify the image URL for the product thumbnail.', 'wordpress-simple-paypal-shopping-cart' ),
 					),
 					'thumb_alt'    => array(
@@ -245,9 +245,9 @@ class WPSC_PRODUCT_BOX {
 			return '<p style="color: red;">' . __( 'Error! You must specify a valid product price.' ) . '</p>';
 		}
 
-		if ( empty( $atts['thumbnail'] ) ) {
-			return '<p style="color: red;">' . __( 'Error! You must specify product thumbnail.' ) . '</p>';
-		}
+		//if ( empty( $atts['thumbnail'] ) ) {
+		//	return '<p style="color: red;">' . __( 'Error! You must specify product thumbnail.' ) . '</p>';
+		//}
 
 		if ( ! empty( $atts['shipping'] ) && ! is_numeric( $atts['shipping'] ) ) {
 			// Prevents fatal error if invalid shipping is provided.
