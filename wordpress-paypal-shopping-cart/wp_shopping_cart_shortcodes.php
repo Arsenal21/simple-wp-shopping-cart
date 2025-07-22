@@ -102,9 +102,11 @@ function wpsc_cart_display_product_handler($atts)
     if(empty($price)){
         return '<div style="color:red;">'.(__("Error! You must specify a price for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
     }
-    if(empty($thumbnail)){
-        return '<div style="color:red;">'.(__("Error! You must specify a thumbnail image for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
-    }
+
+    //if(empty($thumbnail)){
+    //    return '<div style="color:red;">'.(__("Error! You must specify a thumbnail image for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
+    //}
+
     if(empty($thumb_alt)){
         //Use the product name as alt if the thumb_alt is not defined.
         $thumb_alt = $name;
@@ -112,9 +114,13 @@ function wpsc_cart_display_product_handler($atts)
 
     $price = wpsc_strip_char_from_price_amount($price);
     $shipping = wpsc_strip_char_from_price_amount($shipping);
-    $thumbnail_code = '<img src="'.esc_url_raw($thumbnail).'" alt="'.esc_attr( $thumb_alt ).'">';
-    if(!empty($thumb_target) && preg_match("/http/", $thumb_target)){
-        $thumbnail_code = '<a href="'.esc_url_raw($thumb_target).'"><img src="'.esc_url_raw($thumbnail).'" alt="'.esc_attr( $thumb_alt ).'"></a>';
+
+	$thumbnail_code = '';
+    if (!empty($thumbnail)){
+        $thumbnail_code = '<img src="'.esc_url_raw($thumbnail).'" alt="'.esc_attr( $thumb_alt ).'">';
+        if(!empty($thumb_target) && preg_match("/http/", $thumb_target)){
+            $thumbnail_code = '<a href="'.esc_url_raw($thumb_target).'"><img src="'.esc_url_raw($thumbnail).'" alt="'.esc_attr( $thumb_alt ).'"></a>';
+        }
     }
 
     $thumbnail_code = apply_filters('wspsc_product_box_thumbnail_code', $thumbnail_code, $atts);// TODO: Old hook. Need to remove this.
