@@ -127,6 +127,42 @@ function wpsc_stripe_create_checkout_session() {
 			$opts["metadata"] = $custom_metadata;
 		}
 
+		// Check and add tax information.
+		$tax_rate = null;
+		$tax_percentage = $wspsc_cart->get_tax();
+		if (!empty($tax_percentage)){
+			// Retrieve the existing tax rate for this tax percentage if there is any.
+			$tax_rate_option_key = sanitize_text_field("wpsc_saved_tax_rate_" .$tax_percentage);
+			$existing_tax_rate_id = get_option($tax_rate_option_key);
+			if (!empty($existing_tax_rate_id)){
+				try {
+					$existing_tax_rate = \Stripe\TaxRate::retrieve($existing_tax_rate_id);
+
+					if ($existing_tax_rate->active){
+						$tax_rate = $existing_tax_rate;
+						wpsc_log_payment_debug('Existing stripe tax rate found for tax percentage '. $tax_rate->percentage .' and tax rate ID ' . $tax_rate->id, true);
+					} else {
+						wpsc_log_payment_debug('Existing stripe tax rate ' . $tax_rate->id . ' is not active.', false);
+					}
+				} catch (\Exception $e){
+					wpsc_log_payment_debug($e->getMessage(), false);
+				}
+			}
+
+			if (empty($tax_rate)) {
+				$tax_rate = \Stripe\TaxRate::create([
+					'display_name' => 'Tax',
+					'percentage' => $tax_percentage,
+					'inclusive' => false,
+				]);
+
+				wpsc_log_payment_debug('Created a new stripe tax rate for tax percentage '. $tax_rate->percentage .'. Tax rate ID ' . $tax_rate->id, true);
+
+				// Save the tax rate id, so it can be used for later transaction.
+				update_option($tax_rate_option_key, $tax_rate->id);
+			}
+		}
+
 		$lineItems = array();
 
 		foreach ( $wspsc_cart->get_items() as $item ) {
@@ -149,6 +185,10 @@ function wpsc_stripe_create_checkout_session() {
 				'quantity' => $item->get_quantity()
 			);
 
+			if (!empty($tax_rate)){
+				$lineItem['tax_rates'] = array($tax_rate->id);
+			}
+
 			$lineItems[] = $lineItem;
 		}
 
@@ -170,8 +210,8 @@ function wpsc_stripe_create_checkout_session() {
 			);
 		}
 
-		// Collect automatic tax if enabled.
-		if ( get_option('wpsc_enable_stripe_automatic_tax') ){
+		// Collect automatic tax if enabled and no custom tax rate is applied.
+		if (empty($tax_rate) && get_option('wpsc_enable_stripe_automatic_tax') ){
 			$opts["automatic_tax"] = array(
 				'enabled' => true,
 			);

@@ -245,6 +245,7 @@ None
 - New action hook 'wpsc_manual_payment_checkout' added. It triggeres after manual checkout form submit on server site.
 - Added a new setting to hide the country field in the manual checkout form.
 - Added an optional phone number field to the manual checkout form.
+- New tax and tax by region feature added.
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.

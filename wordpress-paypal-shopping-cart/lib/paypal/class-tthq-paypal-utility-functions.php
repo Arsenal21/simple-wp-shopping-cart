@@ -615,6 +615,16 @@ class PayPal_Utility_Functions{
 	
 		$currency = !empty(get_option( 'cart_payment_currency' )) ? get_option( 'cart_payment_currency' ) : 'USD';
 
+		$tax_percentage = floatval(get_option('wpsc_tax_percentage', false));
+		if ( get_option('wpsc_enable_tax_by_region') ) {
+			//Check the selected region and get the tax amount for that region.
+			$region_str = \WPSC_Cart::get_instance()->get_selected_tax_region();
+			$region = check_tax_region_str($region_str);
+			if($region){
+				$tax_percentage = floatval($region['amount']);
+			}
+		}
+
 		//Create the purchase unit items list.
 		$purchase_unit_items_list = array();
 		foreach ( $cart_items as $item ) {
@@ -635,6 +645,10 @@ class PayPal_Utility_Functions{
 					"currency_code" => $currency,
 				],
 				"category" => $category,
+				'tax' => array(
+					"value" => wpsc_number_format_price(wpsc_get_calculated_tax_amount($item->get_price(), $tax_percentage)),
+					"currency_code" => $currency,
+				),
 			];
 			//Add the item object to the list to create an array of objects.
 			$purchase_unit_items_list[] = $pu_item;

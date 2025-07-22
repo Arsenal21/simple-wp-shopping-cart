@@ -48,6 +48,7 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
     $total_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_total_amount', true);
     $shipping_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_amount', true);
     $shipping_region = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_region', true);
+    $tax_region = get_post_meta($wpsc_cart_orders->ID, 'wpsc_tax_region', true);
     $shipping_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_address', true); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
     $billing_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_billing_address', true);
     $phone = get_post_meta($wpsc_cart_orders->ID, 'wpspsc_phone', true);
@@ -112,6 +113,12 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
             <td><?php _e("Tax Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_tax_amount" value="<?php echo esc_attr($tax_amount); ?>" /></td>
         </tr>
+	    <?php if ($tax_region) { ?>
+            <tr>
+                <td><?php _e("Tax Region", "wordpress-simple-paypal-shopping-cart"); ?></td>
+                <td><input type="text" size="20" name="wpsc_tax_region" value="<?php echo esc_attr($tax_region); ?>"  readonly/></td>
+            </tr>
+	    <?php } ?>
         <tr>
             <td><?php _e("Shipping Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_shipping_amount" value="<?php echo esc_attr($shipping_amount); ?>" /></td>
@@ -119,7 +126,7 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
         <?php if ($shipping_region) { ?>
         <tr>
             <td><?php _e("Shipping Region", "wordpress-simple-paypal-shopping-cart"); ?></td>
-            <td><input type="text" size="20" name="wpsc_shipping_region" value="<?php echo esc_attr($shipping_region); ?>" /></td>
+            <td><input type="text" size="20" name="wpsc_shipping_region" value="<?php echo esc_attr($shipping_region); ?>" readonly/></td>
         </tr>
         <?php } ?>
         <tr>

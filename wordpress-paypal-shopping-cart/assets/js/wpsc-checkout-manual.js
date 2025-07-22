@@ -83,6 +83,11 @@ class WpscManualCheckout {
             isValidationSuccess = false;
         }
 
+        // Validate Tax Region
+        if (!wpsc_validateTaxRegion(paymentForm)) {
+            isValidationSuccess = false;
+        }
+
         // Check if there is any validation error,
         if (!isValidationSuccess){
             return;

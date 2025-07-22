@@ -449,6 +449,32 @@ function wpsc_cart_actions_handler() {
         $wspsc_cart->save_cart_to_postmeta();
 
 		wpsc_js_redirect_if_using_anchor();
+	} else if ( isset( $_POST['wpsc_tax_region_submit'] ) ) {
+
+		//Tax region selected action
+		$nonce = $_REQUEST['_wpnonce'];
+		if ( ! wp_verify_nonce( $nonce, 'wpsc_tax_region' ) ) {
+			wp_die( 'Error! Nonce Security Check Failed!' );
+		}
+
+		$selected_tax_region_str = isset( $_POST['wpsc_tax_region'] ) ? sanitize_text_field( stripslashes($_POST['wpsc_tax_region'] )) : '';
+
+		$wpsc_cart = WPSC_Cart::get_instance();
+
+		// Check to make sure selected region option is not tempered.
+		if (!check_tax_region_str($selected_tax_region_str)) {
+			$wpsc_cart->set_selected_tax_region('-1');
+		}else{
+			$wpsc_cart->set_selected_tax_region($selected_tax_region_str);
+		}
+
+		// Recalculate to update all the price for new regional shipping cost.
+		$wpsc_cart->calculate_cart_totals_and_postage();
+
+        // Save the cart.
+        $wpsc_cart->save_cart_to_postmeta();
+
+		wpsc_js_redirect_if_using_anchor();
 	}
 }
 
@@ -579,8 +605,7 @@ function wp_cart_add_read_form_javascript() {
 	ob_start();
     ?>
 	<script type="text/javascript">
-	function ReadForm (obj1, tst)
-	{
+	function ReadForm (obj1, tst) {
 	    // Read the user form
 	    var i,j,pos;
 	    val_total="";val_combo="";
@@ -609,21 +634,15 @@ function wp_cart_add_read_form_javascript() {
 		// Now summarize everything we have processed above
 		val_total = obj1.product_tmp.value + val_combo;
 		obj1.wspsc_product.value = val_total;
+
+        wpscShowCalculatedProductPrice(obj1);
 	}
 
     document.addEventListener('DOMContentLoaded', function (){
+        // Calculate all variation prices on initial page load.
         const addToCartForms = document.querySelectorAll('form.wp-cart-button-form');
         addToCartForms?.forEach(function(addToCartForm){
             wpscShowCalculatedProductPrice(addToCartForm);
-        })
-
-        const wpsc_all_variation_select_inputs = document.querySelectorAll('.wp_cart_variation1_select, .wp_cart_variation2_select, .wp_cart_variation3_select');
-        wpsc_all_variation_select_inputs?.forEach(function (selectInput){
-            selectInput.addEventListener('change', function (e){
-                const addToCartForm = e.target.closest("form.wp-cart-button-form");
-
-                wpscShowCalculatedProductPrice(addToCartForm);
-            })
         })
     })
 
@@ -644,7 +663,6 @@ function wp_cart_add_read_form_javascript() {
 
         const basePriceEl = form?.querySelector('input[name="price"]');
         const basePrice = basePriceEl?.value;
-        const currencySymbolEl = form?.querySelector('input[name="currency_symbol"]');
 
         let updatedPrice = parseFloat(basePrice);
 
@@ -658,10 +676,10 @@ function wp_cart_add_read_form_javascript() {
             }
         })
 
-        priceBox.innerText = currencySymbolEl?.value + updatedPrice.toFixed(2);
+        priceBox.innerText = '<?php echo esc_js(WP_CART_CURRENCY_SYMBOL) ?>' + updatedPrice.toFixed(2);
     }
 
-	</script>';
+	</script>
     <?php
     echo ob_get_clean();
 }
@@ -773,6 +791,7 @@ function wpsc_front_side_enqueue_scripts() {
 	wp_localize_script("wpsc-checkout-cart-script", 'wpscCheckoutCartMsg', array(
         'tncError' => __("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart"),
         'shippingRegionError' => __("You must select a shipping region before you can proceed.", "wordpress-simple-paypal-shopping-cart"),
+        'taxRegionError' => __("You must select a tax region before you can proceed.", "wordpress-simple-paypal-shopping-cart"),
     ));
 
 	if ($is_shipping_region_enabled) {
@@ -782,6 +801,18 @@ function wpsc_front_side_enqueue_scripts() {
 			$region_options[] = implode(':', array(strtolower($region['loc']), $region['type']));
 		}
 		wp_add_inline_script("wpsc-checkout-cart-script", "const wpscShippingRegionOptions = " . json_encode( $region_options ) .";" , 'before');
+	}
+
+	$is_tax_region_enabled = empty(get_option('wpsc_enable_tax_by_region')) ? 'false' : 'true' ;
+	wp_add_inline_script("wpsc-checkout-cart-script", "const wpscIsTaxRegionEnabled = " . $is_tax_region_enabled .";" , 'before');
+
+	if ($is_tax_region_enabled) {
+		$configured_tax_region_options  = get_option('wpsc_tax_region_variations', array() );
+		$region_options  = array();
+		foreach ($configured_tax_region_options as $region) {
+			$region_options[] = implode(':', array(strtolower($region['loc']), $region['type']));
+		}
+		wp_add_inline_script("wpsc-checkout-cart-script", "const wpscTaxRegionOptions = " . json_encode( $region_options ) .";" , 'before');
 	}
 
 	wp_register_script( "wpsc-checkout-manual", WP_CART_URL . "/assets/js/wpsc-checkout-manual.js", array( "wpsc-checkout-cart-script" ), WP_CART_VERSION);

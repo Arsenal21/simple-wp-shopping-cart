@@ -144,8 +144,6 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$replacement .= '<input type="hidden" name="digital" value="' . esc_attr( $atts['digital'] ). '" />';
 	}
 
-	$replacement .= '<input type="hidden" name="currency_symbol" value="' . esc_attr( WP_CART_CURRENCY_SYMBOL ) . '" />';
-
 	$p_key = get_option( 'wspsc_private_key_one' );
 	if ( empty( $p_key ) ) {
 		$p_key = uniqid( '', true );

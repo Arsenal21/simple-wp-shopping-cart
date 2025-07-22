@@ -61,6 +61,12 @@ class PayPal_Utility_IPN_Related {
 			$ipn_data['mc_currency'] = 0;
 		}
 
+		// Tax
+		if ( isset($txn_data['purchase_units'][0]['amount']['breakdown']['tax_total']['value']) ){
+			//This is for PayPal checkout serverside capture.
+			$ipn_data['tax'] = $txn_data['purchase_units'][0]['amount']['breakdown']['tax_total']['value'];
+		}
+
 		//Default to 1 for quantity.
 		$ipn_data['quantity'] = 1;
 

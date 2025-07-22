@@ -226,6 +226,7 @@ class PayPal_Request_API_Injector {
             $description = isset($data['description']) ? $data['description'] : '';
             //$item_name = isset($data['item_name']) ? $data['item_name'] : '';
             //$quantity = isset($data['quantity']) ? $data['quantity'] : 1;
+            $tax_total = isset($data['tax']) ? $data['tax'] : '';
 
             //Get the shipping preference.
             $shipping_preference = isset($data['shipping_preference']) ? $data['shipping_preference'] : 'GET_FROM_FILE';
@@ -260,7 +261,11 @@ class PayPal_Request_API_Injector {
                                     "shipping" => [
                                          "currency_code" => $currency,
                                          "value" => $postage_cost,
-                                     ]                               
+                                    ],
+                                    "tax_total" => [
+	                                    "currency_code" => $currency,
+	                                    "value" => $tax_total,
+                                    ],
                                 ]
                             ],
                             "items" => $pu_items,
@@ -284,7 +289,7 @@ class PayPal_Request_API_Injector {
                     ],
                 ];
             }
-            
+
             //Debugging purpose.
             //PayPal_Utility_Functions::log('Order-create request data below.', true);
             //PayPal_Utility_Functions::log_array( $order_data, true );
@@ -348,6 +353,9 @@ class PayPal_Request_API_Injector {
 
             //For the capture request, we need to pass the PayPal-Request-Id header.
             $additional_args['PayPal-Request-Id'] = $order_id;
+
+			// This header is required to retrieve tax amount
+	        $additional_args['Prefer'] = 'return=representation';
 
             //https://developer.paypal.com/docs/api/orders/v2/#orders_capture
             $endpoint = '/v2/checkout/orders/' . $order_id . '/capture';

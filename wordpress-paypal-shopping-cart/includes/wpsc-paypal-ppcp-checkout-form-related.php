@@ -46,6 +46,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
     $is_tnc_enabled = get_option( 'wp_shopping_cart_enable_tnc' ) != '';
     $is_shipping_by_region_enabled = get_option('enable_shipping_by_region');
+    $is_tax_by_region_enabled = get_option('wpsc_enable_tax_by_region');
     /****************************
      * PayPal SDK related settings
      ****************************/
@@ -106,6 +107,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     <script type="text/javascript">
         var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
         var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
+        var wpscTaxRegionEnabled = <?php echo $is_tax_by_region_enabled ? 'true' : 'false' ?>;
 
         document.addEventListener( "wpsc_paypal_sdk_loaded", function() { 
             //Anything that goes here will only be executed after the PayPal SDK is loaded.
@@ -177,6 +179,9 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 if (!wspsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
                     actions.disable();
                 }
+                if (!wpsc_validateTaxRegion(currentPPCPButtonWrapper, false)) {
+                    actions.disable();
+                }
 
                 // Listen for changes to the required fields.
                 document.querySelectorAll('.wpspsc_cci_input, .wp_shopping_cart_tnc_input').forEach( function(element) {
@@ -199,6 +204,13 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                             if (!wspsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
                                 isAnyValidationError = true;
                             } 
+                        }
+
+                        // Check if tax by region has selected.
+                        if (wpscTaxRegionEnabled){
+                            if (!wpsc_validateTaxRegion(currentPPCPButtonWrapper, false)) {
+                                isAnyValidationError = true;
+                            }
                         }
 
                         if (isAnyValidationError) {
@@ -230,6 +242,13 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                     const shippingRegionContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wpscShippingRegionContainerSelector)
                     wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
                 }
+
+                // Check if tax region is enabled and append error message if validation fails.
+                if (wpscTaxRegionEnabled) {
+                    const taxRegionContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wpscTaxRegionContainerSelector)
+                    wpsc_handleTaxRegionErrorMsg(taxRegionContainer);
+                }
+
                 // Check if terms and condition is enabled and append error message if not checked.
                 if (wpspscTncEnabled) {
                     const tncContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wspscTncContainerSelector)
@@ -252,7 +271,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 let pp_bn_data = {};
                 pp_bn_data.cart_id = '<?php echo esc_js($cart_id); ?>';
                 pp_bn_data.on_page_button_id = '<?php echo esc_js($on_page_embed_button_id); ?>';
-                //Ajax action: <prefix>_wpsc_pp_create_order 
+                //Ajax action: <prefix>pp_create_order
                 let post_data = 'action=wpsc_pp_create_order&data=' + JSON.stringify(pp_bn_data) + '&_wpnonce=<?php echo $wp_nonce; ?>';
                 try {
                     // Using fetch for AJAX request. This is supported in all modern browsers.

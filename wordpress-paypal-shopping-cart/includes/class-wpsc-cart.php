@@ -19,6 +19,14 @@ class WPSC_Cart {
      */
     public $selected_shipping_region = '';
 
+	/**
+	 * Having empty string, means the field was never selected. '-1' means, the field was selected once but not proper value was set.
+	 * A proper tax region string value would be like '<location in string>:<type in number>', i.e. 'london:2'.
+	 *
+	 * @var string A lookup string for calculating regional tax cost.
+	 */
+    public $selected_tax_region = '';
+
     public $on_page_carts_div_count = 0;
     public static $on_page_cart_div_ids = array();
     public $item_shipping_total = 0;
@@ -26,6 +34,7 @@ class WPSC_Cart {
 	public $shipping_cost = 0;
     public $postage_cost = 0;
     public $tax = 0;
+    public $tax_amount = 0;
     public $grand_total = 0;
 
 	private $post_id_reference = 0;
@@ -151,6 +160,14 @@ class WPSC_Cart {
 
     public function get_selected_shipping_region(){
         return $this->selected_shipping_region;
+    }
+
+	public function set_selected_tax_region($region_str){
+        $this->selected_tax_region = $region_str;
+    }
+
+    public function get_selected_tax_region(){
+        return $this->selected_tax_region;
     }
 
     /**
@@ -282,6 +299,27 @@ class WPSC_Cart {
 		return $postage_cost;
 	}
 
+	/**
+	 * This function will return the tax percentage of the cart items after calculate_cart_totals_and_postage() is called.
+	 */
+	public function get_tax() {
+		return $this->tax;
+	}
+
+	/**
+	 * This function will return the calculated tax amount of the cart items after calculate_cart_totals_and_postage() is called.
+	 */
+	public function get_tax_amount() {
+		return $this->tax_amount;
+	}
+
+	/**
+	 * This function will return the formatted tax amount of the cart items after calculate_cart_totals_and_postage() is called.
+	 */
+	public function get_tax_amount_formatted() {
+		return wpsc_number_format_price( $this->get_tax_amount() );
+	}
+
 	public function get_postage_cost_formatted() {
 		//This function will return the formatted postage cost of the cart items after calculate_cart_totals_and_postage() is called.
 		$postage_cost = $this->postage_cost;
@@ -370,17 +408,29 @@ class WPSC_Cart {
 			$postage_cost = 0;
 		}
 
-        $tax = 0;//At the moment we don't have tax calculation. So set it to 0.
+	    $tax_percentage = floatval(get_option('wpsc_tax_percentage', false));
+	    $enable_tax_by_region = get_option('wpsc_enable_tax_by_region');
+	    if ( $enable_tax_by_region ) {
+		    //Check the selected region and get the tax amount for that region.
+		    $region_str = $this->get_selected_tax_region();
+		    $region = check_tax_region_str($region_str);
+		    if($region){
+			    $tax_percentage = floatval($region['amount']);
+		    }
+	    }
+
+		$tax_amount = wpsc_get_calculated_tax_amount($sub_total, $tax_percentage);
 
         //Calculate the grand total
-        $grand_total = $sub_total + $postage_cost + $tax;
+        $grand_total = $sub_total + $postage_cost + $tax_amount;
 
         //Set the values in the class variables
         $this->sub_total = $sub_total;
         $this->item_shipping_total = $item_total_shipping;
 		$this->shipping_cost = $total_shipping;
         $this->postage_cost = $postage_cost;
-        $this->tax = $tax;
+	    $this->tax = $tax_percentage;
+        $this->tax_amount = $tax_amount;
         $this->grand_total = $grand_total;
 
         return $grand_total;

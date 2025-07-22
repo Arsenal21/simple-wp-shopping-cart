@@ -336,6 +336,34 @@ function check_shipping_region_str($str){
     return false;
 }
 
+/**
+ * Check whether the given string is a proper tax region lookup string or not.
+ *
+ * @param string $str Tax regions lookup string.
+ *
+ * @return array|bool If valid, return the tax regions array option, FALSE otherwise
+ */
+function check_tax_region_str($str){
+    // Check if customer have not selected any tax region option.
+    if (empty($str) || $str == '-1') {
+        return false;
+    }
+
+    // Get the available tax region options set in admin end.
+    $available_region_options = get_option('wpsc_tax_region_variations');
+
+    $str_to_arr = explode(':', $str);
+
+    foreach ($available_region_options as $region) {
+        if ($str_to_arr[0] === strtolower($region['loc']) && isset($str_to_arr[1]) && $str_to_arr[1] == $region['type']) {
+            // The tax region string is valid, return the original array element.
+            return $region;
+        }
+    }
+
+    return false;
+}
+
 function wpsc_get_cart_cpt_id_by_cart_id( $cart_id ) {
 	$query = new WP_Query(
 		array(
@@ -404,4 +432,12 @@ function wpsc_get_variation_string_parts($original_input) {
 	$result['display_text'] = "$label $formattedPrice";
 
 	return $result;
+}
+
+function wpsc_get_calculated_tax_amount($price, $tax_percentage = 0){
+	if (!empty($tax_percentage)){
+		return $price * ($tax_percentage / 100);
+	}
+
+	return 0;
 }

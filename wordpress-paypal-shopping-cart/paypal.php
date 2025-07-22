@@ -277,6 +277,33 @@ class paypal_ipn_handler {
 
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->ipn_data['shipping_region'] );
+
+		/**
+		 * Check if tax region was used. If so, calculate regional tax amount and also add the tax region in the ipn data.
+		 */
+		$this->ipn_data['regional_tax_amount'] = 0;
+		$this->ipn_data['tax_region'] = '';
+		$selected_tax_region = check_tax_region_str($orig_cart_postmeta->get_selected_tax_region());
+		if ($selected_tax_region) {
+			wpsc_log_payment_debug('Selected tax region option: ', true);
+			wpsc_log_debug_array($selected_tax_region, true);
+
+			$this->ipn_data['regional_tax_amount'] = $selected_tax_region['amount'];
+			$this->ipn_data['tax_region'] = $selected_tax_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_tax_region['loc']) : $selected_tax_region['loc'];
+		}
+
+		$tax = floatval( $orig_cart_postmeta->get_tax_amount() );
+		if (empty( $tax )) {
+			$tax = "0.00";
+		} else {
+			$tax = wpsc_number_format_price( $tax );
+		}
+
+		wpsc_log_payment_debug( 'Total tax amount: ' . $tax, true);
+
+		update_post_meta( $post_id, 'wpsc_tax_amount', $tax );
+		update_post_meta( $post_id, 'wpsc_tax_region', $this->ipn_data['tax_region'] );
+
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
 
 		$args = array();

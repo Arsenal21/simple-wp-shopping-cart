@@ -223,6 +223,10 @@ class PayPal_Request_API {
 			$headers['PayPal-Request-Id'] = $additional_args['PayPal-Request-Id'];
 		}
 
+		if ( isset( $additional_args['Prefer'] ) ){
+			$headers['Prefer'] = $additional_args['Prefer'];
+		}
+
 		//The request URL.
 		$api_base_url = $this->get_api_base_url();
 		$request_url = $api_base_url . $endpoint; //Example: https://api-m.sandbox.paypal.com/v1/catalogs/products
