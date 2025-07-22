@@ -107,6 +107,21 @@ class WPSC_Post_Payment_Related
 			$ipn_data['shipping'] = wpsc_number_format_price($ipn_data['shipping']);
 		}
 		wpsc_log_payment_debug( 'Total shipping cost: ' . $ipn_data['shipping'], true);
+
+		/**
+		 * Check if tax region was used. If so, calculate the total tax amount and also add the tax region in the ipn data.
+		 */
+		$ipn_data['regional_tax_amount'] = 0;
+		$ipn_data['tax_region'] = '';
+		$selected_tax_region = check_tax_region_str($orig_cart_postmeta->selected_tax_region);
+		if ($selected_tax_region) {
+			wpsc_log_payment_debug('Selected tax region option: ', true);
+			wpsc_log_debug_array($selected_tax_region, true);
+
+			$ipn_data['regional_tax_amount'] = $selected_tax_region['amount'];
+			$ipn_data['tax_region'] = $selected_tax_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_tax_region['loc']) : $selected_tax_region['loc'];
+		}
+		wpsc_log_payment_debug( 'Total tax amount: ' . $ipn_data['tax'], true);
 	}
 
 	/**
@@ -144,6 +159,8 @@ class WPSC_Post_Payment_Related
 		update_post_meta($post_id, 'wpsc_applied_coupon', $ipn_data['applied_coupon_code']);
 		update_post_meta($post_id, 'wpsc_shipping_amount', $ipn_data['shipping']);
 		update_post_meta($post_id, 'wpsc_shipping_region', $ipn_data['shipping_region']);
+		update_post_meta($post_id, 'wpsc_tax_amount', $ipn_data['tax']);
+		update_post_meta($post_id, 'wpsc_tax_region', $ipn_data['tax_region']);
 		update_post_meta($post_id, 'wpspsc_items_ordered', $ipn_data['product_details']);
 		update_post_meta($post_id, 'wpsc_order_status', "Paid");
 

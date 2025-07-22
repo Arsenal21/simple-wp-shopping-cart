@@ -10,7 +10,7 @@ function show_wp_cart_shipping_settings_page()
     {
         $nonce = $_REQUEST['_wpnonce'];
         if ( !wp_verify_nonce($nonce, 'wpspc_shipping_settings_update')){
-                wp_die('Error! Nonce Security Check Failed! Go back to email settings menu and save the settings again.');
+            wp_die('Error! Nonce Security Check Failed! Go back to shipping settings menu and save the settings again.');
         }
 
         $enable_shipping_by_region_value = (isset($_POST['enable_shipping_by_region']) && !empty(sanitize_text_field($_POST['enable_shipping_by_region']))) ? 'checked="checked"':'' ;
@@ -67,7 +67,7 @@ function show_wp_cart_shipping_settings_page()
         $enable_shipping_by_region = '';
     }
 
-    $wpsc_shipping_variations_arr  = get_option('wpsc_shipping_region_variations');
+    $wpsc_shipping_variations_arr  = get_option('wpsc_shipping_region_variations', array());
 
     //Show the documentation message
     wpsc_settings_menu_documentation_msg();

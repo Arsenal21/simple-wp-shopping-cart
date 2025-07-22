@@ -1,4 +1,4 @@
-/* global wp, wspscIsTncEnabled, wspscIsShippingRegionEnabled, wpscShippingRegionOptions, wpscCheckoutCartMsg*/
+/* global wp, wspscIsTncEnabled, wspscIsShippingRegionEnabled, wpscIsTaxRegionEnabled, wpscShippingRegionOptions, wpscCheckoutCartMsg*/
 
 /**
  * NOTE: The following variables will be added by a wp_add_inline_script when certain conditions are met.
@@ -7,12 +7,16 @@
  * @var {boolean} wspscIsTncEnabled If terms and condition is enabled or not.
  * @var {boolean} wspscIsShippingRegionEnabled If shipping region is enabled or not.
  * @var {array} wpscShippingRegionOptions Available shipping region options if shipping region is enabled or empty array.
+ *
+ * @var {boolean} wpscIsTaxRegionEnabled If tax region enabled or not.
+ * @var {array} wpscTaxRegionOptions Available tax region options if tax region enabled or empty array.
  */
 
 const { __ } = wp.i18n;
 
-var wspscPaypalStandardCheckoutForms = document.querySelectorAll('.wspsc_checkout_form_standard');
-var wspscTncCheckboxes = document.querySelectorAll('.wp_shopping_cart_tnc_input');
+var wpscPaypalStandardCheckoutFormSelector = '.wspsc_checkout_form_standard';
+
+var wpscTncCheckboxSelector = '.wp_shopping_cart_tnc_input';
 
 var wspscTncContainerSelector = '.wp-shopping-cart-tnc-container';
 var wspscTncInputSelector = '.wp_shopping_cart_tnc_input';
@@ -24,11 +28,17 @@ var wpscShippingRegionErrorDivSelector = '.wpsc-shipping-region-error';
 var wpscShippingRegionInputs = document.querySelectorAll(wpscShippingRegionInputSelector);
 var wpscShippingRegionInputElementsMeta = {};
 
+var wpscTaxRegionContainerSelector = '.wpsc-tax-region-container';
+var wpscTaxRegionInputSelector = '.wpsc-tax-region-input';
+var wpscTaxRegionErrorDivSelector = '.wpsc-tax-region-error';
+var wpscTaxRegionInputs = document.querySelectorAll(wpscTaxRegionInputSelector);
+var wpscTaxRegionInputElementsMeta = {};
+
 document.addEventListener('DOMContentLoaded', function () {
-	
-	// Check if standard paypal checkout form is enabled.
-	if (wspscPaypalStandardCheckoutForms !== null) {
-		wspscPaypalStandardCheckoutForms.forEach(form => {
+
+	const wpscPaypalStandardCheckoutForms = document.querySelectorAll(wpscPaypalStandardCheckoutFormSelector);
+	// Check PayPal standard checkout form submission.
+	wpscPaypalStandardCheckoutForms?.forEach(form => {
 			form.addEventListener('submit', function (e) {
 				// Check if terms and condition enabled, if so then validate.
 				if (wspscIsTncEnabled) {
@@ -43,13 +53,20 @@ document.addEventListener('DOMContentLoaded', function () {
 						e.preventDefault();
 					}
 				}
+
+				// Check if tax region enabled, if so then validate.
+				if (wpscIsTaxRegionEnabled) {
+					if (!wpsc_validateTaxRegion(form)) {
+						e.preventDefault();
+					}
+				}
 			})
-		})
-	}
+	})
 
 	// Check if terms and conditions in enabled and validate that when the input changes.
 	if (wspscIsTncEnabled) {
-		wspscTncCheckboxes.forEach(checkbox => {
+		const wpscTncCheckboxes = document.querySelectorAll(wpscTncCheckboxSelector);
+		wpscTncCheckboxes?.forEach(checkbox => {
 			checkbox.addEventListener('change', function () {
 				const tncContainer = wspsc_getClosestElement(checkbox, wspscTncContainerSelector);
 				wspsc_handleTncErrorMsg(tncContainer);
@@ -61,6 +78,16 @@ document.addEventListener('DOMContentLoaded', function () {
 		const wpscShippingRegionInputElements = document.querySelectorAll('.wpsc-shipping-region-input');
 		wpscShippingRegionInputElements.forEach(element => {
 			wpscShippingRegionInputElementsMeta[element.id] = {
+				id: element.id,
+				value: element.value,
+			}
+		});
+	}
+
+	if (wpscIsTaxRegionEnabled) {
+		const wpscTaxRegionInputElements = document.querySelectorAll('.wpsc-tax-region-input');
+		wpscTaxRegionInputElements.forEach(element => {
+			wpscTaxRegionInputElementsMeta[element.id] = {
 				id: element.id,
 				value: element.value,
 			}
@@ -179,5 +206,49 @@ function wspsc_handleShippingRegionErrorMsg(shippingRegionContainer) {
 		shippingRegionErrorDiv.innerText = wpscCheckoutCartMsg?.shippingRegionError;
 	} else {
 		shippingRegionErrorDiv.innerText = "";
+	}
+}
+
+/**
+ * Check whether the tax by region is checked or not.
+ *
+ * @param {HTMLFormElement|string} context The element/selector to use to validate the tax by region within/closest.
+ * @param {boolean} showErrorMsg Whether to populate error messages or not.
+ *
+ * @return {boolean}
+ */
+function wpsc_validateTaxRegion(context, showErrorMsg = true) {
+	if (wpscIsTaxRegionEnabled) {
+		const taxRegionContainer = wspsc_getClosestElement(context, wpscTaxRegionContainerSelector)
+		if (showErrorMsg) {
+			wpsc_handleTaxRegionErrorMsg(taxRegionContainer);
+		}
+
+		const wpscTaxRegionInputElement = taxRegionContainer.querySelector(wpscTaxRegionInputSelector);
+		const wpscTaxRegionInputMeta = wpscTaxRegionInputElementsMeta[wpscTaxRegionInputElement.id]
+		if (!wpscTaxRegionOptions.includes(wpscTaxRegionInputMeta.value)) {
+			return false;
+		}
+	}
+	// Return true so that if the shipping region is not enabled, validation doesn't fail.
+	// Code won't reach here if terms and cond enabled.
+	return true;
+}
+
+/**
+ * Populate tax region validation error message.
+ *
+ * @param {HTMLElement} taxRegionContainer The container element of the target taxRegion select input to display errors.
+ */
+function wpsc_handleTaxRegionErrorMsg(taxRegionContainer) {
+	const taxRegionErrorDiv = taxRegionContainer.querySelector(wpscTaxRegionErrorDivSelector);
+	const wpscTaxRegionInputElement = taxRegionContainer.querySelector(wpscTaxRegionInputSelector);
+
+	const wpscTaxRegionInputMeta = wpscTaxRegionInputElementsMeta[wpscTaxRegionInputElement.id]
+
+	if (!wpscTaxRegionOptions.includes(wpscTaxRegionInputMeta.value)) {
+		taxRegionErrorDiv.innerText = wpscCheckoutCartMsg?.taxRegionError;
+	} else {
+		taxRegionErrorDiv.innerText = "";
 	}
 }

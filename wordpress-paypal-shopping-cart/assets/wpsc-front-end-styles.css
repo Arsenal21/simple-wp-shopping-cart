@@ -234,6 +234,7 @@ text-decoration: none;
 
 .wpsc-order-shipping-address,
 .wpsc-order-shipping-region,
+.wpsc-order-tax-region,
 .wpsc-order-billing-address {
     padding: 15px;
     border: 1px solid lightgray;

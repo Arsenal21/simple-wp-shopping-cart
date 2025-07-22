@@ -81,6 +81,7 @@ class PayPal_Button_Ajax_Hander {
 		$wspsc_cart->calculate_cart_totals_and_postage();
 		$formatted_sub_total = $wspsc_cart->get_sub_total_formatted();
 		$formatted_postage_cost = $wspsc_cart->get_postage_cost_formatted();
+		$formatted_tax_amount = $wspsc_cart->get_tax_amount_formatted();
 		$formatted_grand_total = $wspsc_cart->get_grand_total_formatted();
 		//$payment_amount = $formatted_grand_total;
 
@@ -110,7 +111,7 @@ class PayPal_Button_Ajax_Hander {
 			'grand_total' => $formatted_grand_total,
 			'sub_total' => $formatted_sub_total,
 			'postage_cost' => $formatted_postage_cost,
-			'tax' => '0.00', //Currently we are not using tax.
+			'tax' => $formatted_tax_amount,
 			'currency' => $currency,
 			'shipping_preference' => $shipping_preference,
 		);

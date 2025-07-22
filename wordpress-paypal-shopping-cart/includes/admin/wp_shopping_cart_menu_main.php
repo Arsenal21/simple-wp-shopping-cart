@@ -40,7 +40,8 @@ function wpsc_settings_interface() {
     $wpspc_plugin_tabs = array(
         'wspsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=shipping-settings' => __('Shipping Settings', 'wordpress-simple-paypal-shopping-cart'),
+        'wspsc-menu-main&action=shipping-settings' => __('Shipping', 'wordpress-simple-paypal-shopping-cart'),
+        'wspsc-menu-main&action=tax-settings' => __('Tax', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=ppcp-settings' => __('PayPal PPCP (New API)', 'wordpress-simple-paypal-shopping-cart'),
         'wspsc-menu-main&action=adv-settings' => __('PayPal Smart Checkout', 'wordpress-simple-paypal-shopping-cart'),        
         'wspsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
@@ -79,6 +80,10 @@ function wpsc_settings_interface() {
                 include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_shipping_settings.php');
                 show_wp_cart_shipping_settings_page();
                 break;
+	        case 'tax-settings':
+		        include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tax_settings.php');
+		        show_wp_cart_tax_settings_page();
+		        break;
 	        case 'adv-settings':
                 include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_adv_settings.php');
                 show_wp_cart_adv_settings_page();

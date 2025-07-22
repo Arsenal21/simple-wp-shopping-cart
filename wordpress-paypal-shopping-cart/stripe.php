@@ -154,6 +154,11 @@ class stripe_ipn_handler {
 		$tax_amount = isset($this->ipn_data['tax_amount']) ? wpsc_number_format_price($this->ipn_data['tax_amount']) : '0.00';
 		update_post_meta( $post_id, 'wpsc_tax_amount', $tax_amount );
 
+		$tax_region = isset($this->ipn_data['tax_region']) ? $this->ipn_data['tax_region'] : '';
+		if (!empty($tax_region)){
+			update_post_meta( $post_id, 'wpsc_tax_region', $tax_region );
+		}
+
 		$product_details = "";
 		$item_counter = 1;
 		$shipping = 0;
@@ -485,6 +490,17 @@ class stripe_ipn_handler {
 					$ipn['tax_amount'] = $tax_amount_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
 				}
 			}
+		}
+
+		// Also check if tax region is applied.
+		$ipn['tax_region'] = '';
+		$tax_region_str = $wspsc_cart->get_selected_tax_region();
+		$selected_tax_region = check_tax_region_str($tax_region_str);
+		if (!empty($selected_tax_region)){
+			wpsc_log_payment_debug('Selected tax region option: ', true);
+			wpsc_log_debug_array($selected_tax_region, true);
+
+			$ipn['tax_region'] = $selected_tax_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_tax_region['loc']) : $selected_tax_region['loc'];;
 		}
 
 

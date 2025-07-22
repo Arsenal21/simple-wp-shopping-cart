@@ -12,6 +12,10 @@ jQuery(document).ready(function(){
         if (!wspsc_validateShippingRegion(e.target)) {   
             isAnyValidationError = true       
         }
+        // Validate tax region.
+        if (!wpsc_validateTaxRegion(e.target)) {
+            isAnyValidationError = true
+        }
         // Validate terms and conditions.
         if (!wspsc_validateTnc(e.target)) {   
             isAnyValidationError = true       

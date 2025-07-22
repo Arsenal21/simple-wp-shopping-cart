@@ -55,6 +55,7 @@ class WPSC_Manual_Checkout {
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $this->data['applied_coupon_code'] );
 		update_post_meta( $post_id, 'wpsc_payment_gateway', $this->data['gateway'] );
 		update_post_meta( $post_id, 'wpsc_tax_amount', $this->data['tax_amount'] );
+		update_post_meta( $post_id, 'wpsc_tax_region', $this->data['tax_region'] );
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $this->data['shipping'] );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->data['shipping_region'] );
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $this->data['product_details'] );
@@ -114,7 +115,18 @@ class WPSC_Manual_Checkout {
 		$this->data['applied_coupon_code'] = $coupon->get_applied_coupon_code($cart_obj->get_cart_id());
 
 		$this->data['gateway'] = 'manual';
+
 		$this->data['tax_amount'] = 0; // At the moment we don't have tax calculation. So set it to 0.
+		$tax_amount = $cart_obj->get_tax_amount();
+		if (!empty( $tax_amount )){
+			$this->data['tax_amount'] = wpsc_number_format_price( $tax_amount );
+		}
+
+		$this->data['tax_region'] = '';
+		$selected_tax_region = check_tax_region_str($cart_obj->get_selected_tax_region());
+		if ( $selected_tax_region ) {
+			$this->data['tax_region'] = $selected_tax_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_tax_region['loc']) : $selected_tax_region['loc'];
+		}
 
 		$currency_symbol = get_option( 'cart_currency_symbol' );
 
