@@ -29,13 +29,13 @@ function wpsc_show_coupon_discount_settings_page()
                 wp_die('Error! Nonce Security Check Failed! Go back to email settings menu and save the settings again.');
         }
         
-        $collection_obj = WPSPSC_Coupons_Collection::get_instance();
+        $collection_obj = WPSC_Coupons_Collection::get_instance();
         $coupon_code = trim(stripslashes(sanitize_text_field($_POST["wpspsc_coupon_code"])));
         $discount_rate = trim(sanitize_text_field($_POST["wpspsc_coupon_rate"]));
         $expiry_date = trim(sanitize_text_field($_POST["wpspsc_coupon_expiry_date"]));
-        $coupon_item = new WPSPSC_COUPON_ITEM($coupon_code, $discount_rate, $expiry_date);
+        $coupon_item = new WPSC_Coupon_Item($coupon_code, $discount_rate, $expiry_date);
         $collection_obj->add_coupon_item($coupon_item);
-        WPSPSC_Coupons_Collection::save_object($collection_obj);
+        WPSC_Coupons_Collection::save_object($collection_obj);
         
         echo '<div id="message" class="updated fade"><p><strong>';
         echo 'Coupon Saved!';
@@ -45,7 +45,7 @@ function wpsc_show_coupon_discount_settings_page()
     if(isset($_REQUEST['wpspsc_delete_coupon_id']))
     {
         $coupon_id = $_REQUEST['wpspsc_delete_coupon_id'];
-        $collection_obj = WPSPSC_Coupons_Collection::get_instance();
+        $collection_obj = WPSC_Coupons_Collection::get_instance();
         $collection_obj->delete_coupon_item_by_id($coupon_id);
         echo '<div id="message" class="updated fade"><p>';
         echo 'Coupon successfully deleted!';
@@ -148,7 +148,7 @@ function wpsc_show_coupon_discount_settings_page()
     </tr></thead>
     <tbody>';
 
-    $collection_obj = WPSPSC_Coupons_Collection::get_instance();
+    $collection_obj = WPSC_Coupons_Collection::get_instance();
     if($collection_obj)
     {
         $coupons = $collection_obj->coupon_items; 

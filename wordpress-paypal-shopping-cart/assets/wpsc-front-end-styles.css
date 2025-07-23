@@ -332,9 +332,9 @@ text-decoration: none;
     border-radius: 50%;
     border: 5px solid #ccc;
     border-top-color: #0070ba;
-    animation: wpspsc-spinner .6s linear infinite;
+    animation: wpsc-spinner .6s linear infinite;
 }
-@keyframes wpspsc-spinner {
+@keyframes wpsc-spinner {
     to {
         transform: rotate(360deg);
     }

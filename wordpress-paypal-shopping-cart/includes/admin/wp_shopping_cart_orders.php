@@ -152,7 +152,7 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
         <tr>
             <td><?php _e("Phone", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
-                <input type="text" size="40" name="wpspsc_phone" value="<?php echo esc_attr($phone); ?>" />
+                <input type="text" size="40" name="wpsc_phone" value="<?php echo esc_attr($phone); ?>" />
                 <p class="description">
                     <?php _e("A phone number will only be present if the customer entered one during the checkout.", "wordpress-simple-paypal-shopping-cart"); ?>
                 </p>
@@ -164,7 +164,7 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
         </tr>  
         <tr>
             <td><?php _e("Item(s) Ordered", "wordpress-simple-paypal-shopping-cart"); ?></td>
-            <td><textarea name="wpspsc_items_ordered" cols="83" rows="5"><?php echo esc_attr($items_ordered); ?></textarea></td>
+            <td><textarea name="wpsc_items_ordered" cols="83" rows="5"><?php echo esc_attr($items_ordered); ?></textarea></td>
         </tr>
         <tr>
             <td><?php _e("Applied Coupon Code", "wordpress-simple-paypal-shopping-cart"); ?></td>
@@ -269,13 +269,15 @@ function wpsc_cart_save_orders($order_id, $wpsc_cart_orders) {
             $billing_address = sanitize_text_field($_POST['wpsc_billing_address']);
             update_post_meta($order_id, 'wpsc_billing_address', $billing_address);
         }
-        if (isset($_POST['wpspsc_phone']) && $_POST['wpspsc_phone'] != '') {
+        if (isset($_POST['wpsc_phone']) && $_POST['wpsc_phone'] != '') {
             $phone = sanitize_text_field($_POST['wpspsc_phone']);
-            update_post_meta($order_id, 'wpspsc_phone', $phone);
+            update_post_meta($order_id, 'wpspsc_phone', $phone); // TODO: Need to remove this later
+            update_post_meta($order_id, 'wpsc_phone', $phone);
         }
-        if (isset($_POST['wpspsc_items_ordered']) && $_POST['wpspsc_items_ordered'] != '') {
-            $items_ordered = stripslashes(esc_textarea($_POST['wpspsc_items_ordered']));
+        if (isset($_POST['wpsc_items_ordered']) && $_POST['wpsc_items_ordered'] != '') {
+            $items_ordered = stripslashes(esc_textarea($_POST['wpsc_items_ordered']));
             update_post_meta($order_id, 'wpspsc_items_ordered', $items_ordered);
+            update_post_meta($order_id, 'wpsc_items_ordered', $items_ordered);
         }
     }
 }

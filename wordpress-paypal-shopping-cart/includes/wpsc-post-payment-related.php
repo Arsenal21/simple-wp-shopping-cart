@@ -155,13 +155,15 @@ class WPSC_Post_Payment_Related
 		update_post_meta($post_id, 'wpsc_total_amount', $ipn_data['mc_gross']);
 		update_post_meta($post_id, 'wpsc_ipaddress', $ipn_data['ip_address']);
 		update_post_meta($post_id, 'wpsc_address', $ipn_data['address']);
-		update_post_meta($post_id, 'wpspsc_phone', $ipn_data['contact_phone']);
+		update_post_meta($post_id, 'wpspsc_phone', $ipn_data['contact_phone']); // TODO: Need to remove this later
+		update_post_meta($post_id, 'wpsc_phone', $ipn_data['contact_phone']);
 		update_post_meta($post_id, 'wpsc_applied_coupon', $ipn_data['applied_coupon_code']);
 		update_post_meta($post_id, 'wpsc_shipping_amount', $ipn_data['shipping']);
 		update_post_meta($post_id, 'wpsc_shipping_region', $ipn_data['shipping_region']);
 		update_post_meta($post_id, 'wpsc_tax_amount', $ipn_data['tax']);
 		update_post_meta($post_id, 'wpsc_tax_region', $ipn_data['tax_region']);
-		update_post_meta($post_id, 'wpspsc_items_ordered', $ipn_data['product_details']);
+		update_post_meta($post_id, 'wpspsc_items_ordered', $ipn_data['product_details']); // TODO: Need to remove this later
+		update_post_meta($post_id, 'wpsc_items_ordered', $ipn_data['product_details']);
 		update_post_meta($post_id, 'wpsc_order_status', "Paid");
 
 		$gateway = isset( $ipn_data['gateway'] ) ? $ipn_data['gateway'] : '';

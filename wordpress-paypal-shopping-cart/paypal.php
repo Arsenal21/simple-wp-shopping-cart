@@ -222,7 +222,8 @@ class paypal_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_total_amount', $mc_gross );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $address );
-		update_post_meta( $post_id, 'wpspsc_phone', $phone );
+		update_post_meta( $post_id, 'wpspsc_phone', $phone ); // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_phone', $phone );
 		$status = "Paid";
 		update_post_meta( $post_id, 'wpsc_order_status', $status );
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
@@ -304,7 +305,8 @@ class paypal_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_tax_amount', $tax );
 		update_post_meta( $post_id, 'wpsc_tax_region', $this->ipn_data['tax_region'] );
 
-		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
+		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );  // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_items_ordered', $product_details );
 
 		$args = array();
 		$args['product_details'] = $product_details;

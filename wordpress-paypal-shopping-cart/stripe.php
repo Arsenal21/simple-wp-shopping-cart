@@ -146,7 +146,8 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $shipping_address ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
 		update_post_meta( $post_id, 'wpsc_billing_address', $billing_address );
-		update_post_meta( $post_id, 'wpspsc_phone', $phone);
+		update_post_meta( $post_id, 'wpspsc_phone', $phone); // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_phone', $phone);
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
 		$gateway = isset( $this->ipn_data['gateway'] ) ? $this->ipn_data['gateway'] : '';
         update_post_meta( $post_id, 'wpsc_payment_gateway', $gateway );
@@ -210,6 +211,7 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->ipn_data['shipping_region'] );
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
+		update_post_meta( $post_id, 'wpsc_items_ordered', $product_details );
 		$status = "Paid";
 		update_post_meta( $post_id, 'wpsc_order_status', $status );		
 

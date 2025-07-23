@@ -1,11 +1,6 @@
 <?php
 
-/**
- * TODO: Need to refactor this class name.
- */
-
-class WPSPSC_Coupons_Collection
-{
+class WPSC_Coupons_Collection {
     var $coupon_items = array();
 
     function __construct()
@@ -45,7 +40,7 @@ class WPSPSC_Coupons_Collection
         }
         if($coupon_deleted){
             $this->coupon_items = array_values($this->coupon_items);
-            WPSPSC_Coupons_Collection::save_object($this);
+            WPSC_Coupons_Collection::save_object($this);
         }
     }
 
@@ -67,7 +62,7 @@ class WPSPSC_Coupons_Collection
         if($obj){
             return $obj;
         }else{
-            return new WPSPSC_Coupons_Collection();
+            return new WPSC_Coupons_Collection();
         }
     }
 
@@ -136,8 +131,9 @@ class WPSPSC_Coupons_Collection
     }
 }
 
-class WPSPSC_COUPON_ITEM
-{
+class_alias('WPSC_Coupons_Collection', 'WPSPSC_Coupons_Collection'); // TODO: Need to remove this later.
+
+class WPSC_Coupon_Item {
     var $id;
     var $coupon_code;
     var $discount_rate;
@@ -159,10 +155,12 @@ class WPSPSC_COUPON_ITEM
     }
 }
 
+class_alias( 'WPSC_Coupon_Item', 'WPSPSC_COUPON_ITEM'); // TODO: Need to remove this later.
+
 function wpsc_apply_cart_discount($coupon_code)
 {
     $wspsc_cart = WPSC_Cart::get_instance();
-    $collection_obj = WPSPSC_Coupons_Collection::get_instance();
+    $collection_obj = WPSC_Coupons_Collection::get_instance();
     $coupon_item = $collection_obj->find_coupon_by_code($coupon_code);
     if(!isset($coupon_item->id)){
         $wspsc_cart->set_cart_action_msg('<div class="wpsc-error-message">'.__("Coupon code used does not exist!", "wordpress-simple-paypal-shopping-cart").'</div>');
@@ -212,7 +210,7 @@ function wpsc_apply_cart_discount($coupon_code)
 
 function wpsc_reapply_discount_coupon_if_needed()
 {
-    $collection_obj = WPSPSC_Coupons_Collection::get_instance();
+    $collection_obj = WPSC_Coupons_Collection::get_instance();
     $wspsc_cart=WPSC_Cart::get_instance();
     
     //Re-apply coupon to the cart if necessary (meaning a coupon was already applied to the cart when this item was modified.    

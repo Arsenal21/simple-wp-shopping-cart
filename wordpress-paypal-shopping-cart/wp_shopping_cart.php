@@ -413,13 +413,13 @@ function wpsc_cart_actions_handler() {
 		$wspsc_cart->reset_cart();
 		//Redirect to the anchor if the anchor option is enabled.
 		wpsc_redirect_if_using_anchor();
-	} else if ( isset( $_POST['wpspsc_coupon_code'] ) ) {
+	} else if ( isset( $_POST['wpsc_coupon_code'] ) ) {
 		//Apply coupon action
 		$nonce = $_REQUEST['_wpnonce'];
-		if ( ! wp_verify_nonce( $nonce, 'wspsc_coupon' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'wpsc_apply_coupon' ) ) {
 			wp_die( 'Error! Nonce Security Check Failed!' );
 		}
-		$coupon_code = isset( $_POST['wpspsc_coupon_code'] ) ? sanitize_text_field( $_POST['wpspsc_coupon_code'] ) : '';
+		$coupon_code = isset( $_POST['wpsc_coupon_code'] ) ? sanitize_text_field( $_POST['wpsc_coupon_code'] ) : '';
 		//Apply discount and update cart products in database
 		wpsc_apply_cart_discount( $coupon_code );
 		//Redirect to the anchor if the anchor option is enabled. This redirect needs to be handled using JS.
@@ -542,7 +542,7 @@ function wpsc_get_current_page_url() {
 
 function wp_cart_add_custom_field() {
 	$wspsc_cart = WPSC_Cart::get_instance();
-	$collection_obj = WPSPSC_Coupons_Collection::get_instance();
+	$collection_obj = WPSC_Coupons_Collection::get_instance();
 
 	$cart_cpt_id = $wspsc_cart->get_cart_cpt_id();
 	$cart_id = $wspsc_cart->get_cart_id();
@@ -783,10 +783,10 @@ function wpsc_front_side_enqueue_scripts() {
 	//General scripts
 	wp_register_script( "wpsc-checkout-cart-script", WP_CART_URL . "/assets/js/wpsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
 	$is_tnc_enabled = empty(get_option('wp_shopping_cart_enable_tnc')) ? 'false' : 'true' ;
-	wp_add_inline_script("wpsc-checkout-cart-script", "const wspscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
+	wp_add_inline_script("wpsc-checkout-cart-script", "const wpscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
 
 	$is_shipping_region_enabled = empty(get_option('enable_shipping_by_region')) ? 'false' : 'true' ;
-	wp_add_inline_script("wpsc-checkout-cart-script", "const wspscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
+	wp_add_inline_script("wpsc-checkout-cart-script", "const wpscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
 	wp_add_inline_script("wpsc-checkout-cart-script", 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
 	wp_localize_script("wpsc-checkout-cart-script", 'wpscCheckoutCartMsg', array(
         'tncError' => __("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart"),

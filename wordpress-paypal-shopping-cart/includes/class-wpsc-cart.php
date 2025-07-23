@@ -206,7 +206,7 @@ class WPSC_Cart {
 
 		$this->clear_cart_action_msg();
 
-		$collection_obj = WPSPSC_Coupons_Collection::get_instance();
+		$collection_obj = WPSC_Coupons_Collection::get_instance();
 		$collection_obj->clear_discount_applied_once( $this->get_cart_cpt_id() );
 		$collection_obj->clear_applied_coupon_code( $this->get_cart_cpt_id() );
 	}
@@ -223,7 +223,7 @@ class WPSC_Cart {
 		if ( ! empty( $cart_cpt_id ) ) {
 			//After the transaction is completed, the order status will be paid. So we don't want to call the get_cart_id() function.
 			//Do these only if a cart ID is passed.
-			$collection_obj = WPSPSC_Coupons_Collection::get_instance();
+			$collection_obj = WPSC_Coupons_Collection::get_instance();
 			$collection_obj->clear_discount_applied_once( $cart_cpt_id );
 			$collection_obj->clear_applied_coupon_code( $cart_cpt_id );
 

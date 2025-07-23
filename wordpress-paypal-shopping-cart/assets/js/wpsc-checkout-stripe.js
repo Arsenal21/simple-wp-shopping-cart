@@ -9,7 +9,7 @@ jQuery(document).ready(function(){
         let isAnyValidationError = false;
         
         // Validate shipping region.
-        if (!wspsc_validateShippingRegion(e.target)) {   
+        if (!wpsc_validateShippingRegion(e.target)) {   
             isAnyValidationError = true       
         }
         // Validate tax region.
@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
             isAnyValidationError = true
         }
         // Validate terms and conditions.
-        if (!wspsc_validateTnc(e.target)) {   
+        if (!wpsc_validateTnc(e.target)) {
             isAnyValidationError = true       
         }
 
@@ -44,7 +44,7 @@ jQuery(document).ready(function(){
             return;
         }
 
-        var spinnerContainer = jQuery(this).closest('.wspsc-stripe-payment-form').find('.wpspsc-spinner-cont');
+        var spinnerContainer = jQuery(this).closest('.wspsc-stripe-payment-form').find('.wpsc-spinner-cont');
         
         spinnerContainer.css('display', 'inline-block');
         jQuery(this).hide();
