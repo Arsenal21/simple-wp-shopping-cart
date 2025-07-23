@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, WP Simple Shopping Cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 5.1.4
+Stable tag: 5.1.5
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -236,9 +236,8 @@ None
 
 == Changelog ==
 
-= WIP =
-- [TODO][Test if it works fine]. Wrapped the example shortcode in readme with the back ticks.
-- New feature added to specify price modifications for product variations. This allows you to adjust the base price of a product based on the selected variation option.
+= 5.1.5 =
+- New feature added to specify price modifications for product variations. This allows you to adjust the base price of a product based on the selected variation option. [Variation Documentation](https://www.tipsandtricks-hq.com/ecommerce/simple-cart-setting-up-product-variations-4901)
 - Added the Turkish language translation file.
 - New js event listener 'wpscOnManualCheckoutSubmit' added. It triggers on manual checkout form submit.
 - New filter hook 'wpsc_before_manual_checkout_form_submit' added. This will allow adding contents befor the manual checkout submit button.
