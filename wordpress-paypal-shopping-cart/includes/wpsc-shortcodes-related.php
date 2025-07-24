@@ -157,8 +157,11 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		'name' => $name,
 		'price' => $price,
 		'shipping' => $shipping,
-		...$variations
 	);
+
+	// Add variations to the dynamic product data.
+	array_merge($dynamic_product_data, $variations);
+
 	if ( isset( $atts['file_url'] ) ) {
 		$dynamic_product_data['file_url'] = esc_url_raw($atts['file_url']);
 	}
