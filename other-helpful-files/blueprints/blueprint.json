@@ -1,6 +1,6 @@
 {
     "$schema": "https://playground.wordpress.net/blueprint-schema.json",
-	"landingPage": "/wp-admin/admin.php?page=wspsc-menu-main",
+	"landingPage": "/wp-admin/admin.php?page=wpsc-menu-main",
     "preferredVersions": {
         "php": "8.1",
         "wp": "latest"

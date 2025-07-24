@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     wpscManualCheckoutProceedBtns?.forEach(function (proceedBtn) {
 
-        const paymentFormWrap = wspsc_getClosestElement(proceedBtn, '.wpsc-manual-payment-form-wrap');
+        const paymentFormWrap = wpsc_getClosestElement(proceedBtn, '.wpsc-manual-payment-form-wrap');
         const paymentForm = paymentFormWrap?.querySelector('.wpsc-manual-payment-form');
         const paymentFormSubmitBtn = paymentForm?.querySelector('.wpsc-manual-payment-form-submit');
 
@@ -74,12 +74,12 @@ class WpscManualCheckout {
         }
 
         // Validate Terms and conditions
-        if (!wspsc_validateTnc(paymentForm)) {
+        if (!wpsc_validateTnc(paymentForm)) {
             isValidationSuccess = false;
         }
 
         // Validate Shipping Region
-        if (!wspsc_validateShippingRegion(paymentForm)) {
+        if (!wpsc_validateShippingRegion(paymentForm)) {
             isValidationSuccess = false;
         }
 

@@ -36,7 +36,7 @@ function wp_cart_init_handler()
 	//TODO - can be removed at a later version.
 	if (isset($_GET['page']) && $_GET['page'] == 'wordpress-paypal-shopping-cart') {
 	    //let's redirect old settings page to new
-	    wp_redirect(get_admin_url() . 'admin.php?page=wspsc-menu-main', 301);
+	    wp_redirect(get_admin_url() . 'admin.php?page=wpsc-menu-main', 301);
 	    exit;
 	}
 

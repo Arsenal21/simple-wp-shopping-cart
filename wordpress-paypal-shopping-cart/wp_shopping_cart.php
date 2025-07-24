@@ -28,7 +28,7 @@ define( 'WP_CART_CURRENCY_SYMBOL', get_option( 'cart_currency_symbol' ) );
 if ( ! defined( 'WP_CART_MANAGEMENT_PERMISSION' ) ) { //This will allow the user to define custom capability for this constant in wp-config file
 	define( 'WP_CART_MANAGEMENT_PERMISSION', 'manage_options' );
 }
-define( 'WP_CART_MAIN_MENU_SLUG', 'wspsc-menu-main' );
+define( 'WP_CART_MAIN_MENU_SLUG', 'wpsc-menu-main' );
 define( 'WP_CART_LOG_FILENAME', 'wspsc-debug-log' );
 
 //Loading language files
@@ -69,9 +69,9 @@ function wpsc_always_show_cart_handler( $atts ) {
 }
 
 function wpsc_show_wp_shopping_cart_handler( $atts ) {
-	$wspsc_cart = WPSC_Cart::get_instance();
+	$wpsc_cart = WPSC_Cart::get_instance();
 	$output = "";
-	if ( $wspsc_cart->cart_not_empty() ) {
+	if ( $wpsc_cart->cart_not_empty() ) {
 		$output = print_wp_shopping_cart( $atts );
 	}
 	return $output;
@@ -79,10 +79,10 @@ function wpsc_show_wp_shopping_cart_handler( $atts ) {
 
 // Reset cart option
 if ( isset( $_REQUEST["reset_wp_cart"] ) && ! empty( $_REQUEST["reset_wp_cart"] ) ) {
-	$wspsc_cart = WPSC_Cart::get_instance();
+	$wpsc_cart = WPSC_Cart::get_instance();
 
 	//resets cart and cart_id after payment is made.
-	$wspsc_cart->reset_cart_after_txn();
+	$wpsc_cart->reset_cart_after_txn();
 
 	// Redirect to the same url without the 'reset_wp_cart' query arg, by if there is a cart in that page, the query doesn't create problem using the cart.
 	$after_cart_reset_redirect_url = remove_query_arg("reset_wp_cart");
@@ -93,8 +93,8 @@ if ( isset( $_REQUEST["reset_wp_cart"] ) && ! empty( $_REQUEST["reset_wp_cart"] 
 if ( get_option( 'wp_shopping_cart_reset_after_redirection_to_return_page' ) ) {
 	//TODO - remove this field altogether later. Cart will always be reset using query prameter on the thank you page.
 	if ( get_option( 'cart_return_from_paypal_url' ) == cart_current_page_url() ) {
-		$wspsc_cart = WPSC_Cart::get_instance();
-		$wspsc_cart->reset_cart_after_txn();
+		$wpsc_cart = WPSC_Cart::get_instance();
+		$wpsc_cart->reset_cart_after_txn();
 	}
 }
 
@@ -119,20 +119,20 @@ function process_allowed_shipping_countries($countries_str){
  * method to reset the cart and associated variables.
  */
 function reset_wp_cart() {
-	$wspsc_cart = WPSC_Cart::get_instance();
-	$wspsc_cart->reset_cart();
+	$wpsc_cart = WPSC_Cart::get_instance();
+	$wpsc_cart->reset_cart();
 }
 
 function wpsc_cart_actions_handler() {
-	$wspsc_cart = WPSC_Cart::get_instance();
-	$wspsc_cart->clear_cart_action_msg();
+	$wpsc_cart = WPSC_Cart::get_instance();
+	$wpsc_cart->clear_cart_action_msg();
 
 	if ( isset( $_POST['addcart'] ) ) { 
 		//Add to cart action
 
 		//create new cart object when add to cart button is clicked the first time
-		if ( ! $wspsc_cart->get_cart_id() ) {
-			$wspsc_cart->create_cart();
+		if ( ! $wpsc_cart->get_cart_id() ) {
+			$wpsc_cart->create_cart();
 		}
 
 		//Some sites using caching need to be able to disable nonce on the add cart button. Otherwise 48 hour old cached pages will have stale nonce value and fail for valid users.
@@ -252,15 +252,15 @@ function wpsc_cart_actions_handler() {
 		$is_do_not_show_qty_in_cart_enabled = get_option('wp_shopping_cart_do_not_show_qty_in_cart') == 'checked="checked"' ? true : false;
 		$count = 1;
 		$products = array();
-		if ( $wspsc_cart->get_items() ) {
-			$products = $wspsc_cart->get_items();
+		if ( $wpsc_cart->get_items() ) {
+			$products = $wpsc_cart->get_items();
 			if ( is_array( $products ) ) {
 				foreach ( $products as $key => $item ) {
 					if ( $item->get_name() == $post_wspsc_product ) {
                         $count += $item->get_quantity();
                         if ($is_do_not_show_qty_in_cart_enabled){
 	                        $msg = __( "This item is already in your cart", "wordpress-simple-paypal-shopping-cart" );
-                            $cart_id = $wspsc_cart->get_cart_id();
+                            $cart_id = $wpsc_cart->get_cart_id();
 
                             $persistent_msg = WPSC_Persistent_Msg::get_instance();
                             $persistent_msg->set_cart_id($cart_id);
@@ -269,7 +269,7 @@ function wpsc_cart_actions_handler() {
 	                        $persistent_msg->set_msg( $item->get_name(), $msg );
 
                             // This one is to show in the cart.
-	                        $wspsc_cart->set_cart_action_msg($persistent_msg->get_formatted_msg( $msg ));
+	                        $wpsc_cart->set_cart_action_msg($persistent_msg->get_formatted_msg( $msg ));
                         } else {
 						    $item->set_quantity( $item->get_quantity() + 1 );
                             unset( $products[ $key ] );
@@ -306,8 +306,8 @@ function wpsc_cart_actions_handler() {
 
 		sort( $products );
 
-		if ( $wspsc_cart->get_cart_id() ) {
-			$wspsc_cart->add_items( $products );
+		if ( $wpsc_cart->get_cart_id() ) {
+			$wpsc_cart->add_items( $products );
 		}
 
 
@@ -317,13 +317,13 @@ function wpsc_cart_actions_handler() {
 		if ( is_array( $products_discount ) ) {
 			$products = $products_discount;
 		}
-		if ( ! $wspsc_cart->get_cart_id() ) {
-			$wspsc_cart->create_cart();
-			$wspsc_cart->add_items( $products );
+		if ( ! $wpsc_cart->get_cart_id() ) {
+			$wpsc_cart->create_cart();
+			$wpsc_cart->add_items( $products );
 		} else {
 			//cart updating
-			if ( $wspsc_cart->get_cart_id() ) {
-				$wspsc_cart->add_items( $products );
+			if ( $wpsc_cart->get_cart_id() ) {
+				$wpsc_cart->add_items( $products );
 			} else {
 				echo "<p>" . ( __( "Error! Your session is out of sync. Please reset your session.", "wordpress-simple-paypal-shopping-cart" ) ) . "</p>";
 			}
@@ -355,7 +355,7 @@ function wpsc_cart_actions_handler() {
 		if ( ! is_numeric( $post_quantity ) ) {
 			wp_die( 'Error! The quantity value must be numeric.' );
 		}
-		$products = $wspsc_cart->get_items();
+		$products = $wpsc_cart->get_items();
 		foreach ( $products as $key => $item ) {
 			if ( ( stripslashes( $item->get_name() ) == $post_wspsc_product ) && $post_quantity ) {
 				$item->set_quantity( $post_quantity );
@@ -366,12 +366,12 @@ function wpsc_cart_actions_handler() {
 			}
 		}
 		sort( $products );
-		$wspsc_cart->add_items( $products );
+		$wpsc_cart->add_items( $products );
 
 		wpsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
 
-		if ( $wspsc_cart->get_cart_id() ) {
-			$wspsc_cart->add_items( $products );
+		if ( $wpsc_cart->get_cart_id() ) {
+			$wpsc_cart->add_items( $products );
 		}
 		//Redirect to the anchor if the anchor option is enabled.
 		wpsc_redirect_if_using_anchor();
@@ -382,7 +382,7 @@ function wpsc_cart_actions_handler() {
 			wp_die( 'Error! Nonce security check failed for remove item from the cart action!' );
 		}
 		$post_wspsc_product = isset( $_POST['wspsc_product'] ) ? stripslashes( sanitize_text_field( $_POST['wspsc_product'] ) ) : '';
-		$products = $wspsc_cart->get_items();
+		$products = $wpsc_cart->get_items();
 
 		//if user clears cart & refresh the page and click on submit form again
 		// there comes a php warning since $products is false in this case
@@ -391,14 +391,14 @@ function wpsc_cart_actions_handler() {
 				if ( $item->get_name() == $post_wspsc_product )
 					unset( $products[ $key ] );
 			}
-			$wspsc_cart->add_items( $products );
+			$wpsc_cart->add_items( $products );
 		}
 
 		//update the products in database after apply coupon
 		wpsc_reapply_discount_coupon_if_needed(); //Re-apply coupon to the cart if necessary
 
-		if ( ! $wspsc_cart->get_items() ) {
-			$wspsc_cart->reset_cart();
+		if ( ! $wpsc_cart->get_items() ) {
+			$wpsc_cart->reset_cart();
 		}
 		//Redirect to the anchor if the anchor option is enabled.
 		wpsc_redirect_if_using_anchor();
@@ -410,16 +410,16 @@ function wpsc_cart_actions_handler() {
 		}
 
 		//Empty the cart
-		$wspsc_cart->reset_cart();
+		$wpsc_cart->reset_cart();
 		//Redirect to the anchor if the anchor option is enabled.
 		wpsc_redirect_if_using_anchor();
-	} else if ( isset( $_POST['wpspsc_coupon_code'] ) ) {
+	} else if ( isset( $_POST['wpsc_coupon_code'] ) ) {
 		//Apply coupon action
 		$nonce = $_REQUEST['_wpnonce'];
-		if ( ! wp_verify_nonce( $nonce, 'wspsc_coupon' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'wpsc_apply_coupon' ) ) {
 			wp_die( 'Error! Nonce Security Check Failed!' );
 		}
-		$coupon_code = isset( $_POST['wpspsc_coupon_code'] ) ? sanitize_text_field( $_POST['wpspsc_coupon_code'] ) : '';
+		$coupon_code = isset( $_POST['wpsc_coupon_code'] ) ? sanitize_text_field( $_POST['wpsc_coupon_code'] ) : '';
 		//Apply discount and update cart products in database
 		wpsc_apply_cart_discount( $coupon_code );
 		//Redirect to the anchor if the anchor option is enabled. This redirect needs to be handled using JS.
@@ -433,20 +433,20 @@ function wpsc_cart_actions_handler() {
 
 		$selected_shipping_region_str = isset( $_POST['wpsc_shipping_region'] ) ? sanitize_text_field( stripslashes($_POST['wpsc_shipping_region'] )) : '';
 
-		$wspsc_cart = WPSC_Cart::get_instance();
+		$wpsc_cart = WPSC_Cart::get_instance();
 
 		// Check to make sure selected shipping region option is not tempered.
 		if (!check_shipping_region_str($selected_shipping_region_str)) {
-			$wspsc_cart->set_selected_shipping_region('-1');
+			$wpsc_cart->set_selected_shipping_region('-1');
 		}else{
-			$wspsc_cart->set_selected_shipping_region($selected_shipping_region_str);
+			$wpsc_cart->set_selected_shipping_region($selected_shipping_region_str);
 		}
 	
 		// Recalculate to update all the price for new regional shipping cost.
-		$wspsc_cart->calculate_cart_totals_and_postage();
+		$wpsc_cart->calculate_cart_totals_and_postage();
 
         // Save the cart.
-        $wspsc_cart->save_cart_to_postmeta();
+        $wpsc_cart->save_cart_to_postmeta();
 
 		wpsc_js_redirect_if_using_anchor();
 	} else if ( isset( $_POST['wpsc_tax_region_submit'] ) ) {
@@ -775,18 +775,18 @@ function wpsc_front_side_enqueue_scripts() {
 	wp_register_script( "wpsc-stripe", "https://js.stripe.com/v3/", array( "jquery" ), WP_CART_VERSION );
 
 	$publishable_key = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_stripe_test_publishable_key' ) : get_option( 'wpspc_stripe_live_publishable_key' );
-	$stripe_js_obj = "wspsc_stripe_js_obj";
-	wp_add_inline_script( "wpsc-stripe", "var " . $stripe_js_obj . " = Stripe('" . esc_js( $publishable_key ) . "'); var wspsc_ajax_url='" . esc_js( admin_url( 'admin-ajax.php' ) ) . "';" );
+	$stripe_js_obj = "wpsc_stripe_js_obj";
+	wp_add_inline_script( "wpsc-stripe", "var " . $stripe_js_obj . " = Stripe('" . esc_js( $publishable_key ) . "'); var wpsc_ajax_url='" . esc_js( admin_url( 'admin-ajax.php' ) ) . "';" );
 
 	wp_register_script( "wpsc-checkout-stripe", WP_CART_URL . "/assets/js/wpsc-checkout-stripe.js", array( "jquery", "wpsc-stripe"), WP_CART_VERSION);
 
 	//General scripts
 	wp_register_script( "wpsc-checkout-cart-script", WP_CART_URL . "/assets/js/wpsc-cart-script.js", array('wp-i18n'), WP_CART_VERSION, true);
 	$is_tnc_enabled = empty(get_option('wp_shopping_cart_enable_tnc')) ? 'false' : 'true' ;
-	wp_add_inline_script("wpsc-checkout-cart-script", "const wspscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
+	wp_add_inline_script("wpsc-checkout-cart-script", "const wpscIsTncEnabled = " . $is_tnc_enabled .";" , 'before');
 
 	$is_shipping_region_enabled = empty(get_option('enable_shipping_by_region')) ? 'false' : 'true' ;
-	wp_add_inline_script("wpsc-checkout-cart-script", "const wspscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
+	wp_add_inline_script("wpsc-checkout-cart-script", "const wpscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
 	wp_add_inline_script("wpsc-checkout-cart-script", 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
 	wp_localize_script("wpsc-checkout-cart-script", 'wpscCheckoutCartMsg', array(
         'tncError' => __("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart"),
@@ -837,7 +837,7 @@ register_activation_hook( __FILE__, 'wpsc_plugin_install' );
 // Add the settings link
 function wp_simple_cart_add_settings_link( $links, $file ) {
 	if ( $file == plugin_basename( __FILE__ ) ) {
-		$settings_link = '<a href="admin.php?page=wspsc-menu-main">' . ( __( "Settings", "wordpress-simple-paypal-shopping-cart" ) ) . '</a>';
+		$settings_link = '<a href="admin.php?page=wpsc-menu-main">' . ( __( "Settings", "wordpress-simple-paypal-shopping-cart" ) ) . '</a>';
 		array_unshift( $links, $settings_link );
 	}
 	return $links;

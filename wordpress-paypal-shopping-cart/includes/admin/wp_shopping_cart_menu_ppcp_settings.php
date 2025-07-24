@@ -10,9 +10,9 @@ class WPSC_PPCP_settings_page
 
 	private $settings;
 
-	private $ppcp_connection_subtab_url = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-connection";
-	private $ppcp_api_creds_subtab_url = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=api-credentials";
-	private $ppcp_button_subtab_link = "admin.php?page=wspsc-menu-main&action=ppcp-settings&subtab=button-appreance";
+	private $ppcp_connection_subtab_url = "admin.php?page=wpsc-menu-main&action=ppcp-settings&subtab=api-connection";
+	private $ppcp_api_creds_subtab_url = "admin.php?page=wpsc-menu-main&action=ppcp-settings&subtab=api-credentials";
+	private $ppcp_button_subtab_link = "admin.php?page=wpsc-menu-main&action=ppcp-settings&subtab=button-appreance";
 
 	public function __construct()
 	{

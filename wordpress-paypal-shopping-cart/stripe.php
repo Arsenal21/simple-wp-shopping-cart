@@ -29,7 +29,7 @@ class stripe_ipn_handler {
         //Check Product Name, Price, Currency, Receiver email
 		$this->debug_log( 'Executing validate_and_dispatch_product()', true );
 		
-        $wspsc_cart = WPSC_Cart::get_instance();
+        $wpsc_cart = WPSC_Cart::get_instance();
         
 		$txn_id = $this->ipn_data["txn_id"];
         $transaction_type='cart';
@@ -60,7 +60,7 @@ class stripe_ipn_handler {
 			$this->debug_log( 'Transaction Type: Shopping Cart', true );
 			
             // Cart Items
-			$cart_items = $wspsc_cart->get_items();
+			$cart_items = $wpsc_cart->get_items();
 			$num_cart_items = 0;
 			if( !empty($cart_items)){
 				$num_cart_items = count($cart_items);
@@ -72,8 +72,8 @@ class stripe_ipn_handler {
 		$currency_code_payment  = strtoupper( $this->ipn_data["mc_currency"] );
 
 		// $post_id = $custom_values['wp_cart_id']; // TODO: old code.
-		$post_id = $wspsc_cart->get_cart_cpt_id();
-		$orig_cart_items = $wspsc_cart->get_items();
+		$post_id = $wpsc_cart->get_cart_cpt_id();
+		$orig_cart_items = $wpsc_cart->get_items();
 		
 		$ip_address = isset( $custom_values['ip'] ) ? $custom_values['ip'] : '';
 		$applied_coupon_code = isset( $custom_values['coupon_code'] ) ? $custom_values['coupon_code'] : '';
@@ -146,7 +146,8 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $shipping_address ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
 		update_post_meta( $post_id, 'wpsc_billing_address', $billing_address );
-		update_post_meta( $post_id, 'wpspsc_phone', $phone);
+		update_post_meta( $post_id, 'wpspsc_phone', $phone); // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_phone', $phone);
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
 		$gateway = isset( $this->ipn_data['gateway'] ) ? $this->ipn_data['gateway'] : '';
         update_post_meta( $post_id, 'wpsc_payment_gateway', $gateway );
@@ -210,6 +211,7 @@ class stripe_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->ipn_data['shipping_region'] );
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
+		update_post_meta( $post_id, 'wpsc_items_ordered', $product_details );
 		$status = "Paid";
 		update_post_meta( $post_id, 'wpsc_order_status', $status );		
 
@@ -296,7 +298,7 @@ class stripe_ipn_handler {
 		wpsc_clean_incomplete_old_cart_orders();
 
 		//Reset/clear the cart.
-		$wspsc_cart->reset_cart_after_txn();
+		$wpsc_cart->reset_cart_after_txn();
 
 		return true;
 	}

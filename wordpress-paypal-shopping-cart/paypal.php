@@ -222,7 +222,8 @@ class paypal_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_total_amount', $mc_gross );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
 		update_post_meta( $post_id, 'wpsc_address', $address );
-		update_post_meta( $post_id, 'wpspsc_phone', $phone );
+		update_post_meta( $post_id, 'wpspsc_phone', $phone ); // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_phone', $phone );
 		$status = "Paid";
 		update_post_meta( $post_id, 'wpsc_order_status', $status );
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $applied_coupon_code );
@@ -304,7 +305,8 @@ class paypal_ipn_handler {
 		update_post_meta( $post_id, 'wpsc_tax_amount', $tax );
 		update_post_meta( $post_id, 'wpsc_tax_region', $this->ipn_data['tax_region'] );
 
-		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );
+		update_post_meta( $post_id, 'wpspsc_items_ordered', $product_details );  // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_items_ordered', $product_details );
 
 		$args = array();
 		$args['product_details'] = $product_details;
@@ -537,9 +539,9 @@ class paypal_ipn_handler {
 			$address_street .= ", " . $data['payer']['payer_info']['shipping_address']['line2'];
 		}
 
-		$wspsc_cart =  WPSC_Cart::get_instance();
-		$cart_id = $wspsc_cart->get_cart_id();
-		$cart_cpt_id = $wspsc_cart->get_cart_cpt_id();
+		$wpsc_cart =  WPSC_Cart::get_instance();
+		$cart_id = $wpsc_cart->get_cart_id();
+		$cart_cpt_id = $wpsc_cart->get_cart_cpt_id();
 		$custom_field_values = get_post_meta( $cart_cpt_id, 'wpsc_cart_custom_values', true );
 		$ipn['custom'] = $custom_field_values;
 

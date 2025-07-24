@@ -233,8 +233,8 @@ function wpsc_stripe_create_checkout_session() {
  * Process the payment data received from the smart checkout.
  */
 function wpsc_process_pp_smart_checkout() {
-	if ( isset( $_POST['wpspsc_payment_data'] ) ) {
-		$data = $_POST['wpspsc_payment_data'];
+	if ( isset( $_POST['wpsc_payment_data'] ) ) {
+		$data = $_POST['wpsc_payment_data'];
 	}
 	if ( empty( $data ) ) {
 		wp_send_json( array( 'success' => false, 'errMsg' => __( 'Empty payment data received.', "wordpress-simple-paypal-shopping-cart" ) ) );

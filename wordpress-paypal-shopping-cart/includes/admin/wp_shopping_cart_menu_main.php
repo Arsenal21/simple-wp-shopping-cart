@@ -38,14 +38,14 @@ function wpsc_settings_interface() {
     }
 
     $wpspc_plugin_tabs = array(
-        'wspsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=shipping-settings' => __('Shipping', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=tax-settings' => __('Tax', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=ppcp-settings' => __('PayPal PPCP (New API)', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=adv-settings' => __('PayPal Smart Checkout', 'wordpress-simple-paypal-shopping-cart'),        
-        'wspsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
-        'wspsc-menu-main&action=manual-checkout' => __('Manual/Offline Checkout', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main&action=shipping-settings' => __('Shipping', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main&action=tax-settings' => __('Tax', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main&action=ppcp-settings' => __('PayPal PPCP (New API)', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main&action=adv-settings' => __('PayPal Smart Checkout', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
+        'wpsc-menu-main&action=manual-checkout' => __('Manual/Offline Checkout', 'wordpress-simple-paypal-shopping-cart'),
     );
     echo '<div class="wrap">';
     echo '<h1>' . (__("WP Simple Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")) . ' (v'.WP_CART_VERSION .')' . '</h1>';
@@ -123,7 +123,7 @@ function wpsc_dashboard_admin_notices(){
 		?>
 		<div class="notice notice-warning is-dismissible">
 			<p><?php _e('You are using the old PayPal Smart Checkout option in the "Simple Shopping Cart" plugin. Please switch to the new PayPal PPCP option for better security and functionaliy.', 'wordpress-simple-paypal-shopping-cart'); ?></p>
-			<p><a href="<?php echo admin_url('admin.php?page=wspsc-menu-main&action=ppcp-settings'); ?>"><?php _e('Switch to the new PayPal Commerce Platform API by configuring the API credentials', 'wordpress-simple-paypal-shopping-cart'); ?></a></p>
+			<p><a href="<?php echo admin_url('admin.php?page=wpsc-menu-main&action=ppcp-settings'); ?>"><?php _e('Switch to the new PayPal Commerce Platform API by configuring the API credentials', 'wordpress-simple-paypal-shopping-cart'); ?></a></p>
 		</div>
 		<?php
 	}
