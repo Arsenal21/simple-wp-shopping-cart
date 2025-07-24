@@ -452,7 +452,7 @@ function print_wp_shopping_cart( $args = array() ) {
                         //Anything that goes here will only be executed after the PayPal SDK is loaded.
                         console.log('PayPal Smart Checkout SDK loaded.');
 
-                        var wpspsc_cci_do_submit = true;
+                        var wpsc_cci_do_submit = true;
 
                         paypal.Button.render({
                             env: '<?php echo get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'sandbox' : 'production'; ?>',
@@ -538,14 +538,14 @@ function print_wp_shopping_cart( $args = array() ) {
                                 });
                             },
                             onClick: function () {
-                                wpspsc_cci_do_submit = false;
+                                wpsc_cci_do_submit = false;
                                 var res = jQuery('.wpsc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>').triggerHandler('click');
                                 // if (typeof res === "undefined" || res) {
                                 //				    wpspsc_pp_actions.enable();
                                 // } else {
                                 //				    wpspsc_pp_actions.disable();
                                 // }
-                                wpspsc_cci_do_submit = true;
+                                wpsc_cci_do_submit = true;
 
                                 const currentSmartPaymentForm = '.wpsc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
                                 // Check if shipping region is enabled and append error message if validation fails.
@@ -597,7 +597,7 @@ function print_wp_shopping_cart( $args = array() ) {
                                 jQuery('.wpsc-spinner-cont').css('display', 'inline-block');
                                 return actions.payment.execute().then(function (data) {
                                     jQuery.post('<?php echo get_admin_url(); ?>admin-ajax.php',
-                                        { 'action': 'wpsc_process_pp_smart_checkout', 'wpspsc_payment_data': data })
+                                        { 'action': 'wpsc_process_pp_smart_checkout', 'wpsc_payment_data': data })
                                         .done(function (result) {
                                             if (result.success) {
                                                 window.location.href = '<?php echo esc_url_raw( $return_url ); ?>';
@@ -689,7 +689,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			wp_enqueue_script( "wpsc-stripe" );
 			wp_enqueue_script( "wpsc-checkout-stripe" );
 
-			$output .= '<form class="wspsc-stripe-payment-form" >';
+			$output .= '<form class="wpsc-stripe-payment-form" >';
 
 			//Ensure the public key has been configured for this mode.
 			$wpsc_stripe_public_key = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_stripe_test_publishable_key' ) : get_option( 'wpspc_stripe_live_publishable_key' );
@@ -707,7 +707,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 			$stripe_checkout_button_img_src = apply_filters( 'wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src );  // TODO: Old hook. Need to remove this.
 			$stripe_checkout_button_img_src = apply_filters( 'wpsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src );
-			$output .= '<input class="wspsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . $stripe_checkout_button_img_src . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" alt="' . ( __( "Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
+			$output .= '<input class="wpsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . $stripe_checkout_button_img_src . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" alt="' . ( __( "Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
 
 			$output .= wp_cart_add_custom_field();
 

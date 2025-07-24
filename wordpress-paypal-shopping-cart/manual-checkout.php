@@ -60,7 +60,7 @@ class WPSC_Manual_Checkout {
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $this->data['shipping'] );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->data['shipping_region'] );
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $this->data['product_details'] );  // TODO: Need to remove this later
-		update_post_meta( $post_id, 'wpsc_items_ordered', $this->data['product_details'] );  // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_items_ordered', $this->data['product_details'] );
 		update_post_meta( $post_id, 'wpsc_order_status', $this->data['status'] );
 
 		// Send notification emails
@@ -113,7 +113,7 @@ class WPSC_Manual_Checkout {
 		$this->data['billing_address'] = ''; // TODO
 		$this->data['phone'] = isset($post_data['phone']) ? sanitize_text_field($post_data['phone']) : '';
 
-		$coupon = WPSC_Coupons_Collection::get_instance();
+		$coupon = WPSPSC_Coupons_Collection::get_instance();
 		$this->data['applied_coupon_code'] = $coupon->get_applied_coupon_code($cart_obj->get_cart_id());
 
 		$this->data['gateway'] = 'manual';

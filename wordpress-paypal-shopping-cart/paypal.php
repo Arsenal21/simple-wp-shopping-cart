@@ -539,9 +539,9 @@ class paypal_ipn_handler {
 			$address_street .= ", " . $data['payer']['payer_info']['shipping_address']['line2'];
 		}
 
-		$wspsc_cart =  WPSC_Cart::get_instance();
-		$cart_id = $wspsc_cart->get_cart_id();
-		$cart_cpt_id = $wspsc_cart->get_cart_cpt_id();
+		$wpsc_cart =  WPSC_Cart::get_instance();
+		$cart_id = $wpsc_cart->get_cart_id();
+		$cart_cpt_id = $wpsc_cart->get_cart_cpt_id();
 		$custom_field_values = get_post_meta( $cart_cpt_id, 'wpsc_cart_custom_values', true );
 		$ipn['custom'] = $custom_field_values;
 
