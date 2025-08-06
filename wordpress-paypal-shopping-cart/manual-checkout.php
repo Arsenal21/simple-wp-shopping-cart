@@ -51,14 +51,16 @@ class WPSC_Manual_Checkout {
 		update_post_meta( $post_id, 'wpsc_ipaddress', $this->data['ip_address'] );
 		update_post_meta( $post_id, 'wpsc_address', $this->data['address'] ); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
 		update_post_meta( $post_id, 'wpsc_billing_address', $this->data['billing_address'] );
-		update_post_meta( $post_id, 'wpspsc_phone', $this->data['phone']);
+		update_post_meta( $post_id, 'wpspsc_phone', $this->data['phone']); // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_phone', $this->data['phone']);
 		update_post_meta( $post_id, 'wpsc_applied_coupon', $this->data['applied_coupon_code'] );
 		update_post_meta( $post_id, 'wpsc_payment_gateway', $this->data['gateway'] );
 		update_post_meta( $post_id, 'wpsc_tax_amount', $this->data['tax_amount'] );
 		update_post_meta( $post_id, 'wpsc_tax_region', $this->data['tax_region'] );
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $this->data['shipping'] );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->data['shipping_region'] );
-		update_post_meta( $post_id, 'wpspsc_items_ordered', $this->data['product_details'] );
+		update_post_meta( $post_id, 'wpspsc_items_ordered', $this->data['product_details'] );  // TODO: Need to remove this later
+		update_post_meta( $post_id, 'wpsc_items_ordered', $this->data['product_details'] );
 		update_post_meta( $post_id, 'wpsc_order_status', $this->data['status'] );
 
 		// Send notification emails

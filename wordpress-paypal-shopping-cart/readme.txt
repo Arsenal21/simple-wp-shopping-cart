@@ -252,6 +252,7 @@ None
 - Added an optional phone number field to the manual checkout form.
 - New tax and tax by region feature added.
 - Product thumbnail is now optional in 'wpsc_display_product' shortcode.
+- Some code refactored.
 
 = 5.1.4 =
 - Refactored Cart ID handling for improved security.

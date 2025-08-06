@@ -240,21 +240,21 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		//The sub-totals row if postage cost or tax available.
 		if ( !empty($postage_cost) || !empty($tax_amount) ) {
-			$output .= "<tr class='wspsc_cart_subtotal'><td colspan='$calculations_row_colspan' style='font-weight: bold; text-align: right;'>" . ( __( 'Subtotal', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $total, $paypal_symbol, $decimal ) . "</td><td></td></tr>";
+			$output .= "<tr class='wpsc_cart_subtotal'><td colspan='$calculations_row_colspan' style='font-weight: bold; text-align: right;'>" . ( __( 'Subtotal', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $total, $paypal_symbol, $decimal ) . "</td><td></td></tr>";
 		}
 
 		//The shipping cost row
 		if ( $postage_cost != 0 ) {
-			$output .= "<tr class='wspsc_cart_shipping'><td colspan='$calculations_row_colspan' style='font-weight: bold; text-align: right;'>" . ( __( 'Shipping', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $postage_cost, $paypal_symbol, $decimal ) . "</td><td></td></tr>";
+			$output .= "<tr class='wpsc_cart_shipping'><td colspan='$calculations_row_colspan' style='font-weight: bold; text-align: right;'>" . ( __( 'Shipping', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $postage_cost, $paypal_symbol, $decimal ) . "</td><td></td></tr>";
 		}
 
 		//The tax row
         if (!empty($tax_amount)){
-            $output .= "<tr class='wspsc_cart_shipping'><td colspan='$calculations_row_colspan' style='font-weight: bold; text-align: right;'>" . ( __( 'Tax', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $tax_amount, $paypal_symbol, $decimal ) . "</td><td></td></tr>";
+            $output .= "<tr class='wpsc_cart_tax'><td colspan='$calculations_row_colspan' style='font-weight: bold; text-align: right;'>" . ( __( 'Tax', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( $tax_amount, $paypal_symbol, $decimal ) . "</td><td></td></tr>";
         }
 
 		//The total row
-		$output .= "<tr class='wspsc_cart_total'>";
+		$output .= "<tr class='wpsc_cart_total'>";
 		$output .= "<td colspan='".$calculations_row_colspan."' style='font-weight: bold; text-align: right;'>" . ( __( 'Total', 'wordpress-simple-paypal-shopping-cart' ) ) . ": </td><td style='text-align: center'>" . print_payment_currency( ( $total + $postage_cost + $tax_amount ), $paypal_symbol, $decimal ) . '</td>';
 
         $wpsc_enable_empty_cart_button = get_option('wpsc_show_empty_cart_option') == 'checked="checked"' ? true : false;
@@ -281,19 +281,19 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output .= '</tr>';
 
 		//Display the cart action message (if any)
-		$wpspsc_cart_action_msg = $wspsc_cart->get_cart_action_msg();
-		if ( $wpspsc_cart_action_msg ) {
-			$output .= '<tr class="wspsc_cart_action_msg"><td colspan="4"><span class="wpspsc_cart_action_msg">' . $wpspsc_cart_action_msg . '</span></td></tr>';
+		$wpsc_cart_action_msg = $wspsc_cart->get_cart_action_msg();
+		if ( $wpsc_cart_action_msg ) {
+			$output .= '<tr class="wpsc_cart_action_msg"><td colspan="4"><span class="wpsc_cart_action_msg">' . $wpsc_cart_action_msg . '</span></td></tr>';
 		}
 
 		//Display the coupon section
 		if ( get_option( 'wpspsc_enable_coupon' ) == '1' ) {
-			$output .= '<tr class="wspsc_cart_coupon_row"><td colspan="4">
-                <div class="wpspsc_coupon_section">
-                <span class="wpspsc_coupon_label">' . ( __( 'Enter Coupon Code', 'wordpress-simple-paypal-shopping-cart' ) ) . '</span>
-                <form  method="post" action="" >' . wp_nonce_field( 'wspsc_coupon', '_wpnonce', true, false ) . '
-                <input type="text" name="wpspsc_coupon_code" value="" size="10" />
-                <span class="wpspsc_coupon_apply_button"><input type="submit" name="wpspsc_apply_coupon" class="wpspsc_apply_coupon" value="' . ( __( 'Apply', 'wordpress-simple-paypal-shopping-cart' ) ) . '" /></span>
+			$output .= '<tr class="wpsc_cart_coupon_row"><td colspan="4">
+                <div class="wpsc_coupon_section">
+                <span class="wpsc_coupon_label">' . __( 'Enter Coupon Code', 'wordpress-simple-paypal-shopping-cart' ) . '</span>
+                <form  method="post" action="" >' . wp_nonce_field( 'wpsc_apply_coupon', '_wpnonce', true, false ) . '
+                <input type="text" name="wpsc_coupon_code" value="" size="10" />
+                <span class="wpsc_coupon_apply_button"><input type="submit" name="wpsc_apply_coupon" class="wpsc_apply_coupon" value="' . __( 'Apply', 'wordpress-simple-paypal-shopping-cart' ) . '" /></span>
                 </form>
                 </div>
                 </td></tr>';
@@ -312,7 +312,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		$output = apply_filters( 'wpspsc_before_checkout_form', $output ); // TODO: Old hook. Need to remove this.
 		$output = apply_filters( 'wpsc_before_checkout_form', $output );
 
-		$output .= "<tr class='wpspsc_checkout_form'><td colspan='4'>";
+		$output .= "<tr class='wpsc_checkout_form'><td colspan='4'>";
 
         // Shipping region select section field.
 		$is_shipping_by_region_enabled = get_option('enable_shipping_by_region');
@@ -333,7 +333,7 @@ function print_wp_shopping_cart( $args = array() ) {
 		if ( $is_tnc_enabled ) {
 			$output .= wpsc_generate_tnc_section( $carts_cnt );
 		}
-		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . ' class="wspsc_checkout_form_standard">';
+		$output .= '<form action="' . $paypal_checkout_url . '" method="post" ' . $form_target_code . ' class="wpsc_checkout_form_standard">';
 		$output .= $form;
 		$style = get_option( 'wpspc_disable_standard_checkout' ) ? 'display:none !important" data-wspsc-hidden="1' : '';
 		if ( $count ) {
@@ -395,7 +395,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			//Show PayPal Smart Payment Button
 
 			//adding form in smart checkout button, so simple cart collect customer input adon works
-			$output .= '<form action="" method="POST" class="wpspc_pp_smart_checkout_form">';
+			$output .= '<form action="" method="POST" class="wpsc_pp_smart_checkout_form">';
 
 			//Some number formatting (before it is used in JS code.
 			$formatted_total = wpsc_number_format_price( $total );
@@ -434,25 +434,25 @@ function print_wp_shopping_cart( $args = array() ) {
 				?>
 
                 <div class="wp-cart-paypal-button-container-<?php echo $carts_cnt; ?>"></div>
-                <input type="submit" class="wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?> wp_cart_checkout_button"
+                <input type="submit" class="wpsc_pp_smart_checkout_form_<?php echo $carts_cnt; ?> wp_cart_checkout_button"
                        style="display:none" />
                 </form>
 
                 <script type="text/javascript">
                     // Get terms and condition settings.
-                    var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
+                    var wpscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
                     var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
                     var wpscTaxRegionEnabled = <?php echo !empty($is_tax_by_region_enabled) ? 'true' : 'false' ?>;
 
                     document.addEventListener('wspsc_paypal_smart_checkout_sdk_loaded', function () {
 
                         //disable form submission, as it is smart checkout
-                        jQuery(".wpspc_pp_smart_checkout_form").submit(false);
+                        jQuery(".wpsc_pp_smart_checkout_form").submit(false);
 
                         //Anything that goes here will only be executed after the PayPal SDK is loaded.
                         console.log('PayPal Smart Checkout SDK loaded.');
 
-                        var wpspsc_cci_do_submit = true;
+                        var wpsc_cci_do_submit = true;
 
                         paypal.Button.render({
                             env: '<?php echo get_option( 'wp_shopping_cart_enable_sandbox' ) ? 'sandbox' : 'production'; ?>',
@@ -489,11 +489,11 @@ function print_wp_shopping_cart( $args = array() ) {
                                     }
 
                                     // Disable paypal smart checkout form submission if terms and condition validation error.
-                                    const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
-                                    if (!wspsc_validateTnc(currentSmartPaymentForm, false)) {
+                                    const currentSmartPaymentForm = '.wpsc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
+                                    if (!wpsc_validateTnc(currentSmartPaymentForm, false)) {
                                         actions.disable();
                                     }
-                                    if (!wspsc_validateShippingRegion(currentSmartPaymentForm, false)) {
+                                    if (!wpsc_validateShippingRegion(currentSmartPaymentForm, false)) {
                                         actions.disable();
                                     }
                                     if (!wpsc_validateTaxRegion(currentSmartPaymentForm, false)) {
@@ -508,15 +508,15 @@ function print_wp_shopping_cart( $args = array() ) {
                                         }
 
                                         // Also check if terms and condition has checked.
-                                        if (wpspscTncEnabled) {
-                                            if (!wspsc_validateTnc(currentSmartPaymentForm, false)) {
+                                        if (wpscTncEnabled) {
+                                            if (!wpsc_validateTnc(currentSmartPaymentForm, false)) {
                                                 isAnyValidationError = true;
                                             }
                                         }
 
                                         // Also check if shipping by region has selected.
                                         if (wpscShippingRegionEnabled){
-                                            if (!wspsc_validateShippingRegion(currentSmartPaymentForm, false)) {
+                                            if (!wpsc_validateShippingRegion(currentSmartPaymentForm, false)) {
                                                 isAnyValidationError = true;
                                             }
                                         }
@@ -538,32 +538,32 @@ function print_wp_shopping_cart( $args = array() ) {
                                 });
                             },
                             onClick: function () {
-                                wpspsc_cci_do_submit = false;
-                                var res = jQuery('.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>').triggerHandler('click');
+                                wpsc_cci_do_submit = false;
+                                var res = jQuery('.wpsc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>').triggerHandler('click');
                                 // if (typeof res === "undefined" || res) {
                                 //				    wpspsc_pp_actions.enable();
                                 // } else {
                                 //				    wpspsc_pp_actions.disable();
                                 // }
-                                wpspsc_cci_do_submit = true;
+                                wpsc_cci_do_submit = true;
 
-                                const currentSmartPaymentForm = '.wpspc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
+                                const currentSmartPaymentForm = '.wpsc_pp_smart_checkout_form_<?php echo $carts_cnt; ?>';
                                 // Check if shipping region is enabled and append error message if validation fails.
                                 if (wpscShippingRegionEnabled) {
-                                    const shippingRegionContainer = wspsc_getClosestElement(currentSmartPaymentForm, wpscShippingRegionContainerSelector)
-                                    wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
+                                    const shippingRegionContainer = wpsc_getClosestElement(currentSmartPaymentForm, wpscShippingRegionContainerSelector)
+                                    wpsc_handleShippingRegionErrorMsg(shippingRegionContainer);
                                 }
 
                                 // Check if tax region is enabled and append error message if validation fails.
                                 if (wpscTaxRegionEnabled) {
-                                    const taxRegionContainer = wspsc_getClosestElement(currentSmartPaymentForm, wpscTaxRegionContainerSelector)
+                                    const taxRegionContainer = wpsc_getClosestElement(currentSmartPaymentForm, wpscTaxRegionContainerSelector)
                                     wpsc_handleTaxRegionErrorMsg(taxRegionContainer);
                                 }
 
                                 // Check if terms and condition is enabled and append error message if not checked.
-                                if (wpspscTncEnabled) {
-                                    const tncContainer = wspsc_getClosestElement(currentSmartPaymentForm, wspscTncContainerSelector)
-                                    wspsc_handleTncErrorMsg(tncContainer);
+                                if (wpscTncEnabled) {
+                                    const tncContainer = wpsc_getClosestElement(currentSmartPaymentForm, wpscTncContainerSelector)
+                                    wpsc_handleTncErrorMsg(tncContainer);
                                 }
 
                             },
@@ -594,10 +594,10 @@ function print_wp_shopping_cart( $args = array() ) {
                             onAuthorize: function (data, actions) {
                                 jQuery("[class^='wp-cart-paypal-button-container']").hide();
                                 jQuery('.wp_cart_checkout_button').hide();
-                                jQuery('.wpspsc-spinner-cont').css('display', 'inline-block');
+                                jQuery('.wpsc-spinner-cont').css('display', 'inline-block');
                                 return actions.payment.execute().then(function (data) {
                                     jQuery.post('<?php echo get_admin_url(); ?>admin-ajax.php',
-                                        { 'action': 'wpsc_process_pp_smart_checkout', 'wpspsc_payment_data': data })
+                                        { 'action': 'wpsc_process_pp_smart_checkout', 'wpsc_payment_data': data })
                                         .done(function (result) {
                                             if (result.success) {
                                                 window.location.href = '<?php echo esc_url_raw( $return_url ); ?>';
@@ -609,7 +609,7 @@ function print_wp_shopping_cart( $args = array() ) {
                                                     jQuery('.wp_cart_checkout_button').show();
                                                 }
                                                 jQuery('.wp_cart_checkout_button').show();
-                                                jQuery('.wpspsc-spinner-cont').hide();
+                                                jQuery('.wpsc-spinner-cont').hide();
                                             }
                                         })
                                         .fail(function (result) {
@@ -618,7 +618,7 @@ function print_wp_shopping_cart( $args = array() ) {
                                             if (jQuery('.wp_cart_checkout_button').data('wspsc-hidden') !== "1") {
                                                 jQuery('.wp_cart_checkout_button').show();
                                             }
-                                            jQuery('.wpspsc-spinner-cont').hide();
+                                            jQuery('.wpsc-spinner-cont').hide();
                                             alert('<?php echo esc_js( __( 'HTTP error occured during payment process:', 'wordpress-simple-paypal-shopping-cart' ) ); ?>' + ' ' + result.status + ' ' + result.statusText);
                                         });
                                 });
@@ -635,7 +635,7 @@ function print_wp_shopping_cart( $args = array() ) {
                     function has_empty_required_input(cart_no) {
                         let has_any = false;
                         let target_input = '.wpspsc_cci_input';
-                        let target_form = jQuery('.wpspc_pp_smart_checkout_form_' + cart_no).closest('.shopping_cart');
+                        let target_form = jQuery('.wpsc_pp_smart_checkout_form_' + cart_no).closest('.shopping_cart');
 
                         jQuery(target_form).find(target_input).each(function () {
                             if (jQuery(this).prop("required") && !jQuery(this).val().trim()) {
@@ -647,13 +647,13 @@ function print_wp_shopping_cart( $args = array() ) {
                     }
                 </script>
                 <style>
-                    @keyframes wpspsc-spinner {
+                    @keyframes wpsc-spinner {
                         to {
                             transform: rotate(360deg);
                         }
                     }
 
-                    .wpspsc-spinner {
+                    .wpsc-spinner {
                         margin: 0 auto;
                         text-indent: -9999px;
                         vertical-align: middle;
@@ -664,18 +664,18 @@ function print_wp_shopping_cart( $args = array() ) {
                         border-radius: 50%;
                         border: 5px solid #ccc;
                         border-top-color: #0070ba;
-                        animation: wpspsc-spinner .6s linear infinite;
+                        animation: wpsc-spinner .6s linear infinite;
                     }
 
-                    .wpspsc-spinner-cont {
+                    .wpsc-spinner-cont {
                         width: 100%;
                         text-align: center;
                         margin-top: 10px;
                         display: none;
                     }
                 </style>
-                <div class="wpspsc-spinner-cont">
-                    <div class="wpspsc-spinner"></div>
+                <div class="wpsc-spinner-cont">
+                    <div class="wpsc-spinner"></div>
                 </div>
 				<?php
 				$output .= ob_get_clean();
@@ -689,7 +689,7 @@ function print_wp_shopping_cart( $args = array() ) {
 			wp_enqueue_script( "wpsc-stripe" );
 			wp_enqueue_script( "wpsc-checkout-stripe" );
 
-			$output .= '<form class="wspsc-stripe-payment-form" >';
+			$output .= '<form class="wpsc-stripe-payment-form" >';
 
 			//Ensure the public key has been configured for this mode.
 			$wpsc_stripe_public_key = get_option( 'wp_shopping_cart_enable_sandbox' ) ? get_option( 'wpspc_stripe_test_publishable_key' ) : get_option( 'wpspc_stripe_live_publishable_key' );
@@ -707,7 +707,7 @@ function print_wp_shopping_cart( $args = array() ) {
 
 			$stripe_checkout_button_img_src = apply_filters( 'wspsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src );  // TODO: Old hook. Need to remove this.
 			$stripe_checkout_button_img_src = apply_filters( 'wpsc_cart_stripe_checkout_button_image_src', $stripe_checkout_button_img_src );
-			$output .= '<input class="wspsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . $stripe_checkout_button_img_src . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" alt="' . ( __( "Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
+			$output .= '<input class="wpsc_stripe_btn wp_cart_checkout_button"  value="wspsc_stripe_checkout" type="image" src="' . $stripe_checkout_button_img_src . '" name="submit" class="wp_cart_checkout_button wp_cart_checkout_button_' . $carts_cnt . '" alt="' . ( __( "Make payments with Stripe - it\'s fast, free and secure!", 'wordpress-simple-paypal-shopping-cart' ) ) . '" />';
 
 			$output .= wp_cart_add_custom_field();
 
@@ -716,8 +716,8 @@ function print_wp_shopping_cart( $args = array() ) {
 			$extra_stripe_fields = apply_filters( 'wpsc_cart_extra_stripe_fields', $extra_stripe_fields ); //Can be used to add extra PayPal hidden input fields for the cart checkout
 
             $output .= $extra_stripe_fields;
-			$output .= '<div class="wpspsc-spinner-cont" id="wpspsc_spinner_' . esc_js( $wspsc_Cart->get_cart_cpt_id() ) . '">
-						<div class="wpspsc-spinner"></div>
+			$output .= '<div class="wpsc-spinner-cont" id="wpsc_spinner_' . esc_js( $wspsc_Cart->get_cart_cpt_id() ) . '">
+						<div class="wpsc-spinner"></div>
 					</div>';
 			$output .= '</form>';
 		}

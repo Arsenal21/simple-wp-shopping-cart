@@ -1,11 +1,6 @@
 <?php
 
-/**
- * TODO: Need to refactor this class name.
- */
-
-class WPSPSC_Coupons_Collection
-{
+class WPSPSC_Coupons_Collection {
     var $coupon_items = array();
 
     function __construct()
@@ -66,8 +61,6 @@ class WPSPSC_Coupons_Collection
         $obj = get_option('wpspsc_coupons_collection');
         if($obj){
             return $obj;
-        }else{
-            return new WPSPSC_Coupons_Collection();
         }
     }
 
@@ -75,22 +68,22 @@ class WPSPSC_Coupons_Collection
     {        
         if($cart_post_id)
         {
-            update_post_meta($cart_post_id,"wpspsc_discount_applied_once","1");
-        }        
+            update_post_meta($cart_post_id,"wpspsc_discount_applied_once","1"); // TODO: Need to remove this later
+            update_post_meta($cart_post_id,"wpsc_discount_applied_once","1");
+        }
     }
 
     function get_discount_applied_once($cart_cpt_id)
     {        
-        if($cart_cpt_id)
-        {
-           $wpspsc_discount_applied_once= get_post_meta($cart_cpt_id,"wpspsc_discount_applied_once",true);
-           
-           if($wpspsc_discount_applied_once!="1")
-           {
-            return false;
+        if($cart_cpt_id) {
+           $wpsc_discount_applied_once = get_post_meta($cart_cpt_id,"wpsc_discount_applied_once",true);
+           $wpsc_discount_applied_once = get_post_meta($cart_cpt_id,"wpspsc_discount_applied_once",true); // TODO: Need to remove this later
+
+           if( $wpsc_discount_applied_once != "1" ) {
+			   return false;
            }
            else{
-            return $wpspsc_discount_applied_once;
+			   return $wpsc_discount_applied_once;
            }
         }
         return false;
@@ -98,46 +91,48 @@ class WPSPSC_Coupons_Collection
 
     function clear_discount_applied_once($cart_cpt_id)
     {
-        if($cart_cpt_id)
-        {
-            delete_post_meta($cart_cpt_id,"wpspsc_discount_applied_once");
-        }  
+        if($cart_cpt_id) {
+            delete_post_meta($cart_cpt_id,"wpspsc_discount_applied_once"); // TODO: Need to remove this later
+            delete_post_meta($cart_cpt_id,"wpsc_discount_applied_once");
+        }
     }
 
     function set_applied_coupon_code($cart_cpt_id, $coupon_code)
     {
-        if($cart_cpt_id)
-        {
-            update_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code",$coupon_code);
-        } 
+        if($cart_cpt_id) {
+            update_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code",$coupon_code); // TODO: Need to remove this later
+            update_post_meta($cart_cpt_id,"wpsc_applied_coupon_code",$coupon_code);
+        }
     }
 
-    function get_applied_coupon_code($cart_cpt_id)
-    {
-        if($cart_cpt_id)
-        {
-            $coupon_code=get_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code",true);
-            if(!$coupon_code || strlen($coupon_code)==0)
-            {
-                return false;
+    function get_applied_coupon_code($cart_cpt_id) {
+        if ( $cart_cpt_id ) {
+            $coupon_code=get_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code",true); // TODO: Need to remove this later.
+            if( !empty( $coupon_code ) ) {
+	            return $coupon_code;
             }
-            return $coupon_code;
+
+	        $coupon_code = get_post_meta($cart_cpt_id,"wpsc_applied_coupon_code",true);
+	        if( !empty( $coupon_code ) ) {
+		        return $coupon_code;
+	        }
+
+			return false;
         } 
 
         return false;
     }
 
-    function clear_applied_coupon_code($cart_cpt_id)
-    {
-        if($cart_cpt_id)
-        {
-            delete_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code");
-        } 
+    function clear_applied_coupon_code($cart_cpt_id) {
+        if($cart_cpt_id) {
+            delete_post_meta($cart_cpt_id,"wpspsc_applied_coupon_code"); // TODO: Need to remove this later.
+            delete_post_meta($cart_cpt_id,"wpsc_applied_coupon_code");
+        }
     }
 }
+class_alias('WPSPSC_Coupons_Collection', 'WPSC_Coupons_Collection' ); // TODO: Need to remove this later.
 
-class WPSPSC_COUPON_ITEM
-{
+class WPSPSC_COUPON_ITEM {
     var $id;
     var $coupon_code;
     var $discount_rate;
@@ -158,6 +153,7 @@ class WPSPSC_COUPON_ITEM
         echo "<br />".(__("Expiry date: ", "wordpress-simple-paypal-shopping-cart")).$this->expiry_date;
     }
 }
+class_alias('WPSPSC_COUPON_ITEM', 'WPSC_Coupon_Item' ); // TODO: Need to remove this later.
 
 function wpsc_apply_cart_discount($coupon_code)
 {

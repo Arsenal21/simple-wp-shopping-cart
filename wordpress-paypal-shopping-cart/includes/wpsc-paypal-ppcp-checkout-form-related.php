@@ -105,7 +105,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     <!-- Any additional hidden input fields (if needed) -->
 
     <script type="text/javascript">
-        var wpspscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
+        var wpscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
         var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
         var wpscTaxRegionEnabled = <?php echo $is_tax_by_region_enabled ? 'true' : 'false' ?>;
 
@@ -173,10 +173,10 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                                     
                 // Disable paypal smart checkout form submission if terms and condition validation error.
                 const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
-                if (!wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
+                if (!wpsc_validateTnc(currentPPCPButtonWrapper, false)) {
                     actions.disable();
                 }
-                if (!wspsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
+                if (!wpsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
                     actions.disable();
                 }
                 if (!wpsc_validateTaxRegion(currentPPCPButtonWrapper, false)) {
@@ -193,15 +193,15 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                         }
 
                         // Check if terms and condition has checked.
-                        if (wpspscTncEnabled) {
-                            if (!wspsc_validateTnc(currentPPCPButtonWrapper, false)) {
+                        if (wpscTncEnabled) {
+                            if (!wpsc_validateTnc(currentPPCPButtonWrapper, false)) {
                                 isAnyValidationError = true;
                             }
                         }
 
                         // Check if shipping by region has selected.
                         if (wpscShippingRegionEnabled){
-                            if (!wspsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
+                            if (!wpsc_validateShippingRegion(currentPPCPButtonWrapper, false)) {
                                 isAnyValidationError = true;
                             } 
                         }
@@ -239,20 +239,20 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 
                 // Check if shipping region is enabled and append error message if validation fails.
                 if (wpscShippingRegionEnabled) {
-                    const shippingRegionContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wpscShippingRegionContainerSelector)
-                    wspsc_handleShippingRegionErrorMsg(shippingRegionContainer);
+                    const shippingRegionContainer = wpsc_getClosestElement(currentPPCPButtonWrapper, wpscShippingRegionContainerSelector)
+                    wpsc_handleShippingRegionErrorMsg(shippingRegionContainer);
                 }
 
                 // Check if tax region is enabled and append error message if validation fails.
                 if (wpscTaxRegionEnabled) {
-                    const taxRegionContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wpscTaxRegionContainerSelector)
+                    const taxRegionContainer = wpsc_getClosestElement(currentPPCPButtonWrapper, wpscTaxRegionContainerSelector)
                     wpsc_handleTaxRegionErrorMsg(taxRegionContainer);
                 }
 
                 // Check if terms and condition is enabled and append error message if not checked.
-                if (wpspscTncEnabled) {
-                    const tncContainer = wspsc_getClosestElement(currentPPCPButtonWrapper, wspscTncContainerSelector)
-                    wspsc_handleTncErrorMsg(tncContainer);
+                if (wpscTncEnabled) {
+                    const tncContainer = wpsc_getClosestElement(currentPPCPButtonWrapper, wpscTncContainerSelector)
+                    wpsc_handleTncErrorMsg(tncContainer);
                 }
 
             }
@@ -313,7 +313,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
                 //Show the spinner while we process this transaction.
                 const pp_button_container = document.getElementById('<?php echo esc_js($on_page_embed_button_id); ?>');
-                const pp_button_spinner_container = wspsc_getClosestElement(pp_button_container, '.wpsc-pp-button-spinner-container', '.shopping_cart');
+                const pp_button_spinner_container = wpsc_getClosestElement(pp_button_container, '.wpsc-pp-button-spinner-container', '.shopping_cart');
                 pp_button_container.style.display = 'none'; //Hide the buttons
                 pp_button_spinner_container.style.display = 'inline-block'; //Show the spinner.
 
@@ -443,7 +443,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
             let has_any = false;
             const target_input = '.wpspsc_cci_input';
             const currentPPCPButtonWrapper = '#wpsc_paypal_button_'+cart_no;
-            const target_form = wspsc_getClosestElement(currentPPCPButtonWrapper, 'table', '.shopping_cart');
+            const target_form = wpsc_getClosestElement(currentPPCPButtonWrapper, 'table', '.shopping_cart');
             const cciInputElements = target_form.querySelectorAll(target_input);
             cciInputElements.forEach(function (inputElement) {
                 if (inputElement.required && !inputElement.value.trim()) {

@@ -228,7 +228,10 @@ class WPSC_Cart {
 			$collection_obj->clear_applied_coupon_code( $cart_cpt_id );
 
 			//Delete the cart action msg transient
-			$transient_key = 'wpspsc_cart_action_msg' . $cart_cpt_id;
+			$transient_key_old = 'wpspsc_cart_action_msg' . $cart_cpt_id; // TODO: Need to remove this later.
+			delete_transient( $transient_key_old );
+
+			$transient_key = 'wpsc_cart_action_msg' . $cart_cpt_id;
 			delete_transient( $transient_key );
 		}
 
@@ -571,7 +574,7 @@ class WPSC_Cart {
 
 	public function get_cart_action_msg() {
 		if ( $this->get_cart_cpt_id() ) {
-			$transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_cpt_id();
+			$transient_key = 'wpsc_cart_action_msg' . $this->get_cart_cpt_id();
 			//$expiration = 3600; // 1 hour
 			$msg = get_transient( $transient_key );
 
@@ -581,7 +584,7 @@ class WPSC_Cart {
 
 	public function set_cart_action_msg( $msg ) {
 		if ( $this->get_cart_cpt_id() ) {
-			$transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_cpt_id();
+			$transient_key = 'wpsc_cart_action_msg' . $this->get_cart_cpt_id();
 			$expiration    = 3600; // 1 hour
 			set_transient( $transient_key, $msg, $expiration );
 		}
@@ -589,6 +592,9 @@ class WPSC_Cart {
 
 	public function clear_cart_action_msg() {
 		if ( $this->get_cart_cpt_id() ) {
+			$transient_key = 'wpsc_cart_action_msg' . $this->get_cart_cpt_id(); // TODO: Need to remove this later.
+			delete_transient( $transient_key );
+
 			$transient_key = 'wpspsc_cart_action_msg' . $this->get_cart_cpt_id();
 			delete_transient( $transient_key );
 		}

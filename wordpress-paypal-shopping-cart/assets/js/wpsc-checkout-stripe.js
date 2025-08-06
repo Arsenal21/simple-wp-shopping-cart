@@ -1,15 +1,15 @@
 jQuery(document).ready(function(){
-    jQuery(".wspsc-stripe-payment-form").on("submit",function(e){
+    jQuery(".wpsc-stripe-payment-form").on("submit",function(e){
         e.preventDefault();
     });    
     
-    jQuery('.wspsc_stripe_btn').on('click',function(e) {
+    jQuery('.wpsc_stripe_btn').on('click',function(e) {
         e.preventDefault();
         
         let isAnyValidationError = false;
         
         // Validate shipping region.
-        if (!wspsc_validateShippingRegion(e.target)) {   
+        if (!wpsc_validateShippingRegion(e.target)) {   
             isAnyValidationError = true       
         }
         // Validate tax region.
@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
             isAnyValidationError = true
         }
         // Validate terms and conditions.
-        if (!wspsc_validateTnc(e.target)) {   
+        if (!wpsc_validateTnc(e.target)) {
             isAnyValidationError = true       
         }
 
@@ -26,7 +26,7 @@ jQuery(document).ready(function(){
             return;
         }
 
-        var form =jQuery(this).closest('.wspsc-stripe-payment-form');
+        var form =jQuery(this).closest('.wpsc-stripe-payment-form');
         var requiredFields = jQuery(this).closest("table").find('.wpspsc_cci_input').filter("[required]:visible");
         var isValid = true;
         if(requiredFields)
@@ -44,7 +44,7 @@ jQuery(document).ready(function(){
             return;
         }
 
-        var spinnerContainer = jQuery(this).closest('.wspsc-stripe-payment-form').find('.wpspsc-spinner-cont');
+        var spinnerContainer = jQuery(this).closest('.wpsc-stripe-payment-form').find('.wpsc-spinner-cont');
         
         spinnerContainer.css('display', 'inline-block');
         jQuery(this).hide();
@@ -59,13 +59,13 @@ jQuery(document).ready(function(){
             payload["custom"]=custom_field.val();						
         }
 
-        jQuery.post(wspsc_ajax_url, payload).done(function (response) {
+        jQuery.post(wpsc_ajax_url, payload).done(function (response) {
                 if (!response.error) {
                     
                     spinnerContainer.hide();
                     jQuery(this).show();
 
-                    wspsc_stripe_js_obj.redirectToCheckout({sessionId: response.session_id}).then(function (result) {
+                    wpsc_stripe_js_obj.redirectToCheckout({sessionId: response.session_id}).then(function (result) {
                 });			
                 } else {
                     alert(response.error);		
