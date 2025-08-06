@@ -472,9 +472,9 @@ echo '<tr valign="top">
     </td></tr>
 
     <tr valign="top">
-    <th scope="row">'.(__("Enable Sandbox Testing", "wordpress-simple-paypal-shopping-cart")).'</th>
+    <th scope="row">'.(__("Enable Test/Sandbox Mode", "wordpress-simple-paypal-shopping-cart")).'</th>
     <td><input type="checkbox" name="wp_shopping_cart_enable_sandbox" value="1" '.$wp_shopping_cart_enable_sandbox.' />
-    <br />'.(__("Select this option if you wish to conduct sandbox testing. You will need to input your sandbox/test mode credentials from your PayPal or Stripe account.", "wordpress-simple-paypal-shopping-cart")).'</td>
+    <br />'.(__("Use this option to enable test/sandbox mode. Leave it unchecked for live mode. To perform sandbox testing, make sure to enter your sandbox/test credentials from your PayPal or Stripe account.", "wordpress-simple-paypal-shopping-cart")).'</td>
     </tr>
 
     </table>
