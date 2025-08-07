@@ -102,7 +102,7 @@ function wpsc_show_coupon_discount_settings_page() {
 	                        <?php _e( "Coupon Code", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
                         </th>
                         <td>
-                            <input name="wpsc_coupon_code" type="text" size="15" value=""/>
+                            <input name="wpsc_coupon_code" type="text" size="15" value="" required/>
                         </td>
                     </tr>
                     <tr>
@@ -110,7 +110,7 @@ function wpsc_show_coupon_discount_settings_page() {
 	                        <?php _e( "Discount Rate (%)", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
                         </th>
                         <td>
-                            <input name="wpsc_coupon_rate" type="text" size="15" value=""/>
+                            <input name="wpsc_coupon_rate" type="text" size="15" value="" required/>
                         </td>
                     </tr>
                     <tr>

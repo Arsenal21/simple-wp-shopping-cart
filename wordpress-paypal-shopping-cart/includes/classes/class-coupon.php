@@ -3,6 +3,8 @@
 class WPSPSC_Coupons_Collection {
     var $coupon_items = array();
 
+	public static $instance;
+
     function __construct()
     {
 
@@ -16,7 +18,7 @@ class WPSPSC_Coupons_Collection {
     function find_coupon_by_code($coupon_code)
     {
         if(empty($this->coupon_items)){
-            echo "<br />".(__("Admin needs to configure some discount coupons before it can be used", "wordpress-simple-paypal-shopping-cart"));
+            wpsc_log_payment_debug("Admin needs to configure some discount coupons before it can be used", false);
             return new stdClass();
         }
         foreach($this->coupon_items as $key => $coupon)
@@ -53,15 +55,19 @@ class WPSPSC_Coupons_Collection {
 
     static function save_object($obj_to_save)
     {
-        update_option('wpspsc_coupons_collection', $obj_to_save);
+        update_option('wpspsc_coupons_collection', $obj_to_save); // TODO: Old option name, need to remove this later.
+        update_option('wpsc_coupons_collection', $obj_to_save);
     }
 
     static function get_instance()
     {
-        $obj = get_option('wpspsc_coupons_collection');
-        if($obj){
-            return $obj;
-        }
+        self::$instance = get_option('wpspsc_coupons_collection'); // TODO: Old option name, need to rename this with 'wpsc' prefix later.
+
+		if (!isset(self::$instance) || empty(self::$instance)) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
     }
 
     function set_discount_applied_once($cart_post_id)
@@ -179,7 +185,7 @@ function wpsc_apply_cart_discount($coupon_code)
 
     //Apply the discount
     $curr_symbol = WP_CART_CURRENCY_SYMBOL;
-    $discount_rate = $coupon_item->discount_rate;
+    $discount_rate = !empty($coupon_item->discount_rate) ? $coupon_item->discount_rate : 0;
     $products = $wspsc_cart->get_items();
     if( !isset($products) || !is_array($products) ){
         //Cart is empty. No need to run the discount code.
