@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, WordPress shopping cart, WP Simple Shopping Cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 5.1.8
+Stable tag: 5.1.9
 License: GPLv2 or later
 
 Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
@@ -236,8 +236,8 @@ None
 
 == Changelog ==
 
-= WIP =
-- PHP error related to coupons has fixed.
+= 5.1.9 =
+- The PHP error related to coupon functionality has been resolved.
 
 = 5.1.8 =
 - Updated the 'Enable Sandbox' option label and description to make them more descriptive and clear.
