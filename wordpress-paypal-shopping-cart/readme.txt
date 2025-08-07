@@ -236,6 +236,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- PHP error related to coupons has fixed.
+
 = 5.1.8 =
 - Updated the 'Enable Sandbox' option label and description to make them more descriptive and clear.
 - Code refactoring to improve the variable names to be more descriptive and consistent with the plugin's shortname.
