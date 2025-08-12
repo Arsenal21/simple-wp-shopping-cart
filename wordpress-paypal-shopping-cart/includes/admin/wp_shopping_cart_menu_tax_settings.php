@@ -194,7 +194,10 @@ function show_wp_cart_tax_settings_page()
                         <th scope="row"><?php _e("Tax Percentage", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td>
                             <input type="number" min="0" max="100" step="any" name="tax_percentage" value="<?php esc_attr_e($tax_percentage)?>" size="5" />
-                            <p class="description"><?php _e("This is the tax percentage that will be applied to the total of individual products cost. Put 0 if you do not want to apply taxes.", "wordpress-simple-paypal-shopping-cart") ?></p>
+                            <p class="description">
+                                <?php _e("Enter the tax percentage to apply to the total cost of individual products. Set to 0 to disable tax.", "wordpress-simple-paypal-shopping-cart") ?>
+                                <a href="https://www.tipsandtricks-hq.com/ecommerce/configuring-taxes-in-simple-shopping-cart-5401" target="_blank"><?php _e("View the Tax Documentation", "wordpress-simple-paypal-shopping-cart"); ?></a>
+                            </p>
                         </td>
                     </tr>
                 </table>

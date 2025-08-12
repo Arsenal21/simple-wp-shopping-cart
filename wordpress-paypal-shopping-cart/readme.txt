@@ -236,6 +236,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Added tax documentation link to the tax settings page.
+
 = 5.1.9 =
 - The PHP error related to coupon functionality has been resolved.
 
