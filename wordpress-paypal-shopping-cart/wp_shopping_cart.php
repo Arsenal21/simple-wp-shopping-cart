@@ -1,15 +1,15 @@
 <?php
 
 /*
-  Plugin Name: WP Simple Shopping Cart
-  Version: 5.1.9
-  Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
-  Author: Tips and Tricks HQ, Ruhul Amin, mra13
-  Author URI: https://www.tipsandtricks-hq.com/
-  Description: Simple WordPress Shopping Cart Plugin, very easy to use and great for selling products and services from your blog!
-  Text Domain: wordpress-simple-paypal-shopping-cart
-  Domain Path: /languages/
- */
+Plugin Name: Simple Shopping Cart
+Version: 5.2.0
+Plugin URI: https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
+Author: Tips and Tricks HQ, Ruhul Amin, mra13
+Author URI: https://www.tipsandtricks-hq.com/
+Description: Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
+Text Domain: wordpress-simple-paypal-shopping-cart
+Domain Path: /languages/
+*/
 
 //Slug - wpsc. Use this slug/prefix for all the functions and classes.
 
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) { //Exit if accessed directly
 	exit;
 }
 
-define( 'WP_CART_VERSION', '5.1.9' );
+define( 'WP_CART_VERSION', '5.2.0' );
 define( 'WP_CART_FOLDER', dirname( plugin_basename( __FILE__ ) ) );
 define( 'WP_CART_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WP_CART_URL', plugins_url( '', __FILE__ ) );

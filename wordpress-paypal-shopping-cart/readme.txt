@@ -1,17 +1,18 @@
-=== WordPress Simple Shopping Cart ===
+=== Simple Shopping Cart ===
 Contributors: Tips and Tricks HQ, Ruhul Amin, wptipsntricks, mbrsolution, mra13
 Donate link: https://www.tipsandtricks-hq.com
-Tags: cart, shopping cart, WordPress shopping cart, WP Simple Shopping Cart, sell, sell products, stripe, shop, e-commerce, wordpress ecommerce, wordpress store, store, PayPal cart widget, sell digital products, sell service, digital downloads, paypal, paypal cart,
+Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wordpress ecommerce, wordpress store, store, sell digital products, sell service, digital downloads, paypal,
 Requires at least: 6.0
+Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 5.1.9
+Stable tag: 5.2.0
 License: GPLv2 or later
 
-Very easy to use Simple WordPress Shopping Cart Plugin. Great for selling products online in one click from your WordPress site.
+Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
 
 == Description ==
 
-The WordPress Simple Shopping Cart plugin enables you to effortlessly add 'Add to Cart' buttons for your products or services directly on your website. This lightweight plugin transforms your WordPress site into a fully functional e-commerce platform, allowing you to sell products and services with ease.
+The Simple Shopping Cart plugin enables you to effortlessly add 'Add to Cart' buttons for your products or services directly on your website. This lightweight plugin transforms your WordPress site into a fully functional e-commerce platform, allowing you to sell products and services with ease.
 
 With this plugin, your customers have the convenience of paying for their selected items using popular payment gateways such as PayPal and/or Stripe.
 
@@ -38,14 +39,14 @@ https://www.youtube.com/watch?v=gPvXac_j_lI
 = Engineered for a Lightweight Solution =
 Designed as a lightweight solution with minimal lines of code and a streamlined set of options, this plugin ensures optimal site performance. Moreover, it is designed to be a low maintenance solution, minimizing the likelihood of frequent site disruptions caused by upgrades. With this plugin, you can enjoy a stable and hassle-free shopping cart functionality while maintaining the overall stability of your website.
 
-WP Simple Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to allow for testing.
+Simple Shopping Cart Plugin, interfaces with the PayPal sandbox and Stripe testmode to allow for testing.
 
 = Documentation =
 For documentation, video tutorials, screenshots, support, and updates, please visit:
 
-[WP Simple Cart Documentation](https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart)
+[Simple Shopping Cart Documentation](https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart)
 or
-[WP Simple Cart Details Page](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768)
+[Simple Shopping Cart Details Page](https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768)
 
 = Features =
 
@@ -228,7 +229,9 @@ Yes.
 Yes, you can configure the Stripe checkout option in the settings menu of the plugin.
 
 == Screenshots ==
-Visit the plugin site at https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768 for screenshots.
+
+Visit the following page for screenshots:
+https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-768
 
 == Upgrade Notice ==
 
@@ -236,8 +239,9 @@ None
 
 == Changelog ==
 
-= WIP =
-- Added tax documentation link to the tax settings page.
+= 5.2.0 =
+- Added a link to the newly introduced tax feature's documentation on the Tax Settings menu for easier access.
+- Renamed the plugin from 'WordPress Simple Shopping Cart' to 'Simple Shopping Cart' to avoid potential trademark issues and better reflect the plugin's core purpose and functionality.
 
 = 5.1.9 =
 - The PHP error related to coupon functionality has been resolved.
