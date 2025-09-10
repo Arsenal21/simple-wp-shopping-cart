@@ -121,7 +121,7 @@ You can translate the plugin using [this documentation](https://www.tipsandtrick
 
 = Developers =
 * If you are a developer and you need some extra hooks or filters for this plugin please let us know.
-* Github repository - https://github.com/Arsenal21/simple-wp-shopping-cart
+* [Github repository](https://github.com/Arsenal21/simple-wp-shopping-cart)
 
 == Usage ==
 #1) To add an 'Add to Cart' button for a product, simply add the following shortcode to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price.
@@ -238,6 +238,9 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+
+= WIP =
+- Github repository link added in the readme file so developers can contribute to the plugin.
 
 = 5.2.0 =
 - Added a link to the newly introduced tax feature's documentation on the Tax Settings menu for easier access.
