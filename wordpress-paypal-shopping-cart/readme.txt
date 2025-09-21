@@ -240,6 +240,7 @@ None
 == Changelog ==
 
 = WIP =
+- PayPal PPCP Checkout related improvements (the custom var data is added to the ipn_data array correctly).
 - Github repository link added in the readme file so developers can contribute to the plugin.
 
 = 5.2.0 =

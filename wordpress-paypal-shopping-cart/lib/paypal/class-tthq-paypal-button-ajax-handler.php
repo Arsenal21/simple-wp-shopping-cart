@@ -232,11 +232,15 @@ class PayPal_Button_Ajax_Hander {
 		// PayPal_Utility_Functions::log_array($txn_data, true);//Debugging purpose.
 		//--
 
-		$data['cart_cpt_id'] = wpsc_get_cart_cpt_id_by_cart_id($cart_id);
+		//Get the Cart CPT ID from the cart ID.
+		$cart_cpt_id = wpsc_get_cart_cpt_id_by_cart_id($cart_id);
+		//Add the Cart CPT ID to the data array. We will need this in the IPN processing functions.
+		$data['cart_cpt_id'] = $cart_cpt_id;
 
 		//Create the IPN data array from the transaction data.
 		//Need to include the following values in the $data array.
-		$data['custom_field'] = get_post_meta( $cart_id, 'wpsc_cart_custom_values', true );//We saved the custom field in the cart CPT.
+		//We saved the custom var data in the cart CPT post meta when the button was rendered.
+		$data['custom_field'] = get_post_meta( $cart_cpt_id, 'wpsc_cart_custom_values', true );
 		
 		$ipn_data = PayPal_Utility_IPN_Related::create_ipn_data_array_from_capture_order_txn_data( $data, $txn_data );
 		$paypal_capture_id = isset( $ipn_data['txn_id'] ) ? $ipn_data['txn_id'] : '';
