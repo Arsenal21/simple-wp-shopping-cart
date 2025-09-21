@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 5.2.0
+Stable tag: 5.2.1
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -239,10 +239,10 @@ None
 
 == Changelog ==
 
-= WIP =
+= 5.2.1 =
 - PayPal PPCP Checkout related improvements (the custom var data is added to the ipn_data array correctly).
 - Github repository link added in the readme file so developers can contribute to the plugin.
-- 'custom_fields' merge tag issue when resending sale notification issue has fixed.
+- Fixed an issue with the {custom_fields} merge tag when using it with the newly added 'resend sale notification' feature.
 
 = 5.2.0 =
 - Added a link to the newly introduced tax feature's documentation on the Tax Settings menu for easier access.
