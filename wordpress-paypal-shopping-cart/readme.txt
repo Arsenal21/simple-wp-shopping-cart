@@ -242,6 +242,7 @@ None
 = WIP =
 - PayPal PPCP Checkout related improvements (the custom var data is added to the ipn_data array correctly).
 - Github repository link added in the readme file so developers can contribute to the plugin.
+- 'custom_fields' merge tag issue when resending sale notification issue has fixed.
 
 = 5.2.0 =
 - Added a link to the newly introduced tax feature's documentation on the Tax Settings menu for easier access.

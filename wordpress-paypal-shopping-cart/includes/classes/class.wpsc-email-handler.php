@@ -6,6 +6,10 @@ class WPSC_Email_Handler {
         $post_obj = get_post($order_id);
         $post_date = get_the_date("Y-m-d", $post_obj);
 
+        $custom_fields = get_post_meta( $order_id, 'wpsc_cart_custom_values', true );
+	    $custom = !empty($custom_fields) ? $custom_fields : '';
+	    $custom = urldecode( $custom );//Decode it just in case it was encoded.
+
         return array(
             "first_name" => get_post_meta($order_id, 'wpsc_first_name', true),
             "last_name" => get_post_meta($order_id, 'wpsc_last_name', true),
@@ -18,6 +22,7 @@ class WPSC_Email_Handler {
             "purchase_amt" => get_post_meta($order_id, 'wpsc_total_amount', true),
             "purchase_date" => $post_date, // The date when order was placed by customer.
             "coupon_code" => get_post_meta($order_id, 'wpsc_applied_coupon', true),
+            "custom" => $custom,
         );
     }
     
