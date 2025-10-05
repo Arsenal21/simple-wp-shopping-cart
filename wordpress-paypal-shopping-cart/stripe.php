@@ -624,7 +624,7 @@ function wpc_handle_stripe_ipn() {
 		$ipn_handler_instance->secret_key = get_option("wpspc_stripe_test_secret_key");
 		$ipn_handler_instance->sandbox_mode = true;
 	}
-	$ipn_handler_instance->debug_log( 'Stripe Class Initiated by ' . $_SERVER['REMOTE_ADDR'], true );
+	$ipn_handler_instance->debug_log( 'Stripe Class Initiated by ' . wpsc_get_user_ip_address(), true );
 	// Validate the IPN
 	if ($ipn_handler_instance->validate_ipn()) {
 		//Process the IPN.
