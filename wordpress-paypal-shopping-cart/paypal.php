@@ -669,7 +669,7 @@ function wpc_handle_paypal_ipn() {
 		$ipn_handler_instance->paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 		$ipn_handler_instance->sandbox_mode = true;
 	}
-	$ipn_handler_instance->debug_log( 'Paypal Class Initiated by ' . $_SERVER['REMOTE_ADDR'], true );
+	$ipn_handler_instance->debug_log( 'Paypal Class Initiated by ' . wpsc_get_user_ip_address(), true );
 	// Validate the IPN
 	if ($ipn_handler_instance->validate_ipn()) {
 		$ipn_handler_instance->debug_log( 'Creating product Information to send.', true );

@@ -31,7 +31,9 @@ class WPSC_Email_Handler {
         
         $values = array_values($data);
         
-        return stripslashes(str_replace($tags, $values, $text));
+        $text = stripslashes(str_replace($tags, $values, $text));
+
+        return $text;
     }
 
     public static function create_tags($key){
@@ -83,6 +85,10 @@ class WPSC_Email_Handler {
 	public static function send_manual_checkout_notification_emails( $order_id ) {
 		$order_data = WPSC_Email_Handler::process_order_data_for_email($order_id);
 
+		$wpsc_cart = WPSC_Cart::get_instance();
+		$wpsc_cart->set_cart_cpt_id($order_id);
+		$cart_items = $wpsc_cart->get_items();
+
 		$buyer_email = isset($order_data['payer_email']) ? sanitize_email($order_data['payer_email']) : '';
 
 		$send_buyer_payment_instruction_email = get_option( 'wpsc_send_buyer_payment_instruction_email' );
@@ -94,6 +100,9 @@ class WPSC_Email_Handler {
 			$body = get_option( 'wpsc_buyer_payment_instruction_email_body', '' );
 			$body = WPSC_Email_Handler::apply_dynamic_tags( $body, $order_data );
 			// wpsc_log_payment_debug($body, true);
+
+			wpsc_log_payment_debug( 'Applying filter - wpsc_mc_buyer_payment_instruction_email_body', true );
+			$body = apply_filters( 'wpsc_mc_buyer_payment_instruction_email_body', $body, $order_data, $cart_items );
 
 			$headers = array();
 			$headers[] = 'From: ' . self::get_from_email() . "\r\n";
@@ -122,6 +131,9 @@ class WPSC_Email_Handler {
 
 			$seller_email_body = get_option( 'wpsc_seller_manual_checkout_notification_email_body', '' );
 			$seller_email_body = WPSC_Email_Handler::apply_dynamic_tags( $seller_email_body, $order_data );
+
+	        wpsc_log_payment_debug( 'Applying filter - wpsc_mc_seller_checkout_notification_email_body', true );
+	        $seller_email_body = apply_filters( 'wpsc_mc_seller_checkout_notification_email_body', $seller_email_body, $order_data, $cart_items );
 
 	        $headers = array();
 	        $headers[] = 'From: ' . self::get_from_email() . "\r\n";

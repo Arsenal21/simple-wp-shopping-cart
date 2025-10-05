@@ -558,7 +558,8 @@ function wp_cart_add_custom_field() {
 	$value = $wspsc_cart->get_cart_id();
 	$custom_field_val = wpc_append_values_to_custom_field( $name, $value );
 
-	$clientip = $_SERVER['REMOTE_ADDR'];
+	// $clientip = $_SERVER['REMOTE_ADDR'];
+	$clientip = wpsc_get_user_ip_address();
 	if ( ! empty( $clientip ) ) {
 		$name = 'ip';
 		$value = $clientip;
