@@ -87,10 +87,7 @@ class WPSC_Manual_Checkout {
 		$this->data['txn_id'] = uniqid('manual_');
 		$this->data['payment_amount'] = $cart_obj->get_grand_total_formatted();
 
-		$this->data['ip_address'] = $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
-		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$this->data['ip_address'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
+		$this->data['ip_address'] = wpsc_get_user_ip_address();
 
 		$this->data['address'] = '';
 

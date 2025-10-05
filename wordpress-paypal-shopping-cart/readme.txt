@@ -238,6 +238,9 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- IP address collection improved.
+- 'custom_fields' email merge tags support added for manual checkout instruction emails by adding filter hooks.
 
 = 5.2.1 =
 - PayPal PPCP Checkout related improvements (the custom var data is added to the ipn_data array correctly).
