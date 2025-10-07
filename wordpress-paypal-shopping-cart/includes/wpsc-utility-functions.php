@@ -463,7 +463,7 @@ function wpsc_get_user_ip_address( $ignore_private_and_reserved = false ) {
 		'REMOTE_ADDR' //Fallback (might be proxy IP)
 	);
 	//Trigger the filter hook to allow other plugins to modify the header order.
-	$header_order = apply_filters('_ip_address_header_order', $header_order);
+	$header_order = apply_filters('wpsc_ip_address_header_order', $header_order);
 
 	//Loop through the headers and check for a valid IP address
 	foreach ( $header_order as $key ) {
@@ -473,10 +473,15 @@ function wpsc_get_user_ip_address( $ignore_private_and_reserved = false ) {
 				$ip = trim( $ip ); // just to be safe
 
 				if ( filter_var( $ip, FILTER_VALIDATE_IP, $flags ) !== false ) {
+                    //Filter hook to allow modification of the detected IP address.
+                    $ip = apply_filters('wpsc_get_user_ip_address', $ip);
 					return $ip;
 				}
 			}
 		}
 	}
-	return null;
+
+    //Couldn't find a valid IP address.
+    $ip = apply_filters('wpsc_get_user_ip_address', '');
+	return $ip;
 }

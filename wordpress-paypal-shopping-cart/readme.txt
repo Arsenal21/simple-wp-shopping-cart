@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 5.2.1
+Stable tag: 5.2.2
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -238,9 +238,10 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
-= WIP =
-- IP address collection improved.
-- 'custom_fields' email merge tags support added for manual checkout instruction emails by adding filter hooks.
+
+= 5.2.2 =
+- Added a new hook for the IP address so it can be customized if needed. The new filter hook is 'wpsc_get_user_ip_address'.
+- The 'custom_fields' email merge tags support added for manual checkout instruction emails.
 
 = 5.2.1 =
 - PayPal PPCP Checkout related improvements (the custom var data is added to the ipn_data array correctly).
