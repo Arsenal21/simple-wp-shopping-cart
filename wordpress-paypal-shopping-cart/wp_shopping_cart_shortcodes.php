@@ -58,12 +58,14 @@ function wpsc_cart_button_handler($atts){
 
     // Check if the price is empty
 	if(empty($price)){
-            return '<div style="color:red;">'.(__("Error! You must specify a price for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
+        return '<div style="color:red;">'.(__("Error! You must specify a price for your product in the shortcode.", "wordpress-simple-paypal-shopping-cart")).'</div>';
 	}
     $price = wpsc_strip_char_from_price_amount($price);
     $shipping = wpsc_strip_char_from_price_amount($shipping);
 
-	return print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
+	$output = print_wp_cart_button_for_product($name, $price, $shipping, $var1, $var2, $var3, $atts);
+
+    return wpsc_wrap_product_output($output);
 }
 
 function wpsc_cart_display_product_handler($atts)
@@ -156,7 +158,7 @@ function wpsc_cart_display_product_handler($atts)
 	<?php
 	$display_code = ob_get_clean();
 
-    return $display_code;
+    return wpsc_wrap_product_output($display_code);
 }
 
 function wpsc_compact_cart_handler($args)

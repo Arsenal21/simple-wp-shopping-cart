@@ -34,7 +34,7 @@ var wpscTaxRegionErrorDivSelector = '.wpsc-tax-region-error';
 var wpscTaxRegionInputs = document.querySelectorAll(wpscTaxRegionInputSelector);
 var wpscTaxRegionInputElementsMeta = {};
 
-document.addEventListener('DOMContentLoaded', function () {
+function wpsc_cartInit () {
 
 	const wpscPaypalStandardCheckoutForms = document.querySelectorAll(wpscPaypalStandardCheckoutFormSelector);
 	// Check PayPal standard checkout form submission.
@@ -93,7 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 	}
-})
+}
+
+document.addEventListener('DOMContentLoaded', wpsc_cartInit);
+document.addEventListener('wpsc_after_render_cart_by_ajax', wpsc_cartInit);
 
 /**
  * Check whether the terms and conditions is checked or not.

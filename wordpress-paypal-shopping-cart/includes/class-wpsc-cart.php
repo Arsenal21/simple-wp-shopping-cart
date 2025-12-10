@@ -243,7 +243,9 @@ class WPSC_Cart {
 
 	public function delete_cart_and_related_data( $cart_cpt_id ) {
 		// Delete the corresponding order post.
-		wp_delete_post( $cart_cpt_id );
+		if (!empty($cart_cpt_id)){
+			wp_delete_post( $cart_cpt_id );
+		}
 		// Delete the cart and related data.
 		$this->clear_cart_action_msg();
 		$this->items = array();

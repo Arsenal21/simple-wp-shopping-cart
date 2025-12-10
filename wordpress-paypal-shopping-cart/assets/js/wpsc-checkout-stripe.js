@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
+function wpscStripeInit(){
     jQuery(".wpsc-stripe-payment-form").on("submit",function(e){
         e.preventDefault();
     });    
@@ -86,4 +86,13 @@ jQuery(document).ready(function(){
             return false;
         });
     });
+}
+
+jQuery(document).ready(wpscStripeInit);
+
+/**
+ * This is triggered when the cart is created by ajax add to cart.
+ */
+document.addEventListener('wpsc_after_render_cart_by_ajax', function (e) {
+    wpscStripeInit();
 });

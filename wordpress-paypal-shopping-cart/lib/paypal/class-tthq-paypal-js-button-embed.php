@@ -119,6 +119,12 @@ class PayPal_JS_Button_Embed {
 	 * The button's JS code needs to be executed after the SDK is loaded. Check for '<prefix>_paypal_sdk_loaded' event.
 	 */
 	public function load_paypal_sdk() {
+		if (defined('WPSC_PAYPAL_SDK_LOADED')){
+		    return;
+        }
+
+        define('WPSC_PAYPAL_SDK_LOADED', true);
+
 		$args = $this->settings_args;
 		$sdk_args = $this->generate_paypal_js_sdk_args($args);
 

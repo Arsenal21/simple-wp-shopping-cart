@@ -1,36 +1,6 @@
 /* global wpsc_ajaxUrl, wpscCheckoutManualMsg */
 
-document.addEventListener('DOMContentLoaded', function () {
-    const wpscManualCheckoutProceedBtns = document.querySelectorAll('.wpsc-manual-payment-proceed-to-checkout-btn');
-
-    wpscManualCheckoutProceedBtns?.forEach(function (proceedBtn) {
-
-        const paymentFormWrap = wpsc_getClosestElement(proceedBtn, '.wpsc-manual-payment-form-wrap');
-        const paymentForm = paymentFormWrap?.querySelector('.wpsc-manual-payment-form');
-        const paymentFormSubmitBtn = paymentForm?.querySelector('.wpsc-manual-payment-form-submit');
-
-        // Initiate WpscManualCheckout class.
-        const manualCheckout = new WpscManualCheckout(paymentForm);
-
-        // If visitor click the 'Proceed to Manual Checkout' button, then show the manual checkout form.
-        proceedBtn.addEventListener('click', () => {
-            if (manualCheckout.toggleForm()) {
-                proceedBtn.style.display = 'none';
-            }
-        })
-
-        // If visitor click the 'Cancel' button of checkout form, then reset and hide the form.
-        paymentForm?.addEventListener('reset', () => {
-            manualCheckout.toggleForm();
-            proceedBtn.style.display = 'inline';
-        })
-
-        paymentFormSubmitBtn?.addEventListener('click', manualCheckout.onClick);
-    })
-
-})
-
-class WpscManualCheckout {
+class WPSCManualCheckout {
 
     validationRules = {
         'input.wpsc-manual-payment-form-fname': 'required',
@@ -40,8 +10,31 @@ class WpscManualCheckout {
         'input.wpsc-manual-payment-form-state': 'required',
     };
 
-    constructor(paymentForm) {
-        this.paymentForm = paymentForm;
+    constructor(mcSection) {
+        this.proceedBtn = mcSection.querySelector('.wpsc-manual-payment-proceed-to-checkout-btn');
+
+        this.paymentFormWrap = wpsc_getClosestElement(this.proceedBtn, '.wpsc-manual-payment-form-wrap');
+        this.paymentForm = this.paymentFormWrap?.querySelector('.wpsc-manual-payment-form');
+        this.paymentFormSubmitBtn = this.paymentForm?.querySelector('.wpsc-manual-payment-form-submit');
+
+        // If visitor click the 'Proceed to Manual Checkout' button, then show the manual checkout form.
+        this.proceedBtn.addEventListener('click', this.onProceed);
+
+        // If visitor click the 'Cancel' button of checkout form, then reset and hide the form.
+        this.paymentForm?.addEventListener('reset', this.onReset);
+
+        this.paymentFormSubmitBtn?.addEventListener('click', this.onClick);
+    }
+
+    onProceed = (e) => {
+        if (this.toggleForm()) {
+            this.proceedBtn.style.display = 'none';
+        }
+    }
+
+    onReset = (e) => {
+        this.toggleForm();
+        this.proceedBtn.style.display = 'inline';
     }
 
     /**
@@ -240,3 +233,25 @@ class WpscManualCheckout {
     }
 
 }
+
+/**
+ * This is for initial page load.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    const manualCheckoutSections = document.querySelectorAll('.wpsc-manual-checkout-section');
+
+    manualCheckoutSections?.forEach( (mcSection) => {
+        new WPSCManualCheckout(mcSection);
+    })
+});
+
+/**
+ * This is triggered when the cart is created by ajax add to cart.
+ */
+document.addEventListener('wpsc_after_render_cart_by_ajax', function (e) {
+    const {cart} = e.detail;
+
+    const mcSection = cart.querySelector('.wpsc-manual-checkout-section');
+
+    new WPSCManualCheckout(mcSection);
+});
