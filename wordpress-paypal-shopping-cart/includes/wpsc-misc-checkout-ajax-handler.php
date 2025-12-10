@@ -217,6 +217,13 @@ function wpsc_stripe_create_checkout_session() {
 			);
 		}
 
+		$auto_send_invoice = get_option('wpsc_auto_send_receipt_and_invoices', false);
+		if (!empty($auto_send_invoice)){
+			$opts['invoice_creation'] = array(
+				'enabled' => true
+			);
+		}
+
 		$opts = apply_filters( 'wpspsc_stripe_sca_session_opts', $opts, $cart_id );// TODO: Old hook. Need to remove this.
 		$opts = apply_filters( 'wpsc_stripe_sca_session_opts', $opts, $cart_id );
 

@@ -239,6 +239,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- New feature to auto send invoices to customer.
 
 = 5.2.3 =
 - Added a new feature to enable AJAX add to cart buttons. [view documentation](https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons)
