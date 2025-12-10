@@ -2,9 +2,17 @@
 
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 
-function print_wp_shopping_cart( $args = array() ) {
+function print_wp_shopping_cart( $args = array(), $show_always = false ) {
 	$wspsc_cart = WPSC_Cart::get_instance();
 	$wspsc_cart->calculate_cart_totals_and_postage();
+
+    do_action('wpsc_before_shopping_cart_render', $args, $wspsc_cart);
+
+    $is_cart_empty = empty($wspsc_cart->cart_not_empty());
+
+    if ($is_cart_empty && empty($show_always) ) {
+        return '';
+    }
 
 	//Get the on page cart div ID. This will increment the count so we start from 1.
 	$on_page_cart_div_id = $wspsc_cart->get_next_on_page_cart_div_id();
@@ -14,7 +22,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	$output = '';
 
 	//Check and handle the cart empty case
-	if ( ! $wspsc_cart->cart_not_empty() ) {
+	if ( $is_cart_empty ) {
 		$empty_cart_text = get_option( 'wp_cart_empty_text' );
 		if ( ! empty( $empty_cart_text ) ) {
 			$output .= '<div class="wp_cart_empty_cart_section">';
@@ -112,14 +120,16 @@ function print_wp_shopping_cart( $args = array() ) {
 	if ( $wspsc_cart->get_items() ) {
 		ob_start();
 		?>
-        <tr class="wspsc_cart_item_row">
-            <th class="wspsc_cart_item_name_th"><?php _e( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
-			<?php if($show_quantity_column) { ?>
-                <th class="wspsc_cart_qty_th"><?php _e( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
-			<?php } ?>
-            <th class="wspsc_cart_price_th"><?php _e( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
-            <th class="wspsc_remove_item_th"></th>
-        </tr>
+        <thead>
+            <tr class="wspsc_cart_item_row">
+                <th class="wspsc_cart_item_name_th"><?php _e( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+                <?php if($show_quantity_column) { ?>
+                    <th class="wspsc_cart_qty_th"><?php _e( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+                <?php } ?>
+                <th class="wspsc_cart_price_th"><?php _e( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+                <th class="wspsc_remove_item_th"></th>
+            </tr>
+        </thead>
 		<?php
 		$output .= ob_get_clean();
 
@@ -134,6 +144,8 @@ function print_wp_shopping_cart( $args = array() ) {
 
 		$item_tpl = "{name: '%s', quantity: '%d', price: '%s', currency: '" . $paypal_currency . "'}";
 		$items_list = '';
+
+        $output .= '<tbody>';
 
 		foreach ( $wspsc_cart->get_items() as $item ) {
 			//Let's form JS array of items for Smart Checkout
@@ -208,6 +220,7 @@ function print_wp_shopping_cart( $args = array() ) {
 	        ";
 			$count++;
 		}
+
 		$items_list = rtrim( $items_list, ',' );
 		if ( ! get_option( 'wp_shopping_cart_use_profile_shipping' ) ) {
 			//Not using profile based shipping
@@ -230,11 +243,8 @@ function print_wp_shopping_cart( $args = array() ) {
 				$form .= '<input type="hidden" name="no_shipping" value="1" />';
 			}
 		}
-	}
 
-	$count--;
-
-	if ( $count ) {
+	    $count--;
 
 		wp_enqueue_script( "wpsc-checkout-cart-script" );
 
@@ -279,6 +289,10 @@ function print_wp_shopping_cart( $args = array() ) {
         }
 
 		$output .= '</tr>';
+
+		$output .= '</tbody>';
+
+		$output .= '<tfoot>';
 
 		//Display the cart action message (if any)
 		$wpsc_cart_action_msg = $wspsc_cart->get_cart_action_msg();
@@ -728,7 +742,10 @@ function print_wp_shopping_cart( $args = array() ) {
         }
 
 		$output .= '</td></input>';
+
+		$output .= '</tfoot>';
 	}
+
 	$output .= '</table></div>';
 	$output = apply_filters( 'wpspsc_after_cart_output', $output ); // TODO: Old hook. Need to remove this.
 	$output = apply_filters( 'wpsc_after_cart_output', $output );
@@ -931,4 +948,12 @@ function wpsc_process_region_opts(&$region_options, $selected ){
 	sort($processed_options);
 
 	return $processed_options;
+}
+
+function wpsc_wrap_cart_output($cart_html) {
+	$output = '<div class="wpsc_shopping_cart_container">';
+	$output .= $cart_html;
+	$output .= '</div>';
+
+	return $output;
 }

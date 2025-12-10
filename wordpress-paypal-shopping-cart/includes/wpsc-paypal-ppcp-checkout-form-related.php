@@ -109,7 +109,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
         var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
         var wpscTaxRegionEnabled = <?php echo $is_tax_by_region_enabled ? 'true' : 'false' ?>;
 
-        document.addEventListener( "wpsc_paypal_sdk_loaded", function() { 
+        function wpsc_render_paypal_button(btn_container){
             //Anything that goes here will only be executed after the PayPal SDK is loaded.
             console.log('PayPal JS SDK is loaded.');
 
@@ -149,7 +149,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 onCancel: onCancelHandler,
 
             })
-            .render('#<?php echo esc_js($on_page_embed_button_id); ?>')
+            .render(btn_container)
             .catch((err) => {
                 console.error('PayPal Buttons failed to render');
             });
@@ -432,7 +432,24 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 //Return to the parent page which the button does by default.
             }
 
+        }
+
+        document.addEventListener( "wpsc_paypal_sdk_loaded", function(e) {
+            const ppcp_btn_container = document.getElementById('<?php echo esc_js($on_page_embed_button_id); ?>');
+            wpsc_render_paypal_button(ppcp_btn_container);
         });
+
+        document.addEventListener('wpsc_after_cart_shortcode_script_eval', function (e) {
+            const on_page_embed_button_id = '<?php echo esc_js($on_page_embed_button_id); ?>';
+
+            if (! window[on_page_embed_button_id+'_rendered'] ){ // Prevent duplicate ppcp button render for same cart.
+                const ppcp_btn_container = document.getElementById(on_page_embed_button_id);
+
+                wpsc_render_paypal_button(ppcp_btn_container);
+
+                window[on_page_embed_button_id+'_rendered'] = true; // Flag for duplicate render prevention.
+            }
+        })
 
         /**
          * Checks if any input element has required attribute with empty value

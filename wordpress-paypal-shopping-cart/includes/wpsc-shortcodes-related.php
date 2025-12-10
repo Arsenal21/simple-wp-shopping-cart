@@ -1,6 +1,9 @@
 <?php 
 
 function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 = '', $var2 = '', $var3 = '', $atts = array() ) {
+
+	wp_enqueue_script( 'wpsc-product-sc-script' );
+
 	$addcart = get_option( 'addToCartButtonName' );
 	if ( ! $addcart || ( $addcart == '' ) ) {
 		$addcart = __( "Add to Cart", "wordpress-simple-paypal-shopping-cart" );
@@ -150,6 +153,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		update_option( 'wspsc_private_key_one', $p_key );
 	}
 
+	$replacement .= '<div class="wpsc_add_cart_response_div"></div>';
 	$replacement .= '</form>';
 
 	// Prepare product data to save in dynamic products.
@@ -180,4 +184,12 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 
 	$replacement .= '</div>';
 	return $replacement;
+}
+
+function wpsc_wrap_product_output($product_html) {
+	$output = '<div class="wpsc_product">';
+	$output .= $product_html;
+	$output .= '</div>';
+
+	return $output;
 }

@@ -58,6 +58,7 @@ function wpsc_show_general_settings_page ()
         update_option('wp_use_aff_platform', (isset($_POST['wp_use_aff_platform']) && $_POST['wp_use_aff_platform']!='') ? 'checked="checked"':'' );
         update_option('shopping_cart_anchor', (isset($_POST['shopping_cart_anchor']) && $_POST['shopping_cart_anchor']!='') ? 'checked="checked"':'' );
         update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
+        update_option('wpsc_enable_ajax_add_to_cart', (isset($_POST['wpsc_enable_ajax_add_to_cart']) && !empty($_POST['wpsc_enable_ajax_add_to_cart'])) ? 'checked="checked"':'' );
 
         update_option('wp_shopping_cart_enable_sandbox', (isset($_POST['wp_shopping_cart_enable_sandbox']) && $_POST['wp_shopping_cart_enable_sandbox']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_enable_debug', (isset($_POST['wp_shopping_cart_enable_debug']) && $_POST['wp_shopping_cart_enable_debug']!='') ? 'checked="checked"':'' );
@@ -151,6 +152,11 @@ function wpsc_show_general_settings_page ()
     $wspsc_disable_price_check_add_cart = '';
     if (get_option('wspsc_disable_price_check_add_cart')){
         $wspsc_disable_price_check_add_cart = 'checked="checked"';
+    }
+
+    $wpsc_enable_ajax_add_to_cart = '';
+    if (get_option('wpsc_enable_ajax_add_to_cart')){
+        $wpsc_enable_ajax_add_to_cart = 'checked="checked"';
     }
 
     $wpsc_show_empty_cart_option = '';
@@ -406,6 +412,12 @@ echo '<tr valign="top">
 <th scope="row">'.(__("Disable Price Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="checkbox" name="wspsc_disable_price_check_add_cart" value="1" '.$wspsc_disable_price_check_add_cart.' />
 <br />'.(__("Using complex characters for the product name can trigger the error: The price field may have been tampered. Security check failed. This option will stop that check and remove the error.", "wordpress-simple-paypal-shopping-cart")).'</td>
+</tr>
+
+<tr valign="top">
+    <th scope="row">'.__("Enable Ajax on Add to Cart Buttons", "wordpress-simple-paypal-shopping-cart").'</th>
+    <td><input type="checkbox" name="wpsc_enable_ajax_add_to_cart" value="1" '.$wpsc_enable_ajax_add_to_cart.' />
+    <br />'.__("Check this option if you want to enable ajax effect on your Add to Cart buttons. This allows your customers to add products to the cart without page refresh.", "wordpress-simple-paypal-shopping-cart").'</td>
 </tr>
 
 <tr valign="top">

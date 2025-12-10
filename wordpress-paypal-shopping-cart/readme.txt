@@ -238,6 +238,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- A new feature added to add a product to the cart by ajax.
 
 = 5.2.2 =
 - Added a new hook for the IP address so it can be customized if needed. The new filter hook is 'wpsc_get_user_ip_address'.
