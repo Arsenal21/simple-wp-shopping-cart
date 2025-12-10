@@ -415,9 +415,10 @@ echo '<tr valign="top">
 </tr>
 
 <tr valign="top">
-    <th scope="row">'.__("Enable Ajax on Add to Cart Buttons", "wordpress-simple-paypal-shopping-cart").'</th>
+    <th scope="row">'.__("Enable AJAX add to cart buttons", "wordpress-simple-paypal-shopping-cart").'</th>
     <td><input type="checkbox" name="wpsc_enable_ajax_add_to_cart" value="1" '.$wpsc_enable_ajax_add_to_cart.' />
-    <br />'.__("Check this option if you want to enable ajax effect on your Add to Cart buttons. This allows your customers to add products to the cart without page refresh.", "wordpress-simple-paypal-shopping-cart").'</td>
+    <br />'.__("When enabled, 'Add to Cart' buttons will add products to the cart without reloading the entire page. Customers will see an instant confirmation and the cart updates automatically. ", "wordpress-simple-paypal-shopping-cart")
+    . '<a href="https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons" target="_blank"> ' . __("Learn more", "wordpress-simple-paypal-shopping-cart") . '</a>.</td>
 </tr>
 
 <tr valign="top">

@@ -2483,3 +2483,7 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://www.tipsandtricks-hq.com/"
 msgstr ""
+
+#. Item added to cart success message.
+msgid "Added to cart!"
+msgstr ""
