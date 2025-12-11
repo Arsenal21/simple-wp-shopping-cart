@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 5.2.3
+Stable tag: 5.2.4
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -239,9 +239,10 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
-= WIP =
-- New feature to auto send invoices to customer.
-- An issue when image is used for add to cart button has fixed.
+
+= 5.2.4 =
+- Added a new feature to auto send invoices to customers for Stripe checkout.
+- Fixed an issue with the new AJAX add to cart feature when a button image is used.
 
 = 5.2.3 =
 - Added a new feature to enable AJAX add to cart buttons. [view documentation](https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons)
