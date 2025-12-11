@@ -58,8 +58,8 @@ cursor: pointer;
 opacity:0.7;
 }
 
-.wp_cart_button:hover{
-opacity:0.7;
+.wp_cart_button:disabled, .wp_cart_button:hover{
+    opacity:0.7;
 }
 .wp_cart_button_wrapper input{
 margin: 0;

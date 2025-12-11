@@ -63,6 +63,12 @@ class WPSCAddToCartForm {
 
     constructor(form) {
         this.form = form;
+        
+        this.submitBtn = form.querySelector('input[type="submit"]');
+        if (!this.submitBtn) {
+            // Its an image type btn.
+            this.submitBtn = form.querySelector('input[type="image"].wp_cart_button');
+        }
 
         this.form.addEventListener('submit', this.onSubmit);
 
@@ -83,10 +89,8 @@ class WPSCAddToCartForm {
 
     onSubmit = async (e) => {
         e.preventDefault();
-
-        let addToCartFormBtn = this.form.querySelector('.wspsc_add_cart_submit');
-
-        addToCartFormBtn.disabled = true;
+        
+        this.disableSubmitBtn(true);
 
         const formData = new FormData(this.form);
 
@@ -146,7 +150,13 @@ class WPSCAddToCartForm {
             alert(error.message);
             console.log(error.message);
         } finally {
-            addToCartFormBtn.disabled = false;
+            this.disableSubmitBtn(false);
+        }
+    }
+
+    disableSubmitBtn( state ){
+        if(this.submitBtn){
+            this.submitBtn.disabled = Boolean(state);
         }
     }
 

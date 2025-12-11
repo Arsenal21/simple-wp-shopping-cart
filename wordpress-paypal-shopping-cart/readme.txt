@@ -241,6 +241,7 @@ None
 == Changelog ==
 = WIP =
 - New feature to auto send invoices to customer.
+- An issue when image is used for add to cart button has fixed.
 
 = 5.2.3 =
 - Added a new feature to enable AJAX add to cart buttons. [view documentation](https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons)
