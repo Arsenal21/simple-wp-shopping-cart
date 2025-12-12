@@ -21,12 +21,6 @@ function wp_cart_init_handler()
             wpc_handle_paypal_ipn();
             exit;
         }
-        else if(isset($_REQUEST["simple_cart_stripe_ipn"]))
-        {
-            include_once( WP_CART_PATH . 'stripe.php');
-            wpc_handle_stripe_ipn();
-            exit;
-        }
     }
     if (is_admin()) {
         add_action('admin_init', 'wp_cart_add_tinymce_button');
@@ -41,6 +35,15 @@ function wp_cart_init_handler()
 	}
 
     }
+}
+
+function wpsc_handle_wp_tasks() {
+    if(isset($_REQUEST["simple_cart_stripe_ipn"]))
+	{
+		include_once( WP_CART_PATH . 'stripe.php');
+		wpc_handle_stripe_ipn();
+        exit;
+	}
 }
 
 /*
