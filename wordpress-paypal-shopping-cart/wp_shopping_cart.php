@@ -850,3 +850,5 @@ add_action( 'wp_head', 'wp_cart_add_read_form_javascript' );
 add_action( 'wp_enqueue_scripts', 'wpsc_front_side_enqueue_scripts' );
 add_action( 'admin_enqueue_scripts', 'wpsc_admin_side_enqueue_scripts' );
 add_action( 'admin_print_styles', 'wpsc_admin_side_styles' );
+
+add_action( 'wp', 'wpsc_handle_wp_tasks' );

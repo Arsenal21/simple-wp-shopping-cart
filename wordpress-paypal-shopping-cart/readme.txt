@@ -239,6 +239,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- ref_id error after stripe checkout issue fixed.
 
 = 5.2.4 =
 - Added a new feature to auto send invoices to customers for Stripe checkout.
