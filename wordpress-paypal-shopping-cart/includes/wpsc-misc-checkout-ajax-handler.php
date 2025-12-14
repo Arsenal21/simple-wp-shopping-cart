@@ -70,10 +70,10 @@ function wpsc_stripe_create_checkout_session() {
 		$symbol = __( '$', 'wordpress-simple-paypal-shopping-cart' );
 	}
 
-	// $client_reference_id = $cart_id; // TODO: old code. need to remove
-	$client_reference_id = "{CHECKOUT_SESSION_ID}";
+	$client_reference_id = $cart_id; // TODO: old code. need to remove
+	$csid = "{CHECKOUT_SESSION_ID}";  // NOTE: Stripe replaces the {CHECKOUT_SESSION_ID} with actual session id before redirecting to this url.
 
-	$query_args = array( 'simple_cart_stripe_ipn' => '1', 'ref_id' => $client_reference_id );  // NOTE: Stripe replaces the {CHECKOUT_SESSION_ID} with actual session id before redirecting to this url.
+	$query_args = array( 'simple_cart_stripe_ipn' => '1', 'ref_id' => $client_reference_id, 'csid' => $csid );
 	$stripe_ipn_url = add_query_arg( $query_args, WP_CART_SITE_URL );
 
 	wpsc_load_stripe_lib();
@@ -130,8 +130,6 @@ function wpsc_stripe_create_checkout_session() {
 		if ( sizeof( $custom_metadata ) > 0 ) {
 			$opts["metadata"] = $custom_metadata;
 		}
-
-		$opts['metadata']['wp_cart_id'] = $cart_id;
 
 		// Check and add tax information.
 		$tax_rate = null;

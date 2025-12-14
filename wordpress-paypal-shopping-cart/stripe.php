@@ -16,7 +16,7 @@ class stripe_ipn_handler {
 
     private $cart_id = 0;
 
-	private $ref_id = '';
+	private $csid = '';
 
 	function __construct() {
 		$this->secret_key = get_option("wpspc_stripe_live_secret_key");
@@ -305,12 +305,11 @@ class stripe_ipn_handler {
 		return true;
 	}
 
-
 	function validate_ipn() {
 
         // $this->order_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0; // TODO: old code. need to remove
-		// $this->cart_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0; // TODO: old code. need to remove
-		$this->ref_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0;
+		$this->cart_id = isset($_GET["ref_id"]) ? sanitize_text_field($_GET["ref_id"]): 0;
+		$this->csid = isset($_GET["csid"]) ? sanitize_text_field($_GET["csid"]): 0;
 
 		//IPN validation check
 		if ($this->validate_ipn_using_client_reference_id()) {			
@@ -335,8 +334,6 @@ class stripe_ipn_handler {
 				$this->debug_log( $error_msg, false );
 				wp_die(esc_html($error_msg));				
 			}
-
-			$this->cart_id = isset($sess->metadata['wp_cart_id']) ? $sess->metadata['wp_cart_id'] : '';
 
             //ref_id matched
             $pi_id = $sess->payment_intent;
@@ -396,7 +393,7 @@ class stripe_ipn_handler {
 			//	}
 			//}
 
-			$checkout_session_id = $this->ref_id;
+			$checkout_session_id = $this->csid;
 			$sess = \Stripe\Checkout\Session::retrieve($checkout_session_id);
 
 			if (!empty($sess)){
