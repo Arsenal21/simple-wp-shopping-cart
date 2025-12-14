@@ -16,6 +16,8 @@ class stripe_ipn_handler {
 
     private $cart_id = 0;
 
+	private $csid = '';
+
 	function __construct() {
 		$this->secret_key = get_option("wpspc_stripe_live_secret_key");
 		$this->last_error = '';
@@ -303,11 +305,11 @@ class stripe_ipn_handler {
 		return true;
 	}
 
-
 	function validate_ipn() {
 
         // $this->order_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0; // TODO: old code. need to remove
-		$this->cart_id = isset($_GET["ref_id"])?$_GET["ref_id"]:0;
+		$this->cart_id = isset($_GET["ref_id"]) ? sanitize_text_field($_GET["ref_id"]): 0;
+		$this->csid = isset($_GET["csid"]) ? sanitize_text_field($_GET["csid"]): 0;
 
 		//IPN validation check
 		if ($this->validate_ipn_using_client_reference_id()) {			
@@ -324,24 +326,7 @@ class stripe_ipn_handler {
         try {
             \Stripe\Stripe::setApiKey( $this->secret_key );
 
-            $events = \Stripe\Event::all(
-				array(
-					'type'    => 'checkout.session.completed',
-					'created' => array(
-						'gte' => time() - 60 * 60,
-					),
-				)
-			);
-
-            $sess = false;
-            
-            foreach ( $events->autoPagingIterator() as $event ) {
-				$session = $event->data->object;
-				if ( isset( $session->client_reference_id ) && $session->client_reference_id === $this->cart_id ) {
-					$sess = $session;
-					break;
-				}
-			}
+            $sess = $this->retrieve_checkout_session_object();
 
             if ( false === $sess ) {
 				// Can't find session.
@@ -378,6 +363,53 @@ class stripe_ipn_handler {
 		
         $this->debug_log( 'IPN successfully verified.', true );
 		return true;
+	}
+
+	/**
+	 * Retrieves the stripe checkout session.
+	 *
+	 * It might fail in the first attempt if there is any race condition.
+	 * So to prevent that, this method contains a recursion mechanism with max_attempt count.
+	 */
+	private function retrieve_checkout_session_object($max_attempt = 2) {
+		$sess = false;
+
+		if ($max_attempt > 0){
+			// TODO: old code. need to remove
+			//$events = \Stripe\Event::all(
+			//	array(
+			//		'type'    => 'checkout.session.completed',
+			//		'created' => array(
+			//			'gte' => time() - 60 * 60,
+			//		),
+			//	)
+			//);
+			//
+			//foreach ( $events->autoPagingIterator() as $event ) {
+			//	$session = $event->data->object;
+			//	if ( isset( $session->client_reference_id ) && $session->client_reference_id === $this->cart_id ) {
+			//		$sess = $session;
+			//		break;
+			//	}
+			//}
+
+			$checkout_session_id = $this->csid;
+			$sess = \Stripe\Checkout\Session::retrieve($checkout_session_id);
+
+			if (!empty($sess)){
+				return $sess;
+			}
+
+			$max_attempt--;
+
+			wpsc_log_payment_debug(sprintf('The checkout session could not be retrieved. Attempts left to retrieve session: %d', $max_attempt), false);
+
+			sleep(2);
+
+			return $this->retrieve_checkout_session_object($max_attempt);
+		}
+
+		return $sess;
 	}
 
 	function create_ipn_from_stripe( $pi_object, $additional_data = array() ) {
@@ -603,6 +635,9 @@ class stripe_ipn_handler {
 		wpsc_log_debug_array($array_to_write, $success, $end);
 	}
 
+	public function get_cart_id() {
+		return $this->cart_id;
+	}
 }
 
 // Start of Stripe IPN handling (script execution)
@@ -642,7 +677,7 @@ function wpc_handle_stripe_ipn() {
 		$return_url = WP_CART_SITE_URL . '/';		
 	}	
 
-	$cart_id = isset($_GET["ref_id"])?$_GET["ref_id"]:'';
+	$cart_id = $ipn_handler_instance->get_cart_id();
 	$redirect_url = add_query_arg( 'cart_id', $cart_id, $return_url );
 	$redirect_url = add_query_arg('_wpnonce', wp_create_nonce('wpsc_thank_you_nonce_action'), $redirect_url);
 	if ( ! headers_sent() ) {
