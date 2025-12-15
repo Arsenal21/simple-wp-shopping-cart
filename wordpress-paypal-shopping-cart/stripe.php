@@ -371,43 +371,36 @@ class stripe_ipn_handler {
 	 * It might fail in the first attempt if there is any race condition.
 	 * So to prevent that, this method contains a recursion mechanism with max_attempt count.
 	 */
-	private function retrieve_checkout_session_object($max_attempt = 2) {
-		$sess = false;
+	private function retrieve_checkout_session_object() {
+		// TODO: old code. need to remove
+		//$events = \Stripe\Event::all(
+		//	array(
+		//		'type'    => 'checkout.session.completed',
+		//		'created' => array(
+		//			'gte' => time() - 60 * 60,
+		//		),
+		//	)
+		//);
+		//
+		//foreach ( $events->autoPagingIterator() as $event ) {
+		//	$session = $event->data->object;
+		//	if ( isset( $session->client_reference_id ) && $session->client_reference_id === $this->cart_id ) {
+		//		$sess = $session;
+		//		break;
+		//	}
+		//}
 
-		if ($max_attempt > 0){
-			// TODO: old code. need to remove
-			//$events = \Stripe\Event::all(
-			//	array(
-			//		'type'    => 'checkout.session.completed',
-			//		'created' => array(
-			//			'gte' => time() - 60 * 60,
-			//		),
-			//	)
-			//);
-			//
-			//foreach ( $events->autoPagingIterator() as $event ) {
-			//	$session = $event->data->object;
-			//	if ( isset( $session->client_reference_id ) && $session->client_reference_id === $this->cart_id ) {
-			//		$sess = $session;
-			//		break;
-			//	}
-			//}
+		$checkout_session_id = $this->csid;
+		$sess = \Stripe\Checkout\Session::retrieve($checkout_session_id);
 
-			$checkout_session_id = $this->csid;
-			$sess = \Stripe\Checkout\Session::retrieve($checkout_session_id);
-
-			if (!empty($sess)){
-				return $sess;
-			}
-
-			$max_attempt--;
-
-			wpsc_log_payment_debug(sprintf('The checkout session could not be retrieved. Attempts left to retrieve session: %d', $max_attempt), false);
-
-			sleep(2);
-
-			return $this->retrieve_checkout_session_object($max_attempt);
+		if (!empty($sess)){
+			return $sess;
 		}
+
+		wpsc_log_payment_debug('The checkout session could not be retrieved. Retrying to retrieve checkout session...', false);
+		sleep(2);
+
+		$sess = \Stripe\Checkout\Session::retrieve($checkout_session_id);
 
 		return $sess;
 	}
