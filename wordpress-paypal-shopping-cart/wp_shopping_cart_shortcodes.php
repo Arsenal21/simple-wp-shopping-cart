@@ -114,6 +114,8 @@ function wpsc_cart_display_product_handler($atts)
         $thumb_alt = $name;
     }
 
+    $description = sanitize_text_field($description);
+
     $price = wpsc_strip_char_from_price_amount($price);
     $shipping = wpsc_strip_char_from_price_amount($shipping);
 
@@ -144,7 +146,7 @@ function wpsc_cart_display_product_handler($atts)
 	                <?php echo $name ?>
 	            </div>
 	            <div class="wp_cart_product_description">
-		            <?php echo $description ?>
+		            <?php echo esc_attr($description) ?>
 	            </div>
                 <div class="wp_cart_product_price">
 	                <?php echo $formatted_price ?>
