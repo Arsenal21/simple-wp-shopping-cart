@@ -143,10 +143,10 @@ function wpsc_cart_display_product_handler($atts)
 	        </div>
 	        <div class="wp_cart_product_display_bottom">
 	            <div class="wp_cart_product_name">
-	                <?php echo $name ?>
+	                <?php echo esc_attr($name) ?>
 	            </div>
 	            <div class="wp_cart_product_description">
-		            <?php echo esc_attr($description) ?>
+		            <?php echo wp_kses_post($description) ?>
 	            </div>
                 <div class="wp_cart_product_price">
 	                <?php echo wp_kses_post($formatted_price) ?>
