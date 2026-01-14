@@ -139,7 +139,7 @@ function wpsc_cart_display_product_handler($atts)
     <div class="wp_cart_product_display_box_wrapper">
 	    <div class="wp_cart_product_display_box">
 	        <div class="wp_cart_product_thumbnail">
-	            <?php echo $thumbnail_code; ?>
+	            <?php echo wp_kses_post($thumbnail_code); ?>
 	        </div>
 	        <div class="wp_cart_product_display_bottom">
 	            <div class="wp_cart_product_name">
@@ -149,7 +149,7 @@ function wpsc_cart_display_product_handler($atts)
 		            <?php echo esc_attr($description) ?>
 	            </div>
                 <div class="wp_cart_product_price">
-	                <?php echo $formatted_price ?>
+	                <?php echo wp_kses_post($formatted_price) ?>
 	            </div>
                 <div class="wp_cart_product_button">
 	                <?php echo $button_code ?>
