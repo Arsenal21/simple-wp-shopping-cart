@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 5.2.5
+Stable tag: 5.2.6
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -240,7 +240,7 @@ None
 
 == Changelog ==
 
-= WIP =
+= 5.2.6 =
 - Added output escaping to the 'wpsc_display_product' shortcode parameters.
 
 = 5.2.5 =
