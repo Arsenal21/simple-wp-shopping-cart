@@ -239,6 +239,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- Some escaping functions were added.
 
 = 5.2.5 =
 - Improved the Stripe post-checkout handling code to prevent a potential issue with some server configurations.

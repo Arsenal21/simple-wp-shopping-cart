@@ -255,7 +255,7 @@ class WPSC_PPCP_settings_page
 									</label>
 								</th>
 								<td>
-									<input type="text" name="paypal-live-client-id" size="100" value="<?php echo $paypal_live_client_id; ?>">
+									<input type="text" name="paypal-live-client-id" size="100" value="<?php echo esc_attr($paypal_live_client_id); ?>">
 									<p class="description">
 										<?php _e('Enter your PayPal Client ID for live mode.', 'wordpress-simple-paypal-shopping-cart'); ?>
 									</p>
@@ -268,7 +268,7 @@ class WPSC_PPCP_settings_page
 									</label>
 								</th>
 								<td>
-									<input type="text" name="paypal-live-secret-key" size="100" value="<?php echo $paypal_live_secret_key; ?>">
+									<input type="text" name="paypal-live-secret-key" size="100" value="<?php echo esc_attr($paypal_live_secret_key); ?>">
 									<p class="description">
 										<?php _e('Enter your PayPal Secret Key for live mode.', 'wordpress-simple-paypal-shopping-cart'); ?>
 									</p>
@@ -281,7 +281,7 @@ class WPSC_PPCP_settings_page
 									</label>
 								</th>
 								<td>
-									<input type="text" name="paypal-sandbox-client-id" size="100" value="<?php echo $paypal_sandbox_client_id; ?>">
+									<input type="text" name="paypal-sandbox-client-id" size="100" value="<?php echo esc_attr($paypal_sandbox_client_id); ?>">
 									<p class="description">
 										<?php _e('Enter your PayPal Client ID for sandbox mode.', 'wordpress-simple-paypal-shopping-cart'); ?>
 									</p>
@@ -294,7 +294,7 @@ class WPSC_PPCP_settings_page
 									</label>
 								</th>
 								<td>
-									<input type="text" name="paypal-sandbox-secret-key" size="100" value="<?php echo $paypal_sandbox_secret_key; ?>">
+									<input type="text" name="paypal-sandbox-secret-key" size="100" value="<?php echo esc_attr($paypal_sandbox_secret_key); ?>">
 									<p class="description">
 										<?php _e('Enter your PayPal Secret Key for sandbox mode.', 'wordpress-simple-paypal-shopping-cart'); ?>
 									</p>
