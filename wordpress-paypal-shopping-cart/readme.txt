@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 5.2.5
+Stable tag: 5.2.6
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -239,8 +239,9 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
-= WIP =
-- Some escaping functions were added.
+
+= 5.2.6 =
+- Added output escaping to the new PayPal API settings interface fields.
 
 = 5.2.5 =
 - Improved the Stripe post-checkout handling code to prevent a potential issue with some server configurations.
