@@ -241,6 +241,7 @@ None
 == Changelog ==
 = WIP =
 - Added new settings to change default PayPal locale.
+- A small update related to WordPress Version 7.
 
 = 5.2.6 =
 - Added output escaping to the new PayPal API settings interface fields.
