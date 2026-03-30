@@ -103,6 +103,11 @@ class PayPal_JS_Button_Embed {
 			$sdk_args['disable-funding'] = $disable_funding_arg;
 		}
 
+		$locale = wpsc_get_paypal_checkout_locale_code();
+		if (!empty($locale)){
+			$sdk_args['locale'] = $locale;
+		}
+
 		/**
 		 * Trigger filter hook so the PayPal SDK arguments can be modified.
 		 * * Remember to use plugin shortname as prefix as tag when hooking to this hook.
