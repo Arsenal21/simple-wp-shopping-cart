@@ -485,3 +485,13 @@ function wpsc_get_user_ip_address( $ignore_private_and_reserved = false ) {
     $ip = apply_filters('wpsc_get_user_ip_address', '');
 	return $ip;
 }
+
+function wpsc_get_paypal_checkout_locale_code( $default = '' ) {
+	$locale = \TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config::get_instance()->get_value('ppcp_default_locale');
+	$locale = str_replace( '-', '_',  sanitize_text_field( $locale ) );
+	if ( empty( $locale ) ) {
+		return $default;
+	}
+
+	return $locale;
+}

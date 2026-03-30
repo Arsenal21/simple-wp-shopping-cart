@@ -239,6 +239,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- Added new settings to change default PayPal locale.
 
 = 5.2.6 =
 - Added output escaping to the new PayPal API settings interface fields.

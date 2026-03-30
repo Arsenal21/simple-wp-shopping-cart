@@ -113,6 +113,9 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('ppcp_disable_funding_credit', (isset($_POST['ppcp_disable_funding_credit']) ? sanitize_text_field($_POST['ppcp_disable_funding_credit']) : '0'));
 			$this->settings->set_value('ppcp_disable_funding_venmo', (isset($_POST['ppcp_disable_funding_venmo']) ? sanitize_text_field($_POST['ppcp_disable_funding_venmo']) : '0'));
 
+            // Language related
+	        $this->settings->set_value('ppcp_default_locale', (isset($_POST['ppcp_default_locale']) ? sanitize_text_field($_POST['ppcp_default_locale']) : ''));
+
 			$this->settings->save();
 			echo '<div class="notice notice-success"><p>' . __('PayPal button appearance settings updated successfully.', 'wordpress-simple-paypal-shopping-cart') . '</p></div>';
 		}
@@ -394,6 +397,14 @@ class WPSC_PPCP_settings_page
 								<p class="description"><?php _e("By default, funding source eligibility is smartly decided based on a variety of factors. You can force disable funding options by selecting them here.", 'wordpress-simple-paypal-shopping-cart'); ?></p>
 							</td>
 						</tr>
+                        <tr valign="top">
+                            <th scope="row"><?php _e('Default Locale (Optional)', 'wordpress-simple-paypal-shopping-cart'); ?></th>
+                            <td>
+                                <input type="text" step="1" min="0" size="10" name="ppcp_default_locale" value="<?php echo esc_attr($this->settings->get_value('ppcp_default_locale')) ?>" style="min-width: 150px;" />
+                                <p class="description"><?php _e("Pass a locale code (e.g, en_US, de_DE, es_ES, ja_JP, pt_BR, ar_EG) to PayPal to customize the locale of the buyer's checkout experience. Leave empty to let PayPal automatically detect the locale.", 'wordpress-simple-paypal-shopping-cart'); ?></p>
+                                <p class="description"><?php echo sprintf(__("See the list of supported codes: %s", 'wordpress-simple-paypal-shopping-cart'), '<a href="https://developer.paypal.com/api/rest/reference/locale-codes/#link-supportedlocalecodes" target="_blank">'. __('here', 'wordpress-simple-paypal-shopping-cart') .'</a>'); ?></p>
+                            </td>
+                        </tr>
 					</table>
 
 					<?php wp_nonce_field('wpsc_button_appearance_submit_nonce', 'wpsc_button_appearance_submit_nonce') ?>
