@@ -109,7 +109,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
         var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
         var wpscTaxRegionEnabled = <?php echo $is_tax_by_region_enabled ? 'true' : 'false' ?>;
 
-        function wpsc_render_paypal_button(btn_container){
+        function wpsc_render_paypal_button(btn_container, cartNo){
             //Anything that goes here will only be executed after the PayPal SDK is loaded.
             console.log('PayPal JS SDK is loaded.');
 
@@ -172,7 +172,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 }
                                     
                 // Disable paypal smart checkout form submission if terms and condition validation error.
-                const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
+                const currentPPCPButtonWrapper = '#wpsc_paypal_button_'+cartNo;
                 if (!wpsc_validateTnc(currentPPCPButtonWrapper, false)) {
                     actions.disable();
                 }
@@ -188,7 +188,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                     element.addEventListener('change', function () {
                         let isAnyValidationError = false;
 
-                        if (has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                        if (has_empty_required_input(cartNo)) {
                             isAnyValidationError = true;
                         }
 
@@ -229,11 +229,12 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
              * See documentation: https://developer.paypal.com/sdk/js/reference/#link-oninitonclick
              */
             function onClickHandler(){
-                const currentPPCPButtonWrapper = '#wpsc_paypal_button_<?php echo $carts_cnt; ?>';
+                const currentPPCPButtonWrapper = '#wpsc_paypal_button_'+cartNo;
+
                 // Emitting custom event for addons.
                 document.dispatchEvent(new CustomEvent('wpsc_ppcp_checkout_button_clicked', { 
                     detail: {
-                        cartNo: <?php echo $carts_cnt; ?>,
+                        cartNo: cartNo,
                     }
                 }));
                 
@@ -435,17 +436,19 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
         }
 
         document.addEventListener( "wpsc_paypal_sdk_loaded", function(e) {
+            const cartNo = '<?php echo $carts_cnt; ?>';
             const ppcp_btn_container = document.getElementById('<?php echo esc_js($on_page_embed_button_id); ?>');
-            wpsc_render_paypal_button(ppcp_btn_container);
+            wpsc_render_paypal_button(ppcp_btn_container, cartNo);
         });
 
         document.addEventListener('wpsc_after_cart_shortcode_script_eval', function (e) {
+            const cartNo = '<?php echo $carts_cnt; ?>';
             const on_page_embed_button_id = '<?php echo esc_js($on_page_embed_button_id); ?>';
 
             if (! window[on_page_embed_button_id+'_rendered'] ){ // Prevent duplicate ppcp button render for same cart.
                 const ppcp_btn_container = document.getElementById(on_page_embed_button_id);
 
-                wpsc_render_paypal_button(ppcp_btn_container);
+                wpsc_render_paypal_button(ppcp_btn_container, cartNo);
 
                 window[on_page_embed_button_id+'_rendered'] = true; // Flag for duplicate render prevention.
             }

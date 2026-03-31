@@ -239,6 +239,9 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- PayPal Smart checkout gateway removed.
+- A small js related issue fixed for cart.
 
 = 5.2.7 =
 - Added a new settings option that can be used to specify the default PayPal locale for the PayPal Commerce Platform Checkout option.

@@ -37,13 +37,14 @@ function wpsc_settings_interface() {
         wp_die('You do not have permission to access this settings page.');
     }
 
+    $current_tab = isset($_GET['action']) ? sanitize_text_field($_GET['action']) : '';
+
     $wpspc_plugin_tabs = array(
         'wpsc-menu-main' => __('General Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wpsc-menu-main&action=email-settings' => __('Email Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wpsc-menu-main&action=shipping-settings' => __('Shipping', 'wordpress-simple-paypal-shopping-cart'),
         'wpsc-menu-main&action=tax-settings' => __('Tax', 'wordpress-simple-paypal-shopping-cart'),
         'wpsc-menu-main&action=ppcp-settings' => __('PayPal PPCP (New API)', 'wordpress-simple-paypal-shopping-cart'),
-        'wpsc-menu-main&action=adv-settings' => __('PayPal Smart Checkout', 'wordpress-simple-paypal-shopping-cart'),
         'wpsc-menu-main&action=stripe-settings' => __('Stripe Settings', 'wordpress-simple-paypal-shopping-cart'),
         'wpsc-menu-main&action=manual-checkout' => __('Manual/Offline Checkout', 'wordpress-simple-paypal-shopping-cart'),
     );
@@ -70,67 +71,39 @@ function wpsc_settings_interface() {
     $content .= '</h2>';
     echo $content;
     echo '<div id="poststuff"><div id="post-body">';
-    if (isset($_GET['action'])) {
-        switch ($_GET['action']) {
-            case 'email-settings':
-                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_email_settings.php');
-                show_wp_cart_email_settings_page();
-                break;
-            case 'shipping-settings':
-                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_shipping_settings.php');
-                show_wp_cart_shipping_settings_page();
-                break;
-	        case 'tax-settings':
-		        include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tax_settings.php');
-		        show_wp_cart_tax_settings_page();
-		        break;
-	        case 'adv-settings':
-                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_adv_settings.php');
-                show_wp_cart_adv_settings_page();
-                break;
-            case 'ppcp-settings':
-                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_ppcp_settings.php');
-                // show_wp_cart_adv_settings_page();
-                new WPSC_PPCP_settings_page();
-                break;
-            case 'stripe-settings':
-                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_stripe_settings.php');
-                show_wp_cart_stripe_settings_page();
-                break;
-            case 'manual-checkout':
-                include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_manual_checkout.php');
-                show_wp_cart_manual_checkout_settings_page();
-                break;
-        }
-    } else {
-        include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_general_settings.php');
-        wpsc_show_general_settings_page();
+
+    switch ($current_tab) {
+        case 'email-settings':
+            include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_email_settings.php');
+            show_wp_cart_email_settings_page();
+            break;
+        case 'shipping-settings':
+            include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_shipping_settings.php');
+            show_wp_cart_shipping_settings_page();
+            break;
+        case 'tax-settings':
+            include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_tax_settings.php');
+            show_wp_cart_tax_settings_page();
+            break;
+        case 'ppcp-settings':
+            include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_ppcp_settings.php');
+            // show_wp_cart_adv_settings_page();
+            new WPSC_PPCP_settings_page();
+            break;
+        case 'stripe-settings':
+            include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_stripe_settings.php');
+            show_wp_cart_stripe_settings_page();
+            break;
+        case 'manual-checkout':
+            include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_manual_checkout.php');
+            show_wp_cart_manual_checkout_settings_page();
+            break;
+        default: // general settings
+            include_once (WP_CART_PATH . 'includes/admin/wp_shopping_cart_menu_general_settings.php');
+            wpsc_show_general_settings_page();
+            break;
     }
+
     echo '</div></div>';
     echo '</div>';
-}
-
-
-/*******************************************************************
- * Admin Notice to prompt users to switch to the new PayPal settings
- *******************************************************************/
-function wpsc_dashboard_admin_notices(){
-	//Smart Checkout
-	$enable_smart_checkout = get_option( 'wpspc_enable_pp_smart_checkout' );
-
-	if( $enable_smart_checkout ){
-		//The site has the old smart PayPal checkout enabled. Prompt the user to switch to the new PayPal PPCP settings.
-		?>
-		<div class="notice notice-warning is-dismissible">
-			<p><?php _e('You are using the old PayPal Smart Checkout option in the "Simple Shopping Cart" plugin. Please switch to the new PayPal PPCP option for better security and functionaliy.', 'wordpress-simple-paypal-shopping-cart'); ?></p>
-			<p><a href="<?php echo admin_url('admin.php?page=wpsc-menu-main&action=ppcp-settings'); ?>"><?php _e('Switch to the new PayPal Commerce Platform API by configuring the API credentials', 'wordpress-simple-paypal-shopping-cart'); ?></a></p>
-		</div>
-		<?php
-	}
-
-}
-
-if( is_admin() ) {
-	// Add the admin notices hook
-	add_filter('admin_notices', 'wpsc_dashboard_admin_notices');
 }

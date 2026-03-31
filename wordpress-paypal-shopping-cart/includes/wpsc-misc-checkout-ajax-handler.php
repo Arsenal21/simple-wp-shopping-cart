@@ -1,9 +1,6 @@
 <?php 
 
 if ( wp_doing_ajax() ) {
-	add_action( 'wp_ajax_wpsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
-	add_action( 'wp_ajax_nopriv_wpsc_process_pp_smart_checkout', 'wpsc_process_pp_smart_checkout' );
-
 	add_action( 'wp_ajax_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
 	add_action( 'wp_ajax_nopriv_wpsc_stripe_create_checkout_session', 'wpsc_stripe_create_checkout_session' );
 
@@ -238,58 +235,6 @@ function wpsc_stripe_create_checkout_session() {
 	}
 	wp_send_json( array( 'session_id' => $session->id ) );
 
-}
-
-/**
- * Process the payment data received from the smart checkout.
- */
-function wpsc_process_pp_smart_checkout() {
-	if ( isset( $_POST['wpsc_payment_data'] ) ) {
-		$data = $_POST['wpsc_payment_data'];
-	}
-	if ( empty( $data ) ) {
-		wp_send_json( array( 'success' => false, 'errMsg' => __( 'Empty payment data received.', "wordpress-simple-paypal-shopping-cart" ) ) );
-	}
-
-	//We don't use the session anymore. So no need to start it.
-	// if ( session_status() == PHP_SESSION_NONE ) {
-	// 	session_start();
-	// }
-
-	include_once( WP_CART_PATH . 'paypal.php');
-
-	$ipn_handler_instance = new paypal_ipn_handler();
-
-	$ipn_data_success = $ipn_handler_instance->create_ipn_from_smart_checkout( $data );
-
-	if ( $ipn_data_success !== true ) {
-		//error occured during IPN array creation
-		wp_send_json( array( 'success' => false, 'errMsg' => $ipn_data_success ) );
-	}
-
-	$debug_enabled = false;
-	$debug = get_option( 'wp_shopping_cart_enable_debug' );
-	if ( $debug ) {
-		$debug_enabled = true;
-	}
-
-	if ( $debug_enabled ) {
-		$ipn_handler_instance->ipn_log = true;
-	}
-
-	$res = $ipn_handler_instance->validate_ipn_smart_checkout();
-
-	if ( $res !== true ) {
-		wp_send_json( array( 'success' => false, 'errMsg' => $res ) );
-	}
-
-	$res = $ipn_handler_instance->validate_and_dispatch_product();
-
-	if ( $res === true ) {
-		wp_send_json( array( 'success' => true ) );
-	} else {
-		wp_send_json( array( 'success' => false, 'errMsg' => __( 'Error occured during payment processing. Check debug log for additional details.', "wordpress-simple-paypal-shopping-cart" ) ) );
-	}
 }
 
 function wpsc_manual_payment_checkout(){
