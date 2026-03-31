@@ -4,8 +4,8 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wordpress ecommerce, wordpress store, store, sell digital products, sell service, digital downloads, paypal,
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.9
-Stable tag: 5.2.6
+Tested up to: 7.0
+Stable tag: 5.2.7
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -239,9 +239,10 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
-= WIP =
-- Added new settings to change default PayPal locale.
-- A small update related to WordPress Version 7.
+
+= 5.2.7 =
+- Added a new settings option that can be used to specify the default PayPal locale for the PayPal Commerce Platform Checkout option.
+- A small CSS update in the orders menu for WordPress 7.0.
 
 = 5.2.6 =
 - Added output escaping to the new PayPal API settings interface fields.
