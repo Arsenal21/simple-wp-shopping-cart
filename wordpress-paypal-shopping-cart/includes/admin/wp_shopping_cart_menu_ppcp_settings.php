@@ -440,6 +440,9 @@ class WPSC_PPCP_settings_page
 		_e("Use the buttons below to connect and obtain the necessary PayPal API credentials automatically to offer the PayPal Commerce Platform checkout option.", "wordpress-simple-paypal-shopping-cart");
 		echo '&nbsp;' . '<a href="' . $ppcp_documentation_link . '" target="_blank">' . __('Read this documentation', 'wordpress-simple-paypal-shopping-cart') . '</a> ' . __('to learn how to set up and configure it.', 'wordpress-simple-paypal-shopping-cart');
 		echo '</p>';
+
+        $is_sandbox_enabled = !empty( get_option('wp_shopping_cart_enable_sandbox', false ));
+
 		?>
 		<table class="form-table" role="presentation">
 			<tbody>
@@ -447,29 +450,35 @@ class WPSC_PPCP_settings_page
 					<th scope="row"><?php _e("Live Account Connnection Status", "wordpress-simple-paypal-shopping-cart"); ?></th>
 					<td>
 						<?php
-						// Check if the live account is connected
-						$live_account_connection_status = 'connected';
-						if (empty($this->settings->get_value('paypal-live-client-id')) || empty($this->settings->get_value('paypal-live-secret-key'))) {
-							//Sandbox API keys are missing. Account is not connected.
-							$live_account_connection_status = 'not-connected';
-						}
+                        if ( ! $is_sandbox_enabled){
+                            // Check if the live account is connected
+                            $live_account_connection_status = 'connected';
+                            if (empty($this->settings->get_value('paypal-live-client-id')) || empty($this->settings->get_value('paypal-live-secret-key'))) {
+                                //Sandbox API keys are missing. Account is not connected.
+                                $live_account_connection_status = 'not-connected';
+                            }
 
-						if ($live_account_connection_status == 'connected') {
-							//Production account connected
-							echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
-							_e("Live account is connected. If you experience any issues, please disconnect and reconnect.", "wordpress-simple-paypal-shopping-cart");
-							echo '</div>';
-							// Show disconnect option for live account.
-							$ppcp_onboarding_instance->output_production_ac_disconnect_link();
-						} else {
-							//Production account is NOT connected.
-							echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
-							_e("Live PayPal account is not connected. Click the button below to authorize the app and acquire API credentials from your PayPal account.", "wordpress-simple-paypal-shopping-cart");
-							echo '</div>';
+                            if ($live_account_connection_status == 'connected') {
+                                //Production account connected
+                                echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+                                _e("Live account is connected. If you experience any issues, please disconnect and reconnect.", "wordpress-simple-paypal-shopping-cart");
+                                echo '</div>';
+                                // Show disconnect option for live account.
+                                $ppcp_onboarding_instance->output_production_ac_disconnect_link();
+                            } else {
+                                //Production account is NOT connected.
+                                echo '<div class="wpsc-paypal-live-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
+                                _e("Live PayPal account is not connected. Click the button below to authorize the app and acquire API credentials from your PayPal account.", "wordpress-simple-paypal-shopping-cart");
+                                echo '</div>';
 
-							// Show the onboarding link
-							$ppcp_onboarding_instance->output_production_onboarding_link_code();
-						}
+                                // Show the onboarding link
+                                $ppcp_onboarding_instance->output_production_onboarding_link_code();
+                            }
+                        } else {
+                            echo '<p class="wpsc-grey-box"> ';
+                            _e("For live account onboarding, disable the sandbox mode from general settings.", "wordpress-simple-paypal-shopping-cart");
+                            echo '</p>';
+                        }
 						?>
 					</td>
 				</tr>
@@ -477,29 +486,35 @@ class WPSC_PPCP_settings_page
 					<th scope="row"><?php _e("Sandbox Account Connnection Status", "wordpress-simple-paypal-shopping-cart"); ?></th>
 					<td>
 						<?php
-						//Check if the sandbox account is connected
-						$sandbox_account_connection_status = 'connected';
-						if (empty($this->settings->get_value('paypal-sandbox-client-id')) || empty($this->settings->get_value('paypal-sandbox-secret-key'))) {
-							//Sandbox API keys are missing. Account is not connected.
-							$sandbox_account_connection_status = 'not-connected';
-						}
+		                if ( $is_sandbox_enabled) {
+			                //Check if the sandbox account is connected
+			                $sandbox_account_connection_status = 'connected';
+			                if ( empty( $this->settings->get_value( 'paypal-sandbox-client-id' ) ) || empty( $this->settings->get_value( 'paypal-sandbox-secret-key' ) ) ) {
+				                //Sandbox API keys are missing. Account is not connected.
+				                $sandbox_account_connection_status = 'not-connected';
+			                }
 
-						if ($sandbox_account_connection_status == 'connected') {
-							//Test account connected
-							echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
-							_e("Sandbox account is connected. If you experience any issues, please disconnect and reconnect.", "wordpress-simple-paypal-shopping-cart");
-							echo '</div>';
-							//Show disconnect option for sandbox account.
-							$ppcp_onboarding_instance->output_sandbox_ac_disconnect_link();
-						} else {
-							//Sandbox account is NOT connected.
-							echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
-							_e("Sandbox PayPal account is not connected.", "wordpress-simple-paypal-shopping-cart");
-							echo '</div>';
+			                if ( $sandbox_account_connection_status == 'connected' ) {
+				                //Test account connected
+				                echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-yes" style="color:green;"></span>&nbsp;';
+				                _e( "Sandbox account is connected. If you experience any issues, please disconnect and reconnect.", "wordpress-simple-paypal-shopping-cart" );
+				                echo '</div>';
+				                //Show disconnect option for sandbox account.
+				                $ppcp_onboarding_instance->output_sandbox_ac_disconnect_link();
+			                } else {
+				                //Sandbox account is NOT connected.
+				                echo '<div class="wpsc-paypal-sandbox-account-status"><span class="dashicons dashicons-no" style="color: red;"></span>&nbsp;';
+				                _e( "Sandbox PayPal account is not connected.", "wordpress-simple-paypal-shopping-cart" );
+				                echo '</div>';
 
-							//Show the onboarding link for sandbox account.
-							$ppcp_onboarding_instance->output_sandbox_onboarding_link_code();
-						}
+				                //Show the onboarding link for sandbox account.
+				                $ppcp_onboarding_instance->output_sandbox_onboarding_link_code();
+			                }
+		                } else {
+			                echo '<p class="wpsc-grey-box"> ';
+			                _e("For sandbox account onboarding, enable the sandbox mode from general settings.", "wordpress-simple-paypal-shopping-cart");
+			                echo '</p>';
+		                }
 						?>
 					</td>
 				</tr>

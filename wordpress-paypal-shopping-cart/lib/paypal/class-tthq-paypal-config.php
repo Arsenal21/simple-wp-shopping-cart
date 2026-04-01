@@ -26,7 +26,11 @@ class PayPal_PPCP_Config {
 		$this->ppcp_settings_values = (array) get_option($this->ppcp_settings_key);
 	}
 
-	// Public method to get the instance of the class
+	/**
+	 * Public method to get the instance of the class
+	 *
+	 * @return self
+	 */
 	public static function get_instance() {
 		if (!isset(self::$instance)) {
 			self::$instance = new self();
