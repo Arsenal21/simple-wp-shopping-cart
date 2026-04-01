@@ -15,4 +15,5 @@ const wpsc_element           = wp.element.createElement,
     wpsc_panel               = wp.components.Panel,
     wpsc_panel_body          = wp.components.PanelBody,
     wpsc_panel_row           = wp.components.PanelRow,
-    wpsc_inspector_controls  = wp.blockEditor.InspectorControls;
+    wpsc_inspector_controls  = wp.blockEditor.InspectorControls,
+    useBlockProps = wp.blockEditor.useBlockProps;

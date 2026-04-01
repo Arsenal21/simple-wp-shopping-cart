@@ -243,6 +243,7 @@ None
 - PayPal Smart checkout gateway removed.
 - A small js related issue fixed for cart.
 - API connection onboarding related issue fixed.
+- Gutenberg Block API v3 related console warning fixed.
 
 = 5.2.7 =
 - Added a new settings option that can be used to specify the default PayPal locale for the PayPal Commerce Platform Checkout option.

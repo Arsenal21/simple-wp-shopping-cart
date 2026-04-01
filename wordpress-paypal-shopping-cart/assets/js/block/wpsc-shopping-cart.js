@@ -9,21 +9,27 @@
 wpsc_register_block_type(
     wpsc_sc_block_block_meta.name,
     {
+        apiVersion: 3,
         title: wpsc_sc_block_block_meta.title,
         description: wpsc_sc_block_block_meta.description,
         icon: 'cart',
         category: 'common',
 
         edit: function (props) {
+            const blockProps = useBlockProps();
 
             return [
                 wpsc_element(
-                    wpsc_serverSideRender,
-                    {
-                        key: 'wpsc-shopping-cart-block-serverSideRenderer_key', // unique key.
-                        block: wpsc_sc_block_block_meta.name,
-                        attributes: props.attributes,
-                    }
+                    'div',
+                    blockProps,
+                    wpsc_element(
+                        wpsc_serverSideRender,
+                        {
+                            key: 'wpsc-shopping-cart-block-serverSideRenderer_key', // unique key.
+                            block: wpsc_sc_block_block_meta.name,
+                            attributes: props.attributes,
+                        }
+                    )
                 ),
 
                 wpsc_element(
@@ -46,6 +52,7 @@ wpsc_register_block_type(
                                 help: wpsc_sc_block_display_option_meta.description,
                                 options: wpsc_sc_block_display_option_meta.options,
                                 __nextHasNoMarginBottom: true,
+                                __next40pxDefaultSize:true,
                                 onChange: (value) => {
                                     props.setAttributes({display_option: value});
                                     },
