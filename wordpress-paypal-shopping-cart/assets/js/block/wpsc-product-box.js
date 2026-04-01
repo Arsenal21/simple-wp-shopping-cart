@@ -16,7 +16,7 @@ wpsc_register_block_type(
         category: 'common',
 
         edit: function (props) {
-            const blockProps = useBlockProps();
+            const blockProps = wpsc_useBlockProps();
 
             return [
                 wpsc_element(
