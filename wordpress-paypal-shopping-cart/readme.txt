@@ -239,11 +239,12 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+
 = WIP =
-- PayPal Smart checkout gateway removed.
-- A small js related issue fixed for cart.
-- API connection onboarding related issue fixed.
+- The deprecated PayPal Smart Checkout menu tab has been removed. If you were using it, switch to the new PayPal Checkout option. [See the setup guide](https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023)
+- PayPal API connection related message updated to be more clear and informative.
 - Gutenberg Block API v3 related console warning fixed.
+- Fixed a small JS related issue for the cart.
 
 = 5.2.7 =
 - Added a new settings option that can be used to specify the default PayPal locale for the PayPal Commerce Platform Checkout option.
