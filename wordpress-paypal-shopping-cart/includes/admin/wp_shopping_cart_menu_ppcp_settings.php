@@ -476,14 +476,14 @@ class WPSC_PPCP_settings_page
                             }
                         } else {
                             echo '<p class="wpsc-grey-box"> ';
-                            _e("For live account onboarding, disable the sandbox mode from general settings.", "wordpress-simple-paypal-shopping-cart");
+                            _e("To connect your live account, disable the Test/Sandbox mode from the General Settings menu.", "wordpress-simple-paypal-shopping-cart");
                             echo '</p>';
                         }
 						?>
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php _e("Sandbox Account Connnection Status", "wordpress-simple-paypal-shopping-cart"); ?></th>
+					<th scope="row"><?php _e("Sandbox Account Connection Status", "wordpress-simple-paypal-shopping-cart"); ?></th>
 					<td>
 						<?php
 		                if ( $is_sandbox_enabled) {
@@ -512,7 +512,7 @@ class WPSC_PPCP_settings_page
 			                }
 		                } else {
 			                echo '<p class="wpsc-grey-box"> ';
-			                _e("For sandbox account onboarding, enable the sandbox mode from general settings.", "wordpress-simple-paypal-shopping-cart");
+			                _e("To connect your test/sandbox account, enable Test/Sandbox mode from the General Settings menu.", "wordpress-simple-paypal-shopping-cart");
 			                echo '</p>';
 		                }
 						?>
