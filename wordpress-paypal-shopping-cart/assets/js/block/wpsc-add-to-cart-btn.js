@@ -9,21 +9,27 @@
 wpsc_register_block_type(
     wpsc_cb_block_block_meta.name,
     {
+        apiVersion: 3,
         title: wpsc_cb_block_block_meta.title,
         description: wpsc_cb_block_block_meta.description,
         icon: 'cart',
         category: 'common',
 
         edit: function (props) {
+            const blockProps = useBlockProps();
 
             return [
                 wpsc_element(
-                    wpsc_serverSideRender,
-                    {
-                        key: "wpsc-add-to-cart-block-serverSideRender-key", // unique key.
-                        block: wpsc_cb_block_block_meta.name,
-                        attributes: props.attributes,
-                    }
+                    'div',
+                    blockProps,
+                    wpsc_element(
+                        wpsc_serverSideRender,
+                        {
+                            key: "wpsc-add-to-cart-block-serverSideRender-key", // unique key.
+                            block: wpsc_cb_block_block_meta.name,
+                            attributes: props.attributes,
+                        }
+                    )
                 ),
 
                 wpsc_element(
@@ -70,6 +76,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['general']['fields']['name'].description,
                                                     value: props.attributes['name'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['name'] = value;
@@ -85,6 +92,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['general']['fields']['price'].description,
                                                     value: props.attributes['price'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['price'] = value;
@@ -100,6 +108,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['general']['fields']['shipping'].description,
                                                     value: props.attributes['shipping'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['shipping'] = value;
@@ -115,6 +124,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['general']['fields']['button_text'].description,
                                                     value: props.attributes['button_text'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['button_text'] = value;
@@ -130,6 +140,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['general']['fields']['button_image'].description,
                                                     value: props.attributes['button_image'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['button_image'] = value;
@@ -145,6 +156,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['general']['fields']['file_url'].description,
                                                     value: props.attributes['file_url'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['file_url'] = value;
@@ -203,6 +215,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['variation']['fields']['var1'].description,
                                                     value: props.attributes['var1'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['var1'] = value;
@@ -218,6 +231,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['variation']['fields']['var2'].description,
                                                     value: props.attributes['var2'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['var2'] = value;
@@ -233,6 +247,7 @@ wpsc_register_block_type(
                                                     help: wpsc_cb_block_attrs_meta['variation']['fields']['var3'].description,
                                                     value: props.attributes['var3'],
                                                     __nextHasNoMarginBottom: true,
+                                                    __next40pxDefaultSize: true,
                                                     onChange: (value) => {
                                                         let prop_attrs = {};
                                                         prop_attrs['var3'] = value;
