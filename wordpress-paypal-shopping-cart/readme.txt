@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 5.2.8
+Stable tag: 5.2.9
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -239,8 +239,9 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
-= WIP =
-- More disable funding options added for paypal ppcp checkout.
+
+= 5.2.9 =
+- Added more disable funding options in the settings menu of the PayPal PPCP checkout.
 
 = 5.2.8 =
 - The deprecated PayPal Smart Checkout menu tab has been removed. If you were using it, switch to the new PayPal Checkout option. [See the setup guide](https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023)
