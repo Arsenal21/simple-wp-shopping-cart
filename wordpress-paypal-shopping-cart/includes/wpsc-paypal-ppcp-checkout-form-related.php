@@ -15,19 +15,15 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     $sandbox_enabled = $ppcp_configs->get_value('enable-sandbox-testing');
     $is_live_mode = $sandbox_enabled ? 0 : 1;
 
-	$disable_funding_card = $ppcp_configs->get_value('ppcp_disable_funding_card');
-    $disable_funding_credit = $ppcp_configs->get_value('ppcp_disable_funding_credit');
-    $disable_funding_venmo = $ppcp_configs->get_value('ppcp_disable_funding_venmo');
-    $disable_funding = array();
-    if( !empty($disable_funding_card)){
-        $disable_funding[] = 'card';
-    }
-    if( !empty($disable_funding_credit)){
-        $disable_funding[] = 'credit';
-    }
-    if( !empty($disable_funding_venmo)){
-        $disable_funding[] = 'venmo';
-    }
+	$disable_funding = array();
+	$disable_funding_options = wpsc_ppcp_disable_funding_options();
+	foreach ($disable_funding_options as $option_key => $option_text){
+		$funding_option_key = sanitize_key($option_key);
+		$funding_option_checked = $ppcp_configs->get_value('ppcp_disable_funding_'. $funding_option_key );
+		if( !empty( $funding_option_checked )){
+			$disable_funding[] = $funding_option_key;
+		}
+	}
 
 	$btn_type = !empty($ppcp_configs->get_value('ppcp_btn_type')) ? $ppcp_configs->get_value('ppcp_btn_type') : 'checkout';
     $btn_shape = !empty($ppcp_configs->get_value('ppcp_btn_shape')) ? $ppcp_configs->get_value('ppcp_btn_shape') : 'rect';

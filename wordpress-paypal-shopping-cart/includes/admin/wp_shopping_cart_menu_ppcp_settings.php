@@ -112,6 +112,16 @@ class WPSC_PPCP_settings_page
 			$this->settings->set_value('ppcp_disable_funding_card', (isset($_POST['ppcp_disable_funding_card']) ? sanitize_text_field($_POST['ppcp_disable_funding_card']) : '0'));
 			$this->settings->set_value('ppcp_disable_funding_credit', (isset($_POST['ppcp_disable_funding_credit']) ? sanitize_text_field($_POST['ppcp_disable_funding_credit']) : '0'));
 			$this->settings->set_value('ppcp_disable_funding_venmo', (isset($_POST['ppcp_disable_funding_venmo']) ? sanitize_text_field($_POST['ppcp_disable_funding_venmo']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_bancontact', (isset($_POST['ppcp_disable_funding_bancontact']) ? sanitize_text_field($_POST['ppcp_disable_funding_bancontact']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_blik', (isset($_POST['ppcp_disable_funding_blik']) ? sanitize_text_field($_POST['ppcp_disable_funding_blik']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_eps', (isset($_POST['ppcp_disable_funding_eps']) ? sanitize_text_field($_POST['ppcp_disable_funding_eps']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_giropay', (isset($_POST['ppcp_disable_funding_giropay']) ? sanitize_text_field($_POST['ppcp_disable_funding_giropay']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_ideal', (isset($_POST['ppcp_disable_funding_ideal']) ? sanitize_text_field($_POST['ppcp_disable_funding_ideal']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_mercadopago', (isset($_POST['ppcp_disable_funding_mercadopago']) ? sanitize_text_field($_POST['ppcp_disable_funding_mercadopago']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_mybank', (isset($_POST['ppcp_disable_funding_mybank']) ? sanitize_text_field($_POST['ppcp_disable_funding_mybank']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_p24', (isset($_POST['ppcp_disable_funding_p24']) ? sanitize_text_field($_POST['ppcp_disable_funding_p24']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_sepa', (isset($_POST['ppcp_disable_funding_sepa']) ? sanitize_text_field($_POST['ppcp_disable_funding_sepa']) : '0'));
+			$this->settings->set_value('ppcp_disable_funding_sofort', (isset($_POST['ppcp_disable_funding_sofort']) ? sanitize_text_field($_POST['ppcp_disable_funding_sofort']) : '0'));
 
             // Language related
 	        $this->settings->set_value('ppcp_default_locale', (isset($_POST['ppcp_default_locale']) ? sanitize_text_field($_POST['ppcp_default_locale']) : ''));
@@ -391,10 +401,26 @@ class WPSC_PPCP_settings_page
 						<tr valign="top">
 							<th scope="row"><?php _e("Disable Funding", 'wordpress-simple-paypal-shopping-cart'); ?></th>
 							<td>
-								<p><label><input type="checkbox" name="ppcp_disable_funding_card" value="1" <?php echo (!empty($this->settings->get_value('ppcp_disable_funding_card'))) ? ' checked' : ''; ?>> <?php _e("Credit or debit cards", 'wordpress-simple-paypal-shopping-cart'); ?></label></p>
-								<p><label><input type="checkbox" name="ppcp_disable_funding_credit" value="1" <?php echo (!empty($this->settings->get_value('ppcp_disable_funding_credit'))) ? ' checked' : ''; ?>> <?php _e("PayPal Credit", 'wordpress-simple-paypal-shopping-cart'); ?></label></p>
-								<p><label><input type="checkbox" name="ppcp_disable_funding_venmo" value="1" <?php echo (!empty($this->settings->get_value('ppcp_disable_funding_venmo'))) ? ' checked' : ''; ?>> <?php _e("Venmo", 'wordpress-simple-paypal-shopping-cart'); ?></label></p>
-								<p class="description"><?php _e("By default, funding source eligibility is smartly decided based on a variety of factors. You can force disable funding options by selecting them here.", 'wordpress-simple-paypal-shopping-cart'); ?></p>
+                                <p>
+                                <?php
+                                $disable_funding_options = wpsc_ppcp_disable_funding_options();
+                                foreach ($disable_funding_options as $option_key => $option_text){
+	                                $funding_option_key = sanitize_key($option_key);
+	                                $funding_option_field_name = 'ppcp_disable_funding_'. $funding_option_key;
+	                                $funding_option_checked_string = !empty($this->settings->get_value($funding_option_field_name )) ? 'checked' : '';
+
+                                    /*
+                                     * Constructs name field like:
+                                     * - ppcp_disable_funding_card
+                                     * - ppcp_disable_funding_credit
+                                     * - ppcp_disable_funding_venmo
+                                     * .... and so on
+                                     */
+								    echo '<label style="margin-right: 6px"><input type="checkbox" name="'. esc_attr($funding_option_field_name) .'" value="1" '.esc_attr($funding_option_checked_string).'>'. esc_attr($option_text) .'</label>';
+                                }
+                                ?>
+                                </p>
+                                <p class="description"><?php _e("By default, funding source eligibility is smartly decided based on a variety of factors. You can force disable funding options by selecting them here.", 'wordpress-simple-paypal-shopping-cart'); ?></p>
 							</td>
 						</tr>
                         <tr valign="top">

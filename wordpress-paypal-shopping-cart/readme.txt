@@ -239,6 +239,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- More disable funding options added for paypal ppcp checkout.
 
 = 5.2.8 =
 - The deprecated PayPal Smart Checkout menu tab has been removed. If you were using it, switch to the new PayPal Checkout option. [See the setup guide](https://www.tipsandtricks-hq.com/ecommerce/paypal-ppcp-setup-and-configuration-5023)

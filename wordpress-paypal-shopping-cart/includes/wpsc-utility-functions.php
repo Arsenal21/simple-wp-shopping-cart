@@ -495,3 +495,23 @@ function wpsc_get_paypal_checkout_locale_code( $default = '' ) {
 
 	return $locale;
 }
+
+function wpsc_ppcp_disable_funding_options() {
+	$options = array(
+		'card'        => __( 'Credit or debit cards', 'wordpress-simple-paypal-shopping-cart' ),
+		'credit'      => __( 'PayPal Credit', 'wordpress-simple-paypal-shopping-cart' ),
+		'venmo'       => __('Venmo', 'wordpress-simple-paypal-shopping-cart'),
+		'bancontact'  => __('Bancontact', 'wordpress-simple-paypal-shopping-cart'),
+		'blik'        => __('BLIK', 'wordpress-simple-paypal-shopping-cart'),
+		'eps'         => __('eps', 'wordpress-simple-paypal-shopping-cart'),
+		'giropay'     => __('giropay', 'wordpress-simple-paypal-shopping-cart'),
+		'ideal'       => __('iDEAL', 'wordpress-simple-paypal-shopping-cart'),
+		'mercadopago' => __('Mercado Pago', 'wordpress-simple-paypal-shopping-cart'),
+		'mybank'      => __('MyBank', 'wordpress-simple-paypal-shopping-cart'),
+		'p24'         => __('Przelewy24', 'wordpress-simple-paypal-shopping-cart'),
+		'sepa'        => __('SEPA-Lastschrift', 'wordpress-simple-paypal-shopping-cart'),
+		'sofort'      => __('Sofort', 'wordpress-simple-paypal-shopping-cart'),
+	);
+
+	return $options;
+}
