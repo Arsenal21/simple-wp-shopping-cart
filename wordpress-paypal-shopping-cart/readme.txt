@@ -240,6 +240,9 @@ None
 
 == Changelog ==
 
+= WIP =
+- Updated the language translation POT file.
+
 = 5.2.9 =
 - Added more disable funding options in the settings menu of the PayPal PPCP checkout.
 
