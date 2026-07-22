@@ -239,6 +239,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- WordPress version 7 related admin settings UI issue fixed.
 
 = 5.3.0 =
 - Updated the language translation POT file.

@@ -76,6 +76,7 @@ function show_wp_cart_tax_settings_page()
 
         #wpsc-tax-region-variations-add-btn span{
             vertical-align: middle;
+            line-height: normal;
         }
         
         #wpsc-tax-region-variations-tbl{
@@ -98,10 +99,8 @@ function show_wp_cart_tax_settings_page()
 
         .wpsc-tax-region-variations-del-btn .dashicons{
             font-size: 18px;
-        }
-
-        .wpsc-tax-region-variations-del-btn span{
-            vertical-align: middle;
+            vertical-align: middle !important;
+            line-height: 1 !important;
         }
 
         .wpsc-tax-region-variations-input{

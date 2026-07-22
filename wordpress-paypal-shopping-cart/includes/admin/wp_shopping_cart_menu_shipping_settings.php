@@ -79,6 +79,7 @@ function show_wp_cart_shipping_settings_page()
 
         #wpsc-shipping-region-variations-add-btn span{
             vertical-align: middle;
+            line-height: normal;
         }
         
         #wpsc-shipping-region-variations-tbl{
@@ -101,10 +102,8 @@ function show_wp_cart_shipping_settings_page()
 
         .wpsc-shipping-region-variations-del-btn .dashicons{
             font-size: 18px;
-        }
-
-        .wpsc-shipping-region-variations-del-btn span{
-            vertical-align: middle;
+            vertical-align: middle !important;
+            line-height: 1 !important;
         }
 
         .wpsc-shipping-region-variations-input{
