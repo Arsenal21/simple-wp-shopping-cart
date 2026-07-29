@@ -93,32 +93,35 @@ function wpsc_stripe_create_checkout_session() {
 		*/
 		//$opts['payment_method_types'] = array( 'card' );
 
-		//Other options for the checkout session.
-		$force_collect_shipping_address = sanitize_text_field(get_option( 'wpsc_stripe_collect_shipping_address' ));
-		$allowed_shipping_countries = sanitize_text_field(get_option( 'wpsc_stripe_allowed_shipping_countries' ));
-		$allowed_shipping_countries = process_allowed_shipping_countries($allowed_shipping_countries);
-        if( !empty($force_collect_shipping_address) ){
-            $opts['shipping_address_collection'] = array(
-                'allowed_countries' => $allowed_shipping_countries,
-            );
-        } else {
-            $all_items_digital = $wspsc_cart->all_cart_items_digital();
-            if( $all_items_digital ){
-                //All items are digital. No need to collect shipping address.
-            } else {
-                //At least one item is not digital. Get the customer to provide shipping address on the Stripe checkout page.
-                $opts['shipping_address_collection'] = array(
-                    'allowed_countries' => $allowed_shipping_countries,
-                );
-            }
-        }
-		
-		//TODO - add a settings option to allow the site admin to set the allowed countries.
-		// if ( $shipping_preference == 'required' ) {
-		// 	$opts['shipping_address_collection'] = array(
-		// 		'allowed_countries' => array( 'US', 'CA', 'GB', 'AU' ),
-		// 	);
-		// }
+		$is_store_pickup = $wspsc_cart->get_store_pickup();
+		if ( empty($is_store_pickup) ) {
+			//Other options for the checkout session.
+			$force_collect_shipping_address = sanitize_text_field(get_option( 'wpsc_stripe_collect_shipping_address' ));
+			$allowed_shipping_countries = sanitize_text_field(get_option( 'wpsc_stripe_allowed_shipping_countries' ));
+			$allowed_shipping_countries = process_allowed_shipping_countries($allowed_shipping_countries);
+	        if( !empty($force_collect_shipping_address) ){
+	            $opts['shipping_address_collection'] = array(
+	                'allowed_countries' => $allowed_shipping_countries,
+	            );
+	        } else {
+	            $all_items_digital = $wspsc_cart->all_cart_items_digital();
+	            if( $all_items_digital ){
+	                //All items are digital. No need to collect shipping address.
+	            } else {
+	                //At least one item is not digital. Get the customer to provide shipping address on the Stripe checkout page.
+	                $opts['shipping_address_collection'] = array(
+	                    'allowed_countries' => $allowed_shipping_countries,
+	                );
+	            }
+	        }
+
+			//TODO - add a settings option to allow the site admin to set the allowed countries.
+			// if ( $shipping_preference == 'required' ) {
+			// 	$opts['shipping_address_collection'] = array(
+			// 		'allowed_countries' => array( 'US', 'CA', 'GB', 'AU' ),
+			// 	);
+			// }
+		}
 
 		if ( ! empty( $cancel_url ) ) {
 			$opts["cancel_url"] = $cancel_url;

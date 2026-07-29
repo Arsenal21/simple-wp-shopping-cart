@@ -92,9 +92,11 @@ class PayPal_Button_Ajax_Hander {
 		$cart_items = $wspsc_cart->get_items();
 		$pu_items = PayPal_Utility_Functions::create_purchase_units_items_list( $cart_items );
 
+		$is_store_pickup = $wspsc_cart->get_store_pickup();
+
 		//Get the shipping preference.
 		$all_items_digital = $wspsc_cart->all_cart_items_digital();
-		if( $all_items_digital ){
+		if( $all_items_digital || $is_store_pickup ){
 			//This will only happen if the shortcode attribute 'digital' is set to '1' for all the items in the cart. 
 			//So we don't need to check postage cost.
 			$shipping_preference = 'NO_SHIPPING';
@@ -102,7 +104,7 @@ class PayPal_Button_Ajax_Hander {
 			//At least one item is not digital. Get the customer-provided shipping address on the PayPal site.
 			$shipping_preference = 'GET_FROM_FILE';//This is also the default value for the shipping preference.
 		}
-		PayPal_Utility_Functions::log("Shipping preference based on the 'all items digital' flag: " . $shipping_preference, true);
+		PayPal_Utility_Functions::log("Shipping preference based on the 'all items digital' and 'store pickup' flag: " . $shipping_preference, true);
 
 		// Create the order using the PayPal API.
 		// https://developer.paypal.com/docs/api/orders/v2/#orders_create
@@ -160,6 +162,9 @@ class PayPal_Button_Ajax_Hander {
 	 * Handles the order capture for standard 'Buy Now' type buttons.
 	 */
 	public function pp_capture_order(){
+
+		// TODO: Remove this.
+		wpsc_log_debug_array($_POST, false);
 
 		//Get the data from the request
 		$data = isset( $_POST['data'] ) ? stripslashes_deep( $_POST['data'] ) : array();

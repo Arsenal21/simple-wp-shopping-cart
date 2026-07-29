@@ -221,7 +221,7 @@ class paypal_ipn_handler {
 		$mc_gross = $this->ipn_data['mc_gross'];
 		update_post_meta( $post_id, 'wpsc_total_amount', $mc_gross );
 		update_post_meta( $post_id, 'wpsc_ipaddress', $ip_address );
-		update_post_meta( $post_id, 'wpsc_address', $address );
+
 		update_post_meta( $post_id, 'wpspsc_phone', $phone ); // TODO: Need to remove this later
 		update_post_meta( $post_id, 'wpsc_phone', $phone );
 		$status = "Paid";
@@ -253,18 +253,26 @@ class paypal_ipn_handler {
 
 		$orig_cart_postmeta = WPSC_Cart::get_cart_from_postmeta($post_id);
 
+		$is_store_pickup = $orig_cart_postmeta->get_store_pickup();
+
 		/**
 		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
 		 */
 		$this->ipn_data['regional_shipping_cost'] = 0;
 		$this->ipn_data['shipping_region'] = '';
-		$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
-		if ($selected_shipping_region) {
-			wpsc_log_payment_debug('Selected shipping region option: ', true);
-			wpsc_log_debug_array($selected_shipping_region, true);
 
-			$this->ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
-			$this->ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+		if ($is_store_pickup) {
+			$shipping = 0;
+			$address = '';
+		} else {
+			$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
+			if ($selected_shipping_region) {
+				wpsc_log_payment_debug('Selected shipping region option: ', true);
+				wpsc_log_debug_array($selected_shipping_region, true);
+
+				$this->ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
+				$this->ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+			}
 		}
 
 		if (empty( $shipping )) {
@@ -278,6 +286,9 @@ class paypal_ipn_handler {
 
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $shipping );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->ipn_data['shipping_region'] );
+
+		update_post_meta( $post_id, 'wpsc_address', $address );
+		update_post_meta( $post_id, 'wpsc_store_pickup', $is_store_pickup );
 
 		/**
 		 * Check if tax region was used. If so, calculate regional tax amount and also add the tax region in the ipn data.

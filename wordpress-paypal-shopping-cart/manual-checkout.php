@@ -5,10 +5,14 @@ class WPSC_Manual_Checkout {
 	public $data = array();
 
 	public static function validate_checkout_form( $post ){
+		$cart_obj = WPSC_Cart::get_instance();
+		$is_all_digital = $cart_obj->all_cart_items_digital();
+		$is_store_pickup = $cart_obj->get_store_pickup();
+
 		if ( !isset($post['first_name']) || empty(trim($post['first_name'])) ) return false;
 		if ( !isset($post['email']) || empty(trim($post['email'])) || !is_email(trim($post['email'])) ) return false;
 
-		if ( ! WPSC_Cart::get_instance()->all_cart_items_digital()){
+		if ( empty($is_all_digital) && empty($is_store_pickup) ) {
 			if ( !isset($post['address']['street']) || empty(trim($post['address']['street'])) ) return false;
 			if ( !isset($post['address']['city']) || empty(trim($post['address']['city'])) ) return false;
 			if ( !isset($post['address']['state']) || empty(trim($post['address']['state'])) ) return false;
@@ -58,6 +62,8 @@ class WPSC_Manual_Checkout {
 		update_post_meta( $post_id, 'wpsc_tax_amount', $this->data['tax_amount'] );
 		update_post_meta( $post_id, 'wpsc_tax_region', $this->data['tax_region'] );
 		update_post_meta( $post_id, 'wpsc_shipping_amount', $this->data['shipping'] );
+		update_post_meta( $post_id, 'wpsc_shipping_amount', $this->data['shipping'] );
+		update_post_meta( $post_id, 'wpsc_store_pickup', $this->data['store_pickup'] );
 		update_post_meta( $post_id, 'wpsc_shipping_region', $this->data['shipping_region'] );
 		update_post_meta( $post_id, 'wpspsc_items_ordered', $this->data['product_details'] );  // TODO: Need to remove this later
 		update_post_meta( $post_id, 'wpsc_items_ordered', $this->data['product_details'] );
@@ -155,6 +161,13 @@ class WPSC_Manual_Checkout {
 
 		$shipping = $cart_obj->get_total_shipping_cost();
 		$this->data['shipping'] = !empty( $shipping ) ? wpsc_number_format_price( $shipping ) : "0.00";
+
+		$is_store_pickup = $cart_obj->get_store_pickup();
+		$this->data['store_pickup'] = $is_store_pickup;
+		if ($is_store_pickup){
+			$this->data['shipping'] = "0.00";
+			$this->data['shipping_region'] = '';
+		}
 
 		$this->data['status'] = "Pending";
 	}

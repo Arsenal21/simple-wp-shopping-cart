@@ -473,6 +473,28 @@ function wpsc_cart_actions_handler() {
         $wpsc_cart->save_cart_to_postmeta();
 
 		wpsc_js_redirect_if_using_anchor();
+	} else if ( isset( $_POST['wpsc_store_pickup_submit'] ) ) {
+        if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'wpsc_store_pickup' ) ) {
+            wp_die( 'Error! Nonce Security Check Failed!' );
+        }
+
+        $wpsc_cart = WPSC_Cart::get_instance();
+
+        $store_pickup = false;
+        if (isset($_POST['wpsc_store_pickup'])) {
+            $store_pickup = true;
+            $wpsc_cart->set_cart_action_msg('<div class="wpsc-success-message">'.__("You have selected to pickup from the store. No shipping will be charged.", "wordpress-simple-paypal-shopping-cart") .'</div>');
+        }
+
+        $wpsc_cart->set_store_pickup($store_pickup);
+
+        // Recalculate to update all the price for new regional shipping cost.
+        $wpsc_cart->calculate_cart_totals_and_postage();
+
+        // Save the cart.
+        $wpsc_cart->save_cart_to_postmeta();
+
+		wpsc_js_redirect_if_using_anchor();
 	}
 }
 
@@ -742,6 +764,10 @@ function wpsc_front_side_enqueue_scripts() {
 
 	$is_shipping_region_enabled = empty(get_option('enable_shipping_by_region')) ? 'false' : 'true' ;
 	wp_add_inline_script("wpsc-checkout-cart-script", "const wpscIsShippingRegionEnabled = " . $is_shipping_region_enabled .";" , 'before');
+
+    $is_store_pickup_enabled = empty(get_option('wpsc_enable_store_pickup', false)) ? 'false' : 'true';
+    wp_add_inline_script("wpsc-checkout-cart-script", "const wpscIsStorePickupEnabled = " . $is_store_pickup_enabled .";" , 'before');
+
 	wp_add_inline_script("wpsc-checkout-cart-script", 'var wpsc_ajaxUrl = "'.esc_url(admin_url( "admin-ajax.php" )).'";' , 'before');
 	wp_localize_script("wpsc-checkout-cart-script", 'wpscCheckoutCartMsg', array(
         'tncError' => __("You must accept the terms before you can proceed.", "wordpress-simple-paypal-shopping-cart"),

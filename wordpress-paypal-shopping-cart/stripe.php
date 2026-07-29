@@ -32,7 +32,9 @@ class stripe_ipn_handler {
 		$this->debug_log( 'Executing validate_and_dispatch_product()', true );
 		
         $wpsc_cart = WPSC_Cart::get_instance();
-        
+
+		$is_store_pickup = $wpsc_cart->get_store_pickup();
+
 		$txn_id = $this->ipn_data["txn_id"];
         $transaction_type='cart';
 		$payment_status = $this->ipn_data["payment_status"];		
@@ -185,20 +187,27 @@ class stripe_ipn_handler {
 		}
 
 		$orig_cart_postmeta = WPSC_Cart::get_cart_from_postmeta($post_id);
-		
+
 		/**
 		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
 		 */
 		$this->ipn_data['regional_shipping_cost'] = 0;
 		$this->ipn_data['shipping_region'] = '';
-		$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
-		if ($selected_shipping_region) {
-			wpsc_log_payment_debug('Selected shipping region option: ', true);
-			wpsc_log_debug_array($selected_shipping_region, true);
 
-			$this->ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
-			$this->ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+		if ($is_store_pickup) {
+			$shipping = 0;
+		} else {
+			$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
+			if ($selected_shipping_region) {
+				wpsc_log_payment_debug('Selected shipping region option: ', true);
+				wpsc_log_debug_array($selected_shipping_region, true);
+
+				$this->ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
+				$this->ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+			}
 		}
+
+		update_post_meta( $post_id, 'wpsc_store_pickup', $is_store_pickup );
 
 		if (empty( $shipping )) {
 			$shipping = "0.00";
@@ -452,7 +461,15 @@ class stripe_ipn_handler {
 		// Get billing address
 		$billing_address = $this->get_ipn_billing_address($charge_array);
 		// Get shipping address
-		$shipping_address = $this->get_ipn_shipping_address($data);
+
+		$wspsc_cart =  WPSC_Cart::get_instance();
+
+		$is_store_pickup = $wspsc_cart->get_store_pickup();
+		if ($is_store_pickup) {
+			$shipping_address = '';
+		} else {
+			$shipping_address = $this->get_ipn_shipping_address($data);
+		}
 
 		$price_in_cents = floatval($data['amount_received']);
 		$currency_code_payment = strtoupper($data['currency']);
@@ -464,9 +481,6 @@ class stripe_ipn_handler {
 		} else {
 			$payment_amount = $price_in_cents / 100;// The amount (in cents). This value is used in Stripe API.
 		}
-
-
-		$wspsc_cart =  WPSC_Cart::get_instance();
 
 		$cart_id = $wspsc_cart->get_cart_id();
 		$cart_post_id = $wspsc_cart->get_cart_cpt_id();

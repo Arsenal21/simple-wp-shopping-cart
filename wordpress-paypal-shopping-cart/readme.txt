@@ -241,6 +241,7 @@ None
 == Changelog ==
 = WIP =
 - WordPress version 7 related admin settings UI issue fixed.
+- New store pickup feature settings added.
 
 = 5.3.0 =
 - Updated the language translation POT file.

@@ -81,19 +81,27 @@ class WPSC_Post_Payment_Related
 		$ipn_data['cart_items'] = $orig_cart_items;
 
 		$orig_cart_postmeta = WPSC_Cart::get_cart_from_postmeta($ipn_data['post_id']);
-		
+
+		$is_store_pickup = WPSC_Cart::get_instance()->get_store_pickup();
+
 		/**
 		 * Check if shipping region was used. If so, calculate the total shipping cost and also add the shipping region in the ipn data.
 		 */
 		$ipn_data['regional_shipping_cost'] = 0;
 		$ipn_data['shipping_region'] = '';
-		$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
-		if ($selected_shipping_region) {
-			wpsc_log_payment_debug('Selected shipping region option: ', true);
-			wpsc_log_debug_array($selected_shipping_region, true);
+		$ipn_data['store_pickup'] = $is_store_pickup;
 
-			$ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
-			$ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+		if ($is_store_pickup) {
+			$ipn_data['shipping'] = 0;
+		} else {
+			$selected_shipping_region = check_shipping_region_str($orig_cart_postmeta->selected_shipping_region);
+			if ($selected_shipping_region) {
+				wpsc_log_payment_debug('Selected shipping region option: ', true);
+				wpsc_log_debug_array($selected_shipping_region, true);
+
+				$ipn_data['regional_shipping_cost'] = $selected_shipping_region['amount'];
+				$ipn_data['shipping_region'] = $selected_shipping_region['type'] == '0' ? wpsc_get_country_name_by_country_code($selected_shipping_region['loc']) : $selected_shipping_region['loc'];
+			}
 		}
 
 		/**
@@ -155,6 +163,7 @@ class WPSC_Post_Payment_Related
 		update_post_meta($post_id, 'wpsc_total_amount', $ipn_data['mc_gross']);
 		update_post_meta($post_id, 'wpsc_ipaddress', $ipn_data['ip_address']);
 		update_post_meta($post_id, 'wpsc_address', $ipn_data['address']);
+		update_post_meta($post_id, 'wpsc_store_pickup', $ipn_data['store_pickup']);
 		update_post_meta($post_id, 'wpspsc_phone', $ipn_data['contact_phone']); // TODO: Need to remove this later
 		update_post_meta($post_id, 'wpsc_phone', $ipn_data['contact_phone']);
 		update_post_meta($post_id, 'wpsc_applied_coupon', $ipn_data['applied_coupon_code']);
