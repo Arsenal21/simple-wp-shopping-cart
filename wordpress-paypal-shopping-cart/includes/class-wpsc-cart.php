@@ -26,7 +26,7 @@ class WPSC_Cart {
 	 * @var string A lookup string for calculating regional tax cost.
 	 */
     public $selected_tax_region = '';
-
+	private $store_pickup = false;
     public $on_page_carts_div_count = 0;
     public static $on_page_cart_div_ids = array();
     public $item_shipping_total = 0;
@@ -169,6 +169,21 @@ class WPSC_Cart {
     public function get_selected_tax_region(){
         return $this->selected_tax_region;
     }
+
+	public function set_store_pickup($store_pickup){
+		$is_store_pickup_enabled = get_option( 'wpsc_enable_store_pickup', false);
+		if ($is_store_pickup_enabled){
+			$this->store_pickup = boolval($store_pickup);
+		}
+	}
+
+	public function get_store_pickup(){
+		$is_store_pickup_enabled = get_option( 'wpsc_enable_store_pickup', false);
+		if (empty($is_store_pickup_enabled)){
+			return false;
+		}
+		return (bool) $this->store_pickup;
+	}
 
     /**
      * Add / update items to the cart.
@@ -372,6 +387,11 @@ class WPSC_Cart {
 			$item_total_shipping += $item->get_shipping() * $item->get_quantity();
 			$total_items += $item->get_quantity();
 		}
+
+        if ( $this->get_store_pickup() ){
+	        $item_total_shipping = 0;
+        }
+
 		if ( ! empty( $item_total_shipping ) ) {
             $baseShipping = get_option( 'cart_base_shipping_cost' );
             // Check if shipping by region is enabled, override base shipping if enabled.
@@ -506,6 +526,7 @@ class WPSC_Cart {
      */
 	public function get_items() {
 		if ( $this->get_cart_cpt_id() ) {
+			// TODO: This postmeta has been deprecated. Use the $this->items instead.
 			$products = get_post_meta( $this->get_cart_cpt_id(), 'wpsc_cart_items', true );
 
             if (!is_array($products) || count($products) == 0) {

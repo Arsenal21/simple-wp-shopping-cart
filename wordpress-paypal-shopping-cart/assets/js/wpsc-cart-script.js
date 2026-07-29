@@ -1,4 +1,4 @@
-/* global wp, wpscIsTncEnabled, wpscIsShippingRegionEnabled, wpscIsTaxRegionEnabled, wpscShippingRegionOptions, wpscCheckoutCartMsg*/
+/* global wp, wpscIsTncEnabled, wpscIsShippingRegionEnabled, wpscIsStorePickupEnabled, wpscIsTaxRegionEnabled, wpscShippingRegionOptions, wpscCheckoutCartMsg*/
 
 /**
  * NOTE: The following variables will be added by a wp_add_inline_script when certain conditions are met.
@@ -33,6 +33,8 @@ var wpscTaxRegionInputSelector = '.wpsc-tax-region-input';
 var wpscTaxRegionErrorDivSelector = '.wpsc-tax-region-error';
 var wpscTaxRegionInputs = document.querySelectorAll(wpscTaxRegionInputSelector);
 var wpscTaxRegionInputElementsMeta = {};
+
+var wpscStorePickupCheckboxSelector = '.wpsc_cart_store_pickup_checkbox';
 
 function wpsc_cartInit () {
 
@@ -91,6 +93,18 @@ function wpsc_cartInit () {
 				id: element.id,
 				value: element.value,
 			}
+		});
+	}
+
+	if (wpscIsStorePickupEnabled){
+		const wpscStorePickupCheckboxes = document.querySelectorAll(wpscStorePickupCheckboxSelector);
+		wpscStorePickupCheckboxes.forEach(element => {
+			element.addEventListener('change', (e) => {
+				const wpscStorePickupForm = element.closest('form');
+				if (wpscStorePickupForm){
+					wpscStorePickupForm.requestSubmit();
+				}
+			})
 		});
 	}
 }
@@ -177,6 +191,14 @@ function wpsc_getClosestElement(reference, target, context = '.wpsc_checkout_for
  * @return {boolean}
  */
 function wpsc_validateShippingRegion(context, showErrorMsg = true) {
+	// Don't need to validate shipping region if store pickup is selected.
+	if (wpscIsStorePickupEnabled ){
+		const storePickupCheckbox = wpsc_getClosestElement(context, wpscStorePickupCheckboxSelector);
+		if (storePickupCheckbox && storePickupCheckbox.checked){
+			return true;
+		}
+	}
+
 	if (wpscIsShippingRegionEnabled) {
 		const shippingRegionContainer = wpsc_getClosestElement(context, wpscShippingRegionContainerSelector)
 		if (showErrorMsg) {

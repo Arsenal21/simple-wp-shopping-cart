@@ -48,6 +48,7 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
     $total_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_total_amount', true);
     $shipping_amount = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_amount', true);
     $shipping_region = get_post_meta($wpsc_cart_orders->ID, 'wpsc_shipping_region', true);
+    $is_store_pickup = get_post_meta($wpsc_cart_orders->ID, 'wpsc_store_pickup', true);
     $tax_region = get_post_meta($wpsc_cart_orders->ID, 'wpsc_tax_region', true);
     $shipping_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_address', true); // Using shipping address in wpsc_address post meta. This meta-key hasn't changed for backward compatibility.
     $billing_address = get_post_meta($wpsc_cart_orders->ID, 'wpsc_billing_address', true);
@@ -169,6 +170,12 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
         <tr>
             <td><?php _e("Applied Coupon Code", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_applied_coupon" value="<?php echo esc_attr($applied_coupon); ?>" readonly /></td>
+        </tr>
+        <tr>
+            <td><?php _e("Pickup From Store", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td>
+                <input type="text" size="20" value="<?php echo $is_store_pickup ? 'Yes' : '' ?>" readonly />
+            </td>
         </tr>
         <?php
         do_action('wpspsc_edit_order_pre_table_end', $order_id);  // TODO: Old hook. Need to remove this.

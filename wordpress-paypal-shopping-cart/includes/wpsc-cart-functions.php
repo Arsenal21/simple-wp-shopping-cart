@@ -230,7 +230,7 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
 
 		if ( !empty(floatval( $tax_amount )) ) {
 			//Not using profile based shipping
-			$form .= '<input type="hidden" name="tax_1" value="' . esc_attr( $tax_amount ) . '" />';
+			$form .= '<input type="hidden" name="tax_cart" value="' . esc_attr( $tax_amount ) . '" />';
 		}
 
 		//Tackle the "no_shipping" parameter
@@ -330,7 +330,7 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
 
         // Shipping region select section field.
 		$is_shipping_by_region_enabled = get_option('enable_shipping_by_region');
-		if ( $is_shipping_by_region_enabled ) {
+		if ( $is_shipping_by_region_enabled && empty($wspsc_cart->get_store_pickup()) ) {
 			$selected_shipping_region_variant = $wspsc_cart->get_selected_shipping_region();
 			$output .= wpsc_generate_shipping_region_section($carts_cnt, $selected_shipping_region_variant);
 		}
@@ -341,6 +341,12 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
 			$selected_tax_region_variant = $wspsc_cart->get_selected_tax_region();
 			$output .= wpsc_generate_tax_region_section($carts_cnt, $selected_tax_region_variant);
 		}
+
+        // Check if store pickup option enabled or not.
+        $is_store_pickup_enabled = get_option( 'wpsc_enable_store_pickup', false);
+        if ( $is_store_pickup_enabled ) {
+            $output .= wpsc_generate_store_pickup_section( $carts_cnt );
+        }
 
 		// Check if terms and conditions are enabled or not.
 		$is_tnc_enabled = get_option( 'wp_shopping_cart_enable_tnc' ) != '';
@@ -481,6 +487,41 @@ function wpsc_generate_tnc_section( $carts_cnt ) {
 	$html .= '<br />';
 	$html .= '<span class="wp-shopping-cart-tnc-error" style="color: #cc0000; font-size: smaller;" role="alert"></span>';
 	$html .= '</p>';
+	$html .= '</div>';
+
+	return $html;
+}
+
+/**
+ * Generate the rendering code for store pickup if enabled.
+ *
+ * @param int $carts_cnt The cart no.
+ *
+ * @return string HTML output.
+ */
+function wpsc_generate_store_pickup_section( $carts_cnt ) {
+	$html = '';
+
+    $checked_str = WPSC_Cart::get_instance()->get_store_pickup() ? ' checked="checked"' : '';
+
+    $input_id = 'wpsc_cart_store_pickup_input_' . $carts_cnt;
+    $checkbox_label = apply_filters('', __( 'I want to pickup from store', 'wordpress-simple-paypal-shopping-cart'));
+
+	$html .= '<div class="wpsc-cart-store-pickup-container pure-u-1" style="margin-top: 10px;">';
+    $html .= '<form method="post" action="" class="wpsc-store-pickup-form" id="wpsc-store-pickup-form-'.$carts_cnt.'">';
+	$html .= '<p>';
+	$html .= '<label for="'.esc_attr($input_id).'" class="pure-checkbox">';
+	$html .= '<input type="checkbox" class="wpsc_cart_store_pickup_checkbox" name="wpsc_store_pickup" id="'.esc_attr($input_id).'" value="1" style="margin-right: 8px" '.esc_attr($checked_str).' >';
+	$html .= $checkbox_label;
+	$html .= '</label>';
+	$html .= '<br />';
+	$html .= '<span class="wpsc_cart_store_pickup_error" style="color: #cc0000; font-size: smaller;" role="alert"></span>';
+	$html .= '</p>';
+    $html .= wp_nonce_field( 'wpsc_store_pickup', '_wpnonce', true, false );
+
+    $html .= '<input type="hidden" name="wpsc_store_pickup_submit" value="1" />';
+
+    $html .= '</form>';
 	$html .= '</div>';
 
 	return $html;

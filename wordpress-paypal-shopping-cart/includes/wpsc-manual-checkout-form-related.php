@@ -6,6 +6,7 @@ function wpsc_render_manual_checkout_form() {
 	$wpsc_cart = WPSC_Cart::get_instance();
 	$cart_id = $wpsc_cart->get_cart_id();
 	$is_all_cart_items_digital = $wpsc_cart->all_cart_items_digital();
+	$is_store_pickup = $wpsc_cart->get_store_pickup();
 
 	$manual_checkout_hide_country_field = get_option( 'wpsc_manual_checkout_hide_country_field' , false);
 
@@ -50,7 +51,7 @@ function wpsc_render_manual_checkout_form() {
 
 	// end of 'wpsc-manual-payment-form-basic-fields'
 
-	if ( !$is_all_cart_items_digital ) {
+	if ( !$is_all_cart_items_digital && empty($is_store_pickup) ) {
 	    $output .= '<div class="wpsc-manual-payment-address-section-label">'. __('Shipping Address', 'wordpress-simple-paypal-shopping-cart') .'</div>';
 
 	    $output .= '<div class="wpsc-manual-payment-form-address-fields">';

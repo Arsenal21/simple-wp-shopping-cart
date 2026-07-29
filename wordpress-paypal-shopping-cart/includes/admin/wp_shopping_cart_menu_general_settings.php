@@ -59,6 +59,7 @@ function wpsc_show_general_settings_page ()
         update_option('shopping_cart_anchor', (isset($_POST['shopping_cart_anchor']) && $_POST['shopping_cart_anchor']!='') ? 'checked="checked"':'' );
         update_option( 'wpspc_disable_standard_checkout', $disable_standard_checkout );
         update_option('wpsc_enable_ajax_add_to_cart', (isset($_POST['wpsc_enable_ajax_add_to_cart']) && !empty($_POST['wpsc_enable_ajax_add_to_cart'])) ? 'checked="checked"':'' );
+        update_option('wpsc_enable_store_pickup', (isset($_POST['wpsc_enable_store_pickup']) && !empty($_POST['wpsc_enable_store_pickup'])) ? 'checked="checked"':'' );
 
         update_option('wp_shopping_cart_enable_sandbox', (isset($_POST['wp_shopping_cart_enable_sandbox']) && $_POST['wp_shopping_cart_enable_sandbox']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_enable_debug', (isset($_POST['wp_shopping_cart_enable_debug']) && $_POST['wp_shopping_cart_enable_debug']!='') ? 'checked="checked"':'' );
@@ -157,6 +158,11 @@ function wpsc_show_general_settings_page ()
     $wpsc_enable_ajax_add_to_cart = '';
     if (get_option('wpsc_enable_ajax_add_to_cart')){
         $wpsc_enable_ajax_add_to_cart = 'checked="checked"';
+    }
+
+    $wpsc_enable_store_pickup = '';
+    if (get_option('wpsc_enable_store_pickup')){
+        $wpsc_enable_store_pickup = 'checked="checked"';
     }
 
     $wpsc_show_empty_cart_option = '';
@@ -419,6 +425,14 @@ echo '<tr valign="top">
     <td><input type="checkbox" name="wpsc_enable_ajax_add_to_cart" value="1" '.$wpsc_enable_ajax_add_to_cart.' />
     <br />'.__("When enabled, 'Add to Cart' buttons will add products to the cart without reloading the entire page. Customers will see an instant confirmation and the cart updates automatically. ", "wordpress-simple-paypal-shopping-cart")
     . '<a href="https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons" target="_blank"> ' . __("Learn more", "wordpress-simple-paypal-shopping-cart") . '</a>.</td>
+</tr>
+
+<tr valign="top">
+    <th scope="row">'.__("Enable Store Pickup", "wordpress-simple-paypal-shopping-cart").'</th>
+    <td>
+        <input type="checkbox" name="wpsc_enable_store_pickup" value="1" ' . esc_attr($wpsc_enable_store_pickup) . ' />
+        <p class="">' . __( "Check this option if you want to allow your users to be able to pick up from your store. When this is enabled, the users will be able to choose to pickup the items from the store. In that case the cart will not charge any shipping.", "wordpress-simple-paypal-shopping-cart" ) . '</p>
+    </td>
 </tr>
 
 <tr valign="top">

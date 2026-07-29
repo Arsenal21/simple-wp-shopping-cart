@@ -236,20 +236,17 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 
                 // Check if shipping region is enabled and append error message if validation fails.
                 if (wpscShippingRegionEnabled) {
-                    const shippingRegionContainer = wpsc_getClosestElement(currentPPCPButtonWrapper, wpscShippingRegionContainerSelector)
-                    wpsc_handleShippingRegionErrorMsg(shippingRegionContainer);
+                    wpsc_validateShippingRegion(currentPPCPButtonWrapper);
                 }
 
                 // Check if tax region is enabled and append error message if validation fails.
                 if (wpscTaxRegionEnabled) {
-                    const taxRegionContainer = wpsc_getClosestElement(currentPPCPButtonWrapper, wpscTaxRegionContainerSelector)
-                    wpsc_handleTaxRegionErrorMsg(taxRegionContainer);
+                    wpsc_validateTaxRegion(currentPPCPButtonWrapper);
                 }
 
                 // Check if terms and condition is enabled and append error message if not checked.
                 if (wpscTncEnabled) {
-                    const tncContainer = wpsc_getClosestElement(currentPPCPButtonWrapper, wpscTncContainerSelector)
-                    wpsc_handleTncErrorMsg(tncContainer);
+                    wpsc_validateTnc(currentPPCPButtonWrapper);
                 }
 
             }
