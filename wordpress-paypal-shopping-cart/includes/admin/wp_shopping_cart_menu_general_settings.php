@@ -424,14 +424,15 @@ echo '<tr valign="top">
     <th scope="row">'.__("Enable AJAX add to cart buttons", "wordpress-simple-paypal-shopping-cart").'</th>
     <td><input type="checkbox" name="wpsc_enable_ajax_add_to_cart" value="1" '.$wpsc_enable_ajax_add_to_cart.' />
     <br />'.__("When enabled, 'Add to Cart' buttons will add products to the cart without reloading the entire page. Customers will see an instant confirmation and the cart updates automatically. ", "wordpress-simple-paypal-shopping-cart")
-    . '<a href="https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons" target="_blank"> ' . __("Learn more", "wordpress-simple-paypal-shopping-cart") . '</a>.</td>
+    . ' <a href="https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons" target="_blank">' . __("Learn more", "wordpress-simple-paypal-shopping-cart") . '</a>.</td>
 </tr>
 
 <tr valign="top">
     <th scope="row">'.__("Enable Store Pickup", "wordpress-simple-paypal-shopping-cart").'</th>
     <td>
         <input type="checkbox" name="wpsc_enable_store_pickup" value="1" ' . esc_attr($wpsc_enable_store_pickup) . ' />
-        <p class="">' . __( "Check this option if you want to allow your users to be able to pick up from your store. When this is enabled, the users will be able to choose to pickup the items from the store. In that case the cart will not charge any shipping.", "wordpress-simple-paypal-shopping-cart" ) . '</p>
+        <p class="">' . __( "Check this option if you want to allow your users to be able to pick up from your store. When this is enabled, the users will be able to choose to pickup the items from the store. In that case the cart will not charge any shipping.", "wordpress-simple-paypal-shopping-cart" )
+        . ' <a href="https://www.tipsandtricks-hq.com/ecommerce/store-pickup-option-let-customers-pick-up-orders-from-your-store-5563" target="_blank">' . __("Learn more", "wordpress-simple-paypal-shopping-cart") . '.</p>
     </td>
 </tr>
 
