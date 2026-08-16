@@ -21,7 +21,21 @@ wpsc_register_block_type(
             return [
                 wpsc_element(
                     'div',
-                    blockProps,
+                    {
+                        ...blockProps,
+
+                        // Disable links in the editor preview.
+                        onClickCapture: function (event) {
+                            if (event.target.closest('a')) {
+                                event.preventDefault();
+                            }
+                        },
+
+                        // Disable form submission in the editor preview.
+                        onSubmitCapture: function (event) {
+                            event.preventDefault();
+                        },
+                    },
                     wpsc_element(
                         wpsc_serverSideRender,
                         {

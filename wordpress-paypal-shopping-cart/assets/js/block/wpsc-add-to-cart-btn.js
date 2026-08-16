@@ -18,10 +18,40 @@ wpsc_register_block_type(
         edit: function (props) {
             const blockProps = wpsc_useBlockProps();
 
+            blockProps.ref = function (element) {
+                if (element) {
+                    const editorWindow = element.ownerDocument.defaultView;
+
+                    /*
+                    * The 'ReadForm' function is called when the cart button is interacted.
+                    * So defining an empty function prevents JavaScript actions from being failed in the editor screen.
+                    */
+                    if (typeof editorWindow.ReadForm !== 'function') {
+                        editorWindow.ReadForm = function () {
+                            return false;
+                        };
+                    }
+                }
+            };
+
             return [
                 wpsc_element(
                     'div',
-                    blockProps,
+                    {
+                        ...blockProps,
+
+                        // Disable links in the editor preview.
+                        onClickCapture: function (event) {
+                            if (event.target.closest('a')) {
+                                event.preventDefault();
+                            }
+                        },
+
+                        // Disable form submission in the editor preview.
+                        onSubmitCapture: function (event) {
+                            event.preventDefault();
+                        },
+                    },
                     wpsc_element(
                         wpsc_serverSideRender,
                         {
@@ -270,11 +300,3 @@ wpsc_register_block_type(
         },
     }
 );
-
-/*
-* The 'ReadForm' function is called when the cart button is interacted.
-* So defining an empty function prevents javascript actions from being failed in the editor screen.
-*/
-function ReadForm(){
-    // do nothing.
-}

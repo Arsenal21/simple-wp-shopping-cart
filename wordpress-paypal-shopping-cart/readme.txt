@@ -240,6 +240,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- Links inside blocks in edit screen is now disabled.
 
 = 5.3.1 =
 - Added new settings for the store pickup feature. [Store Pickup Documentation](https://www.tipsandtricks-hq.com/ecommerce/store-pickup-option-let-customers-pick-up-orders-from-your-store-5563)
