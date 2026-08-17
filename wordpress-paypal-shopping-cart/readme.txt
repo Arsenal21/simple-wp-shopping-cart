@@ -4,7 +4,7 @@ Donate link: https://www.tipsandtricks-hq.com
 Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wordpress ecommerce, wordpress store, store, sell digital products, sell service, digital downloads, paypal,
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 7.0
+Tested up to: 7.1
 Stable tag: 5.3.2
 License: GPLv2 or later
 
