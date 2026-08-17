@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 5.3.1
+Stable tag: 5.3.2
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -240,8 +240,9 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
-= WIP =
-- Links inside blocks in edit screen is now disabled.
+
+= 5.3.2 =
+- WordPress 7.1 shopping cart block compatibility update.
 
 = 5.3.1 =
 - Added new settings for the store pickup feature. [Store Pickup Documentation](https://www.tipsandtricks-hq.com/ecommerce/store-pickup-option-let-customers-pick-up-orders-from-your-store-5563)
