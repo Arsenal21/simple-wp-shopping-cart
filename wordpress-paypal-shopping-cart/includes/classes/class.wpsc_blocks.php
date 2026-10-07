@@ -10,7 +10,7 @@ class WPSC_Blocks {
 	 *
 	 * @var string[]
 	 */
-	public $deps = array( 'wp-blocks', 'wp-element', 'wp-components' );
+	public $deps = array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'wp-compose' );
 
 	/**
 	 * Initiate Block Class.

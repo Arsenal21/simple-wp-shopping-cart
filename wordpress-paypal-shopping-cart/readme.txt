@@ -240,6 +240,8 @@ https://www.tipsandtricks-hq.com/wordpress-simple-paypal-shopping-cart-plugin-76
 None
 
 == Changelog ==
+= WIP =
+- A Gutenberg Block related issue fixed.
 
 = 5.3.2 =
 - WordPress 7.1 shopping cart block compatibility update.
