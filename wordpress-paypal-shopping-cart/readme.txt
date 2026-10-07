@@ -242,6 +242,8 @@ None
 == Changelog ==
 = WIP =
 - A Gutenberg Block related issue fixed.
+- Now only published content can register products data to dynamic products.
+- PayPal Standard now always verifies the recipient against the configured primary PayPal email address. Removed the optional strict email check setting.
 
 = 5.3.2 =
 - WordPress 7.1 shopping cart block compatibility update.

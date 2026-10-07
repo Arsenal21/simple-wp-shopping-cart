@@ -171,7 +171,11 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	}
 
 	$product_key = WPSC_Dynamic_Products::generate_product_key($name, $price);
-	WPSC_Dynamic_Products::get_instance()->save($product_key, $dynamic_product_data);
+	
+	// Only published content may register products; previews must not change saved product data.
+	if ( 'publish' === get_post_status() && ! is_preview() ) {
+		WPSC_Dynamic_Products::get_instance()->save($product_key, $dynamic_product_data);
+	}
 
 	$cart_id = WPSC_Cart::get_instance()->get_cart_id();
 	if (!empty($cart_id)){

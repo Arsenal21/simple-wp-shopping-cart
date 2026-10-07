@@ -50,7 +50,6 @@ function wpsc_show_general_settings_page ()
 
         update_option('wp_shopping_cart_image_hide', (isset($_POST['wp_shopping_cart_image_hide']) && $_POST['wp_shopping_cart_image_hide']!='') ? 'checked="checked"':'' );
         update_option('wp_cart_paypal_co_page_style', sanitize_text_field($_POST["wp_cart_paypal_co_page_style"]));
-        update_option('wp_shopping_cart_strict_email_check', (isset($_POST['wp_shopping_cart_strict_email_check']) && $_POST['wp_shopping_cart_strict_email_check']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_nonce_add_cart', (isset($_POST['wspsc_disable_nonce_add_cart']) && $_POST['wspsc_disable_nonce_add_cart']!='') ? 'checked="checked"':'' );
         update_option('wp_shopping_cart_do_not_show_qty_in_cart', (isset($_POST['wp_shopping_cart_do_not_show_qty_in_cart']) && $_POST['wp_shopping_cart_do_not_show_qty_in_cart']!='') ? 'checked="checked"':'' );
         update_option('wspsc_disable_price_check_add_cart', (isset($_POST['wspsc_disable_price_check_add_cart']) && $_POST['wspsc_disable_price_check_add_cart']!='') ? 'checked="checked"':'' );
@@ -139,11 +138,6 @@ function wpsc_show_general_settings_page ()
     }
 
     $wp_cart_paypal_co_page_style = get_option('wp_cart_paypal_co_page_style');
-
-    $wp_shopping_cart_strict_email_check = '';
-    if (get_option('wp_shopping_cart_strict_email_check')){
-        $wp_shopping_cart_strict_email_check = 'checked="checked"';
-    }
 
     $wspsc_disable_nonce_add_cart = '';
     if (get_option('wspsc_disable_nonce_add_cart')){
@@ -245,7 +239,8 @@ echo '
 
 <tr valign="top">
 <th scope="row">'.(__("Paypal Email Address", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_paypal_email" value="'.esc_attr($defaultEmail).'" size="40" /></td>
+<td><input type="text" name="cart_paypal_email" value="'.esc_attr($defaultEmail).'" size="40" />
+<br /><span class="description">'.__("Enter your PayPal account's primary email address, not an alias. PayPal Standard payment notifications are always checked against this address. For sandbox testing, use the sandbox business account's primary email address.", "wordpress-simple-paypal-shopping-cart").'</span></td>
 </tr>
 <tr valign="top">
 <th scope="row">'.__( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ).'</th>
@@ -266,10 +261,7 @@ echo '
 <td><input type="checkbox" name="wspsc_open_pp_checkout_in_new_tab" value="1" '.$wspsc_open_pp_checkout_in_new_tab.' />
 <br />'.(__("If checked the PayPal checkout page will be opened in a new tab/window when the user clicks the checkout button.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
-<tr valign="top">
-<th scope="row">'.(__("Use Strict PayPal Email Address Checking", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_strict_email_check" value="1" '.$wp_shopping_cart_strict_email_check.' /><br />'.(__("If checked the script will check to make sure that the PayPal email address specified is the same as the account where the payment was deposited (Usage of PayPal Email Alias will fail too).", "wordpress-simple-paypal-shopping-cart")).'</td>
-</tr>
+
 <tr valign="top">
 <th scope="row">'.(__("Customize the Note to Seller Text", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td>'.(__("PayPal has removed this feature. We have created an addon so you can still collect instructions from customers at the time of checking out. ", "wordpress-simple-paypal-shopping-cart"))

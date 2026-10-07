@@ -24,17 +24,36 @@ class paypal_ipn_handler {
 		$this->ipn_response = '';
 	}
 
-	/*
-	 * This function gets called for both the following scenarios.
-	 * 1) Standard PayPal checkout IPN
-	 * 2) Smart checkout (from the wpsc_process_pp_smart_checkout() function).
-	 */
+	// Validate the verified PayPal Standard notification before fulfilling the order.
 	function validate_and_dispatch_product() {
 		//Check Product Name, Price, Currency, Receiver email
 
 		$this->debug_log( 'Executing validate_and_dispatch_product()', true );
 
-		$error_msg = '';
+		// A VERIFIED IPN authenticates the notification, not the intended merchant.
+		// Check the original values before sanitization can alter a malformed address.
+		$seller_paypal_email = get_option( 'cart_paypal_email' );
+		$receiver_email = isset( $this->ipn_data['receiver_email'] ) ? $this->ipn_data['receiver_email'] : '';
+		if ( ! is_string( $seller_paypal_email ) || ! is_email( trim( $seller_paypal_email ) ) ) {
+			$this->debug_log( 'PayPal IPN rejected: the configured PayPal email address is missing or invalid. Set the account primary email address in the plugin settings.', false );
+			return false;
+		}
+		if ( ! is_string( $receiver_email ) || '' === trim( $receiver_email ) ) {
+			$this->debug_log( 'PayPal IPN rejected: receiver_email is missing, empty or not a string.', false );
+			return false;
+		}
+		$seller_paypal_email = trim( $seller_paypal_email );
+		$receiver_email = trim( $receiver_email );
+		if ( ! is_email( $receiver_email ) ) {
+			$this->debug_log( 'PayPal IPN rejected: receiver_email is not a valid email address.', false );
+			return false;
+		}
+		if ( 0 !== strcasecmp( $seller_paypal_email, $receiver_email ) ) {
+			$this->debug_log( 'PayPal IPN rejected: recipient mismatch. Configured email: ' . $seller_paypal_email . '; receiver_email: ' . $receiver_email . '. Verify that the configured address is the PayPal account primary email, not an alias.', false );
+			return false;
+		}
+		$this->debug_log( 'PayPal recipient verification passed. receiver_email: ' . $receiver_email, true );
+
 		//Decode the custom field before sanitizing.
 		$custom_field_value = urldecode( $this->ipn_data['custom'] ); //urldecode is harmless
 		$this->ipn_data['custom'] = $custom_field_value;
@@ -172,16 +191,6 @@ class paypal_ipn_handler {
 			return;
 		}
 
-		if (get_option( 'wp_shopping_cart_strict_email_check' ) != '') {
-			$seller_paypal_email = get_option( 'cart_paypal_email' );
-			if ($seller_paypal_email != $this->ipn_data['receiver_email']) {
-				$error_msg .= 'Invalid Seller Paypal Email Address : ' . $this->ipn_data['receiver_email'];
-				$this->debug_log( $error_msg, false );
-				return;
-			} else {
-				$this->debug_log( 'Seller Paypal Email Address is Valid: ' . $this->ipn_data['receiver_email'], true );
-			}
-		}
 
 		$transaction_id = get_post_meta( $post_id, 'wpsc_txn_id', true );
 		if (! empty( $transaction_id )) {
@@ -409,6 +418,10 @@ class paypal_ipn_handler {
 		//Generate the post string from the _POST vars aswell as load the _POST vars into an array
 		$post_string = '';
 		foreach ( $_POST as $field => $value ) {
+			if ( ! is_string( $value ) ) {
+				$this->debug_log( 'PayPal IPN rejected: non-string value for field ' . json_encode( $field ) . '.', false );
+				return false;
+			}
 			$this->ipn_data[ "$field" ] = $value;
 			$post_string .= $field . '=' . urlencode( stripslashes( $value ) ) . '&';
 		}
