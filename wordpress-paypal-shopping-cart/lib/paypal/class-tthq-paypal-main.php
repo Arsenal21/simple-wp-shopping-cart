@@ -2,6 +2,10 @@
 
 namespace TTHQ\WPSC\Lib\PayPal;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use TTHQ\WPSC\Lib\PayPal\Onboarding\PayPal_PPCP_Onboarding_Serverside;
 
 //Includes

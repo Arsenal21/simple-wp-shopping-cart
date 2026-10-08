@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 status_header( 200 );
 
 class stripe_ipn_handler {
@@ -441,7 +445,7 @@ class stripe_ipn_handler {
 			//Using OLD Stripe API version. Log an error and exit.
 			$error_msg = 'Error! You are using the OLD Stripe API version. This version is not supported. Please update the Stripe API version to 2022-11-15 or later from your Stripe account.';
 			wpsc_log_payment_debug( $error_msg, false );
-			wp_die($error_msg);
+			wp_die( wp_kses( $error_msg, WPSC_Utility_Kses::wp_kses_post_tags() ) );
 		}
 
 		//Conver the charge object to array
@@ -690,7 +694,7 @@ function wpc_handle_stripe_ipn() {
 	if ( ! headers_sent() ) {
 		header( 'Location: ' . $redirect_url );
 	} else {
-		echo '<meta http-equiv="refresh" content="0;url=' . $redirect_url . '" />';
+		echo '<meta http-equiv="refresh" content="0;url=' . esc_url( $redirect_url ) . '" />';
 	}
 
 }

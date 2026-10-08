@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 use TTHQ\WPSC\Lib\PayPal\PayPal_JS_Button_Embed;
 
@@ -101,54 +105,66 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
     <!-- Any additional hidden input fields (if needed) -->
 
     <script type="text/javascript">
+    (function () {
+        // Keep each cart's callbacks and checkout data isolated.
         var wpscTncEnabled = <?php echo $is_tnc_enabled ? 'true' : 'false' ?>;
         var wpscShippingRegionEnabled = <?php echo $is_shipping_by_region_enabled ? 'true' : 'false' ?>;
         var wpscTaxRegionEnabled = <?php echo $is_tax_by_region_enabled ? 'true' : 'false' ?>;
 
-        function wpsc_render_paypal_button(btn_container, cartNo){
-            //Anything that goes here will only be executed after the PayPal SDK is loaded.
-            console.log('PayPal JS SDK is loaded.');
+        async function wpsc_render_paypal_button(btn_container, cartNo){
+            // SDK, DOM, and cart validation must all be ready, in any loading order.
+            if (!btn_container || !btn_container.isConnected || document.readyState === 'loading' ||
+                !window.wpscCartReady || !window.wpsc_paypal || typeof window.wpsc_paypal.Buttons !== 'function' ||
+                btn_container.wpscPaypalRenderState) {
+                return;
+            }
 
-            /**
-             * See documentation: https://developer.paypal.com/sdk/js/reference/
-             */
-            paypal.Buttons({
+            // Store state on the element, not its ID: AJAX can replace a cart with the same ID.
+            btn_container.wpscPaypalRenderState = 'rendering';
+            try {
                 /**
-                 * Optional styling for buttons.
-                 * 
-                 * See documentation: https://developer.paypal.com/sdk/js/reference/#link-style
+                 * See documentation: https://developer.paypal.com/sdk/js/reference/
                  */
-                style: {
-                    color: '<?php echo esc_js($btn_color); ?>',
-                    shape: '<?php echo esc_js($btn_shape); ?>',
-                    height: <?php echo esc_js($btn_height); ?>,
-                    label: '<?php echo esc_js($btn_type); ?>',
-                    layout: '<?php echo esc_js($btn_layout); ?>',
-                },
+                await window.wpsc_paypal.Buttons({
+                    /**
+                     * Optional styling for buttons.
+                     *
+                     * See documentation: https://developer.paypal.com/sdk/js/reference/#link-style
+                     */
+                    style: {
+                        color: '<?php echo esc_js($btn_color); ?>',
+                        shape: '<?php echo esc_js($btn_shape); ?>',
+                        height: <?php echo esc_js($btn_height); ?>,
+                        label: '<?php echo esc_js($btn_type); ?>',
+                        layout: '<?php echo esc_js($btn_layout); ?>',
+                    },
 
-                // Triggers when the button first renders.
-                onInit: onInitHandler,
+                    // Triggers when the button first renders.
+                    onInit: onInitHandler,
 
-                // Triggers when the button is clicked.
-                onClick: onClickHandler,
+                    // Triggers when the button is clicked.
+                    onClick: onClickHandler,
 
-                // Setup the transaction.
-                createOrder: createOrderHandler,
+                    // Setup the transaction.
+                    createOrder: createOrderHandler,
 
-                // Handle the onApprove event.
-                onApprove: onApproveHandler,
+                    // Handle the onApprove event.
+                    onApprove: onApproveHandler,
 
-                // Handle unrecoverable errors.
-                onError: onErrorHandler,
+                    // Handle unrecoverable errors.
+                    onError: onErrorHandler,
 
-                // Handles onCancel event.
-                onCancel: onCancelHandler,
+                    // Handles onCancel event.
+                    onCancel: onCancelHandler,
 
-            })
-            .render(btn_container)
-            .catch((err) => {
-                console.error('PayPal Buttons failed to render');
-            });
+                })
+                .render(btn_container);
+                btn_container.wpscPaypalRenderState = 'rendered';
+            } catch (err) {
+                // Allow a later readiness/cart event to retry a failed render.
+                delete btn_container.wpscPaypalRenderState;
+                console.error('PayPal Buttons failed to render', err);
+            }
 
             /**
              * OnInit is called when the button first renders.
@@ -163,7 +179,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                  */
 
                 // Checks if there is any required input field with empty value.                        
-                if (document.querySelectorAll('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo $carts_cnt; ?>)) {
+                if (document.querySelectorAll('.wpspsc_cci_input').length > 0 && has_empty_required_input(<?php echo absint( $carts_cnt ); ?>)) {
                     actions.disable();
                 }
                                     
@@ -266,10 +282,10 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 pp_bn_data.cart_id = '<?php echo esc_js($cart_id); ?>';
                 pp_bn_data.on_page_button_id = '<?php echo esc_js($on_page_embed_button_id); ?>';
                 //Ajax action: <prefix>pp_create_order
-                let post_data = 'action=wpsc_pp_create_order&data=' + JSON.stringify(pp_bn_data) + '&_wpnonce=<?php echo $wp_nonce; ?>';
+                let post_data = 'action=wpsc_pp_create_order&data=' + JSON.stringify(pp_bn_data) + '&_wpnonce=<?php echo esc_js( $wp_nonce ); ?>';
                 try {
                     // Using fetch for AJAX request. This is supported in all modern browsers.
-                    const response = await fetch("<?php echo admin_url( 'admin-ajax.php' ); ?>", {
+                    const response = await fetch("<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>", {
                         method: "post",
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -324,9 +340,9 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                 //pp_bn_data.custom_field = encodeURIComponent(custom_data);
 
                 //Ajax action: <prefix>_pp_capture_order
-                let post_data = 'action=wpsc_pp_capture_order&data=' + JSON.stringify(pp_bn_data) + '&_wpnonce=<?php echo $wp_nonce; ?>';
+                let post_data = 'action=wpsc_pp_capture_order&data=' + JSON.stringify(pp_bn_data) + '&_wpnonce=<?php echo esc_js( $wp_nonce ); ?>';
                 try {
-                    const response = await fetch("<?php echo admin_url( 'admin-ajax.php' ); ?>", {
+                    const response = await fetch("<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>", {
                         method: "post",
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -350,7 +366,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
                         //Redirect to the Thank you page URL if it is set.
                         let return_url = new URL("<?php echo esc_url_raw($return_url); ?>");
                         return_url.searchParams.set('cart_id',  pp_bn_data.cart_id);
-                        return_url.searchParams.set('_wpnonce',  '<?php echo wp_create_nonce('wpsc_thank_you_nonce_action'); ?>');
+                        return_url.searchParams.set('_wpnonce',  '<?php echo esc_js( wp_create_nonce('wpsc_thank_you_nonce_action') ); ?>');
                         if( return_url ){
                             //redirect to the Thank you page URL.
                             console.log('Redirecting to the Thank you page URL: ' + return_url);
@@ -428,24 +444,31 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
 
         }
 
-        document.addEventListener( "wpsc_paypal_sdk_loaded", function(e) {
-            const cartNo = '<?php echo $carts_cnt; ?>';
-            const ppcp_btn_container = document.getElementById('<?php echo esc_js($on_page_embed_button_id); ?>');
-            wpsc_render_paypal_button(ppcp_btn_container, cartNo);
-        });
+        const cartNo = '<?php echo absint( $carts_cnt ); ?>';
+        const buttonId = '<?php echo esc_js($on_page_embed_button_id); ?>';
+        let buttonContainer = document.getElementById(buttonId);
+        const readinessEvents = [
+            'DOMContentLoaded',
+            'wpsc_cart_ready',
+            'wpsc_paypal_sdk_loaded',
+            'wpsc_after_cart_shortcode_script_eval'
+        ];
 
-        document.addEventListener('wpsc_after_cart_shortcode_script_eval', function (e) {
-            const cartNo = '<?php echo $carts_cnt; ?>';
-            const on_page_embed_button_id = '<?php echo esc_js($on_page_embed_button_id); ?>';
-
-            if (! window[on_page_embed_button_id+'_rendered'] ){ // Prevent duplicate ppcp button render for same cart.
-                const ppcp_btn_container = document.getElementById(on_page_embed_button_id);
-
-                wpsc_render_paypal_button(ppcp_btn_container, cartNo);
-
-                window[on_page_embed_button_id+'_rendered'] = true; // Flag for duplicate render prevention.
+        function renderWhenReady() {
+            // Bind once to this element so old listeners cannot render a replacement cart.
+            if (!buttonContainer) {
+                buttonContainer = document.getElementById(buttonId);
             }
-        })
+            if (buttonContainer && !buttonContainer.isConnected) {
+                readinessEvents.forEach(event => document.removeEventListener(event, renderWhenReady));
+                return;
+            }
+            wpsc_render_paypal_button(buttonContainer, cartNo);
+        }
+
+        readinessEvents.forEach(event => document.addEventListener(event, renderWhenReady));
+        // Also handle cached SDKs and scripts evaluated after the SDK's load event.
+        renderWhenReady();
 
         /**
          * Checks if any input element has required attribute with empty value
@@ -467,6 +490,7 @@ function wpsc_render_paypal_ppcp_checkout_form( $args ){
             
             return has_any;
         }
+    })();
     </script>
     <style>
         @keyframes wpsc-pp-button-spinner {

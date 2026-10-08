@@ -136,27 +136,54 @@ class PayPal_JS_Button_Embed {
 		$script_url = add_query_arg( $sdk_args, 'https://www.paypal.com/sdk/js' );
 		?>
 		<script type="text/javascript">
-			wpsc_onDocumentReady(function(){
-				var script = document.createElement( 'script' );
-				script.type = 'text/javascript';
-				script.setAttribute( 'data-partner-attribution-id', 'TipsandTricks_SP_PPCP' );
-				script.async = true;
-				script.src = '<?php echo esc_url_raw( $script_url ); ?>';	
-				script.onload = function () {
-					document.dispatchEvent(new Event('wpsc_paypal_sdk_loaded'));//REPLACE: plugin prefix across different plugins.
-				};
-				document.getElementsByTagName( 'head' )[0].appendChild( script );
-			})
+            (function () {
+                // PHP cannot prevent a cached/AJAX script from being evaluated twice in the browser.
+                if (window.wpscPayPalSDKPromise) {
+                    return;
+                }
 
-			function wpsc_onDocumentReady(callback) {
-            	// If the document is already loaded, execute the callback immediately
-				if (document.readyState !== 'loading') {
-					callback();
-				} else {
-					// Otherwise, wait for the DOMContentLoaded event
-					document.addEventListener('DOMContentLoaded', callback);
-				}
-			}
+                window.wpscPayPalSDKPromise = new Promise(function (resolve, reject) {
+                    function loadSDK() {
+                        if (window.wpsc_paypal && typeof window.wpsc_paypal.Buttons === 'function') {
+                            resolve(window.wpsc_paypal);
+                            return;
+                        }
+
+                        var script = document.createElement('script');
+                        script.type = 'text/javascript';
+                        script.setAttribute('data-partner-attribution-id', 'TipsandTricks_SP_PPCP');
+                        // A different plugin loading window.paypal must not destroy our active buttons.
+                        script.setAttribute('data-namespace', 'wpsc_paypal');
+                        script.async = true;
+                        script.src = <?php echo wp_json_encode( $script_url, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ); ?>;
+                        script.onload = function () {
+                            if (window.wpsc_paypal && typeof window.wpsc_paypal.Buttons === 'function') {
+                                resolve(window.wpsc_paypal);
+                            } else {
+                                reject(new Error('PayPal SDK loaded without the Simple Cart Buttons API.'));
+                            }
+                        };
+                        script.onerror = function () {
+                            script.remove();
+                            reject(new Error('Unable to load the PayPal SDK.'));
+                        };
+                        document.head.appendChild(script);
+                    }
+
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', loadSDK, {once: true});
+                    } else {
+                        loadSDK();
+                    }
+                });
+
+                window.wpscPayPalSDKPromise.then(function () {
+                    document.dispatchEvent(new Event('wpsc_paypal_sdk_loaded'));
+                }).catch(function (err) {
+                    delete window.wpscPayPalSDKPromise;
+                    console.error('PayPal SDK failed to load', err);
+                });
+            })();
 		</script>
 		<?php
 	}
@@ -192,16 +219,15 @@ class PayPal_JS_Button_Embed {
 	}
 
 	/**
-	 * Generate the PayPal JS SDK Script.
+	 * Generate the shared PayPal SDK loader.
 	 * 
-	 * It can be called to get the SDK script that can be used right where you want to output it.
+	 * Returns loader markup; buttons must wait for the wpsc_paypal_sdk_loaded event.
 	 */
 	public function generate_paypal_sdk_script_output() {
-		$sdk_args = $this->generate_paypal_js_sdk_args();
-		$script_url = add_query_arg( $sdk_args, 'https://www.paypal.com/sdk/js' );
-
-		$output = '<script src="' . esc_url_raw( $script_url ) . '" data-partner-attribution-id="TipsandTricks_SP_PPCP"></script>';
-		return $output;
+        // Use the same loader and namespace as footer loading, including its browser-side guard.
+        ob_start();
+        $this->load_paypal_sdk();
+        return ob_get_clean();
 	}
 
 }

@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use TTHQ\WPSC\Lib\PayPal\PayPal_PPCP_Config;
 
 function print_wp_shopping_cart( $args = array(), $show_always = false ) {
@@ -27,9 +31,9 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
 		if ( ! empty( $empty_cart_text ) ) {
 			$output .= '<div class="wp_cart_empty_cart_section">';
 			if ( preg_match( '/http/', $empty_cart_text ) ) {
-				$output .= '<img src="' . $empty_cart_text . '" alt="' . $empty_cart_text . '" class="wp_cart_empty_cart_image" />';
+				$output .= '<img src="' . esc_url( $empty_cart_text ) . '" alt="' . esc_attr( $empty_cart_text ) . '" class="wp_cart_empty_cart_image" />';
 			} else {
-				$output .= __( $empty_cart_text, 'wordpress-simple-paypal-shopping-cart' );
+				$output .= wp_kses( $empty_cart_text, WPSC_Utility_Kses::wp_kses_post_tags() );
 			}
 			$output .= '</div>';
 		}
@@ -122,11 +126,11 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
 		?>
         <thead>
             <tr class="wspsc_cart_item_row">
-                <th class="wspsc_cart_item_name_th"><?php _e( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+                <th class="wspsc_cart_item_name_th"><?php esc_html_e( 'Item Name', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
                 <?php if($show_quantity_column) { ?>
-                    <th class="wspsc_cart_qty_th"><?php _e( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+                    <th class="wspsc_cart_qty_th"><?php esc_html_e( 'Quantity', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
                 <?php } ?>
-                <th class="wspsc_cart_price_th"><?php _e( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
+                <th class="wspsc_cart_price_th"><?php esc_html_e( 'Price', 'wordpress-simple-paypal-shopping-cart' ) ?></th>
                 <th class="wspsc_remove_item_th"></th>
             </tr>
         </thead>
@@ -174,9 +178,9 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
 
 			<?php if($show_quantity_column) {?>
                 <td class='wspsc_cart_qty_td' style='text-align: center'>
-                    <form method="post"  action="" name='pcquantity_<?php echo $uniqid ?>' style='display: inline'>
-						<?php echo wp_nonce_field( 'wspsc_cquantity', '_wpnonce', true, false ) ?>
-                        <input type="hidden" name="wspsc_product" value="<?php echo htmlspecialchars( $item->get_name() ) ?>" />
+                    <form method="post"  action="" name='pcquantity_<?php echo esc_attr( $uniqid ) ?>' style='display: inline'>
+						<?php wp_nonce_field( 'wspsc_cquantity', '_wpnonce', true, true ) ?>
+                        <input type="hidden" name="wspsc_product" value="<?php echo esc_attr( $item->get_name() ) ?>" />
                         <input type='hidden' name='cquantity' value='1' />
                         <input
                                 type='number'
@@ -186,25 +190,25 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
                                 min='0'
                                 step='1'
                                 size='3'
-                                onchange='document.pcquantity_<?php echo $uniqid ?>.submit();'
+                                onchange='document.pcquantity_<?php echo esc_attr( $uniqid ) ?>.submit();'
                                 onkeypress='document.getElementById("wpsc-cart-qty-change").style.display = "";'
                         />
                     </form>
                 </td>
 			<?php } ?>
             <td style='text-align: center'>
-				<?php echo print_payment_currency( ( $item->get_price() * $item->get_quantity() ), $paypal_symbol, $decimal ) ?>
+				<?php echo wp_kses( print_payment_currency( ( $item->get_price() * $item->get_quantity() ), $paypal_symbol, $decimal ), WPSC_Utility_Kses::wp_kses_post_tags() ) ?>
             </td>
             <td class='wspsc_remove_item_td'>
                 <form method="post" action="" class="wp_cart_remove_item_form">
-					<?php echo wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, false ) ?>
+					<?php wp_nonce_field( 'wspsc_delcart', '_wpnonce', true, true ) ?>
                     <input type="hidden" name="wspsc_product" value="<?php echo esc_attr( $item->get_name() ) ?>"/>
                     <input type='hidden' name='delcart' value='1'/>
                     <input
                             type='image'
-                            src='<?php echo WP_CART_URL . "/images/remove-item-svg-1.2em.svg" ?>'
-                            value='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
-                            title='<?php _e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                            src='<?php echo esc_url( WP_CART_URL . "/images/remove-item-svg-1.2em.svg" ) ?>'
+                            value='<?php esc_html_e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                            title='<?php esc_html_e( 'Remove', 'wordpress-simple-paypal-shopping-cart' ) ?>'
                     />
                 </form>
             </td>
@@ -274,13 +278,13 @@ function print_wp_shopping_cart( $args = array(), $show_always = false ) {
             ?>
             <td class='wpsc_empty_cart_td'>
                 <form method="post" action="" class="wpsc_empty_cart_form">
-                    <?php echo wp_nonce_field( 'wpsc_empty_cart', '_wpnonce', true, false ) ?>
+                    <?php wp_nonce_field( 'wpsc_empty_cart', '_wpnonce', true, true ) ?>
                     <input type='hidden' name='wpsc_empty_cart' value='1'/>
                     <input
                             type='image'
-                            src='<?php echo WP_CART_URL . "/images/empty-cart-svg-1.2em.svg" ?>'
-                            value='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
-                            title='<?php _e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                            src='<?php echo esc_url( WP_CART_URL . "/images/empty-cart-svg-1.2em.svg" ) ?>'
+                            value='<?php esc_html_e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
+                            title='<?php esc_html_e( 'Empty Cart', 'wordpress-simple-paypal-shopping-cart' ) ?>'
                     />
                 </form>
             </td>

@@ -1,6 +1,13 @@
 /* global wpsc_ajaxUrl, wp, wpscAdminScriptMsg */
 
 document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('form[data-wpsc-confirm]').forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!confirm(form.dataset.wpscConfirm)) {
+                event.preventDefault();
+            }
+        });
+    });
     const {__} = wp.i18n;
     const wpscResendEmailBtn = document.getElementById("wpsc-resend-sale-notification-email-btn");
     wpscResendEmailBtn?.addEventListener('click', async function ( e ){

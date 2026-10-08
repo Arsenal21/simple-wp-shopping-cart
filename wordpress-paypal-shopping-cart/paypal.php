@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 status_header( 200 );
 
 //Alternatively, we can use the wpsc_log_payment_debug() function directly.
@@ -485,7 +489,7 @@ class paypal_ipn_handler {
 		if (! $this->ipn_log)
 			return; // is logging turned off?
 		// Timestamp
-		$text = '[' . date( 'm/d/Y g:i A' ) . '] - ';
+		$text = '[' . wp_date( 'm/d/Y g:i A' ) . '] - ';
 
 		// Success or failure being logged?
 		if ($success)
@@ -503,10 +507,8 @@ class paypal_ipn_handler {
 		$text .= "\nIPN Response from Paypal Server:\n " . $this->ipn_response;
 
 		// Write to log
-		$fp = fopen( $this->ipn_log_file, 'a' );
-		fwrite( $fp, $text . "\n\n" );
-
-		fclose( $fp ); // close file
+		// Append under a lock so simultaneous payment callbacks keep all log entries.
+		file_put_contents( $this->ipn_log_file, $text . "\n\n", FILE_APPEND | LOCK_EX );
 	}
 
 	function debug_log( $message, $success, $end = false ) {
@@ -518,22 +520,21 @@ class paypal_ipn_handler {
 		if (is_array( $message )) {
 			$message = json_encode( $message );
 		}
-		$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . $message . "\n";
+		$text = '[' . gmdate( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . $message . "\n";
 
 		if ($end) {
 			$text .= "\n------------------------------------------------------------------\n\n";
 		}
 
 		// Write to log
-		$fp = fopen( $this->ipn_log_file, 'a' );
-		fwrite( $fp, $text );
-		fclose( $fp ); // close file
+		// Append under a lock so simultaneous payment callbacks keep all log entries.
+		file_put_contents( $this->ipn_log_file, $text, FILE_APPEND | LOCK_EX );
 	}
 
 	function debug_log_array( $array_to_write, $success, $end = false ) {
 		if (! $this->ipn_log)
 			return; // is logging turned off?
-		$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . "\n";
+		$text = '[' . gmdate( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . "\n";
 		ob_start();
 		print_r( $array_to_write );
 		$var = ob_get_contents();
@@ -544,9 +545,8 @@ class paypal_ipn_handler {
 			$text .= "\n------------------------------------------------------------------\n\n";
 		}
 		// Write to log
-		$fp = fopen( $this->ipn_log_file, 'a' );
-		fwrite( $fp, $text );
-		fclose( $fp ); // close filee
+		// Append under a lock so simultaneous payment callbacks keep all log entries.
+		file_put_contents( $this->ipn_log_file, $text, FILE_APPEND | LOCK_EX );
 	}
 
 }

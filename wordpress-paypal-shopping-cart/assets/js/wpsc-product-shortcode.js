@@ -1,4 +1,4 @@
-/* global wpsc_vars */
+/* global wpsc_vars, ReadForm */
 
 class WPSCProduct {
     constructor(productOutput) {
@@ -21,6 +21,12 @@ class WPSCProduct {
             // This is a product display box shortcode, need to render the updated price when product variation changes.
             this.showUpdatedPrice(true);
         }
+
+        // Update the product name before either a normal or AJAX submission.
+        this.variationInputs?.forEach(input => {
+            input.addEventListener('change', () => ReadForm(this.addToCartForm, false));
+        });
+        this.addToCartForm.addEventListener('submit', () => ReadForm(this.addToCartForm, true));
 
         // check if ajax add to cart enabled.
         if (wpsc_vars.ajaxAddToCartEnabled) {

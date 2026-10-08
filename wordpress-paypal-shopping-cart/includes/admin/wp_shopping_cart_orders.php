@@ -1,4 +1,8 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /*
  * This page handles the orders menu page in the admin dashboard
  */
@@ -71,108 +75,109 @@ function wpsc_order_review_meta_box($wpsc_cart_orders) {
 	if ( strtolower($order_status) != 'paid'){
 		?>
         <div class="wpsc-yellow-box">
-			<?php echo sprintf(__("Payment for this order has not been received yet. The current status of this order is: %s", "wordpress-simple-paypal-shopping-cart"), $order_status) ?>
+			<?php /* translators: %s: Current order payment status. */
+            echo sprintf(esc_html__("Payment for this order has not been received yet. The current status of this order is: %s", "wordpress-simple-paypal-shopping-cart"), esc_html( $order_status ) ) ?>
         </div>
 	<?php }
     ?>
     <table class="widefat" style="border: none;">
         <tr>
-            <td><?php _e("Order ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Order ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><?php echo esc_attr($order_id); ?></td>
         </tr>
         <tr>
-            <td><?php _e("Transaction ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Transaction ID", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><?php echo esc_attr($txn_id); ?></td>
         </tr>
         <?php if (isset($payment_gateway) && !empty($payment_gateway)) { ?>
             <tr>
-                <td><?php _e("Payment Gateway", "wordpress-simple-paypal-shopping-cart"); ?></td>
-                <td><?php echo wpsc_get_formatted_payment_gateway_name(esc_attr($payment_gateway)); ?></td>
+                <td><?php esc_html_e("Payment Gateway", "wordpress-simple-paypal-shopping-cart"); ?></td>
+                <td><?php echo esc_html( wpsc_get_formatted_payment_gateway_name( $payment_gateway ) ); ?></td>
             </tr>
         <?php } ?>
         <tr>
-            <td><?php _e("First Name", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("First Name", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="40" name="wpsc_first_name" value="<?php echo esc_attr($first_name); ?>" /></td>
         </tr>        
         <tr>
-            <td><?php _e("Last Name", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Last Name", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="40" name="wpsc_last_name" value="<?php echo esc_attr($last_name); ?>" /></td>
         </tr>
         <tr>
-            <td><?php _e("Email Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Email Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="40" name="wpsc_email_address" value="<?php echo esc_attr($email); ?>" /></td>
         </tr>
         <tr>
-            <td><?php _e("IP Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("IP Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="40" name="wpsc_ipaddress" value="<?php echo esc_attr($ip_address); ?>" /></td>
         </tr>
         <tr>
-            <td><?php _e("Total Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Total Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_total_amount" value="<?php echo esc_attr($total_amount); ?>" /></td>
         </tr>
         <tr>
-            <td><?php _e("Tax Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Tax Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_tax_amount" value="<?php echo esc_attr($tax_amount); ?>" /></td>
         </tr>
 	    <?php if ($tax_region) { ?>
             <tr>
-                <td><?php _e("Tax Region", "wordpress-simple-paypal-shopping-cart"); ?></td>
+                <td><?php esc_html_e("Tax Region", "wordpress-simple-paypal-shopping-cart"); ?></td>
                 <td><input type="text" size="20" name="wpsc_tax_region" value="<?php echo esc_attr($tax_region); ?>"  readonly/></td>
             </tr>
 	    <?php } ?>
         <tr>
-            <td><?php _e("Shipping Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Shipping Amount", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_shipping_amount" value="<?php echo esc_attr($shipping_amount); ?>" /></td>
         </tr>
         <?php if ($shipping_region) { ?>
         <tr>
-            <td><?php _e("Shipping Region", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Shipping Region", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_shipping_region" value="<?php echo esc_attr($shipping_region); ?>" readonly/></td>
         </tr>
         <?php } ?>
         <tr>
-            <td><?php _e("Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
                 <textarea name="wpsc_address" cols="83" rows="2"><?php echo esc_attr($shipping_address); ?></textarea>
                 <p class="description">
-                    <?php _e("An address value is usually provided when the order includes physical items that require shipping. ", "wordpress-simple-paypal-shopping-cart"); ?>
+                    <?php esc_html_e("An address value is usually provided when the order includes physical items that require shipping. ", "wordpress-simple-paypal-shopping-cart"); ?>
                 </p>
             </td>
         </tr>
         <?php if ($billing_address) { ?>
         <tr>
-            <td><?php _e("Billing Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Billing Address", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
                 <textarea name="wpsc_billing_address" cols="83" rows="2"><?php echo esc_attr($billing_address); ?></textarea>
                 <p class="description">
-                    <?php _e("The billing address (if available).", "wordpress-simple-paypal-shopping-cart"); ?>
+                    <?php esc_html_e("The billing address (if available).", "wordpress-simple-paypal-shopping-cart"); ?>
                 </p>
             </td>
         </tr>
         <?php } ?>
         <tr>
-            <td><?php _e("Phone", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Phone", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
                 <input type="text" size="40" name="wpsc_phone" value="<?php echo esc_attr($phone); ?>" />
                 <p class="description">
-                    <?php _e("A phone number will only be present if the customer entered one during the checkout.", "wordpress-simple-paypal-shopping-cart"); ?>
+                    <?php esc_html_e("A phone number will only be present if the customer entered one during the checkout.", "wordpress-simple-paypal-shopping-cart"); ?>
                 </p>
             </td>
         </tr>
         <tr>
-            <td><?php _e("Buyer Email Sent?", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Buyer Email Sent?", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="80" name="wpsc_buyer_email_sent" value="<?php echo esc_attr($email_sent_field_msg); ?>" readonly /></td>
         </tr>  
         <tr>
-            <td><?php _e("Item(s) Ordered", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Item(s) Ordered", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><textarea name="wpsc_items_ordered" cols="83" rows="5"><?php echo esc_attr($items_ordered); ?></textarea></td>
         </tr>
         <tr>
-            <td><?php _e("Applied Coupon Code", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Applied Coupon Code", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td><input type="text" size="20" name="wpsc_applied_coupon" value="<?php echo esc_attr($applied_coupon); ?>" readonly /></td>
         </tr>
         <tr>
-            <td><?php _e("Pickup From Store", "wordpress-simple-paypal-shopping-cart"); ?></td>
+            <td><?php esc_html_e("Pickup From Store", "wordpress-simple-paypal-shopping-cart"); ?></td>
             <td>
                 <input type="text" size="20" value="<?php echo $is_store_pickup ? 'Yes' : '' ?>" readonly />
             </td>
@@ -196,11 +201,11 @@ function wpsc_order_actions_meta_box( $wpsc_cart_orders ) {
                     href="#"
                     id="wpsc-mark-order-confirm-btn"
                     class="button wpsc-order-action-btn"
-                    data-order-id="<?php esc_attr_e($order_id) ?>"
-                    data-nonce="<?php echo wp_create_nonce( "wpsc_mark_order_confirm" ) ?>"
+                    data-order-id="<?php echo esc_attr($order_id) ?>"
+                    data-nonce="<?php echo esc_attr( wp_create_nonce( "wpsc_mark_order_confirm" ) ) ?>"
                 >
                     <span class="dashicons dashicons-yes wpsc-order-action-btn-icon"></span>
-                    <span ><?php _e("Mark This Order as Paid", "wordpress-simple-paypal-shopping-cart") ?></span>
+                    <span ><?php esc_html_e("Mark This Order as Paid", "wordpress-simple-paypal-shopping-cart") ?></span>
                 </a>
             </div>
         <?php } ?>
@@ -210,12 +215,12 @@ function wpsc_order_actions_meta_box( $wpsc_cart_orders ) {
                 href="#"
                 id="wpsc-resend-sale-notification-email-btn"
                 class="button wpsc-order-action-btn"
-                data-order-id="<?php esc_attr_e($order_id) ?>"
-                data-nonce="<?php echo wp_create_nonce( "wpsc_resend_sale_notification_email" ) ?>"
-                title="<?php _e( "Mark this order as paid and send purchase notification email to buyer.", "wordpress-simple-paypal-shopping-cart") ?>"
+                data-order-id="<?php echo esc_attr($order_id) ?>"
+                data-nonce="<?php echo esc_attr( wp_create_nonce( "wpsc_resend_sale_notification_email" ) ) ?>"
+                title="<?php esc_html_e( "Mark this order as paid and send purchase notification email to buyer.", "wordpress-simple-paypal-shopping-cart") ?>"
             >
                 <span class="dashicons dashicons-email wpsc-order-action-btn-icon"></span>
-                <span><?php _e("Resend Sale Notification Email", "wordpress-simple-paypal-shopping-cart") ?></span>
+                <span><?php esc_html_e("Resend Sale Notification Email", "wordpress-simple-paypal-shopping-cart") ?></span>
             </a>
         </div>
     </div>

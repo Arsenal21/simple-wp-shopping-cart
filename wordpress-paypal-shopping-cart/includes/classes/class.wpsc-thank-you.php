@@ -24,7 +24,7 @@ class WPSC_Thank_You {
 			$output .= '<div style="background-color: #FFFFE0; border: 1px solid #E6DB55; padding: 8px  14px;">';
             $output .= '<p>' . __( 'Our system is currently awaiting payment confirmation from the payment gateway. Please wait a few minutes and refresh this page. You may also navigate away, as we will send you an email once the payment confirmation is received.', "wordpress-simple-paypal-shopping-cart" ) . '</p>';
 			$output .= '</div>';
-			echo $output;
+			echo wp_kses( $output, WPSC_Utility_Kses::wp_kses_post_tags() );
 			return;
 		}
 
@@ -52,37 +52,37 @@ class WPSC_Thank_You {
 		?>
 
         <div>
-            <h4><?php _e( "Thank you. Your order has been received.", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+            <h4><?php esc_html_e( "Thank you. Your order has been received.", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
             <div class="wpsc-order-data-box">
                 <div class="wpsc-order-data-box-col">
-                    <div><?php _e( "Order ID", "wordpress-simple-paypal-shopping-cart" ); ?></div>
+                    <div><?php esc_html_e( "Order ID", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( $order_id ) ?></div>
                 </div>
                 <div class="wpsc-order-data-box-col">
-                    <div><?php _e( "Date", "wordpress-simple-paypal-shopping-cart" ); ?></div>
+                    <div><?php esc_html_e( "Date", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( $purchase_data ) ?></div>
                 </div>
                 <div class="wpsc-order-data-box-col">
-                    <div><?php _e( "Total", "wordpress-simple-paypal-shopping-cart" ); ?></div>
+                    <div><?php esc_html_e( "Total", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( print_payment_currency( $total_amount, WP_CART_CURRENCY_SYMBOL ) ) ?></div>
                 </div>
                 <div class="wpsc-order-data-box-col">
-                    <div><?php _e( "Email", "wordpress-simple-paypal-shopping-cart" ); ?></div>
+                    <div><?php esc_html_e( "Email", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( $email ) ?></div>
                 </div>
                 <div class="wpsc-order-data-box-col">
-                    <div><?php _e( "Payment Gateway", "wordpress-simple-paypal-shopping-cart" ); ?></div>
+                    <div><?php esc_html_e( "Payment Gateway", "wordpress-simple-paypal-shopping-cart" ); ?></div>
                     <div><?php echo esc_attr( wpsc_get_formatted_payment_gateway_name( $payment_gateway ) ) ?></div>
                 </div>
             </div>
 
-            <h4><?php _e( "Order Details", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+            <h4><?php esc_html_e( "Order Details", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
 
             <table class="wpsc-order-details-table">
                 <thead>
                 <tr>
-                    <th style="text-align: start"><?php _e( "Product", "wordpress-simple-paypal-shopping-cart" ); ?></th>
-                    <th style="text-align: end"><?php _e( "Total", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                    <th style="text-align: start"><?php esc_html_e( "Product", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                    <th style="text-align: end"><?php esc_html_e( "Total", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,30 +96,30 @@ class WPSC_Thank_You {
 				<?php } ?>
 				<?php if ( ! empty( floatval( $shipping_amount ) ) ) { // Show this row if shipping amount is not 0.0 ?>
                     <tr>
-                        <th style="text-align: start"><?php _e( "Shipping Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th style="text-align: start"><?php esc_html_e( "Shipping Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td style="text-align: end"><?php echo esc_attr( print_payment_currency( $shipping_amount, WP_CART_CURRENCY_SYMBOL ) ); ?></td>
                     </tr>
 				<?php } ?>
                 <?php if ( ! empty( floatval( $tax_amount ) ) ) { // Show this row if tax amount is not 0.0 ?>
                     <tr>
-                        <th style="text-align: start"><?php _e( "Tax Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th style="text-align: start"><?php esc_html_e( "Tax Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td style="text-align: end"><?php echo esc_attr( print_payment_currency( $tax_amount, WP_CART_CURRENCY_SYMBOL ) ); ?></td>
                     </tr>
 				<?php } ?>
                 <tr>
-                    <th style="text-align: start"><?php _e( "Total Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                    <th style="text-align: start"><?php esc_html_e( "Total Amount: ", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                     <td style="text-align: end"><?php echo esc_attr( print_payment_currency( $total_amount, WP_CART_CURRENCY_SYMBOL ) ); ?></td>
                 </tr>
                 </tbody>
             </table>
 
 			<?php if ( ! empty( $downloadable_items ) ) { ?>
-                <h4><?php _e( "Downloads", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+                <h4><?php esc_html_e( "Downloads", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
                 <table class="wpsc-order-downloads-table">
                     <thead>
                     <tr>
-                        <th style="text-align: start"><?php _e( "Product", "wordpress-simple-paypal-shopping-cart" ); ?></th>
-                        <th style="text-align: start"><?php _e( "Download Link", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th style="text-align: start"><?php esc_html_e( "Product", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th style="text-align: start"><?php esc_html_e( "Download Link", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -127,7 +127,7 @@ class WPSC_Thank_You {
                         <tr>
                             <td><?php echo esc_attr( $downloadable_item['product_name'] ) ?></td>
                             <td><a href="<?php echo esc_url( $downloadable_item['file_url'] ) ?>"
-                                   target="_blank"><?php _e( "Download", "wordpress-simple-paypal-shopping-cart" ) ?></a>
+                                   target="_blank"><?php esc_html_e( "Download", "wordpress-simple-paypal-shopping-cart" ) ?></a>
                             </td>
                         </tr>
 					<?php } ?>
@@ -137,7 +137,7 @@ class WPSC_Thank_You {
 
 			<?php if ( ! empty( $shipping_address ) ) { ?>
                 <div>
-                    <h4><?php _e( "Shipping Address", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+                    <h4><?php esc_html_e( "Shipping Address", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
                     <div class="wpsc-order-shipping-address">
 						<?php echo esc_attr( $shipping_address ); ?>
                     </div>
@@ -146,7 +146,7 @@ class WPSC_Thank_You {
 
 			<?php if ( ! empty( $shipping_region ) ) { ?>
                 <div>
-                    <h4><?php _e( "Shipping Region", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+                    <h4><?php esc_html_e( "Shipping Region", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
                     <div class="wpsc-order-shipping-region">
 						<?php echo esc_attr( $shipping_region ); ?>
                     </div>
@@ -155,7 +155,7 @@ class WPSC_Thank_You {
 
 			<?php if ( ! empty( $tax_region ) ) { ?>
                 <div>
-                    <h4><?php _e( "Tax Region", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+                    <h4><?php esc_html_e( "Tax Region", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
                     <div class="wpsc-order-tax-region">
 						<?php echo esc_attr( $tax_region ); ?>
                     </div>
@@ -164,7 +164,7 @@ class WPSC_Thank_You {
 
 			<?php if ( ! empty( $billing_address ) ) { ?>
                 <div>
-                    <h4><?php _e( "Billing Address", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
+                    <h4><?php esc_html_e( "Billing Address", "wordpress-simple-paypal-shopping-cart" ); ?></h4>
                     <div class="wpsc-order-billing-address">
 						<?php echo esc_attr( $billing_address ); ?>
                     </div>

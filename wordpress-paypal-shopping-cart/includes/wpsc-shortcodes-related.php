@@ -1,5 +1,9 @@
 <?php 
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 = '', $var2 = '', $var3 = '', $atts = array() ) {
 
 	wp_enqueue_script( 'wpsc-product-sc-script' );
@@ -24,7 +28,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$variation_options = array();
 
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation1_name . ' : </span>';
-		$var_output .= '<select name="variation1" class="wp_cart_variation1_select" onchange="ReadForm (this.form, false);">';
+		$var_output .= '<select name="variation1" class="wp_cart_variation1_select">';
 
 		for ( $i = 1; $i < sizeof( $var1_pieces ); $i++ ) {
 			$variation_string = $var1_pieces[ $i ];
@@ -49,7 +53,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$variation_options = array();
 
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation2_name . ' : </span>';
-		$var_output .= '<select name="variation2" class="wp_cart_variation2_select" onchange="ReadForm (this.form, false);">';
+		$var_output .= '<select name="variation2" class="wp_cart_variation2_select">';
 		for ( $i = 1; $i < sizeof( $var2_pieces ); $i++ ) {
 			$variation_string = $var2_pieces[ $i ];
 			$variation_parts = wpsc_get_variation_string_parts($variation_string);
@@ -73,7 +77,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 		$variation_options = array();
 
 		$var_output .= '<span class="wp_cart_variation_name">' . $variation3_name . ' : </span>';
-		$var_output .= '<select name="variation3" class="wp_cart_variation3_select" onchange="ReadForm (this.form, false);">';
+		$var_output .= '<select name="variation3" class="wp_cart_variation3_select">';
 		for ( $i = 1; $i < sizeof( $var3_pieces ); $i++ ) {
 			$variation_string = $var3_pieces[ $i ];
 			$variation_parts = wpsc_get_variation_string_parts($variation_string);
@@ -96,7 +100,7 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 	$add_cart_button_form_attr = apply_filters( "wspsc_add_cart_button_form_attr", $add_cart_button_form_attr ); // TODO: Old hook. Need to remove this.
 	$add_cart_button_form_attr = apply_filters( "wpsc_add_cart_button_form_attr", $add_cart_button_form_attr );
 
-	$replacement .= '<form method="post" class="wp-cart-button-form" action="" style="display:inline" onsubmit="return ReadForm(this, true);" ' . $add_cart_button_form_attr . '>';
+	$replacement .= '<form method="post" class="wp-cart-button-form" action="" style="display:inline" ' . $add_cart_button_form_attr . '>';
 	$replacement .= wp_nonce_field( 'wspsc_addcart', '_wpnonce', true, false );
 	if ( ! empty( $var_output ) ) { //Show variation
 		$replacement .= '<div class="wp_cart_variation_section">' . $var_output . '</div>';

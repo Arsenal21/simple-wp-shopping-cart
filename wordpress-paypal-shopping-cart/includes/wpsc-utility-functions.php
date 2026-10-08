@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wpsc_contains_special_char($str) {
     //This function checks if the input string contains any of the special characters that are not allowed in the product name.
     // The set of unsupported special characters: [, ], <, >
@@ -49,7 +53,7 @@ function wpsc_get_total_cart_sub_total() {
 function wpsc_clean_incomplete_old_cart_orders() {
     //Empty any incomplete old cart orders (that are more than 48 hours old)
     global $wpdb;
-    $specific_time = date('Y-m-d H:i:s', strtotime('-48 hours'));
+    $specific_time = wp_date('Y-m-d H:i:s', strtotime('-48 hours'));
     $wpdb->query(
             $wpdb->prepare("DELETE FROM $wpdb->posts
                  WHERE post_type = %s

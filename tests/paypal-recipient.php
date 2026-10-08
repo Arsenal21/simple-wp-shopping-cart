@@ -5,6 +5,7 @@ set_error_handler( function ( $severity, $message, $file, $line ) {
     throw new ErrorException( $message, 0, $severity, $file, $line );
 } );
 define( 'WP_CART_VERSION', 'test' );
+define( 'ABSPATH', __DIR__ . '/' );
 $options = array();
 $writes = array();
 $reply = 'VERIFIED';

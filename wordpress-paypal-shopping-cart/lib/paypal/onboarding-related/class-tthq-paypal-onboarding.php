@@ -108,10 +108,10 @@ class PayPal_PPCP_Onboarding {
 				const formData = new FormData();
 				formData.append('action', 'wpsc_handle_onboarded_callback_data');
 				formData.append('data', data);
-				formData.append('_wpnonce', '<?php echo $wp_nonce; ?>');
+				formData.append('_wpnonce', '<?php echo esc_js( $wp_nonce ); ?>');
 
 				//Post the AJAX request to the server.
-				fetch('<?php echo $ajax_post_url; ?>', {
+				fetch('<?php echo esc_js( $ajax_post_url ); ?>', {
 					method: 'POST',
 					body: formData,
 				}).then(response => response.json())
@@ -134,9 +134,9 @@ class PayPal_PPCP_Onboarding {
 		</script>
 		<a class="button button-primary direct" target="_blank"
 			data-paypal-onboard-complete="wpsc_ppcp_onboarded_callback_sandbox"
-			href="<?php echo ($sandbox_singup_link); ?>"
+			href="<?php echo esc_url( $sandbox_singup_link ); ?>"
 			data-paypal-button="true">Get PayPal Sandbox Credentials</a>
-		<script id="paypal-js" src="https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
+		<?php wp_enqueue_script( 'wpsc-paypal-onboarding-sandbox', 'https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js', array(), null, true ); ?>
 
 		<?php
 
@@ -150,7 +150,7 @@ class PayPal_PPCP_Onboarding {
 		$sandbox_disconnect_url = admin_url($disonnect_link_path);
 		$ac_disconnect_nonce = wp_create_nonce('wpsc_ac_disconnect_nonce_sandbox');
 		$sandbox_disconnect_url_nonced = add_query_arg('_wpnonce', $ac_disconnect_nonce, $sandbox_disconnect_url);
-		echo '<a class="button" href="' . $sandbox_disconnect_url_nonced . '" onclick="return confirm(\'Are you sure you want to disconnect the PayPal sandbox account?\')">Disconnect Sandbox Account</a>';	
+		echo '<a class="button" href="' . esc_url( $sandbox_disconnect_url_nonced ) . '" onclick="return confirm(\'Are you sure you want to disconnect the PayPal sandbox account?\')">Disconnect Sandbox Account</a>';
 	}
 
 	/**
@@ -177,10 +177,10 @@ class PayPal_PPCP_Onboarding {
 				const formData = new FormData();
 				formData.append('action', 'wpsc_handle_onboarded_callback_data');
 				formData.append('data', data);
-				formData.append('_wpnonce', '<?php echo $wp_nonce; ?>');
+				formData.append('_wpnonce', '<?php echo esc_js( $wp_nonce ); ?>');
 
 				//Post the AJAX request to the server.
-				fetch('<?php echo $ajax_post_url; ?>', {
+				fetch('<?php echo esc_js( $ajax_post_url ); ?>', {
 					method: 'POST',
 					body: formData,
 				}).then(response => response.json())
@@ -203,9 +203,9 @@ class PayPal_PPCP_Onboarding {
 		</script>
 		<a class="button button-primary direct" target="_blank"
 			data-paypal-onboard-complete="wpsc_ppcp_onboarded_callback_production"
-			href="<?php echo ($singup_link); ?>"
+			href="<?php echo esc_url( $singup_link ); ?>"
 			data-paypal-button="true">Get PayPal Live Credentials</a>
-		<script id="paypal-js" src="https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js"></script>
+		<?php wp_enqueue_script( 'wpsc-paypal-onboarding', 'https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js', array(), null, true ); ?>
 		<?php
 	}
 
@@ -217,7 +217,7 @@ class PayPal_PPCP_Onboarding {
 		$disconnect_url = admin_url($disonnect_link_path);
 		$ac_disconnect_nonce = wp_create_nonce('wpsc_ac_disconnect_nonce_production');
 		$disconnect_url_nonced = add_query_arg('_wpnonce', $ac_disconnect_nonce, $disconnect_url);
-		echo '<a class="button" href="' . $disconnect_url_nonced . '" onclick="return confirm(\'Are you sure you want to disconnect the PayPal account?\')">Disconnect PayPal Account</a>';	
+		echo '<a class="button" href="' . esc_url( $disconnect_url_nonced ) . '" onclick="return confirm(\'Are you sure you want to disconnect the PayPal account?\')">Disconnect PayPal Account</a>';
 	}
 
 }

@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function show_wp_cart_tax_settings_page()
 {
     if(!current_user_can('manage_options')){
@@ -186,16 +190,16 @@ function show_wp_cart_tax_settings_page()
         <input type="hidden" name="info_update" id="info_update" value="true" />
 
         <div class="postbox">
-            <h3 class="hndle"><label for="title"><?php _e("Tax Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
+            <h3 class="hndle"><label for="title"><?php esc_html_e("Tax Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
             <div class="inside">
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e("Tax Percentage", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <th scope="row"><?php esc_html_e("Tax Percentage", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td>
-                            <input type="number" min="0" max="100" step="any" name="tax_percentage" value="<?php esc_attr_e($tax_percentage)?>" size="5" />
+                            <input type="number" min="0" max="100" step="any" name="tax_percentage" value="<?php echo esc_attr($tax_percentage)?>" size="5" />
                             <p class="description">
-                                <?php _e("Enter the tax percentage to apply to the total cost of individual products. Set to 0 to disable tax.", "wordpress-simple-paypal-shopping-cart") ?>
-                                <a href="https://www.tipsandtricks-hq.com/ecommerce/configuring-taxes-in-simple-shopping-cart-5401" target="_blank"><?php _e("View the Tax Documentation", "wordpress-simple-paypal-shopping-cart"); ?></a>
+                                <?php esc_html_e("Enter the tax percentage to apply to the total cost of individual products. Set to 0 to disable tax.", "wordpress-simple-paypal-shopping-cart") ?>
+                                <a href="https://www.tipsandtricks-hq.com/ecommerce/configuring-taxes-in-simple-shopping-cart-5401" target="_blank"><?php esc_html_e("View the Tax Documentation", "wordpress-simple-paypal-shopping-cart"); ?></a>
                             </p>
                         </td>
                     </tr>
@@ -204,21 +208,21 @@ function show_wp_cart_tax_settings_page()
         </div>
         
         <div class="postbox">
-            <h3 class="hndle"><label for="title"><?php _e("Regional Tax Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
+            <h3 class="hndle"><label for="title"><?php esc_html_e("Regional Tax Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
             <div class="inside">
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e("Enable Tax by Region", "wordpress-simple-paypal-shopping-cart")?></th>
+                        <th scope="row"><?php esc_html_e("Enable Tax by Region", "wordpress-simple-paypal-shopping-cart")?></th>
                         <td>
-                            <input type="checkbox" name="enable_tax_by_region" value="1" <?php echo $enable_tax_by_region ?> />
-                            <p class="description"><?php _e('Select this option to enable region based tax.', 'wordpress-simple-paypal-shopping-cart') ?></p>
-                            <p class="description"><?php _e('You can define tax regions and allocate tax percentage for each. Customers will choose their region from a list, and the relevant tax percentage will be applied to the product cost.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                            <input type="checkbox" name="enable_tax_by_region" value="1" <?php checked( ! empty( $enable_tax_by_region ), true ) ?> />
+                            <p class="description"><?php esc_html_e('Select this option to enable region based tax.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                            <p class="description"><?php esc_html_e('You can define tax regions and allocate tax percentage for each. Customers will choose their region from a list, and the relevant tax percentage will be applied to the product cost.', 'wordpress-simple-paypal-shopping-cart') ?></p>
                         </td>
                     </tr>
 
                     <?php if (!empty($enable_tax_by_region)) {?>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Tax Regions", "wordpress-simple-paypal-shopping-cart")?></th>
+                        <th scope="row"><?php esc_html_e("Tax Regions", "wordpress-simple-paypal-shopping-cart")?></th>
                         <td>
                             <div>
                                 <table class="" id="wpsc-tax-region-variations-tbl"<?php echo empty( $wpsc_tax_variations_arr ) ? 'style="display:none;"' : ''; ?>>
@@ -238,16 +242,16 @@ function show_wp_cart_tax_settings_page()
                                         <tr>
                                             <td>
                                                 <select class="wpsc-tax-region-variations-base wpsc-tax-region-variations-input" name="wpsc_tax_region_variations_base[]">
-                                                    <option value="0" <?php echo '0' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'Country', 'stripe-payments' ) ?></option>
-                                                    <option value="1" <?php echo '1' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'State', 'stripe-payments' ) ?></option>
-                                                    <option value="2" <?php echo '2' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'City', 'stripe-payments' ) ?></option>
+                                                    <option value="0" <?php echo '0' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'Country', 'wordpress-simple-paypal-shopping-cart' ) ?></option>
+                                                    <option value="1" <?php echo '1' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'State', 'wordpress-simple-paypal-shopping-cart' ) ?></option>
+                                                    <option value="2" <?php echo '2' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'City', 'wordpress-simple-paypal-shopping-cart' ) ?></option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <!-- Country type location field (type = 0) -->
                                                 <div class="wpsc-tax-region-variations-cont-type-0" style="<?php echo $v['type'] === '0' ? '' : 'display:none' ?>">
                                                     <select class="wpsc-tax-region-variations-input" name="wpsc_tax_region_variations_loc[]" <?php echo '0' === $v['type'] ? '' : 'disabled' ?>>
-                                                        <?php echo wpsc_get_countries_opts( $c_code ) ?>
+                                                        <?php echo wp_kses( wpsc_get_countries_opts( $c_code ), WPSC_Utility_Kses::wp_kses_select_option_tags() ) ?>
                                                     </select>
                                                 </div>
                                                 <!-- State type location field (type = 1) -->
@@ -260,11 +264,11 @@ function show_wp_cart_tax_settings_page()
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="number" min="0" max="100" step="any" class="wpsc-tax-region-variations-input" name="wpsc_tax_region_variations_amt[]" value="<?php esc_attr_e($v['amount']) ?>">
+                                                <input type="number" min="0" max="100" step="any" class="wpsc-tax-region-variations-input" name="wpsc_tax_region_variations_amt[]" value="<?php echo esc_attr($v['amount']) ?>">
                                             </td>
                                             <td>
                                                 <button type="button" class="button wpsc-tax-region-variations-del-btn wpsc-tax-region-variations-del-btn-small">
-                                                    <span class="dashicons dashicons-trash" title="<?php _e( 'Delete variation', 'stripe-payments' ) ?>"></span>
+                                                    <span class="dashicons dashicons-trash" title="<?php esc_html_e( 'Delete variation', 'wordpress-simple-paypal-shopping-cart' ) ?>"></span>
                                                 </button>
                                             </td>
                                         </tr>
@@ -274,10 +278,10 @@ function show_wp_cart_tax_settings_page()
                             </div>
                             <p>
                                 <button type="button" id="wpsc-tax-region-variations-add-btn" class="button">
-                                    <span class="dashicons dashicons-plus"></span> <?php _e( 'Add Tax Variation', 'wordpress-simple-paypal-shopping-cart' ); ?>
+                                    <span class="dashicons dashicons-plus"></span> <?php esc_html_e( 'Add Tax Variation', 'wordpress-simple-paypal-shopping-cart' ); ?>
                                 </button>
                             </p>
-                            <p class="description"><?php _e('Use this to configure tax variations on a per-region basis.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                            <p class="description"><?php esc_html_e('Use this to configure tax variations on a per-region basis.', 'wordpress-simple-paypal-shopping-cart') ?></p>
                         </td>
                     </tr>
                     <?php } ?>
@@ -288,7 +292,7 @@ function show_wp_cart_tax_settings_page()
         <input type="hidden" id="wpsc_tax_region_variations_delete_last" name="wpsc_tax_region_variations_delete_last" value="0">
 
         <div class="submit">
-            <input type="submit" class="button-primary" name="wpsc_tax_settings_update" value="<?php echo (__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />
+            <input type="submit" class="button-primary" name="wpsc_tax_settings_update" value="<?php echo (esc_html__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />
         </div>
     </form>
 

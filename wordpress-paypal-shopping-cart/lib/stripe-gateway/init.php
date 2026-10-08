@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // File generated from our OpenAPI spec
 
 require __DIR__ . '/lib/Util/ApiVersion.php';

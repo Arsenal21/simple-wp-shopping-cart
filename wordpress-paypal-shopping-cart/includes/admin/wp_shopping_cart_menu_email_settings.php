@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function show_wp_cart_email_settings_page()
 {
     if(!current_user_can('manage_options')){
@@ -67,34 +71,34 @@ function show_wp_cart_email_settings_page()
     <input type="hidden" name="info_update" id="info_update" value="true" />
 
     <div class="postbox">
-    <h3 class="hndle"><label for="title"><?php _e("Purchase Confirmation Email Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
+    <h3 class="hndle"><label for="title"><?php esc_html_e("Purchase Confirmation Email Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
     <div class="inside">
 
-    <p><i><?php _e("This section allows you to configure general email-related settings.", "wordpress-simple-paypal-shopping-cart");?></i></p>
+    <p><i><?php esc_html_e("This section allows you to configure general email-related settings.", "wordpress-simple-paypal-shopping-cart");?></i></p>
 
     <table class="form-table">
 
     <tr valign="top">
-        <th scope="row"><?php _e("Email Content Type", "wordpress-simple-paypal-shopping-cart");?></th>
+        <th scope="row"><?php esc_html_e("Email Content Type", "wordpress-simple-paypal-shopping-cart");?></th>
         <td>
             <select name="wpsc_email_content_type">
                 <option value="plain_text" <?php echo $wpsc_email_content_type == 'plain_text' ? 'selected' : ''; ?>>
-                    <?php _e('Plain Text', 'wordpress-simple-paypal-shopping-cart'); ?>
+                    <?php esc_html_e('Plain Text', 'wordpress-simple-paypal-shopping-cart'); ?>
                 </option>
                 <option value="html" <?php echo $wpsc_email_content_type == 'html' ? 'selected' : ''; ?>>
-                    <?php _e('HTML', 'wordpress-simple-paypal-shopping-cart'); ?>
+                    <?php esc_html_e('HTML', 'wordpress-simple-paypal-shopping-cart'); ?>
                 </option>
             </select>
             <p>
-                <span class="description"><?php _e("Choose which format of email to send.", "wordpress-simple-paypal-shopping-cart");?></span>
+                <span class="description"><?php esc_html_e("Choose which format of email to send.", "wordpress-simple-paypal-shopping-cart");?></span>
             </p>
         </td>
     </tr>
 
     <tr valign="top">
-    <th scope="row"><?php _e("From Email Address", "wordpress-simple-paypal-shopping-cart");?></th>
+    <th scope="row"><?php esc_html_e("From Email Address", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_buyer_from_email" value="<?php echo esc_attr($wpspc_buyer_from_email); ?>" size="50" />
-    <br /><p class="description"><?php _e("Example: Your Name &lt;sales@your-domain.com&gt; This is the email address that will be used to send the email to the buyer. This name and email address will appear in the from field of the email.", "wordpress-simple-paypal-shopping-cart");?></p></td>
+    <br /><p class="description"><?php esc_html_e("Example: Your Name &lt;sales@your-domain.com&gt; This is the email address that will be used to send the email to the buyer. This name and email address will appear in the from field of the email.", "wordpress-simple-paypal-shopping-cart");?></p></td>
     </tr>    
 
     </table>
@@ -102,26 +106,26 @@ function show_wp_cart_email_settings_page()
     </div><!--end of general email section postbox-->
 
     <div class="postbox">
-    <h3 class="hndle"><label for="title"><?php _e("General Email Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
+    <h3 class="hndle"><label for="title"><?php esc_html_e("General Email Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
     <div class="inside">
 
-    <p><i><?php _e("The following options affect the emails that gets sent to your buyers after a purchase.", "wordpress-simple-paypal-shopping-cart");?></i></p>
+    <p><i><?php esc_html_e("The following options affect the emails that gets sent to your buyers after a purchase.", "wordpress-simple-paypal-shopping-cart");?></i></p>
 
     <table class="form-table">
 
     <tr valign="top">
-    <th scope="row"><?php _e("Send Emails to Buyer After Purchase", "wordpress-simple-paypal-shopping-cart");?></th>
-    <td><input type="checkbox" name="wpspc_send_buyer_email" value="1" <?php echo $wpspc_send_buyer_email; ?> /><span class="description"><?php _e("If checked the plugin will send an email to the buyer with the sale details. If digital goods are purchased then the email will contain the download links for the purchased products.", "wordpress-simple-paypal-shopping-cart");?></a></span></td>
+    <th scope="row"><?php esc_html_e("Send Emails to Buyer After Purchase", "wordpress-simple-paypal-shopping-cart");?></th>
+    <td><input type="checkbox" name="wpspc_send_buyer_email" value="1" <?php checked( ! empty( $wpspc_send_buyer_email ), true ); ?> /><span class="description"><?php esc_html_e("If checked the plugin will send an email to the buyer with the sale details. If digital goods are purchased then the email will contain the download links for the purchased products.", "wordpress-simple-paypal-shopping-cart");?></a></span></td>
     </tr>
 
     <tr valign="top">
-    <th scope="row"><?php _e("Buyer Email Subject", "wordpress-simple-paypal-shopping-cart");?></th>
+    <th scope="row"><?php esc_html_e("Buyer Email Subject", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_buyer_email_subj" value="<?php echo esc_attr($wpspc_buyer_email_subj); ?>" size="50" />
-    <br /><p class="description"><?php _e("This is the subject of the email that will be sent to the buyer.", "wordpress-simple-paypal-shopping-cart");?></p></td>
+    <br /><p class="description"><?php esc_html_e("This is the subject of the email that will be sent to the buyer.", "wordpress-simple-paypal-shopping-cart");?></p></td>
     </tr>
 
     <tr valign="top">
-        <th scope="row"><?php _e("Buyer Email Body", "wordpress-simple-paypal-shopping-cart");?></th>
+        <th scope="row"><?php esc_html_e("Buyer Email Body", "wordpress-simple-paypal-shopping-cart");?></th>
     <td>
 
     <?php if ($wpsc_email_content_type == 'html') {
@@ -139,39 +143,39 @@ function show_wp_cart_email_settings_page()
         <textarea name="wpspc_buyer_email_body" cols="90" rows="7"><?php echo esc_textarea($wpspc_buyer_email_body); ?></textarea>
 	<?php } ?>
 
-    <br /><p class="description"><?php _e("This is the body of the email that will be sent to the buyer. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{first_name} – <?php _e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{last_name} – <?php _e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{payer_email} – <?php _e("Email Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{address} – <?php _e("Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{product_details} – <?php _e("The item details of the purchased product (this will include the download link for digital items).", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{transaction_id} – <?php _e("The unique transaction ID of the purchase", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{order_id} – <?php _e("The order ID reference of this transaction in the cart orders menu", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{purchase_amt} – <?php _e("The amount paid for the current transaction", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{purchase_date} – <?php _e("The date of the purchase", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{coupon_code} – <?php _e("Coupon code applied to the purchase", "wordpress-simple-paypal-shopping-cart");?>
+    <br /><p class="description"><?php esc_html_e("This is the body of the email that will be sent to the buyer. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{first_name} – <?php esc_html_e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{last_name} – <?php esc_html_e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{payer_email} – <?php esc_html_e("Email Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{address} – <?php esc_html_e("Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{product_details} – <?php esc_html_e("The item details of the purchased product (this will include the download link for digital items).", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{transaction_id} – <?php esc_html_e("The unique transaction ID of the purchase", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{order_id} – <?php esc_html_e("The order ID reference of this transaction in the cart orders menu", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{purchase_amt} – <?php esc_html_e("The amount paid for the current transaction", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{purchase_date} – <?php esc_html_e("The date of the purchase", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{coupon_code} – <?php esc_html_e("Coupon code applied to the purchase", "wordpress-simple-paypal-shopping-cart");?>
     </p></td>
     </tr>
 
     <tr valign="top">
-    <th scope="row"><?php _e("Send Emails to Seller After Purchase", "wordpress-simple-paypal-shopping-cart");?></th>
-    <td><input type="checkbox" name="wpspc_send_seller_email" value="1" <?php echo $wpspc_send_seller_email; ?> /><span class="description"><?php _e("If checked the plugin will send an email to the seller with the sale details", "wordpress-simple-paypal-shopping-cart");?></a></span></td>
+    <th scope="row"><?php esc_html_e("Send Emails to Seller After Purchase", "wordpress-simple-paypal-shopping-cart");?></th>
+    <td><input type="checkbox" name="wpspc_send_seller_email" value="1" <?php checked( ! empty( $wpspc_send_seller_email ), true ); ?> /><span class="description"><?php esc_html_e("If checked the plugin will send an email to the seller with the sale details", "wordpress-simple-paypal-shopping-cart");?></a></span></td>
     </tr>
 
     <tr valign="top">
-    <th scope="row"><?php _e("Notification Email Address*", "wordpress-simple-paypal-shopping-cart");?></th>
+    <th scope="row"><?php esc_html_e("Notification Email Address*", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_notify_email_address" value="<?php echo esc_attr($wpspc_notify_email_address); ?>" size="50" />
-    <br /><p class="description"><?php _e("This is the email address where the seller will be notified of product sales. You can put multiple email addresses separated by comma (,) in the above field to send the notification to multiple email addresses.", "wordpress-simple-paypal-shopping-cart");?></p></td>
+    <br /><p class="description"><?php esc_html_e("This is the email address where the seller will be notified of product sales. You can put multiple email addresses separated by comma (,) in the above field to send the notification to multiple email addresses.", "wordpress-simple-paypal-shopping-cart");?></p></td>
     </tr>
 
     <tr valign="top">
-    <th scope="row"><?php _e("Seller Email Subject*", "wordpress-simple-paypal-shopping-cart");?></th>
+    <th scope="row"><?php esc_html_e("Seller Email Subject*", "wordpress-simple-paypal-shopping-cart");?></th>
     <td><input type="text" name="wpspc_seller_email_subj" value="<?php echo esc_attr($wpspc_seller_email_subj); ?>" size="50" />
-    <br /><p class="description"><?php _e("This is the subject of the email that will be sent to the seller for record.", "wordpress-simple-paypal-shopping-cart");?></p></td>
+    <br /><p class="description"><?php esc_html_e("This is the subject of the email that will be sent to the seller for record.", "wordpress-simple-paypal-shopping-cart");?></p></td>
     </tr>
 
     <tr valign="top">
-    <th scope="row"><?php _e("Seller Email Body*", "wordpress-simple-paypal-shopping-cart");?></th>
+    <th scope="row"><?php esc_html_e("Seller Email Body*", "wordpress-simple-paypal-shopping-cart");?></th>
     <td>
 	<?php if ($wpsc_email_content_type == 'html') {
 	add_filter( 'wp_default_editor', 'wpsc_set_default_email_body_editor' );
@@ -187,17 +191,17 @@ function show_wp_cart_email_settings_page()
     } else { ?>
         <textarea name="wpspc_seller_email_body" cols="90" rows="7"><?php echo esc_textarea($wpspc_seller_email_body); ?></textarea>
     <?php } ?>
-    <br /><p class="description"><?php _e("This is the body of the email that will be sent to the seller for record. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{first_name} – <?php _e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{last_name} – <?php _e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{payer_email} – <?php _e("Email Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{address} – <?php _e("Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{product_details} – <?php _e("The item details of the purchased product (this will include the download link for digital items).", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{transaction_id} – <?php _e("The unique transaction ID of the purchase", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{order_id} – <?php _e("The order ID reference of this transaction in the cart orders menu", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{purchase_amt} – <?php _e("The amount paid for the current transaction", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{purchase_date} – <?php _e("The date of the purchase", "wordpress-simple-paypal-shopping-cart");?>
-    <br />{coupon_code} – <?php _e("Coupon code applied to the purchase", "wordpress-simple-paypal-shopping-cart");?>
+    <br /><p class="description"><?php esc_html_e("This is the body of the email that will be sent to the seller for record. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{first_name} – <?php esc_html_e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{last_name} – <?php esc_html_e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{payer_email} – <?php esc_html_e("Email Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{address} – <?php esc_html_e("Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{product_details} – <?php esc_html_e("The item details of the purchased product (this will include the download link for digital items).", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{transaction_id} – <?php esc_html_e("The unique transaction ID of the purchase", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{order_id} – <?php esc_html_e("The order ID reference of this transaction in the cart orders menu", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{purchase_amt} – <?php esc_html_e("The amount paid for the current transaction", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{purchase_date} – <?php esc_html_e("The date of the purchase", "wordpress-simple-paypal-shopping-cart");?>
+    <br />{coupon_code} – <?php esc_html_e("Coupon code applied to the purchase", "wordpress-simple-paypal-shopping-cart");?>
     </p></td>
     </tr>
 
@@ -207,7 +211,7 @@ function show_wp_cart_email_settings_page()
     </div><!--end of confirmation email section postbox-->
 
     <div class="submit">
-        <input type="submit" class="button-primary" name="wpspc_email_settings_update" value="<?php echo (__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />
+        <input type="submit" class="button-primary" name="wpspc_email_settings_update" value="<?php echo (esc_html__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />
     </div>
     </form>
 
