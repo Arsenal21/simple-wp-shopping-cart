@@ -242,7 +242,8 @@ None
 == Changelog ==
 = WIP =
 - A Gutenberg Block related issue fixed.
-- Now only published content can register products data to dynamic products.
+- Now only published content by a trusted author (Editor or above by default, filterable via "wpsc_dynamic_product_register_capability") can register products data to dynamic products.
+- Existing dynamic products data is reset once on update so it gets rebuilt under the new check. If your site uses page caching, clear the cache after updating.
 - PayPal Standard now always verifies the recipient against the configured primary PayPal email address. Removed the optional strict email check setting.
 - Stripe Managed Payments related api error issue fixed.
 

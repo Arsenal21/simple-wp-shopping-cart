@@ -172,8 +172,10 @@ function print_wp_cart_button_for_product( $name, $price, $shipping = 0, $var1 =
 
 	$product_key = WPSC_Dynamic_Products::generate_product_key($name, $price);
 	
-	// Only published content may register products; previews must not change saved product data.
-	if ( 'publish' === get_post_status() && ! is_preview() ) {
+	// Only published content by a trusted author may register products; previews must not change saved product data.
+	$wpsc_post = get_post();
+	$wpsc_register_cap = apply_filters( 'wpsc_dynamic_product_register_capability', 'edit_others_posts' );
+	if ( $wpsc_post && 'publish' === $wpsc_post->post_status && ! is_preview() && user_can( (int) $wpsc_post->post_author, $wpsc_register_cap ) ) {
 		WPSC_Dynamic_Products::get_instance()->save($product_key, $dynamic_product_data);
 	}
 

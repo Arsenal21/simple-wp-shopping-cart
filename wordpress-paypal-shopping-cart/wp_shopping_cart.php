@@ -848,6 +848,12 @@ function wpsc_front_side_enqueue_scripts() {
 //Handle the plugins loaded action
 function wp_cart_handle_plugins_loaded() {
 	wpsc_register_shortcodes();
+
+	// One-time reset of dynamic products registered before the trusted author check. Entries get rebuilt when product pages are viewed.
+	if ( ! get_option( 'wpsc_dynamic_products_reset_done' ) ) {
+		delete_option( 'wpsc_dynamic_products' );
+		update_option( 'wpsc_dynamic_products_reset_done', '1' );
+	}
 }
 
 //Hanlde the activation of the plugin
