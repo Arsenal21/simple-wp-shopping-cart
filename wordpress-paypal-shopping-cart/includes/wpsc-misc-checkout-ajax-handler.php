@@ -228,6 +228,10 @@ function wpsc_stripe_create_checkout_session() {
 			);
 		}
 
+		$opts['managed_payments'] = array(
+			'enabled' => false,
+		);
+		
 		$opts = apply_filters( 'wpspsc_stripe_sca_session_opts', $opts, $cart_id );// TODO: Old hook. Need to remove this.
 		$opts = apply_filters( 'wpsc_stripe_sca_session_opts', $opts, $cart_id );
 

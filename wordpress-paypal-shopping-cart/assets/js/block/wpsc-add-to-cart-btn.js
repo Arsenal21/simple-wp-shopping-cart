@@ -18,7 +18,11 @@ wpsc_register_block_type(
         edit: function (props) {
             const blockProps = wpsc_useBlockProps();
 
-            blockProps.ref = function (element) {
+            // Merge our custom ref with the one from useBlockProps() instead of
+            // overwriting it, so the block editor can still track this block's
+            // DOM node (required for the selection outline and floating block
+            // toolbar - move up/down, drag handle, options menu, etc).
+            const wpscCustomRef = function (element) {
                 if (element) {
                     const editorWindow = element.ownerDocument.defaultView;
 
@@ -39,6 +43,7 @@ wpsc_register_block_type(
                     'div',
                     {
                         ...blockProps,
+                        ref: wpsc_useMergeRefs([blockProps.ref, wpscCustomRef]),
 
                         // Disable links in the editor preview.
                         onClickCapture: function (event) {
