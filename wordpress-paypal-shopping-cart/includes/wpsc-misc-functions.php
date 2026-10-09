@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /* This function gets called when init is executed */
 function wp_cart_init_handler()
 {
@@ -156,7 +160,7 @@ function wpsc_apply_dynamic_tags_on_email($text, $ipn_data, $args)
 {
     $order_id = $args['order_id'];
     $purchase_amount = get_post_meta( $order_id, 'wpsc_total_amount', true );
-    $purchase_date = date("Y-m-d");
+    $purchase_date = wp_date("Y-m-d");
     $tags = array("{first_name}","{last_name}","{product_details}","{payer_email}","{transaction_id}","{purchase_amt}","{purchase_date}","{coupon_code}","{address}","{phone}","{order_id}");
     $vals = array($ipn_data['first_name'], $ipn_data['last_name'], $args['product_details'], $args['payer_email'], $ipn_data['txn_id'], $purchase_amount, $purchase_date, (isset($args['coupon_code']) ? $args['coupon_code'] : '') , $args['address'], (isset($ipn_data['contact_phone']) ? $ipn_data['contact_phone'] : ''), $order_id);
 
@@ -241,9 +245,9 @@ function wpsc_settings_menu_documentation_msg()
     ?>
     <div class="wpsc-grey-box">
         <p>
-            <?php _e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?>
+            <?php esc_html_e("For more information, updates, detailed documentation and video tutorial, please visit:", "wordpress-simple-paypal-shopping-cart"); ?>
             <?php echo ' '; ?>
-            <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php _e("WP Simple Cart Documentation", "wordpress-simple-paypal-shopping-cart"); ?></a>
+            <a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank"><?php esc_html_e("WP Simple Cart Documentation", "wordpress-simple-paypal-shopping-cart"); ?></a>
         </p>
     </div>
     <?php
@@ -254,11 +258,11 @@ function wpsc_settings_menu_footer()
     ?>
     <div class="wpsc-yellow-box">
     <p>
-        <?php _e("Need a shopping cart plugin with a lot of features and support? Check out our ", "wordpress-simple-paypal-shopping-cart"); ?>
-        <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php _e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a>
+        <?php esc_html_e("Need a shopping cart plugin with a lot of features and support? Check out our ", "wordpress-simple-paypal-shopping-cart"); ?>
+        <a href="https://www.tipsandtricks-hq.com/wordpress-estore-plugin-complete-solution-to-sell-digital-products-from-your-wordpress-blog-securely-1059" target="_blank"><?php esc_html_e("WP eStore Plugin", "wordpress-simple-paypal-shopping-cart"); ?></a>
     </p>
     <p>
-        <?php _e('You can also try our free', "wordpress-simple-paypal-shopping-cart") ?> <a href="https://wordpress.org/plugins/wp-express-checkout/" target="_blank">WP Express Checkout</a> <?php _e('or', "wordpress-simple-paypal-shopping-cart") ?> <a href="https://wordpress.org/plugins/stripe-payments/" target="_blank">Accept Stripe Payments</a> <?php _e('plugins to sell your products.', "wordpress-simple-paypal-shopping-cart") ?>
+        <?php esc_html_e('You can also try our free', "wordpress-simple-paypal-shopping-cart") ?> <a href="https://wordpress.org/plugins/wp-express-checkout/" target="_blank">WP Express Checkout</a> <?php esc_html_e('or', "wordpress-simple-paypal-shopping-cart") ?> <a href="https://wordpress.org/plugins/stripe-payments/" target="_blank">Accept Stripe Payments</a> <?php esc_html_e('plugins to sell your products.', "wordpress-simple-paypal-shopping-cart") ?>
     </p>
     </div>
     <?php
@@ -267,7 +271,7 @@ function wpsc_settings_menu_footer()
 function wpsc_settings_output_sandbox_mode_msg(){
     if( get_option ('wp_shopping_cart_enable_sandbox') ) {
         // Sandbox mode is enabled.
-        echo '<p class="wpsc-blue-box">' . __('Note: the sandbox/test mode is enabled. You can turn off the sandbox mode (from the general settings menu) when you want to do live transactions.', 'wordpress-simple-paypal-shopping-cart') . '</p>';
+        echo '<p class="wpsc-blue-box">' . esc_html__('Note: the sandbox/test mode is enabled. You can turn off the sandbox mode (from the general settings menu) when you want to do live transactions.', 'wordpress-simple-paypal-shopping-cart') . '</p>';
     }    
 }
 

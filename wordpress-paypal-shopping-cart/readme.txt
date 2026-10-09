@@ -246,6 +246,7 @@ None
 - Existing dynamic products data is reset once on update so it gets rebuilt under the new check. If your site uses page caching, clear the cache after updating.
 - PayPal Standard now always verifies the recipient against the configured primary PayPal email address. Removed the optional strict email check setting.
 - Stripe Managed Payments related api error issue fixed.
+- Some escaping functions added for improved security.
 
 = 5.3.2 =
 - WordPress 7.1 shopping cart block compatibility update.

@@ -9,6 +9,8 @@ Author URI: https://www.tipsandtricks-hq.com/
 Description: Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
 Text Domain: wordpress-simple-paypal-shopping-cart
 Domain Path: /languages/
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 //Slug - wpsc. Use this slug/prefix for all the functions and classes.
@@ -41,6 +43,7 @@ include_once( WP_CART_PATH . 'wp_shopping_cart_shortcodes.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-shortcodes-related.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-debug-logging-functions.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-utility-functions.php' );
+include_once( WP_CART_PATH . 'includes/wpsc-utility-kses.php' );
 include_once( WP_CART_PATH . 'includes/wpsc-misc-functions.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-wpsc-persistent-msg.php' );
 include_once( WP_CART_PATH . 'includes/classes/class-coupon.php' );
@@ -191,7 +194,7 @@ function wpsc_cart_actions_handler() {
 					$error_msg = '<p>Error! The price field may have been tampered. Security check failed.</p>';
 					$error_msg .= '<p>If this site uses any caching, empty the cache then try again.</p>';
 					$error_msg .= "<p>If the issue persists go to the settings menu of the plugin and select/tick the 'Disable Price Check for Add to Cart' checkbox and save it.</p>";
-					wp_die( $error_msg );
+					wp_die( wp_kses( $error_msg, WPSC_Utility_Kses::wp_kses_post_tags() ) );
 				}
 			}
 
@@ -215,7 +218,7 @@ function wpsc_cart_actions_handler() {
             $price += $variation_price;
 
             if (floatval($price) < 0){
-                wp_die(__('Error! Product price amount cannot be negative.', "wordpress-simple-paypal-shopping-cart"));
+                wp_die(esc_html__('Error! Product price amount cannot be negative.', "wordpress-simple-paypal-shopping-cart"));
             }
 
 			//At this stage the price amt has already been sanitized and validated.
@@ -323,7 +326,7 @@ function wpsc_cart_actions_handler() {
 			if ( $wpsc_cart->get_cart_id() ) {
 				$wpsc_cart->add_items( $products );
 			} else {
-				echo "<p>" . ( __( "Error! Your session is out of sync. Please reset your session.", "wordpress-simple-paypal-shopping-cart" ) ) . "</p>";
+				echo "<p>" . ( esc_html__( "Error! Your session is out of sync. Please reset your session.", "wordpress-simple-paypal-shopping-cart" ) ) . "</p>";
 			}
 		}
 
@@ -331,7 +334,7 @@ function wpsc_cart_actions_handler() {
 		if ( get_option( 'wp_shopping_cart_auto_redirect_to_checkout_page' ) ) {
 			$checkout_url = sanitize_text_field(get_option( 'cart_checkout_page_url' ));
 			if ( empty( $checkout_url ) ) {
-				echo "<br /><strong>" . ( __( "Shopping Cart Configuration Error! You must specify a value in the 'Checkout Page URL' field for the automatic redirection feature to work!", "wordpress-simple-paypal-shopping-cart" ) ) . "</strong><br />";
+				echo "<br /><strong>" . ( esc_html__( "Shopping Cart Configuration Error! You must specify a value in the 'Checkout Page URL' field for the automatic redirection feature to work!", "wordpress-simple-paypal-shopping-cart" ) ) . "</strong><br />";
 			} else {
 				wpsc_redirect_to_url( $checkout_url );
 				exit;
@@ -515,7 +518,7 @@ function wpsc_js_redirect_if_using_anchor() {
 			?>
 			<script>
 				document.addEventListener("DOMContentLoaded", function () {
-					window.location.href = "<?php echo $anchor_name; ?>";
+					window.location.href = "<?php echo esc_js( $anchor_name ); ?>";
 				})
 			</script>
 		<?php
@@ -525,7 +528,7 @@ function wpsc_js_redirect_if_using_anchor() {
 
 function wpsc_redirect_to_url( $url, $delay = '0', $exit = '1' ) {
 	if ( empty( $url ) ) {
-		echo "<br /><strong>" . __( "Error! The URL value is empty. Please specify a correct URL value to redirect to!", "wordpress-simple-paypal-shopping-cart" ) . "</strong>";
+		echo "<br /><strong>" . esc_html__( "Error! The URL value is empty. Please specify a correct URL value to redirect to!", "wordpress-simple-paypal-shopping-cart" ) . "</strong>";
 		exit;
 	}
 
@@ -534,7 +537,7 @@ function wpsc_redirect_to_url( $url, $delay = '0', $exit = '1' ) {
 	if ( ! headers_sent() ) {
 		header( 'Location: ' . $url );
 	} else {
-		echo '<meta http-equiv="refresh" content="' . $delay . ';url=' . $url . '" />';
+		echo '<meta http-equiv="refresh" content="' . absint( $delay ) . ';url=' . esc_url( $url ) . '" />';
 	}
 	if ( $exit == '1' ) {
 		exit;
@@ -621,9 +624,7 @@ function wp_cart_add_custom_field() {
 }
 
 function wp_cart_add_read_form_javascript() {
-	$debug_marker = "<!-- WP Simple Shopping Cart plugin v" . WP_CART_VERSION . " - https://wordpress.org/plugins/wordpress-simple-paypal-shopping-cart/ -->";
-	echo "\n" . $debug_marker . "\n";
-	ob_start();
+	echo "\n<!-- WP Simple Shopping Cart plugin v" . esc_html( WP_CART_VERSION ) . " - https://wordpress.org/plugins/wordpress-simple-paypal-shopping-cart/ -->\n";
     ?>
 	<script type="text/javascript">
 	function ReadForm (obj1, tst) {
@@ -658,7 +659,7 @@ function wp_cart_add_read_form_javascript() {
 	}
 	</script>
     <?php
-    echo ob_get_clean();
+
 }
 
 /**

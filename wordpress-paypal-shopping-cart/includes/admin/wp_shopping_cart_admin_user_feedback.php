@@ -101,7 +101,7 @@ class WPSC_Admin_User_Feedback {
 				<p><?php esc_html_e( 'That\'s great! Could you please do me a big favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?', 'wordpress-simple-paypal-shopping-cart' ); ?></p>
 				<p><strong><?php esc_html_e( '~ Simple Shopping Cart Team', 'wordpress-simple-paypal-shopping-cart' ) ?></strong></p>
 				<p>
-					<a href="https://wordpress.org/support/plugin/wordpress-simple-paypal-shopping-cart/reviews/?filter=5#new-post" class="wspsc-plugin-dismiss-review-notice wspsc-plugin-review-out" target="_blank" rel="noopener noreferrer">
+					<a href="https://wordpress.org/support/plugin/wordpress-simple-paypal-shopping-cart/reviews/#new-post" class="wspsc-plugin-dismiss-review-notice wspsc-plugin-review-out" target="_blank" rel="noopener noreferrer">
 						<?php esc_html_e( 'OK, you deserve it', 'wordpress-simple-paypal-shopping-cart' ); ?>
 					</a><br>
 					<a href="#" class="wspsc-plugin-dismiss-review-notice" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Nope, maybe later', 'wordpress-simple-paypal-shopping-cart' ); ?></a><br>

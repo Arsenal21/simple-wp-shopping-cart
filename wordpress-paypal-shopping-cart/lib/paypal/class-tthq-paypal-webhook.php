@@ -311,8 +311,10 @@ class PayPal_Webhook {
 				//No webhook exists in PayPal. Delete the webhook ID (if any) from our DB to clean it up (so it can be created again).
 				PayPal_Utility_Functions::delete_option( 'paypal_webhook_id_' . $this->mode );
 			} elseif ( $error_code === 'UNAUTHORIZED' ) {
+				/* translators: %s: PayPal mode (sandbox or live). */
 				$ret['msg'] = $response->get_error_message() . '. ' . sprintf( __( 'PayPal API Credential information is missing in settings. Please enter valid PayPal API Credentials in the General Settings tab for %s mode.', 'wordpress-simple-paypal-shopping-cart' ), $this->mode );
 			} elseif ( $error_code === 'invalid_client' ) {
+				/* translators: %s: PayPal mode (sandbox or live). */
 				$ret['msg'] = sprintf( __( 'Invalid or Missing API Credentials! Check the plugin settings and enter valid API credentials in the PayPal Credentials section for %s mode.', 'wordpress-simple-paypal-shopping-cart' ), $this->mode );
 			} else {
 				$ret['msg'] = $response->get_error_message();

@@ -32,7 +32,7 @@ class WPSC_Manual_Checkout {
 
 		//Check if cart items are empty
 		if(empty($cart_items)){
-			throw new \Exception(__( 'No cart items found. Cannot place this order!', 'wordpress-simple-paypal-shopping-cart' ));
+			throw new \Exception(esc_html__( 'No cart items found. Cannot place this order!', 'wordpress-simple-paypal-shopping-cart' ));
 		}
 
 		// Process payment data.

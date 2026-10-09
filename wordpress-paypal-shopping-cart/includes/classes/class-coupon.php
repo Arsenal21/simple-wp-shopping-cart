@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class WPSPSC_Coupons_Collection {
     var $coupon_items = array();
 
@@ -153,10 +157,10 @@ class WPSPSC_COUPON_ITEM {
 
     function print_coupon_item_details()
     {
-        echo "<br />".(__("Coupon ID: ", "wordpress-simple-paypal-shopping-cart")).$this->id;
-        echo "<br />".(__("Coupon Code: ", "wordpress-simple-paypal-shopping-cart")).$this->coupon_code;
-        echo "<br />".(__("Discount Amt: ", "wordpress-simple-paypal-shopping-cart")).$this->discount_rate;
-        echo "<br />".(__("Expiry date: ", "wordpress-simple-paypal-shopping-cart")).$this->expiry_date;
+        echo "<br />".(esc_html__("Coupon ID: ", "wordpress-simple-paypal-shopping-cart")).esc_html( $this->id );
+        echo "<br />".(esc_html__("Coupon Code: ", "wordpress-simple-paypal-shopping-cart")).esc_html( $this->coupon_code );
+        echo "<br />".(esc_html__("Discount Amt: ", "wordpress-simple-paypal-shopping-cart")).esc_html( $this->discount_rate );
+        echo "<br />".(esc_html__("Expiry date: ", "wordpress-simple-paypal-shopping-cart")).esc_html( $this->expiry_date );
     }
 }
 class_alias('WPSPSC_COUPON_ITEM', 'WPSC_Coupon_Item' ); // TODO: Need to remove this later.
@@ -172,7 +176,7 @@ function wpsc_apply_cart_discount($coupon_code)
     }
     $coupon_expiry_date = $coupon_item->expiry_date;
     if(!empty($coupon_expiry_date)){
-        $current_date = date("Y-m-d");
+        $current_date = gmdate("Y-m-d");
         if($current_date > $coupon_expiry_date){
             $wspsc_cart->set_cart_action_msg('<div class="wpsc-error-message">'.__("Coupon code expired!", "wordpress-simple-paypal-shopping-cart").'</div>');
             return;

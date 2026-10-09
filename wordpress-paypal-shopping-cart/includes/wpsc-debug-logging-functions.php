@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Generates a unique suffix for filename.
  *
@@ -44,12 +48,15 @@ function wpsc_read_log_file() {
 	if ( ! file_exists( wpsc_get_log_file() ) ) {
 		wpsc_reset_logfile();
 	}
-	$logfile = fopen( wpsc_get_log_file(), 'rb' );
-	if ( ! $logfile ) {
-		wp_die( __( 'Log file dosen\'t exists.', 'wordpress-simple-paypal-shopping-cart' ) );
+	$logfile = file_get_contents( wpsc_get_log_file() );
+	if ( false === $logfile ) {
+		wp_die( esc_html__( 'Log file dosen\'t exists.', 'wordpress-simple-paypal-shopping-cart' ) );
 	}
 	header( 'Content-Type: text/plain' );
-	fpassthru( $logfile );
+	header( 'X-Content-Type-Options: nosniff' );
+	// Plain-text download: preserve the log contents exactly.
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $logfile;
 	die;
 }
 
@@ -71,14 +78,13 @@ function wpsc_log_payment_debug( $message, $success, $end = false ) {
 	}
 
 	// Timestamp
-	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS: ' : 'FAILURE: ' ) . $message . "\n";
+	$text = '[' . wp_date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS: ' : 'FAILURE: ' ) . $message . "\n";
 	if ( $end ) {
 		$text .= "\n------------------------------------------------------------------\n\n";
 	}
 	// Write to log
-	$fp = fopen( $logfile, 'a' );
-	fwrite( $fp, $text );
-	fclose( $fp );
+	// Append under a lock so simultaneous payment callbacks keep all log entries.
+	file_put_contents( $logfile, $text, FILE_APPEND | LOCK_EX );
 }
 
 /**
@@ -98,7 +104,7 @@ function wpsc_log_debug_array( $array_to_write, $success, $end = false ) {
 		//Debug is not enabled.
 		return;
 	}
-	$text = '[' . date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS: ' : 'FAILURE: ' ) . "\n";
+	$text = '[' . wp_date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS: ' : 'FAILURE: ' ) . "\n";
 	ob_start();
 	print_r( $array_to_write );
 	$var = ob_get_contents();
@@ -109,9 +115,8 @@ function wpsc_log_debug_array( $array_to_write, $success, $end = false ) {
 		$text .= "\n------------------------------------------------------------------\n\n";
 	}
 	// Write to log
-	$fp = fopen( $logfile, 'a' );
-	fwrite( $fp, $text );
-	fclose( $fp ); // close filee
+	// Append under a lock so simultaneous payment callbacks keep all log entries.
+	file_put_contents( $logfile, $text, FILE_APPEND | LOCK_EX );
 }
 
 /**
@@ -130,17 +135,8 @@ function wspsc_log_debug_array($array_to_write, $success, $end = false) {
  * @return bool Reset successful
  */
 function wpsc_reset_logfile() {
-	$log_reset = true;
 	$logfile   = wpsc_get_log_file();
-	$text      = '[' . date( 'm/d/Y g:i A' ) . '] - SUCCESS: Log file reset';
+	$text      = '[' . wp_date( 'm/d/Y g:i A' ) . '] - SUCCESS: Log file reset';
 	$text      .= "\n------------------------------------------------------------------\n\n";
-	$fp        = fopen( $logfile, 'w' );
-	if ( $fp != false ) {
-		@fwrite( $fp, $text );
-		@fclose( $fp );
-	} else {
-		$log_reset = false;
-	}
-
-	return $log_reset;
+	return false !== file_put_contents( $logfile, $text, LOCK_EX );
 }

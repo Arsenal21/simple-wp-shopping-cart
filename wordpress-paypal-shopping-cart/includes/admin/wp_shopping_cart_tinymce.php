@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wp_cart_add_tinymce_button() {
 
     // Don't bother doing this stuff if the current user lacks permissions
@@ -35,7 +39,7 @@ function wp_cart_print_admin_scripts() {
     //The following is used by the TinyMCE button.
     ?>
     <script type="text/javascript">
-        var wp_cart_admin_ajax_url = '<?php echo admin_url( 'admin-ajax.php?action=ajax' ); ?>';
+        var wp_cart_admin_ajax_url = '<?php echo esc_js( admin_url( 'admin-ajax.php?action=ajax' ) ); ?>';
     </script>
     <?php
 }
@@ -88,7 +92,7 @@ function wp_cart_tinymce_ajax_handler() {
 
     	    // Validations
     	    if (product_name == '') {
-    		alert('<?php _e( "Please enter product name", 'wordpress-simple-paypal-shopping-cart' ); ?>');
+            alert('<?php esc_html_e( "Please enter product name", 'wordpress-simple-paypal-shopping-cart' ); ?>');
     		document.getElementById('wpsppsc_product_name').focus();
     		return false;
     	    }
@@ -96,7 +100,7 @@ function wp_cart_tinymce_ajax_handler() {
     	    product_price = product_price || 0;
 
     	    if (product_price == 0) {
-    		alert('<?php _e( "Please enter product price", 'wordpress-simple-paypal-shopping-cart' ); ?>');
+            alert('<?php esc_html_e( "Please enter product price", 'wordpress-simple-paypal-shopping-cart' ); ?>');
     		document.getElementById('wpsppsc_product_price').focus();
     		return false;
     	    }
@@ -145,92 +149,93 @@ function wp_cart_tinymce_ajax_handler() {
     	<!-- panel -->
     	<div id="wpsppsc_panel" class="panel current">
 
-    	    <p><?php _e( sprintf( 'Visit the %s page to learn all the shortcode usage.', '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank">' . __( 'Simple Cart Documentation', 'wordpress-simple-paypal-shopping-cart' ) . '</a>' ), 'wordpress-simple-paypal-shopping-cart' ); ?></p>
+            <p><?php /* translators: %s: Link to the Simple Cart documentation. */
+            echo wp_kses( sprintf( __( 'Visit the %s page to learn all the shortcode usage.', 'wordpress-simple-paypal-shopping-cart' ), '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-shopping-cart" target="_blank">' . __( 'Simple Cart Documentation', 'wordpress-simple-paypal-shopping-cart' ) . '</a>' ), WPSC_Utility_Kses::wp_kses_post_tags() ); ?></p>
     	    <br />
 
     	    <table border="0" cellpadding="4" cellspacing="0">
     		<tr>
     		    <td nowrap="nowrap">
-    			<label for="wpsppsc_product_name"><?php _e( "Product Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
+                <label for="wpsppsc_product_name"><?php esc_html_e( "Product Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
     		    </td>
     		    <td>
     			<input type="text" id="wpsppsc_product_name" name="wpsppsc_product_name" value="" />
     		    </td>
     		    <td>
-			    <?php _e( "Example: My Great Product", 'wordpress-simple-paypal-shopping-cart' ); ?>
+			    <?php esc_html_e( "Example: My Great Product", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap">
-    			<label for="wpsppsc_product_price"><?php _e( "Price", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
+                <label for="wpsppsc_product_price"><?php esc_html_e( "Price", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
     		    </td>
     		    <td>
     			<input type="text" id="wpsppsc_product_price" name="wpsppsc_product_price" value="" />
     		    </td>
     		    <td>
-			    <?php _e( "Example: 10 or 10.50", 'wordpress-simple-paypal-shopping-cart' ); ?>
+			    <?php esc_html_e( "Example: 10 or 10.50", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap">
-    			<label for="wpsppsc_shipping"><?php _e( "Shipping (Optional)", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
+                <label for="wpsppsc_shipping"><?php esc_html_e( "Shipping (Optional)", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
     		    </td>
     		    <td>
     			<input type="text" id="wpsppsc_shipping" name="wpsppsc_shipping" value="" />
     		    </td>
     		    <td>
-			    <?php _e( "Example: 10 or 10.50", 'wordpress-simple-paypal-shopping-cart' ); ?>
+			    <?php esc_html_e( "Example: 10 or 10.50", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap">
-    			<label for="wpsppsc_file_url"><?php _e( "File URL (Optional)", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
+                <label for="wpsppsc_file_url"><?php esc_html_e( "File URL (Optional)", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
     		    </td>
     		    <td>
     			<input type="text" id="wpsppsc_file_url" name="wpsppsc_shipping" value="" />
     		    </td>
     		    <td>
-			    <?php _e( 'Example:' ); ?> http://www.your-site.com/wp-content/uploads/my-ebook.zip
+			    <?php esc_html_e( 'Example:' , 'wordpress-simple-paypal-shopping-cart'); ?> http://www.your-site.com/wp-content/uploads/my-ebook.zip
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap" colspan="3">
     			<br/>
-    			<strong><?php _e( "Product Variations (Optional)", 'wordpress-simple-paypal-shopping-cart' ); ?></strong>
-    			<p><?php _e( 'Example: For a T-Shirt product you may want to use a variation with name "Size" and values as "Small, Medium, Large"', 'wordpress-simple-paypal-shopping-cart' ); ?></p>
+                <strong><?php esc_html_e( "Product Variations (Optional)", 'wordpress-simple-paypal-shopping-cart' ); ?></strong>
+                <p><?php esc_html_e( 'Example: For a T-Shirt product you may want to use a variation with name "Size" and values as "Small, Medium, Large"', 'wordpress-simple-paypal-shopping-cart' ); ?></p>
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap">
-    			<label for="wpsppsc_custom1_id"><?php _e( "Variation 1: Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
+                <label for="wpsppsc_custom1_id"><?php esc_html_e( "Variation 1: Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
     		    </td>
     		    <td><input type="text" id="wpsppsc_custom1_id" name="wpsppsc_custom1_id" value="" />
     		    </td>
     		    <td>
-			    <?php _e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
-    			<input type="text" id="wpsppsc_custom1_values" name="wpsppsc_custom1_values" value="" /><?php _e(" Example: Small, Medium, Large", 'wordpress-simple-paypal-shopping-cart' ); ?>
+			    <?php esc_html_e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
+                <input type="text" id="wpsppsc_custom1_values" name="wpsppsc_custom1_values" value="" /><?php esc_html_e(" Example: Small, Medium, Large", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap">
-    			<label for="wpsppsc_custom2_id"><?php _e( "Variation 2: Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
+                <label for="wpsppsc_custom2_id"><?php esc_html_e( "Variation 2: Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
     		    </td>
     		    <td><input type="text" id="wpsppsc_custom2_id" name="wpsppsc_custom2_id" value="" />
     		    </td>
     		    <td>
-			    <?php _e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
-    			<input type="text" id="wpsppsc_custom2_values" name="wpsppsc_custom2_values" value="" /><?php _e(" Example: Blue, Red, Black, White", 'wordpress-simple-paypal-shopping-cart' ); ?>
+			    <?php esc_html_e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
+                <input type="text" id="wpsppsc_custom2_values" name="wpsppsc_custom2_values" value="" /><?php esc_html_e(" Example: Blue, Red, Black, White", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     		<tr>
     		    <td nowrap="nowrap">
-    			<label for="wpsppsc_custom3_id"><?php _e( "Variation 3: Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
+                <label for="wpsppsc_custom3_id"><?php esc_html_e( "Variation 3: Name", 'wordpress-simple-paypal-shopping-cart' ); ?></label>
     		    </td>
     		    <td><input type="text" id="wpsppsc_custom3_id" name="wpsppsc_custom3_id" value="" />
     		    </td>
     		    <td>
-			    <?php _e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
-    			<input type="text" id="wpsppsc_custom3_values" name="wpsppsc_custom3_values" value="" /><?php _e(" Example: Short, Full", 'wordpress-simple-paypal-shopping-cart' ); ?>
+			    <?php esc_html_e( "Values", 'wordpress-simple-paypal-shopping-cart' ); ?>
+                <input type="text" id="wpsppsc_custom3_values" name="wpsppsc_custom3_values" value="" /><?php esc_html_e(" Example: Short, Full", 'wordpress-simple-paypal-shopping-cart' ); ?>
     		    </td>
     		</tr>
     	    </table>
@@ -240,14 +245,14 @@ function wp_cart_tinymce_ajax_handler() {
     	<div class="mceActionPanel">
 
     	    <div style="float: left">
-    		<input type="submit" id="insert" name="insert" value="<?php _e( "Insert", 'wordpress-simple-paypal-shopping-cart' ); ?>"
+            <input type="submit" id="insert" name="insert" value="<?php esc_html_e( "Insert", 'wordpress-simple-paypal-shopping-cart' ); ?>"
     		       class='app_positive_button  mceButton button-primary'
     		       onclick="ui_for_ppsc_insert_content();
     			       return false;" />
     	    </div>
 
     	    <div style="float: right">
-    		<input type="button" id="cancel" name="cancel" value="<?php _e( "Cancel", 'wordpress-simple-paypal-shopping-cart' ); ?>"
+            <input type="button" id="cancel" name="cancel" value="<?php esc_html_e( "Cancel", 'wordpress-simple-paypal-shopping-cart' ); ?>"
     		       class='app_negative_button button'
     		       onclick="tb_remove();" />
     	    </div>

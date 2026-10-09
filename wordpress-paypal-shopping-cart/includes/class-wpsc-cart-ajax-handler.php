@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class WPSC_Cart_Ajax_Handler {
 
 	public function __construct() {
@@ -154,14 +158,14 @@ class WPSC_Cart_Ajax_Handler {
 					$error_msg .= ' ' . __( "If this site uses any caching, empty the cache then try again.", "wordpress-simple-paypal-shopping-cart" );
 					$error_msg .= ' ' . __( "If the issue persists go to the settings menu of the plugin and select/tick the 'Disable Price Check for Add to Cart' checkbox and save it.", "wordpress-simple-paypal-shopping-cart" );
 					// wp_die( $error_msg );
-					throw new \Exception( $error_msg );
+					throw new \Exception( esc_html( $error_msg ) );
 				}
 			}
 
 			$price = str_replace( WP_CART_CURRENCY_SYMBOL, "", $price ); //Remove any currency symbol from the price.
 			//Check that the price field is numeric.
 			if ( ! is_numeric( $price ) ) { //Price validation failed
-				throw new \Exception( __( "Error! The price validation failed. The value must be numeric.", "wordpress-simple-paypal-shopping-cart" ) );
+				throw new \Exception( esc_html__( "Error! The price validation failed. The value must be numeric.", "wordpress-simple-paypal-shopping-cart" ) );
 			}
 
 			$variation_price = 0;
@@ -178,12 +182,12 @@ class WPSC_Cart_Ajax_Handler {
 			$price += $variation_price;
 
 			if ( floatval( $price ) < 0 ) {
-				throw new \Exception( __( 'Error! Product price amount cannot be negative.', "wordpress-simple-paypal-shopping-cart" ) );
+				throw new \Exception( esc_html__( 'Error! Product price amount cannot be negative.', "wordpress-simple-paypal-shopping-cart" ) );
 			}
 
 			//At this stage the price amt has already been sanitized and validated.
 		} else {
-			throw new \Exception( __( 'Error! Missing price value. The price must be set.', "wordpress-simple-paypal-shopping-cart" ) );
+			throw new \Exception( esc_html__( 'Error! Missing price value. The price must be set.', "wordpress-simple-paypal-shopping-cart" ) );
 		}
 
 		//Sanitize and validate shipping price
@@ -196,18 +200,18 @@ class WPSC_Cart_Ajax_Handler {
 			} else {
 				$shipping_from_db = $wpsc_dynamic_products->get_data_by_param( $wpsc_product_key, 'shipping' );
 				if ( $shipping != $shipping_from_db ) { //Shipping validation failed
-					throw new \Exception( __( 'Error! The shipping price validation failed.', "wordpress-simple-paypal-shopping-cart" ) );
+					throw new \Exception( esc_html__( 'Error! The shipping price validation failed.', "wordpress-simple-paypal-shopping-cart" ) );
 				}
 			}
 
 			$shipping = str_replace( WP_CART_CURRENCY_SYMBOL, "", $shipping ); //Remove any currency symbol from the price.
 			//Check that the shipping price field is numeric.
 			if ( ! is_numeric( $shipping ) ) { //Shipping price validation failed
-				throw new \Exception( __( 'Error! The shipping price validation failed. The value must be numeric.', "wordpress-simple-paypal-shopping-cart" ) );
+				throw new \Exception( esc_html__( 'Error! The shipping price validation failed. The value must be numeric.', "wordpress-simple-paypal-shopping-cart" ) );
 			}
 			//At this stage the shipping price amt has already been sanitized and validated.
 		} else {
-			throw new \Exception( __( 'Error! Missing shipping price value. The price must be set.', "wordpress-simple-paypal-shopping-cart" ) );
+			throw new \Exception( esc_html__( 'Error! Missing shipping price value. The price must be set.', "wordpress-simple-paypal-shopping-cart" ) );
 		}
 
 		$is_do_not_show_qty_in_cart_enabled = get_option( 'wp_shopping_cart_do_not_show_qty_in_cart' ) == 'checked="checked"' ? true : false;
@@ -287,7 +291,7 @@ class WPSC_Cart_Ajax_Handler {
 			if ( $wpsc_cart->get_cart_id() ) {
 				$wpsc_cart->add_items( $products );
 			} else {
-				throw new \Exception( __( "Error! Your session is out of sync. Please reset your session.", "wordpress-simple-paypal-shopping-cart" ) );
+				throw new \Exception( esc_html__( "Error! Your session is out of sync. Please reset your session.", "wordpress-simple-paypal-shopping-cart" ) );
 			}
 		}
 

@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wpsc_render_manual_checkout_form() {
 	wp_enqueue_script( "wpsc-checkout-manual" );
 

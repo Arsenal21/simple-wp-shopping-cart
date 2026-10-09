@@ -214,23 +214,23 @@ class WPSC_ADD_TO_CART {
 		}, $atts );
 
 		if ( empty( $atts['name']) && empty( $atts['price'] ))  {
-			return '<p style="color: red;">' . __( 'You must specify the required fields of this block first!' ) . '</p>';
+			return '<p style="color: red;">' . __( 'You must specify the required fields of this block first!' , 'wordpress-simple-paypal-shopping-cart') . '</p>';
 		}
 
 		if ( empty( $atts['name'] ) ) {
-			return '<p style="color: red;">' . __( 'Error! You must specify product name.' ) . '</p>';
+			return '<p style="color: red;">' . __( 'Error! You must specify product name.' , 'wordpress-simple-paypal-shopping-cart') . '</p>';
 		}
 
 		if ( empty( $atts['price'] ) ) {
-			return '<p style="color: red;">' . __( 'Error! You must specify product price.' ) . '</p>';
+			return '<p style="color: red;">' . __( 'Error! You must specify product price.' , 'wordpress-simple-paypal-shopping-cart') . '</p>';
 		} else if ( ! is_numeric( $atts['price'] ) ) {
 			// Prevents fatal error if invalid price is provided.
-			return '<p style="color: red;">' . __( 'Error! You must specify a valid product price.' ) . '</p>';
+			return '<p style="color: red;">' . __( 'Error! You must specify a valid product price.' , 'wordpress-simple-paypal-shopping-cart') . '</p>';
 		}
 
 		if ( ! empty( $atts['shipping'] ) && ! is_numeric( $atts['shipping'] ) ) {
 			// Prevents fatal error if invalid shipping is provided.
-			return '<p style="color: red;">' . __( 'Error! You must specify a valid shipping cost.' ) . '</p>';
+			return '<p style="color: red;">' . __( 'Error! You must specify a valid shipping cost.' , 'wordpress-simple-paypal-shopping-cart') . '</p>';
 		}
 
 		$sc_str = 'wp_cart_button';

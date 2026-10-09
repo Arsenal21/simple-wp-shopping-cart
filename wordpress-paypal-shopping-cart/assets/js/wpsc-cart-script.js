@@ -107,9 +107,17 @@ function wpsc_cartInit () {
 			})
 		});
 	}
+
+    // PayPal onInit uses the region metadata populated above.
+    window.wpscCartReady = true;
+    document.dispatchEvent(new Event('wpsc_cart_ready'));
 }
 
-document.addEventListener('DOMContentLoaded', wpsc_cartInit);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wpsc_cartInit);
+} else {
+    wpsc_cartInit();
+}
 document.addEventListener('wpsc_after_render_cart_by_ajax', wpsc_cartInit);
 
 /**

@@ -1,12 +1,16 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wpsc_show_coupon_discount_settings_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		wp_die( 'You do not have permission to access this settings page.' );
 	}
 
 	echo '<div class="wrap">';
-	echo '<h1>'.__( "Simple Shopping Cart Coupons/Discounts", "wordpress-simple-paypal-shopping-cart" ).'</h1>';
+	echo '<h1>'.esc_html__( "Simple Shopping Cart Coupons/Discounts", "wordpress-simple-paypal-shopping-cart" ).'</h1>';
 
 	echo '<div id="poststuff"><div id="post-body">';
 
@@ -67,16 +71,16 @@ function wpsc_show_coupon_discount_settings_page() {
 
     <div class="postbox">
         <h3 class="hndle">
-            <label for="title"><?php _e( "Coupon/Discount Settings", "wordpress-simple-paypal-shopping-cart" ); ?></label>
+            <label for="title"><?php esc_html_e( "Coupon/Discount Settings", "wordpress-simple-paypal-shopping-cart" ); ?></label>
         </h3>
         <div class="inside">
             <form method="post" action="">
                 <table class="form-table" width="100%">
                     <tr valign="top">
-                        <th scope="row"><?php _e( "Enable Discount Coupon Feature", "wordpress-simple-paypal-shopping-cart" ); ?></th>
+                        <th scope="row"><?php esc_html_e( "Enable Discount Coupon Feature", "wordpress-simple-paypal-shopping-cart" ); ?></th>
                         <td>
-                            <input type="checkbox" name="wpsc_enable_coupon" value="1" <?php echo $wpsc_enable_coupon; ?> />
-                            <span class="description"><?php _e( "When checked your customers will be able to enter a coupon code in the shopping cart before checkout.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
+                            <input type="checkbox" name="wpsc_enable_coupon" value="1" <?php checked( ! empty( $wpsc_enable_coupon ), true ); ?> />
+                            <span class="description"><?php esc_html_e( "When checked your customers will be able to enter a coupon code in the shopping cart before checkout.", "wordpress-simple-paypal-shopping-cart" ); ?></span>
                         </td>
                     </tr>
                 </table>
@@ -92,14 +96,14 @@ function wpsc_show_coupon_discount_settings_page() {
     <input type="hidden" name="info_update" id="info_update" value="true"/>
 
     <div class="postbox">
-        <h3 class="hndle"><label for="title"><?php _e( "Add Coupon/Discount", "wordpress-simple-paypal-shopping-cart" ); ?></label>
+        <h3 class="hndle"><label for="title"><?php esc_html_e( "Add Coupon/Discount", "wordpress-simple-paypal-shopping-cart" ); ?></label>
         </h3>
         <div class="inside">
             <form method="post" action="">
                 <table class="form-table" width="100%">
                     <tr>
                         <th scope="row">
-	                        <?php _e( "Coupon Code", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
+	                        <?php esc_html_e( "Coupon Code", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
                         </th>
                         <td>
                             <input name="wpsc_coupon_code" type="text" size="15" value="" required/>
@@ -107,7 +111,7 @@ function wpsc_show_coupon_discount_settings_page() {
                     </tr>
                     <tr>
                         <th scope="row">
-	                        <?php _e( "Discount Rate (%)", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
+	                        <?php esc_html_e( "Discount Rate (%)", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
                         </th>
                         <td>
                             <input name="wpsc_coupon_rate" type="text" size="15" value="" required/>
@@ -115,7 +119,7 @@ function wpsc_show_coupon_discount_settings_page() {
                     </tr>
                     <tr>
                         <th scope="row">
-							<?php _e( "Expiry Date", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
+							<?php esc_html_e( "Expiry Date", 'wordpress-simple-paypal-shopping-cart' ); ?><br/>
                         </th>
                         <td>
                             <input name="wpsc_coupon_expiry_date" class="wpsc_coupon_expiry" type="text" size="15" value=""/>
@@ -161,7 +165,7 @@ function wpsc_show_coupon_discount_settings_page() {
 					$output .= '<td><strong>' . $coupon->expiry_date . '</strong></td>';
 				}
 				$output    .= '<td>';
-				$output    .= "<form method=\"post\" action=\"\" onSubmit=\"return confirm('Are you sure you want to delete this entry?');\">";
+				$output    .= "<form method=\"post\" action=\"\" data-wpsc-confirm=\"Are you sure you want to delete this entry?\">";
 				$output    .= "<input type=\"hidden\" name=\"wpsc_delete_coupon_id\" value=" . $coupon->id . " />";
 				$output    .= '<input style="border: none; color: red; background-color: transparent; padding: 0; cursor:pointer;" type="submit" name="Delete" value="Delete">';
 				$output    .= "</form>";
@@ -179,7 +183,7 @@ function wpsc_show_coupon_discount_settings_page() {
 	$output .= '</tbody>
     </table>';
 
-	echo $output;
+	echo wp_kses( $output, WPSC_Utility_Kses::wp_kses_post_tags_with_form() );
 	wpsc_settings_menu_footer();
 
 	echo '</div></div>';//End of poststuff and post-body

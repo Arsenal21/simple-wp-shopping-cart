@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wpsc_register_shortcodes(){
     if( !is_admin() ){
         //Register the shortcodes on the front-end only.
@@ -152,7 +156,7 @@ function wpsc_cart_display_product_handler($atts)
 	                <?php echo wp_kses_post($formatted_price) ?>
 	            </div>
                 <div class="wp_cart_product_button">
-	                <?php echo $button_code ?>
+	                <?php echo wp_kses( $button_code, WPSC_Utility_Kses::wp_kses_post_tags_with_form() ) ?>
                 </div>
             </div>
 	    </div>

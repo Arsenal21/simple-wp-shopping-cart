@@ -62,7 +62,7 @@ class PayPal_ACDC_Related {
         $characters_length = strlen($characters);
         $random_string = '';
         for ($i = 0; $i < $length; $i++) {
-            $random_string .= $characters[rand(0, $characters_length - 1)];
+            $random_string .= $characters[wp_rand(0, $characters_length - 1)];
         }
         $customer_id = $random_string;
         return $customer_id;

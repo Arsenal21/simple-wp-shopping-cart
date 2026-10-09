@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wpsc_show_addons_menu_page() {
     if (!current_user_can('manage_options')) {
         wp_die('You do not have permission to access this settings page.');
@@ -7,7 +11,7 @@ function wpsc_show_addons_menu_page() {
     $output = "";
 
     echo '<div class="wrap">';
-    echo '<h1>' . (__("Simple Shopping Cart Add-ons", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
+    echo '<h1>' . (esc_html__("Simple Shopping Cart Add-ons", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
 
     echo '<div id="poststuff"><div id="post-body">';
 
@@ -70,7 +74,7 @@ function wpsc_show_addons_menu_page() {
         $output .= '</div>'; //end canvas
     }
 
-    echo $output;
+    echo wp_kses( $output, WPSC_Utility_Kses::wp_kses_post_tags() );
 
     echo '</div></div>';//End of poststuff and post-body
     echo '</div>';//End of wrap

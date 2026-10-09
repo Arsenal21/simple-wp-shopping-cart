@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function show_wp_cart_stripe_settings_page()
 {
 
@@ -80,94 +84,95 @@ function show_wp_cart_stripe_settings_page()
 
         <div class="postbox">
             <h3 class="hndle">
-                <label for="title"><?php _e("Stripe Checkout Settings", "wordpress-simple-paypal-shopping-cart"); ?></label>
+                <label for="title"><?php esc_html_e("Stripe Checkout Settings", "wordpress-simple-paypal-shopping-cart"); ?></label>
             </h3>
             <div class="inside">
 
                 <table class="form-table">
 
                     <tr valign="top">
-                        <th scope="row"><?php _e("Enable Stripe Checkout", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <th scope="row"><?php esc_html_e("Enable Stripe Checkout", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="checkbox" name="wpspc_enable_stripe_checkout" value="1" <?php echo get_option('wpspc_enable_stripe_checkout') ? ' checked' : ''; ?> />
                             <span class="description">
                                 <?php
-                                _e("To learn how to enable Stripe, please refer to ", "wordpress-simple-paypal-shopping-cart");
-                                echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . __("the documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.';
+                                esc_html_e("To learn how to enable Stripe, please refer to ", "wordpress-simple-paypal-shopping-cart");
+                                echo '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-shopping-cart-enabling-stripe-checkout" target="_blank">' . esc_html__("the documentation", "wordpress-simple-paypal-shopping-cart") . '</a>.';
                                 ?>
                             </span>
 
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Live Publishable Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <th scope="row"><?php esc_html_e("Live Publishable Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="text" name="wpspc_stripe_live_publishable_key" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_live_publishable_key')); ?>" />
-                            <span class="description"><?php _e("Enter your live Publishable Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
+                            <span class="description"><?php esc_html_e("Enter your live Publishable Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Live Secret Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <th scope="row"><?php esc_html_e("Live Secret Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="text" name="wpspc_stripe_live_secret_key" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_live_secret_key')); ?>" />
-                            <span class="description"><?php _e("Enter your live Secret Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
+                            <span class="description"><?php esc_html_e("Enter your live Secret Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Test Publishable Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <th scope="row"><?php esc_html_e("Test Publishable Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="text" name="wpspc_stripe_test_publishable_key" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_test_publishable_key')); ?>" />
-                            <span class="description"><?php _e("Enter your test Publishable Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
+                            <span class="description"><?php esc_html_e("Enter your test Publishable Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Test Secret Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <th scope="row"><?php esc_html_e("Test Secret Key", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td><input type="text" name="wpspc_stripe_test_secret_key" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_test_secret_key')); ?>" />
-                            <span class="description"><?php _e("Enter your test Secret Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
+                            <span class="description"><?php esc_html_e("Enter your test Secret Key.", "wordpress-simple-paypal-shopping-cart"); ?></span>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Collect Billing Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
-                        <td><input type="checkbox" name="wpspc_stripe_collect_address" value="1" <?php echo $wpspc_stripe_collect_address;?> />
-                        <span class="description"><?php _e("If this option is checked, customers will be required to enter their billing address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
+                        <th scope="row"><?php esc_html_e("Collect Billing Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <td><input type="checkbox" name="wpspc_stripe_collect_address" value="1" <?php checked( ! empty( $wpspc_stripe_collect_address ), true );?> />
+                        <span class="description"><?php esc_html_e("If this option is checked, customers will be required to enter their billing address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Collect Shipping Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
-                        <td><input type="checkbox" name="wpsc_stripe_collect_shipping_address" value="1" <?php esc_attr_e($wpsc_stripe_collect_shipping_address);?> />
-                        <span class="description"><?php _e("If this option is checked, customers will be required to enter their shipping address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
+                        <th scope="row"><?php esc_html_e("Collect Shipping Address on Stripe Checkout Page", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <td><input type="checkbox" name="wpsc_stripe_collect_shipping_address" value="1" <?php checked( ! empty( $wpsc_stripe_collect_shipping_address ), true );?> />
+                        <span class="description"><?php esc_html_e("If this option is checked, customers will be required to enter their shipping address on Stripe during the checkout process.", "wordpress-simple-paypal-shopping-cart")?></span></td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Allowed countries for shipping", "wordpress-simple-paypal-shopping-cart"); ?></th>
-                        <td><input type="text" name="wpsc_stripe_allowed_shipping_countries" size="100" value="<?php esc_attr_e($wpsc_stripe_allowed_shipping_countries); ?>" />
+                        <th scope="row"><?php esc_html_e("Allowed countries for shipping", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <td><input type="text" name="wpsc_stripe_allowed_shipping_countries" size="100" value="<?php echo esc_attr($wpsc_stripe_allowed_shipping_countries); ?>" />
                         <div class="description">
-                            <span><?php _e("Enter the countries that are allowed for shipping by specifying their two-letter ISO country codes separated by comma. For example: US, UK, CA, AU etc.", "wordpress-simple-paypal-shopping-cart"); ?></span> <a href="https://www.nationsonline.org/oneworld/country_code_list.htm" target="_blank"><?php _e('See the list of ISO country codes here.', "wordpress-simple-paypal-shopping-cart") ?></a>
+                            <span><?php esc_html_e("Enter the countries that are allowed for shipping by specifying their two-letter ISO country codes separated by comma. For example: US, UK, CA, AU etc.", "wordpress-simple-paypal-shopping-cart"); ?></span> <a href="https://www.nationsonline.org/oneworld/country_code_list.htm" target="_blank"><?php esc_html_e('See the list of ISO country codes here.', "wordpress-simple-paypal-shopping-cart") ?></a>
                         </div>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Enable Automatic Tax", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <th scope="row"><?php esc_html_e("Enable Automatic Tax", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td>
-                            <input type="checkbox" name="wpsc_enable_stripe_automatic_tax" value="1" <?php esc_attr_e($wpsc_enable_stripe_automatic_tax);?> />
-                            <p class="description"><?php _e("If enabled, automatic tax will be applied during Stripe checkout. Ensure that the tax option is enabled and configured in your Stripe account before activating it in our plugin.", "wordpress-simple-paypal-shopping-cart")?></p>
+                            <input type="checkbox" name="wpsc_enable_stripe_automatic_tax" value="1" <?php checked( ! empty( $wpsc_enable_stripe_automatic_tax ), true );?> />
+                            <p class="description"><?php esc_html_e("If enabled, automatic tax will be applied during Stripe checkout. Ensure that the tax option is enabled and configured in your Stripe account before activating it in our plugin.", "wordpress-simple-paypal-shopping-cart")?></p>
                         </td>
                     </tr>
 
                     <tr valign="top">
-                        <th scope="row"><?php _e("Auto Send Receipt and Invoices", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <th scope="row"><?php esc_html_e("Auto Send Receipt and Invoices", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td>
-                            <input type="checkbox" name="wpsc_auto_send_receipt_and_invoices" value="1" <?php esc_attr_e($wpsc_auto_send_receipt_and_invoices);?> />
+                            <input type="checkbox" name="wpsc_auto_send_receipt_and_invoices" value="1" <?php checked( ! empty( $wpsc_auto_send_receipt_and_invoices ), true );?> />
                             <p class="description">
-                                <?php echo sprintf(__("Complete the steps detailed in %s to activate the automated receipt feature.", "wordpress-simple-paypal-shopping-cart"), '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-cart-enabling-automated-stripe-receipts-and-invoices" target="_blank">this guide</a>') ?>
+                                <?php /* translators: %s: Link to the Stripe receipts setup guide. */
+            echo sprintf(esc_html__("Complete the steps detailed in %s to activate the automated receipt feature.", "wordpress-simple-paypal-shopping-cart"), '<a href="https://www.tipsandtricks-hq.com/ecommerce/simple-cart-enabling-automated-stripe-receipts-and-invoices" target="_blank">this guide</a>') ?>
                             </p>
                         </td>
                     </tr>
                 </table>
 
-                <h4><?php _e("Button Appearance Settings", "wordpress-simple-paypal-shopping-cart"); ?></h4>
+                <h4><?php esc_html_e("Button Appearance Settings", "wordpress-simple-paypal-shopping-cart"); ?></h4>
                 <hr />
 
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e("Checkout Button Image URL", "wordpress-simple-paypal-shopping-cart"); ?></th>
+                        <th scope="row"><?php esc_html_e("Checkout Button Image URL", "wordpress-simple-paypal-shopping-cart"); ?></th>
                         <td>
                             <input type="text" name="wpspc_stripe_button_image_url" size="100" value="<?php echo esc_attr(get_option('wpspc_stripe_button_image_url')); ?>" />
-                            <p class="description"><?php _e("If you want to customize the look of the button using an image then enter the URL of the image.", "wordpress-simple-paypal-shopping-cart"); ?></p>
+                            <p class="description"><?php esc_html_e("If you want to customize the look of the button using an image then enter the URL of the image.", "wordpress-simple-paypal-shopping-cart"); ?></p>
                         </td>
                     </tr>
                 </table>
@@ -178,7 +183,7 @@ function show_wp_cart_stripe_settings_page()
                 ?>
 
                 <div class="submit">
-                    <input type="submit" class="button-primary" name="wpspc_stripe_settings_update" value="<?php echo (__("Save Changes", "wordpress-simple-paypal-shopping-cart")) ?>" />
+                    <input type="submit" class="button-primary" name="wpspc_stripe_settings_update" value="<?php echo (esc_html__("Save Changes", "wordpress-simple-paypal-shopping-cart")) ?>" />
                 </div>
 
             </div>

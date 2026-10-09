@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 //Handle the admin dashboard main menu
 add_action('admin_menu', 'wpsc_handle_admin_menu' );
 
@@ -49,7 +53,7 @@ function wpsc_settings_interface() {
         'wpsc-menu-main&action=manual-checkout' => __('Manual/Offline Checkout', 'wordpress-simple-paypal-shopping-cart'),
     );
     echo '<div class="wrap">';
-    echo '<h1>' . (__("WP Simple Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")) . ' (v'.WP_CART_VERSION .')' . '</h1>';
+    echo '<h1>' . (esc_html__("WP Simple Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")) . ' (v'.esc_html( WP_CART_VERSION ) .')' . '</h1>';
 
     $current = "";
     if (isset($_GET['page'])) {
@@ -69,7 +73,7 @@ function wpsc_settings_interface() {
         $content .= '<a class="nav-tab' . $class . '" href="?page=' . $location . '">' . $tabname . '</a>';
     }
     $content .= '</h2>';
-    echo $content;
+    echo wp_kses( $content, WPSC_Utility_Kses::wp_kses_post_tags() );
     echo '<div id="poststuff"><div id="post-body">';
 
     switch ($current_tab) {

@@ -1,5 +1,9 @@
 <?php 
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * @deprecated: This function is deprecated and should no longer be used.
  * Please use the shortcode.

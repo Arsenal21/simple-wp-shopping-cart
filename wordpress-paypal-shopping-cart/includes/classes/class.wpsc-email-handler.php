@@ -78,7 +78,8 @@ class WPSC_Email_Handler {
 			update_post_meta( $order_id, 'wpsc_buyer_email_sent', 'Email sent to: ' . $buyer_email );
         } else {
 			wpsc_log_payment_debug( 'Email could not be sent to: '. $buyer_email, false );
-            throw new \Exception(sprintf(__('Invalid email address: %s. Email could not be sent!', 'wordpress-simple-paypal-shopping-cart' ), $buyer_email));
+            /* translators: %s: Buyer email address. */
+            throw new \Exception(sprintf(esc_html__('Invalid email address: %s. Email could not be sent!', 'wordpress-simple-paypal-shopping-cart' ), esc_html( $buyer_email ) ));
         }
     }
 
@@ -154,18 +155,18 @@ class WPSC_Email_Handler {
 	public static function get_email_merge_tags_hints(){
 		ob_start();
 		?>
-		<p class="description"><?php _e("This is the body of the email that will be sent. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{first_name} – <?php _e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{last_name} – <?php _e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{payer_email} – <?php _e("Email Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{payer_phone} – <?php _e("Phone number of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{address} – <?php _e("Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{product_details} – <?php _e("The item details of the purchased product (this will include the download link for digital items).", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{transaction_id} – <?php _e("The unique transaction ID of the purchase", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{order_id} – <?php _e("The order ID reference of this transaction in the cart orders menu", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{purchase_amt} – <?php _e("The amount paid for the current transaction", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{purchase_date} – <?php _e("The date of the purchase", "wordpress-simple-paypal-shopping-cart");?>
-			<br />{coupon_code} – <?php _e("Coupon code applied to the purchase", "wordpress-simple-paypal-shopping-cart");?>
+		<p class="description"><?php esc_html_e("This is the body of the email that will be sent. Do not change the text within the braces {}. You can use the following email tags in this email body field:", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{first_name} – <?php esc_html_e("First name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{last_name} – <?php esc_html_e("Last name of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{payer_email} – <?php esc_html_e("Email Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{payer_phone} – <?php esc_html_e("Phone number of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{address} – <?php esc_html_e("Address of the buyer", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{product_details} – <?php esc_html_e("The item details of the purchased product (this will include the download link for digital items).", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{transaction_id} – <?php esc_html_e("The unique transaction ID of the purchase", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{order_id} – <?php esc_html_e("The order ID reference of this transaction in the cart orders menu", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{purchase_amt} – <?php esc_html_e("The amount paid for the current transaction", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{purchase_date} – <?php esc_html_e("The date of the purchase", "wordpress-simple-paypal-shopping-cart");?>
+			<br />{coupon_code} – <?php esc_html_e("Coupon code applied to the purchase", "wordpress-simple-paypal-shopping-cart");?>
 		</p>
 		<?php
 		return ob_get_clean();

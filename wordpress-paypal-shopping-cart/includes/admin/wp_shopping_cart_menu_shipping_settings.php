@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function show_wp_cart_shipping_settings_page()
 {
     if(!current_user_can('manage_options')){
@@ -189,22 +193,22 @@ function show_wp_cart_shipping_settings_page()
         <input type="hidden" name="info_update" id="info_update" value="true" />
 
         <div class="postbox">
-            <h3 class="hndle"><label for="title"><?php _e("Shipping Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
+            <h3 class="hndle"><label for="title"><?php esc_html_e("Shipping Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
             <div class="inside">
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e("Base Shipping Cost", "wordpress-simple-paypal-shopping-cart");?></th>
+                        <th scope="row"><?php esc_html_e("Base Shipping Cost", "wordpress-simple-paypal-shopping-cart");?></th>
                         <td>
-                            <input type="text" name="cart_base_shipping_cost" value="<?php esc_attr_e($baseShipping)?>" size="5" /> <br /> <?php _e("This is the base shipping cost that will be added to the total of individual products shipping cost. Put 0 if you do not want to charge shipping cost or use base shipping cost.", "wordpress-simple-paypal-shopping-cart") ?>
-                            <a href="https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-how-the-shipping-cost-calculation-works-297" target="_blank"><?php _e("Learn More on Shipping Calculation", "wordpress-simple-paypal-shopping-cart")?></a>
+                            <input type="text" name="cart_base_shipping_cost" value="<?php echo esc_attr($baseShipping)?>" size="5" /> <br /> <?php esc_html_e("This is the base shipping cost that will be added to the total of individual products shipping cost. Put 0 if you do not want to charge shipping cost or use base shipping cost.", "wordpress-simple-paypal-shopping-cart") ?>
+                            <a href="https://www.tipsandtricks-hq.com/ecommerce/wordpress-shopping-cart-how-the-shipping-cost-calculation-works-297" target="_blank"><?php esc_html_e("Learn More on Shipping Calculation", "wordpress-simple-paypal-shopping-cart")?></a>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Free Shipping for Orders Over", "wordpress-simple-paypal-shopping-cart")?></th>
+                        <th scope="row"><?php esc_html_e("Free Shipping for Orders Over", "wordpress-simple-paypal-shopping-cart")?></th>
                         <td>
-                            <input type="text" name="cart_free_shipping_threshold" value="<?php esc_attr_e($cart_free_shipping_threshold)?>" size="5" /> 
+                            <input type="text" name="cart_free_shipping_threshold" value="<?php echo esc_attr($cart_free_shipping_threshold)?>" size="5" />
                             <br />
-                            <?php _e("When a customer orders more than this amount he/she will get free shipping. Leave empty if you do not want to use it.", "wordpress-simple-paypal-shopping-cart")?>
+                            <?php esc_html_e("When a customer orders more than this amount he/she will get free shipping. Leave empty if you do not want to use it.", "wordpress-simple-paypal-shopping-cart")?>
                         </td>
                     </tr>
                 </table>
@@ -212,21 +216,21 @@ function show_wp_cart_shipping_settings_page()
         </div>
         
         <div class="postbox">
-            <h3 class="hndle"><label for="title"><?php _e("Regional Shipping Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
+            <h3 class="hndle"><label for="title"><?php esc_html_e("Regional Shipping Settings", "wordpress-simple-paypal-shopping-cart");?></label></h3>
             <div class="inside">
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e("Enable Shipping by Region", "wordpress-simple-paypal-shopping-cart")?></th>
-                        <td><input type="checkbox" name="enable_shipping_by_region" value="1" <?php echo $enable_shipping_by_region ?> />
+                        <th scope="row"><?php esc_html_e("Enable Shipping by Region", "wordpress-simple-paypal-shopping-cart")?></th>
+                        <td><input type="checkbox" name="enable_shipping_by_region" value="1" <?php checked( ! empty( $enable_shipping_by_region ), true ) ?> />
                         <br />
-                        <p class="description"><?php _e('Select this option to enable region based shipping cost additions.', 'wordpress-simple-paypal-shopping-cart') ?></p>
-                        <p class="description"><?php _e('You can define shipping regions and allocate extra shipping costs for each. Customers will choose their region from a list, and the relevant additional charge will be included in the total shipping cost.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                        <p class="description"><?php esc_html_e('Select this option to enable region based shipping cost additions.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                        <p class="description"><?php esc_html_e('You can define shipping regions and allocate extra shipping costs for each. Customers will choose their region from a list, and the relevant additional charge will be included in the total shipping cost.', 'wordpress-simple-paypal-shopping-cart') ?></p>
                         </td>
                     </tr>
 
                     <?php if (!empty($enable_shipping_by_region)) {?>
                     <tr valign="top">
-                        <th scope="row"><?php _e("Shipping Regions", "wordpress-simple-paypal-shopping-cart")?></th>
+                        <th scope="row"><?php esc_html_e("Shipping Regions", "wordpress-simple-paypal-shopping-cart")?></th>
                         <td>
                             <div>
                                 <table class="" id="wpsc-shipping-region-variations-tbl"<?php echo empty( $wpsc_shipping_variations_arr ) ? 'style="display:none;"' : ''; ?>>
@@ -246,16 +250,16 @@ function show_wp_cart_shipping_settings_page()
                                         <tr>
                                             <td>
                                                 <select class="wpsc-shipping-region-variations-base wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_base[]">
-                                                    <option value="0" <?php echo '0' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'Country', 'stripe-payments' ) ?></option>
-                                                    <option value="1" <?php echo '1' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'State', 'stripe-payments' ) ?></option>
-                                                    <option value="2" <?php echo '2' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'City', 'stripe-payments' ) ?></option>
+                                                    <option value="0" <?php echo '0' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'Country', 'wordpress-simple-paypal-shopping-cart' ) ?></option>
+                                                    <option value="1" <?php echo '1' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'State', 'wordpress-simple-paypal-shopping-cart' ) ?></option>
+                                                    <option value="2" <?php echo '2' === $v['type'] ? 'selected' : '' ?>><?php esc_html_e( 'City', 'wordpress-simple-paypal-shopping-cart' ) ?></option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <!-- Country type location field (type = 0) -->
                                                 <div class="wpsc-shipping-region-variations-cont-type-0" style="<?php echo $v['type'] === '0' ? '' : 'display:none' ?>">
                                                     <select class="wpsc-shipping-region-variations-input" name="wpsc_shipping_region_variations_loc[]" <?php echo '0' === $v['type'] ? '' : 'disabled' ?>>
-                                                        <?php echo wpsc_get_countries_opts( $c_code ) ?>
+                                                        <?php echo wp_kses( wpsc_get_countries_opts( $c_code ), WPSC_Utility_Kses::wp_kses_select_option_tags() ) ?>
                                                     </select>
                                                 </div>
                                                 <!-- State type location field (type = 1) -->
@@ -268,11 +272,11 @@ function show_wp_cart_shipping_settings_page()
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_amt[]" value="<?php esc_attr_e($v['amount']) ?>">
+                                                <input type="number" class="wpsc-shipping-region-variations-input" step="any" min="0" name="wpsc_shipping_region_variations_amt[]" value="<?php echo esc_attr($v['amount']) ?>">
                                             </td>
                                             <td>
                                                 <button type="button" class="button wpsc-shipping-region-variations-del-btn wpsc-shipping-region-variations-del-btn-small">
-                                                    <span class="dashicons dashicons-trash" title="<?php _e( 'Delete variation', 'stripe-payments' ) ?>"></span>
+                                                    <span class="dashicons dashicons-trash" title="<?php esc_html_e( 'Delete variation', 'wordpress-simple-paypal-shopping-cart' ) ?>"></span>
                                                 </button>
                                             </td>
                                         </tr>
@@ -282,10 +286,10 @@ function show_wp_cart_shipping_settings_page()
                             </div>
                             <p>
                                 <button type="button" id="wpsc-shipping-region-variations-add-btn" class="button">
-                                    <span class="dashicons dashicons-plus"></span> <?php _e( 'Add Shipping Variation', 'wordpress-simple-paypal-shopping-cart' ); ?>
+                                    <span class="dashicons dashicons-plus"></span> <?php esc_html_e( 'Add Shipping Variation', 'wordpress-simple-paypal-shopping-cart' ); ?>
                                 </button>
                             </p>
-                            <p class="description"><?php _e('Use this to configure shipping additions on a per-region basis.', 'wordpress-simple-paypal-shopping-cart') ?></p>
+                            <p class="description"><?php esc_html_e('Use this to configure shipping additions on a per-region basis.', 'wordpress-simple-paypal-shopping-cart') ?></p>
                         </td>
                     </tr>
                     <?php } ?>
@@ -296,7 +300,7 @@ function show_wp_cart_shipping_settings_page()
         <input type="hidden" id="wpsc_shipping_region_variations_delete_last" name="wpsc_shipping_region_variations_delete_last" value="0">
 
         <div class="submit">
-            <input type="submit" class="button-primary" name="wpspc_shipping_settings_update" value="<?php echo (__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />
+            <input type="submit" class="button-primary" name="wpspc_shipping_settings_update" value="<?php echo (esc_html__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")) ?>" />
         </div>
     </form>
 

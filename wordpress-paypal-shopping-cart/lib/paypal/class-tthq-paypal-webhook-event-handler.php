@@ -229,7 +229,7 @@ class PayPal_Webhook_Event_Handler {
 		$link_capture_txn = isset( $links[1]['href'] ) ? $links[1]['href'] : '';
 
 		//Get the original capture txn ID from the refund link url.
-		$uri_path_components = explode("/", parse_url($link_capture_txn, PHP_URL_PATH));
+		$uri_path_components = explode("/", wp_parse_url($link_capture_txn, PHP_URL_PATH));
 		$orig_capture_txn_id = array_pop($uri_path_components);
 		PayPal_Utility_Functions::log( 'Transaction ID from resource. Transaction ID: ' . $orig_capture_txn_id . '. Original Capture Link: ' . $link_capture_txn, true );
 		

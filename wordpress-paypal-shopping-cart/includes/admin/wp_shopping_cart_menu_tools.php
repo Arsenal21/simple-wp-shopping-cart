@@ -1,12 +1,16 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function wpsc_show_tools_menu_page() {
     if (!current_user_can('manage_options')) {
         wp_die('You do not have permission to access this settings page.');
     }
 
     echo '<div class="wrap">';
-    echo '<h1>' . (__("Simple Shopping Cart Tools", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
+    echo '<h1>' . (esc_html__("Simple Shopping Cart Tools", "wordpress-simple-paypal-shopping-cart")) . '</h1>';
     
     echo '<div id="poststuff"><div id="post-body">';
     
@@ -15,14 +19,14 @@ function wpsc_show_tools_menu_page() {
     ?>
 
     <div class="postbox">
-        <h3 class="hndle"><label for="title"><?php _e("Export Cart Orders Data", "wordpress-simple-paypal-shopping-cart"); ?></label></h3>
+        <h3 class="hndle"><label for="title"><?php esc_html_e("Export Cart Orders Data", "wordpress-simple-paypal-shopping-cart"); ?></label></h3>
         <div class="inside">
             <form method="post" action="">
                 <?php wp_nonce_field('wspsc_tools_export_orders_data'); ?>
 
-                <p><?php _e("You can use this option to export all the orders data to a CSV/Excel file.", "wordpress-simple-paypal-shopping-cart"); ?></p>
+                <p><?php esc_html_e("You can use this option to export all the orders data to a CSV/Excel file.", "wordpress-simple-paypal-shopping-cart"); ?></p>
                 <div class="submit">
-                    <input type="submit" name="wspsc_export_orders_data" class="button-primary" value="<?php echo (__("Export Data", "wordpress-simple-paypal-shopping-cart")) ?>" />
+                    <input type="submit" name="wspsc_export_orders_data" class="button-primary" value="<?php echo (esc_html__("Export Data", "wordpress-simple-paypal-shopping-cart")) ?>" />
                 </div>
 
             </form>
@@ -105,7 +109,7 @@ function wpsc_export_orders_data_to_csv(){
     // Get the contents of the output buffer
     $string = ob_get_clean();
 
-    $filename = 'exported_orders_data_'. date('Ymd');
+    $filename = 'exported_orders_data_'. wp_date('Ymd');
             
     // Output CSV-specific headers
     header('Pragma: public');
@@ -117,5 +121,7 @@ function wpsc_export_orders_data_to_csv(){
     header('Content-Transfer-Encoding: binary');
 
     // Stream the CSV data
+    // CSV download: HTML escaping would corrupt the exported field values.
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     exit($string);
 }

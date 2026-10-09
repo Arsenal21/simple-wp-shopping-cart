@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use TTHQ\WPSC\Lib\PayPal\PayPal_Bearer;
 
 /*
@@ -67,7 +71,7 @@ function wpsc_show_general_settings_page ()
         update_option('wp_shopping_cart_tnc_text', (isset($_POST['wp_shopping_cart_tnc_text']) && $_POST['wp_shopping_cart_tnc_text']!='') ? wp_kses_post($_POST['wp_shopping_cart_tnc_text']) :'' );
         
         echo '<div id="message" class="updated fade">';
-        echo '<p><strong>'.(__("Options Updated!", "wordpress-simple-paypal-shopping-cart")).'</strong></p></div>';
+        echo '<p><strong>'.(esc_html__("Options Updated!", "wordpress-simple-paypal-shopping-cart")).'</strong></p></div>';
 
         //Check if live/sandbox mode option has changed. If so, delete the cached PayPal access token so a new one is generated.
         $new_sandbox_enable_status =  sanitize_text_field(get_option('wp_shopping_cart_enable_sandbox'));
@@ -210,18 +214,18 @@ function wpsc_show_general_settings_page ()
     ?>
 
     <div class="postbox">
-    <h3 class="hndle"><label for="title"><?php _e("Quick Usage Guide", "wordpress-simple-paypal-shopping-cart"); ?></label></h3>
+    <h3 class="hndle"><label for="title"><?php esc_html_e("Quick Usage Guide", "wordpress-simple-paypal-shopping-cart"); ?></label></h3>
     <div class="inside">
 
-        <p><strong><?php _e("Step 1) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php _e("To add an 'Add to Cart' button for a product simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [wp_cart_button name="<?php _e("PRODUCT-NAME", "wordpress-simple-paypal-shopping-cart"); ?>" price="<?php _e("PRODUCT-PRICE", "wordpress-simple-paypal-shopping-cart"); ?>"] <?php _e("to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price of your product.", "wordpress-simple-paypal-shopping-cart"); ?></p>
+        <p><strong><?php esc_html_e("Step 1) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php esc_html_e("To add an 'Add to Cart' button for a product simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [wp_cart_button name="<?php esc_html_e("PRODUCT-NAME", "wordpress-simple-paypal-shopping-cart"); ?>" price="<?php esc_html_e("PRODUCT-PRICE", "wordpress-simple-paypal-shopping-cart"); ?>"] <?php esc_html_e("to a post or page next to the product. Replace PRODUCT-NAME and PRODUCT-PRICE with the actual name and price of your product.", "wordpress-simple-paypal-shopping-cart"); ?></p>
         <p>
-            <?php _e("Example add to cart button shortcode usage:", "wordpress-simple-paypal-shopping-cart"); ?>
+            <?php esc_html_e("Example add to cart button shortcode usage:", "wordpress-simple-paypal-shopping-cart"); ?>
             <input type="text" name="wspsc_shortcode" class="large-text code" onfocus="this.select();" readonly value="[wp_cart_button name=&quot;Test Product&quot; price=&quot;29.95&quot;]">
         </p>
         
-	<p><strong><?php _e("Step 2) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php _e("To add the shopping cart to a post or page (example: a checkout page) simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [show_wp_shopping_cart] <?php _e("to a post or page or use the sidebar widget to add the shopping cart to the sidebar.", "wordpress-simple-paypal-shopping-cart"); ?></p>
+	<p><strong><?php esc_html_e("Step 2) ","wordpress-simple-paypal-shopping-cart"); ?></strong><?php esc_html_e("To add the shopping cart to a post or page (example: a checkout page) simply add the shortcode", "wordpress-simple-paypal-shopping-cart"); ?> [show_wp_shopping_cart] <?php esc_html_e("to a post or page or use the sidebar widget to add the shopping cart to the sidebar.", "wordpress-simple-paypal-shopping-cart"); ?></p>
         <p>
-            <?php _e("Example shopping cart shortcode usage:", "wordpress-simple-paypal-shopping-cart");?>
+            <?php esc_html_e("Example shopping cart shortcode usage:", "wordpress-simple-paypal-shopping-cart");?>
             <input type="text" name="wspsc_shortcode" class="large-text code" onfocus="this.select();" readonly value="[show_wp_shopping_cart]">
         </p>
     </div></div>
@@ -232,45 +236,45 @@ function wpsc_show_general_settings_page ()
 <?php
 echo '
 <div class="postbox">
-<h3 class="hndle"><label for="title">'.(__("PayPal Standard Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
+<h3 class="hndle"><label for="title">'.(esc_html__("PayPal Standard Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
 <div class="inside">
 
 <table class="form-table">
 
 <tr valign="top">
-<th scope="row">'.(__("Paypal Email Address", "wordpress-simple-paypal-shopping-cart")).'</th>
+<th scope="row">'.(esc_html__("Paypal Email Address", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="cart_paypal_email" value="'.esc_attr($defaultEmail).'" size="40" />
-<br /><span class="description">'.__("Enter your PayPal account's primary email address, not an alias. PayPal Standard payment notifications are always checked against this address. For sandbox testing, use the sandbox business account's primary email address.", "wordpress-simple-paypal-shopping-cart").'</span></td>
+<br /><span class="description">'.esc_html__("Enter your PayPal account's primary email address, not an alias. PayPal Standard payment notifications are always checked against this address. For sandbox testing, use the sandbox business account's primary email address.", "wordpress-simple-paypal-shopping-cart").'</span></td>
 </tr>
 <tr valign="top">
-<th scope="row">'.__( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ).'</th>
-<td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1" '.$wpspc_disable_standard_checkout.' />
-<span class="description">'. __( "By default the PayPal standard checkout option is always enabled. If you only want to use the PayPal PPCP or Stripe option then use this checkbox to disable the standard PayPal checkout option.", "wordpress-simple-paypal-shopping-cart" ).'</span>
+<th scope="row">'.esc_html__( "Disable Standard PayPal Checkout", "wordpress-simple-paypal-shopping-cart" ).'</th>
+<td><input type="checkbox" name="wpspc_disable_standard_checkout" value="1" '.checked( ! empty( $wpspc_disable_standard_checkout ), true, false ).' />
+<span class="description">'. esc_html__( "By default the PayPal standard checkout option is always enabled. If you only want to use the PayPal PPCP or Stripe option then use this checkbox to disable the standard PayPal checkout option.", "wordpress-simple-paypal-shopping-cart" ).'</span>
 </td>
 </tr>
 <tr valign="top">
-<th scope="row">'.(__("Must Collect Shipping Address on PayPal", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_collect_address" value="1" '.$wp_shopping_cart_collect_address.' /><br />'.(__("If checked the customer will be forced to enter a shipping address on PayPal when checking out.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Must Collect Shipping Address on PayPal", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_collect_address" value="1" '.checked( ! empty( $wp_shopping_cart_collect_address ), true, false ).' /><br />'.(esc_html__("If checked the customer will be forced to enter a shipping address on PayPal when checking out.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 <tr valign="top">
-<th scope="row">'.(__("Use PayPal Profile Based Shipping", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_use_profile_shipping" value="1" '.$wp_shopping_cart_use_profile_shipping.' /><br />'.(__("Check this if you want to use", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/setup-paypal-profile-based-shipping-5865" target="_blank">'.(__("PayPal profile based shipping", "wordpress-simple-paypal-shopping-cart")).'</a>. '.(__("Using this will ignore any other shipping options that you have specified in this plugin.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Use PayPal Profile Based Shipping", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_use_profile_shipping" value="1" '.checked( ! empty( $wp_shopping_cart_use_profile_shipping ), true, false ).' /><br />'.(esc_html__("Check this if you want to use", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/setup-paypal-profile-based-shipping-5865" target="_blank">'.(esc_html__("PayPal profile based shipping", "wordpress-simple-paypal-shopping-cart")).'</a>. '.(esc_html__("Using this will ignore any other shipping options that you have specified in this plugin.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 <tr valign="top">
-<th scope="row">'.(__("Open PayPal Checkout Page in a New Tab", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wspsc_open_pp_checkout_in_new_tab" value="1" '.$wspsc_open_pp_checkout_in_new_tab.' />
-<br />'.(__("If checked the PayPal checkout page will be opened in a new tab/window when the user clicks the checkout button.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Open PayPal Checkout Page in a New Tab", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wspsc_open_pp_checkout_in_new_tab" value="1" '.checked( ! empty( $wspsc_open_pp_checkout_in_new_tab ), true, false ).' />
+<br />'.(esc_html__("If checked the PayPal checkout page will be opened in a new tab/window when the user clicks the checkout button.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Customize the Note to Seller Text", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td>'.(__("PayPal has removed this feature. We have created an addon so you can still collect instructions from customers at the time of checking out. ", "wordpress-simple-paypal-shopping-cart"))
-. '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-simple-cart-collect-customer-input-in-the-shopping-cart-4396" target="_blank">'.__("View the addon details", "wordpress-simple-paypal-shopping-cart").'</a>'.'</td>
+<th scope="row">'.(esc_html__("Customize the Note to Seller Text", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td>'.(esc_html__("PayPal has removed this feature. We have created an addon so you can still collect instructions from customers at the time of checking out. ", "wordpress-simple-paypal-shopping-cart"))
+. '<a href="https://www.tipsandtricks-hq.com/ecommerce/wp-simple-cart-collect-customer-input-in-the-shopping-cart-4396" target="_blank">'.esc_html__("View the addon details", "wordpress-simple-paypal-shopping-cart").'</a>'.'</td>
 </tr>
 <tr valign="top">
-<th scope="row">'.(__("Custom Checkout Page Logo Image", "wordpress-simple-paypal-shopping-cart")).'</th>
+<th scope="row">'.(esc_html__("Custom Checkout Page Logo Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="wp_cart_paypal_co_page_style" value="'.esc_attr($wp_cart_paypal_co_page_style).'" size="100" />
-<br />'.(__("Specify an image URL if you want to customize the paypal checkout page with a custom logo/image. The image URL must be a 'https' URL otherwise PayPal will ignore it.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<br />'.(esc_html__("Specify an image URL if you want to customize the paypal checkout page with a custom logo/image. The image URL must be a 'https' URL otherwise PayPal will ignore it.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 </table>
@@ -281,23 +285,23 @@ echo '
 
 echo '
 <div class="postbox">
-<h3 class="hndle"><label for="title">'.(__("Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
+<h3 class="hndle"><label for="title">'.(esc_html__("Shopping Cart Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
 <div class="inside">
 
 <table class="form-table">
 
 <tr valign="top">
-<th scope="row">'.(__("Shopping Cart title", "wordpress-simple-paypal-shopping-cart")).'</th>
+<th scope="row">'.(esc_html__("Shopping Cart title", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="wp_cart_title" value="'.esc_attr($title).'" size="40" /></td>
 </tr>
 <tr valign="top">
-<th scope="row">'.(__("Text/Image to Show When Cart Empty", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="wp_cart_empty_text" value="'.esc_attr($emptyCartText).'" size="100" /><br />'.(__("You can either enter plain text or the URL of an image that you want to show when the shopping cart is empty", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Text/Image to Show When Cart Empty", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="text" name="wp_cart_empty_text" value="'.esc_attr($emptyCartText).'" size="100" /><br />'.(esc_html__("You can either enter plain text or the URL of an image that you want to show when the shopping cart is empty", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>';
 
 ?>
 <tr valign="top">
-    <th scope="row"><?php _e("Currency", "wordpress-simple-paypal-shopping-cart"); ?></th>
+    <th scope="row"><?php esc_html_e("Currency", "wordpress-simple-paypal-shopping-cart"); ?></th>
     <td>
         <select id="cart_payment_currency" name="cart_payment_currency">
             <option value="USD" <?php echo ($defaultCurrency == 'USD') ? 'selected="selected"' : ''; ?>>US Dollars (USD)</option>
@@ -337,101 +341,101 @@ echo '
 <?php
 
 echo '<tr valign="top">
-<th scope="row">'.(__("Currency Symbol", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_currency_symbol" value="'.esc_attr($defaultSymbol).'" size="5" /> ('.(__("Example:", "wordpress-simple-paypal-shopping-cart")).' $, &#163;, &#8364;)
+<th scope="row">'.(esc_html__("Currency Symbol", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="text" name="cart_currency_symbol" value="'.esc_attr($defaultSymbol).'" size="5" /> ('.(esc_html__("Example:", "wordpress-simple-paypal-shopping-cart")).' $, &#163;, &#8364;)
 </td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Add to Cart button Text or Image", "wordpress-simple-paypal-shopping-cart")).'</th>
+<th scope="row">'.(esc_html__("Add to Cart button Text or Image", "wordpress-simple-paypal-shopping-cart")).'</th>
 <td><input type="text" name="addToCartButtonName" value="'.esc_attr($addcart).'" size="100" />
-<br />'.(__("To use a customized image as the button simply enter the URL of the image file.", "wordpress-simple-paypal-shopping-cart")).' '.(__("Example:", "wordpress-simple-paypal-shopping-cart")).' https://www.your-domain.com/images/buy_now_button.png
+<br />'.(esc_html__("To use a customized image as the button simply enter the URL of the image file.", "wordpress-simple-paypal-shopping-cart")).' '.(esc_html__("Example:", "wordpress-simple-paypal-shopping-cart")).' https://www.your-domain.com/images/buy_now_button.png
 <br />You can download nice add to cart button images from <a href="https://www.tipsandtricks-hq.com/ecommerce/add-to-cart-button-images-for-shopping-cart-631" target="_blank">this page</a>.
 </td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Return URL (Thank You Page)", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_return_from_paypal_url" value="'.esc_attr($return_url).'" size="100" /><br />'.(__("This is the URL the customers will be redirected to after a successful payment", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Return URL (Thank You Page)", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="text" name="cart_return_from_paypal_url" value="'.esc_attr($return_url).'" size="100" /><br />'.(esc_html__("This is the URL the customers will be redirected to after a successful payment", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Cancel URL", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_cancel_from_paypal_url" value="'.esc_attr($cancel_url).'" size="100" /><br />'.(__("The customers will be sent to the above page if the cancel link is clicked on the PayPal checkout page.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Cancel URL", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="text" name="cart_cancel_from_paypal_url" value="'.esc_attr($cancel_url).'" size="100" /><br />'.(esc_html__("The customers will be sent to the above page if the cancel link is clicked on the PayPal checkout page.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Products Page URL", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="text" name="cart_products_page_url" value="'.esc_attr($cart_products_page_url).'" size="100" /><br />'.(__("This is the URL of your products page if you have any. If used, the shopping cart widget will display a link to this page when the cart is empty", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Products Page URL", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="text" name="cart_products_page_url" value="'.esc_attr($cart_products_page_url).'" size="100" /><br />'.(esc_html__("This is the URL of your products page if you have any. If used, the shopping cart widget will display a link to this page when the cart is empty", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Automatic Redirection to Checkout Page", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_auto_redirect_to_checkout_page" value="1" '.$wp_shopping_cart_auto_redirect_to_checkout_page.' />
- '.(__("Checkout Page URL", "wordpress-simple-paypal-shopping-cart")).': <input type="text" name="cart_checkout_page_url" value="'.esc_url_raw($cart_checkout_page_url).'" size="60" />
-<br />'.(__("If checked the visitor will be redirected to the Checkout page after a product is added to the cart. You must enter a URL in the Checkout Page URL field for this to work.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Automatic Redirection to Checkout Page", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_auto_redirect_to_checkout_page" value="1" '.checked( ! empty( $wp_shopping_cart_auto_redirect_to_checkout_page ), true, false ).' />
+ '.(esc_html__("Checkout Page URL", "wordpress-simple-paypal-shopping-cart")).': <input type="text" name="cart_checkout_page_url" value="'.esc_url_raw($cart_checkout_page_url).'" size="60" />
+<br />'.(esc_html__("If checked the visitor will be redirected to the Checkout page after a product is added to the cart. You must enter a URL in the Checkout Page URL field for this to work.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.__("Allow Shopping Cart Anchor", "wordpress-simple-paypal-shopping-cart").'</th>
-<td><input type="checkbox" name="shopping_cart_anchor" value="1" '.$shopping_cart_anchor.' />
-<br /><p class="description">'. __('If checked the visitor will be taken to the Shopping cart anchor point within the page after a product Add, Delete or Quantity Change.', 'wordpress-simple-paypal-shopping-cart') .'</p></td>
+<th scope="row">'.esc_html__("Allow Shopping Cart Anchor", "wordpress-simple-paypal-shopping-cart").'</th>
+<td><input type="checkbox" name="shopping_cart_anchor" value="1" '.checked( ! empty( $shopping_cart_anchor ), true, false ).' />
+<br /><p class="description">'. esc_html__('If checked the visitor will be taken to the Shopping cart anchor point within the page after a product Add, Delete or Quantity Change.', 'wordpress-simple-paypal-shopping-cart') .'</p></td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Reset Cart After Redirection to Return Page", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_reset_after_redirection_to_return_page" value="1" '.$wp_shopping_cart_reset_after_redirection_to_return_page.' />
-<br />'.(__("If checked the shopping cart will be reset when the customer lands on the return URL (Thank You) page.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Reset Cart After Redirection to Return Page", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_reset_after_redirection_to_return_page" value="1" '.checked( ! empty( $wp_shopping_cart_reset_after_redirection_to_return_page ), true, false ).' />
+<br />'.(esc_html__("If checked the shopping cart will be reset when the customer lands on the return URL (Thank You) page.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Show Empty Cart Option", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wpsc_show_empty_cart_option" value="1" '.$wpsc_show_empty_cart_option.' />
-<br />'.(__("Selecting this feature will add an Empty Cart option to the shopping cart, allowing users to clear all items with a single click.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Show Empty Cart Option", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wpsc_show_empty_cart_option" value="1" '.checked( ! empty( $wpsc_show_empty_cart_option ), true, false ).' />
+<br />'.(esc_html__("Selecting this feature will add an Empty Cart option to the shopping cart, allowing users to clear all items with a single click.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Hide Shopping Cart Image", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_image_hide" value="1" '.$wp_cart_image_hide.' /><br />'.(__("If ticked the shopping cart image will not be shown.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Hide Shopping Cart Image", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_image_hide" value="1" '.checked( ! empty( $wp_cart_image_hide ), true, false ).' /><br />'.(esc_html__("If ticked the shopping cart image will not be shown.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Do Not Show Quantity in Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_shopping_cart_do_not_show_qty_in_cart" value="1" '.$wp_cart_do_not_show_qty_in_cart.' /><br />'.(__("Check this option to prevent the shopping cart from displaying product quantities. Customers will only be able to add one copy of each product to the cart. This is useful if you are selling digital products and do not want customers to purchase multiple copies of a single item.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Do Not Show Quantity in Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_shopping_cart_do_not_show_qty_in_cart" value="1" '.checked( ! empty( $wp_cart_do_not_show_qty_in_cart ), true, false ).' /><br />'.(esc_html__("Check this option to prevent the shopping cart from displaying product quantities. Customers will only be able to add one copy of each product to the cart. This is useful if you are selling digital products and do not want customers to purchase multiple copies of a single item.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Disable Nonce Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wspsc_disable_nonce_add_cart" value="1" '.$wspsc_disable_nonce_add_cart.' />
-<br />'.(__("Check this option if you are using a caching solution on your site. This will bypass the nonce check on the add to cart buttons.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Disable Nonce Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wspsc_disable_nonce_add_cart" value="1" '.checked( ! empty( $wspsc_disable_nonce_add_cart ), true, false ).' />
+<br />'.(esc_html__("Check this option if you are using a caching solution on your site. This will bypass the nonce check on the add to cart buttons.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Disable Price Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wspsc_disable_price_check_add_cart" value="1" '.$wspsc_disable_price_check_add_cart.' />
-<br />'.(__("Using complex characters for the product name can trigger the error: The price field may have been tampered. Security check failed. This option will stop that check and remove the error.", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Disable Price Check for Add to Cart", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wspsc_disable_price_check_add_cart" value="1" '.checked( ! empty( $wspsc_disable_price_check_add_cart ), true, false ).' />
+<br />'.(esc_html__("Using complex characters for the product name can trigger the error: The price field may have been tampered. Security check failed. This option will stop that check and remove the error.", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 <tr valign="top">
-    <th scope="row">'.__("Enable AJAX add to cart buttons", "wordpress-simple-paypal-shopping-cart").'</th>
-    <td><input type="checkbox" name="wpsc_enable_ajax_add_to_cart" value="1" '.$wpsc_enable_ajax_add_to_cart.' />
-    <br />'.__("When enabled, 'Add to Cart' buttons will add products to the cart without reloading the entire page. Customers will see an instant confirmation and the cart updates automatically. ", "wordpress-simple-paypal-shopping-cart")
-    . ' <a href="https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons" target="_blank">' . __("Learn more", "wordpress-simple-paypal-shopping-cart") . '</a>.</td>
+    <th scope="row">'.esc_html__("Enable AJAX add to cart buttons", "wordpress-simple-paypal-shopping-cart").'</th>
+    <td><input type="checkbox" name="wpsc_enable_ajax_add_to_cart" value="1" '.checked( ! empty( $wpsc_enable_ajax_add_to_cart ), true, false ).' />
+    <br />'.esc_html__("When enabled, 'Add to Cart' buttons will add products to the cart without reloading the entire page. Customers will see an instant confirmation and the cart updates automatically. ", "wordpress-simple-paypal-shopping-cart")
+    . ' <a href="https://www.tipsandtricks-hq.com/ecommerce/using-ajax-add-to-cart-buttons" target="_blank">' . esc_html__("Learn more", "wordpress-simple-paypal-shopping-cart") . '</a>.</td>
 </tr>
 
 <tr valign="top">
-    <th scope="row">'.__("Enable Store Pickup", "wordpress-simple-paypal-shopping-cart").'</th>
+    <th scope="row">'.esc_html__("Enable Store Pickup", "wordpress-simple-paypal-shopping-cart").'</th>
     <td>
         <input type="checkbox" name="wpsc_enable_store_pickup" value="1" ' . esc_attr($wpsc_enable_store_pickup) . ' />
-        <p class="">' . __( "Check this option if you want to allow your users to be able to pick up from your store. When this is enabled, the users will be able to choose to pickup the items from the store. In that case the cart will not charge any shipping.", "wordpress-simple-paypal-shopping-cart" )
-        . ' <a href="https://www.tipsandtricks-hq.com/ecommerce/store-pickup-option-let-customers-pick-up-orders-from-your-store-5563" target="_blank">' . __("Learn more", "wordpress-simple-paypal-shopping-cart") . '.</p>
+        <p class="">' . esc_html__( "Check this option if you want to allow your users to be able to pick up from your store. When this is enabled, the users will be able to choose to pickup the items from the store. In that case the cart will not charge any shipping.", "wordpress-simple-paypal-shopping-cart" )
+        . ' <a href="https://www.tipsandtricks-hq.com/ecommerce/store-pickup-option-let-customers-pick-up-orders-from-your-store-5563" target="_blank">' . esc_html__("Learn more", "wordpress-simple-paypal-shopping-cart") . '.</p>
     </td>
 </tr>
 
 <tr valign="top">
-<th scope="row">'.(__("Use WP Affiliate Platform", "wordpress-simple-paypal-shopping-cart")).'</th>
-<td><input type="checkbox" name="wp_use_aff_platform" value="1" '.$wp_use_aff_platform.' />
-<br />'.(__("Check this if using with the", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/wordpress-affiliate-platform-plugin-simple-affiliate-program-for-wordpress-blogsite-1474" target="_blank">WP Affiliate Platform plugin</a>. '.(__("This plugin lets you run your own affiliate campaign/program and allows you to reward (pay commission) your affiliates for referred sales", "wordpress-simple-paypal-shopping-cart")).'</td>
+<th scope="row">'.(esc_html__("Use WP Affiliate Platform", "wordpress-simple-paypal-shopping-cart")).'</th>
+<td><input type="checkbox" name="wp_use_aff_platform" value="1" '.checked( ! empty( $wp_use_aff_platform ), true, false ).' />
+<br />'.(esc_html__("Check this if using with the", "wordpress-simple-paypal-shopping-cart")).' <a href="https://www.tipsandtricks-hq.com/wordpress-affiliate-platform-plugin-simple-affiliate-program-for-wordpress-blogsite-1474" target="_blank">WP Affiliate Platform plugin</a>. '.(esc_html__("This plugin lets you run your own affiliate campaign/program and allows you to reward (pay commission) your affiliates for referred sales", "wordpress-simple-paypal-shopping-cart")).'</td>
 </tr>
 
 </table>
@@ -439,29 +443,29 @@ echo '<tr valign="top">
 </div></div>
 
 <div class="postbox">
-    <h3 class="hndle"><label for="title">'.(__("Terms and Conditions Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
+    <h3 class="hndle"><label for="title">'.(esc_html__("Terms and Conditions Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
     <div class="inside">
-        <p>' . __( 'This section allows you to configure Terms and Conditions that the customer must accept before making payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>
+        <p>' . esc_html__( 'This section allows you to configure Terms and Conditions that the customer must accept before making payment.', 'wordpress-simple-paypal-shopping-cart' ) . '</p>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row">
-                    <label for="wp_shopping_cart_enable_tnc">'.(__("Enable Terms and Conditions", "wordpress-simple-paypal-shopping-cart")).'<label>
+                    <label for="wp_shopping_cart_enable_tnc">'.(esc_html__("Enable Terms and Conditions", "wordpress-simple-paypal-shopping-cart")).'<label>
                 </th>
                 <td>
-                    <input type="checkbox" id="wp_shopping_cart_enable_tnc" name="wp_shopping_cart_enable_tnc" value="1" '.$wp_shopping_cart_enable_tnc.' />
+                    <input type="checkbox" id="wp_shopping_cart_enable_tnc" name="wp_shopping_cart_enable_tnc" value="1" '.checked( ! empty( $wp_shopping_cart_enable_tnc ), true, false ).' />
                     <br />
-                    <p class="description">'.(__("Enable Terms and Conditions checkbox.", "wordpress-simple-paypal-shopping-cart")).'</a>
+                    <p class="description">'.(esc_html__("Enable Terms and Conditions checkbox.", "wordpress-simple-paypal-shopping-cart")).'</a>
                 </td>
             </tr>
 
             <tr valign="top">
                 <th scope="row">
-                    <label for="wp_shopping_cart_tnc_text">'.(__("Checkbox Text", "wordpress-simple-paypal-shopping-cart")).'<label>
+                    <label for="wp_shopping_cart_tnc_text">'.(esc_html__("Checkbox Text", "wordpress-simple-paypal-shopping-cart")).'<label>
                 </th>
                 <td>
                     <textarea id="wp_shopping_cart_tnc_text" name="wp_shopping_cart_tnc_text" rows="4" cols="70">' . esc_html( $wp_shopping_cart_tnc_text ) . '</textarea>
                     <br />
-                    <p class="description">'.(__("Specify the text for the checkbox. It accepts HTML code so you can add a link to your terms and conditions page.", "wordpress-simple-paypal-shopping-cart")).'</a>
+                    <p class="description">'.(esc_html__("Specify the text for the checkbox. It accepts HTML code so you can add a link to your terms and conditions page.", "wordpress-simple-paypal-shopping-cart")).'</a>
                 </td>
             </tr>
         </table>
@@ -469,15 +473,15 @@ echo '<tr valign="top">
 </div>
 
 <div class="postbox">
-    <h3 class="hndle"><label for="title">'.(__("Testing and Debugging Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
+    <h3 class="hndle"><label for="title">'.(esc_html__("Testing and Debugging Settings", "wordpress-simple-paypal-shopping-cart")).'</label></h3>
     <div class="inside">
 
     <table class="form-table">
 
     <tr valign="top">
-    <th scope="row">'.(__("Enable Debug", "wordpress-simple-paypal-shopping-cart")).'</th>
-    <td><input type="checkbox" name="wp_shopping_cart_enable_debug" value="1" '.$wp_shopping_cart_enable_debug.' />
-    <br />'.(__("If checked, debug output will be written to the log file. This is useful for troubleshooting post payment failures", "wordpress-simple-paypal-shopping-cart")).'
+    <th scope="row">'.(esc_html__("Enable Debug", "wordpress-simple-paypal-shopping-cart")).'</th>
+    <td><input type="checkbox" name="wp_shopping_cart_enable_debug" value="1" '.checked( ! empty( $wp_shopping_cart_enable_debug ), true, false ).' />
+    <br />'.(esc_html__("If checked, debug output will be written to the log file. This is useful for troubleshooting post payment failures", "wordpress-simple-paypal-shopping-cart")).'
         <p><i>You can check the debug log file by clicking on the link below (The log file can be viewed using any text editor):</i>
             <ul>
                 <li>
@@ -492,9 +496,9 @@ echo '<tr valign="top">
     </td></tr>
 
     <tr valign="top">
-    <th scope="row">'.(__("Enable Test/Sandbox Mode", "wordpress-simple-paypal-shopping-cart")).'</th>
-    <td><input type="checkbox" name="wp_shopping_cart_enable_sandbox" value="1" '.$wp_shopping_cart_enable_sandbox.' />
-    <br />'.(__("Use this option to enable test/sandbox mode. Leave it unchecked for live mode. To perform sandbox testing, make sure to enter your sandbox/test credentials from your PayPal or Stripe account.", "wordpress-simple-paypal-shopping-cart")).'</td>
+    <th scope="row">'.(esc_html__("Enable Test/Sandbox Mode", "wordpress-simple-paypal-shopping-cart")).'</th>
+    <td><input type="checkbox" name="wp_shopping_cart_enable_sandbox" value="1" '.checked( ! empty( $wp_shopping_cart_enable_sandbox ), true, false ).' />
+    <br />'.(esc_html__("Use this option to enable test/sandbox mode. Leave it unchecked for live mode. To perform sandbox testing, make sure to enter your sandbox/test credentials from your PayPal or Stripe account.", "wordpress-simple-paypal-shopping-cart")).'</td>
     </tr>
 
     </table>
@@ -503,11 +507,11 @@ echo '<tr valign="top">
 </div>
 
     <div class="submit">
-        <input type="submit" class="button-primary" name="info_update" value="'.(__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")).'" />
+        <input type="submit" class="button-primary" name="info_update" value="'.(esc_html__("Update Options &raquo;", "wordpress-simple-paypal-shopping-cart")).'" />
     </div>
  </form>
  ';
-    echo (__("Like the Simple WordPress Shopping Cart Plugin?", "wordpress-simple-paypal-shopping-cart")).' <a href="https://wordpress.org/support/plugin/wordpress-simple-paypal-shopping-cart/reviews/?filter=5" target="_blank">'.(__("Give it a good rating", "wordpress-simple-paypal-shopping-cart")).'</a>';
-    _e ( ". It will help us keep the plugin free & maintained.", "wordpress-simple-paypal-shopping-cart" );
+    echo (esc_html__("Like the Simple WordPress Shopping Cart Plugin?", "wordpress-simple-paypal-shopping-cart")).' <a href="https://wordpress.org/support/plugin/wordpress-simple-paypal-shopping-cart/reviews/" target="_blank">'.(esc_html__("Give it a good rating", "wordpress-simple-paypal-shopping-cart")).'</a>';
+    esc_html_e ( ". It will help us keep the plugin free & maintained.", "wordpress-simple-paypal-shopping-cart" );
     wpsc_settings_menu_footer();
 }

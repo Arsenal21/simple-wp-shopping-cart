@@ -14,13 +14,13 @@ Follow variables are useable :
 ?>
 <?php if (!defined ('ABSPATH')) die ('No direct access allowed'); ?><?php if (!empty ($gallery)) : ?>
 
-<div class="ngg-galleryoverview" id="ngg-gallery-<?php echo $gallery->ID ?>">
+<div class="ngg-galleryoverview" id="ngg-gallery-<?php echo esc_attr( $gallery->ID ) ?>">
 
 <?php if ($gallery->show_slideshow) { ?>
 	<!-- Slideshow link -->
 	<div class="slideshowlink">
-		<a class="slideshowlink" href="<?php echo $gallery->slideshow_link ?>">
-			<?php echo $gallery->slideshow_link_text ?>
+		<a class="slideshowlink" href="<?php echo esc_url( $gallery->slideshow_link ) ?>">
+			<?php echo esc_html( $gallery->slideshow_link_text ) ?>
 		</a>
 	</div>
 <?php } ?>
@@ -28,8 +28,8 @@ Follow variables are useable :
 <?php if ($gallery->show_piclens) { ?>
 	<!-- Piclense link -->
 	<div class="piclenselink">
-		<a class="piclenselink" href="<?php echo $gallery->piclens_link ?>">
-			<?php _e('[View with PicLens]','nggallery'); ?>
+		<a class="piclenselink" href="<?php echo esc_url( $gallery->piclens_link ) ?>">
+			<?php esc_html_e('[View with PicLens]','wordpress-simple-paypal-shopping-cart'); ?>
 		</a>
 	</div>
 <?php } ?>
@@ -37,10 +37,10 @@ Follow variables are useable :
 	<!-- Thumbnails -->
 	<?php foreach ($images as $image) : ?>
 	
-	<div id="ngg-image-<?php echo $image->pid ?>" class="ngg-gallery-thumbnail-box" <?php echo $gallery->imagewidth ?> >
+	<div id="ngg-image-<?php echo esc_attr( $image->pid ) ?>" class="ngg-gallery-thumbnail-box" <?php /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attribute fragment sanitized by wp_kses_attr(). */ echo WPSC_Utility_Kses::escape_attributes( $gallery->imagewidth, 'div' ) ?> >
 		<div class="ngg-gallery-thumbnail" >
-			<a href="<?php echo $image->imageURL ?>" title="" <?php echo $image->thumbcode ?> >
-				<img title="<?php echo $image->alttext ?>" alt="<?php echo $image->alttext ?>" src="<?php echo $image->thumbnailURL ?>" <?php echo $image->size ?> />
+			<a href="<?php echo esc_url( $image->imageURL ) ?>" title="" <?php /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attribute fragment sanitized by wp_kses_attr(). */ echo WPSC_Utility_Kses::escape_attributes( $image->thumbcode, 'a' ) ?> >
+				<img title="<?php echo esc_attr( $image->alttext ) ?>" alt="<?php echo esc_attr( $image->alttext ) ?>" src="<?php echo esc_url( $image->thumbnailURL ) ?>" <?php /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attribute fragment sanitized by wp_kses_attr(). */ echo WPSC_Utility_Kses::escape_attributes( $image->size, 'img' ) ?> />
 			</a>
 			<span><?php echo do_shortcode($image->caption); ?></span>
 		</div>
@@ -51,7 +51,7 @@ Follow variables are useable :
  	<?php endforeach; ?>
  	
 	<!-- Pagination -->
- 	<?php echo $pagination ?>
+    <?php echo wp_kses( $pagination, WPSC_Utility_Kses::wp_kses_post_tags() ) ?>
  	
 </div>
 
