@@ -95,8 +95,9 @@ class WPSC_Cart_Ajax_Handler {
 				'compact_cart2_shortcode_output' => $compact_cart2_shortcode_output,
 			) );
 		} catch ( \Exception $e ) {
+			// Messages are HTML-escaped when thrown, but the browser shows them as plain text (alert/innerText), so decode them for JSON.
 			wp_send_json_error( array(
-				'message' => $e->getMessage(),
+				'message' => wp_specialchars_decode( $e->getMessage(), ENT_QUOTES ),
 			) );
 		}
 	}

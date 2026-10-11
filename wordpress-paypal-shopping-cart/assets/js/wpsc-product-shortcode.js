@@ -22,12 +22,6 @@ class WPSCProduct {
             this.showUpdatedPrice(true);
         }
 
-        // Update the product name before either a normal or AJAX submission.
-        this.variationInputs?.forEach(input => {
-            input.addEventListener('change', () => ReadForm(this.addToCartForm, false));
-        });
-        this.addToCartForm.addEventListener('submit', () => ReadForm(this.addToCartForm, true));
-
         // check if ajax add to cart enabled.
         if (wpsc_vars.ajaxAddToCartEnabled) {
             new WPSCAddToCartForm(this.addToCartForm);
@@ -305,6 +299,20 @@ class WPSCAddToCartForm {
     }
 }
 
+
+/**
+ * Update the product name (with the selected variations) before a normal or AJAX submission.
+ * Delegated from the document so it also covers buttons added after page load. The capture phase
+ * makes it run before the AJAX add to cart submit handler reads the form data.
+ */
+function wpsc_readProductForm(e) {
+    const form = e.target?.closest?.('form.wp-cart-button-form');
+    if (form && typeof ReadForm === 'function') {
+        ReadForm(form, e.type === 'submit');
+    }
+}
+document.addEventListener('change', wpsc_readProductForm, true);
+document.addEventListener('submit', wpsc_readProductForm, true);
 
 document.addEventListener('DOMContentLoaded', function () {
     const products = document.querySelectorAll('.wpsc_product');

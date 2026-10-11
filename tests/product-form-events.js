@@ -11,22 +11,28 @@ const source = fs.readFileSync(path.join(plugin, 'assets/js/wpsc-product-shortco
 
 for (const ajax of [false, true]) {
     const listeners = {};
-    const variationListeners = {};
+    const documentListeners = {};
     const choice = { value: 'Large:5', getAttribute: key => key === 'data-display-text' ? 'Large' : null };
     const select = {
         type: 'select-one', name: 'variation1', selectedIndex: 0, options: [choice],
-        addEventListener: (name, callback) => { variationListeners[name] = callback; }
+        addEventListener() {},
+        closest: () => form
     };
     const button = { disabled: false };
     const form = {
         length: 1, elements: [select], product_tmp: { value: 'Tea' }, wspsc_product: { value: 'Tea' },
         querySelector: selector => selector === 'input[name="price"]' ? { value: '10' } : button,
         querySelectorAll: () => [select],
-        addEventListener: (name, callback) => { (listeners[name] ??= []).push(callback); }
+        addEventListener: (name, callback) => { (listeners[name] ??= []).push(callback); },
+        closest: () => form
     };
     let submittedName;
     const context = {
-        document: { addEventListener() {}, querySelectorAll: () => [] },
+        document: {
+            // Record only the capture-phase listeners, i.e. the delegated product form handlers.
+            addEventListener: (name, callback, capture) => { if (capture) { documentListeners[name] = callback; } },
+            querySelectorAll: () => []
+        },
         wpsc_vars: { currencySymbol: '$', ajaxAddToCartEnabled: ajax },
         FormData: class {
             constructor(target) { submittedName = target.wspsc_product.value; }
@@ -39,11 +45,14 @@ for (const ajax of [false, true]) {
     };
     vm.createContext(context);
     vm.runInContext(readForm + '\n' + source + '\nnew WPSCProduct(product);', context);
-    variationListeners.change();
+    documentListeners.change({ type: 'change', target: select });
     assert.equal(form.wspsc_product.value, 'Tea (Large)', 'Variation change updates the product name');
     choice.getAttribute = key => key === 'data-display-text' ? 'Small' : null;
     let prevented = false;
-    listeners.submit.forEach(callback => callback({ preventDefault() { prevented = true; } }));
+    // Capture phase first (document), then the form's own listeners, as in a browser.
+    const submitEvent = { type: 'submit', target: form, preventDefault() { prevented = true; } };
+    documentListeners.submit(submitEvent);
+    (listeners.submit || []).forEach(callback => callback(submitEvent));
     assert.equal(form.wspsc_product.value, 'Tea (Small)', 'Submit reads the current selection');
     assert.equal(prevented, ajax, 'Normal submits continue; AJAX submits are intercepted');
     if (ajax) {
