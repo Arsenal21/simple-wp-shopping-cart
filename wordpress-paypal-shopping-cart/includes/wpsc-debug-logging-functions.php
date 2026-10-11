@@ -48,7 +48,9 @@ function wpsc_read_log_file() {
 	if ( ! file_exists( wpsc_get_log_file() ) ) {
 		wpsc_reset_logfile();
 	}
-	$logfile = file_get_contents( wpsc_get_log_file() );
+	// Stream the local log to avoid loading the entire file into memory.
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+	$logfile = fopen( wpsc_get_log_file(), 'rb' );
 	if ( false === $logfile ) {
 		wp_die( esc_html__( 'Log file dosen\'t exists.', 'wordpress-simple-paypal-shopping-cart' ) );
 	}
@@ -56,7 +58,9 @@ function wpsc_read_log_file() {
 	header( 'X-Content-Type-Options: nosniff' );
 	// Plain-text download: preserve the log contents exactly.
 	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $logfile;
+	fpassthru( $logfile );
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+	fclose( $logfile );
 	die;
 }
 

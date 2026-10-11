@@ -276,6 +276,24 @@ class WPSCAddToCartForm {
         if (cartTableBody) {
             cartTableBody.replaceWith(newCartTableBody);
         }
+
+        // The checkout form lives in tfoot, outside the replaced item rows.
+        // Refresh its cart values while preserving checkout controls and their listeners.
+        const checkoutForm = cartContent.querySelector('.wpsc_checkout_form_standard');
+        const newCheckoutForm = newCartShortCodeOutput.content.querySelector('.wpsc_checkout_form_standard');
+        if (checkoutForm && newCheckoutForm) {
+            const isCartField = input => /^(?:(?:item_name|item_number|amount|quantity|shipping|shipping2)_\d+|tax_cart|no_shipping)$/.test(input.name);
+            checkoutForm.querySelectorAll('input[type="hidden"]').forEach(input => {
+                if (isCartField(input)) {
+                    input.remove();
+                }
+            });
+            newCheckoutForm.querySelectorAll('input[type="hidden"]').forEach(input => {
+                if (isCartField(input)) {
+                    checkoutForm.appendChild(input.cloneNode(true));
+                }
+            });
+        }
     }
 
     updateCompactCart(cart, response_data) {
