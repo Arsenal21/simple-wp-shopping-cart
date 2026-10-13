@@ -247,6 +247,8 @@ None
 - PayPal Standard now always verifies the recipient against the configured primary PayPal email address. Removed the optional strict email check setting.
 - Stripe Managed Payments related api error issue fixed.
 - Some escaping functions added for improved security.
+- A php deprecation warning issue in exported order data csv issue fixed.
+- A paypal standard cart item calculation issue fixed when ajax-add-to-cart is enabled.
 
 = 5.3.2 =
 - WordPress 7.1 shopping cart block compatibility update.

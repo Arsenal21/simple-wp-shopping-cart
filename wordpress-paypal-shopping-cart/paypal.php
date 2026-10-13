@@ -520,7 +520,7 @@ class paypal_ipn_handler {
 		if (is_array( $message )) {
 			$message = json_encode( $message );
 		}
-		$text = '[' . gmdate( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . $message . "\n";
+		$text = '[' . wp_date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . $message . "\n";
 
 		if ($end) {
 			$text .= "\n------------------------------------------------------------------\n\n";
@@ -534,7 +534,7 @@ class paypal_ipn_handler {
 	function debug_log_array( $array_to_write, $success, $end = false ) {
 		if (! $this->ipn_log)
 			return; // is logging turned off?
-		$text = '[' . gmdate( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . "\n";
+		$text = '[' . wp_date( 'm/d/Y g:i A' ) . '] - ' . ( ( $success ) ? 'SUCCESS :' : 'FAILURE :' ) . "\n";
 		ob_start();
 		print_r( $array_to_write );
 		$var = ob_get_contents();

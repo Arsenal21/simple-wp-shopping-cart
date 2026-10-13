@@ -70,7 +70,8 @@ function wpsc_export_orders_data_to_csv(){
     // Start output buffering (to capture stream contents)
     ob_start();
     
-    fputcsv($fh, $header_names);
+    // Explicit escape character preserves the existing CSV format without PHP deprecation warnings.
+    fputcsv($fh, $header_names, ',', '"', '\\');
     
     $query_args = array(
         'post_type' => WPSC_Cart::POST_TYPE,
@@ -102,7 +103,7 @@ function wpsc_export_orders_data_to_csv(){
         $fields = apply_filters( 'wpspc_export_csv_data', $fields, $order_id ); // TODO: Old hook. Need to remove this.
         $fields = apply_filters( 'wpsc_export_csv_data', $fields, $order_id );
 
-        fputcsv($fh, $fields);
+        fputcsv($fh, $fields, ',', '"', '\\');
 
     }
     
