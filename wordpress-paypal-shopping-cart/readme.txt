@@ -241,6 +241,9 @@ None
 
 == Changelog ==
 
+= WIP - 5.3.4 =
+- Fixed an issue where spaces in a variation name were removed when a price modifier (::) was used.
+
 = 5.3.3 =
 - Security improvement: PayPal Standard payment notifications are now always checked against the PayPal email address in the plugin settings. The optional "Use Strict PayPal Email Address Checking" setting has been removed. Make sure this setting uses your PayPal account's primary email address, not an alias, or payments will not be marked as paid.
 - Security improvement: Product prices are now only registered from published posts and pages created by an Editor or Administrator. Previews and drafts no longer register prices. Developers can change the required capability with the `wpsc_dynamic_product_register_capability` filter.

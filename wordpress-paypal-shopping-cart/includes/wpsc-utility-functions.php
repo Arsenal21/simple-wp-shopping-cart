@@ -397,9 +397,10 @@ function wpsc_get_variation_price_separator(){
 }
 
 function wpsc_get_variation_string_parts($original_input) {
-	$input = preg_replace('/\s+/', '', $original_input);
+	// Only trim the outer whitespace, so spaces inside the label are kept.
+	$input = trim($original_input);
 	// Split the string into label and value
-	$parts = explode( wpsc_get_variation_price_separator(), $input, 2);
+	$parts = array_map('trim', explode( wpsc_get_variation_price_separator(), $input, 2));
 
 	$result = array(
 		'label' => '',

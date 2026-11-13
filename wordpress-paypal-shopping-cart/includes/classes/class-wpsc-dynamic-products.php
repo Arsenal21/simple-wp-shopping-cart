@@ -78,7 +78,7 @@ class WPSC_Dynamic_Products {
 			return 0; // No price modifier part added.
 		}
 
-		$applied_variation_price_amt = $applied_variation_arr[1];
+		$applied_variation_price_amt = trim($applied_variation_arr[1]);
 		if (!is_numeric($applied_variation_price_amt)) {
 			return 0; // Incorrect price format, no price modifier applies.
 		}
