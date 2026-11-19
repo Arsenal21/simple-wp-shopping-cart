@@ -120,9 +120,9 @@ class WPSC_Cart_Ajax_Handler {
 
 		//Sanitize post data
 		$post_wspsc_product = isset( $_POST['wspsc_product'] ) ? stripslashes( sanitize_text_field( $_POST['wspsc_product'] ) ) : '';
-		$post_item_number   = isset( $_POST['item_number'] ) ? sanitize_text_field( $_POST['item_number'] ) : '';
+		$post_item_number   = isset( $_POST['item_number'] ) ? sanitize_text_field( wp_unslash( $_POST['item_number'] ) ) : '';
 		$post_cart_link     = isset( $_POST['cartLink'] ) ? esc_url_raw( sanitize_text_field( urldecode( $_POST['cartLink'] ) ) ) : '';
-		$post_stamp_pdf     = isset( $_POST['stamp_pdf'] ) ? sanitize_text_field( $_POST['stamp_pdf'] ) : '';
+		$post_stamp_pdf     = isset( $_POST['stamp_pdf'] ) ? sanitize_text_field( wp_unslash( $_POST['stamp_pdf'] ) ) : '';
 
 		$post_thumbnail = isset( $_POST['thumbnail'] ) ? esc_url_raw( sanitize_text_field( $_POST['thumbnail'] ) ) : '';
 		$digital_flag   = isset( $_POST['digital'] ) ? esc_url_raw( sanitize_text_field( $_POST['digital'] ) ) : '';

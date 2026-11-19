@@ -40,7 +40,14 @@ class WPSC_Cart {
 	private $post_id_reference = 0;
 
 	private function __construct() {
-		$this->cart_id = isset( $_COOKIE['simple_cart_id'] ) ? $_COOKIE['simple_cart_id'] : 0;
+		$this->cart_id = 0;
+		if ( isset( $_COOKIE['simple_cart_id'] ) && is_string( $_COOKIE['simple_cart_id'] ) ) {
+			$cookie_cart_id = sanitize_text_field( wp_unslash( $_COOKIE['simple_cart_id'] ) );
+			// Cart IDs are hex strings (older carts used uniqid(), newer ones use 32 hex characters).
+			if ( preg_match( '/^[a-f0-9]{1,64}$/', $cookie_cart_id ) ) {
+				$this->cart_id = $cookie_cart_id;
+			}
+		}
 
 		$cart_cpt_id = wpsc_get_cart_cpt_id_by_cart_id( $this->cart_id );
 		if ( ! empty( $cart_cpt_id ) ) {
@@ -135,7 +142,9 @@ class WPSC_Cart {
 	public function save_cart_to_postmeta() {
 		$serialized_cart_object = serialize( $this );
 
-		return update_post_meta( $this->get_cart_cpt_id(), 'wpsc_cart_object', $serialized_cart_object );
+		// update_post_meta() runs wp_unslash() on the value, which would remove backslashes from the serialized
+		// string and break its stored string lengths. Slash it first so it is saved exactly as serialized.
+		return update_post_meta( $this->get_cart_cpt_id(), 'wpsc_cart_object', wp_slash( $serialized_cart_object ) );
 	}
 
 	/**
@@ -147,8 +156,9 @@ class WPSC_Cart {
 	public static function get_cart_from_postmeta( $cart_cpt_id ) {
 		$serialized_cart_object = get_post_meta( $cart_cpt_id, 'wpsc_cart_object', true );
 
-        if ($serialized_cart_object) {
-            return unserialize($serialized_cart_object); // Unserialize data to get the object
+        if ( is_string( $serialized_cart_object ) && $serialized_cart_object !== '' ) {
+            // Only allow the cart classes, so no other object can be created from the stored data.
+            return unserialize( $serialized_cart_object, array( 'allowed_classes' => array( 'WPSC_Cart', 'WPSC_Cart_Item' ) ) );
         }
 
         return false;

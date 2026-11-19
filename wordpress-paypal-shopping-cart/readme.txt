@@ -242,6 +242,7 @@ None
 == Changelog ==
 
 = WIP - 5.3.4 =
+- Security fix: The saved cart data can no longer be changed to load other PHP classes (PHP object injection). Thanks to Patchstack for reporting this.
 - Fixed an issue where spaces in a variation name were removed when a price modifier (::) was used.
 
 = 5.3.3 =
