@@ -173,7 +173,7 @@ function wpsc_run_activation()
     //General options
     add_option('wp_cart_title', __("Your Shopping Cart", "wordpress-simple-paypal-shopping-cart"));
     add_option('wp_cart_empty_text', __("Your cart is empty", "wordpress-simple-paypal-shopping-cart"));
-    add_option('cart_return_from_paypal_url', get_bloginfo('wpurl'));
+    //The return URL (cart_return_from_paypal_url) is set by wpsc_check_and_create_thank_you_page() below.
 
     //Add Confirmation Email Settings
     add_option("wpspc_send_buyer_email", 1);
@@ -235,6 +235,12 @@ function wpsc_check_and_create_thank_you_page() {
 		'post_status'    => 'publish',
 		'post_type'      => 'page',
 	) );
+
+	if ( empty( $post_id ) || is_wp_error( $post_id ) ) {
+		// The page couldn't be created. Send buyers back to the site instead.
+		update_option( 'cart_return_from_paypal_url', get_bloginfo( 'wpurl' ) );
+		return;
+	}
 
 	// Save the Thank you page URL in settings.
 	update_option( 'cart_return_from_paypal_url', get_permalink($post_id) );

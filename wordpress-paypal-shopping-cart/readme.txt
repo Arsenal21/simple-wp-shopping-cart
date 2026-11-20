@@ -241,6 +241,9 @@ None
 
 == Changelog ==
 
+= WIP - 5.3.5 =
+- Fixed the Thank You page (with the order summary) not being created when the plugin is installed on a new site.
+
 = 5.3.4 =
 - The saved cart data can no longer be changed to load other PHP classes (PHP object injection). Thanks to Patchstack for reporting this.
 - Fixed an issue where spaces in a variation name were removed when a price modifier (::) was used.

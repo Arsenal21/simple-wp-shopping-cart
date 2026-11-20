@@ -54,12 +54,9 @@ class Test_Plugin_Smoke extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Known issue: activation saves the site URL as the return URL first, so the Thank You page is never created on a new install.
-	 * See "Known issues" in tests/TESTS.md. Remove the markTestSkipped() line in the commit that fixes it.
+	 * Fixed after 5.3.4: activation used to save the site URL as the return URL first, so the Thank You page was never created.
 	 */
 	public function test_activation_creates_the_thank_you_page_on_a_new_install() {
-		$this->markTestSkipped( 'Known issue: the Thank You page is not created on a new install (see tests/TESTS.md).' );
-
 		delete_option( 'cart_return_from_paypal_url' );
 
 		wpsc_plugin_install();
@@ -67,7 +64,13 @@ class Test_Plugin_Smoke extends WP_UnitTestCase {
 		$return_url = get_option( 'cart_return_from_paypal_url' );
 		$page_id    = url_to_postid( $return_url );
 		$this->assertNotEmpty( $page_id, 'The return URL is not a page: ' . $return_url );
+		$this->assertSame( 'publish', get_post_status( $page_id ) );
 		$this->assertStringContainsString( '[wpsc_thank_you]', get_post( $page_id )->post_content );
+
+		//Activating again (a plugin update) must not create a second page.
+		wpsc_plugin_install();
+		$this->assertSame( $return_url, get_option( 'cart_return_from_paypal_url' ) );
+		$this->assertCount( 1, get_posts( array( 'post_type' => 'page', 's' => 'wpsc_thank_you' ) ), 'A second Thank You page was created.' );
 	}
 
 	public function test_activation_keeps_a_return_url_that_is_already_set() {
