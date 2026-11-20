@@ -5,3 +5,7 @@ wordpress-paypal-shopping-cart/wspsc-debug-log-*.txt
 .idea
 
 wordpress-paypal-shopping-cart.zip
+
+/tests/phpunit/vendor
+/tests/phpunit/composer.lock
+/tests/phpunit/.phpunit.result.cache
