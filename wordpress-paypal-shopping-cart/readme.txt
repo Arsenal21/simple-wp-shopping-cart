@@ -5,7 +5,7 @@ Tags: cart, shopping cart, ecommerce, sell online, shop, stripe, e-commerce, wor
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 7.1
-Stable tag: 5.3.3
+Stable tag: 5.3.4
 License: GPLv2 or later
 
 Lightweight, user-friendly plugin to sell products/services on WordPress. Easily add a shopping cart and start accepting orders in minutes.
@@ -241,8 +241,8 @@ None
 
 == Changelog ==
 
-= WIP - 5.3.4 =
-- Security fix: The saved cart data can no longer be changed to load other PHP classes (PHP object injection). Thanks to Patchstack for reporting this.
+= 5.3.4 =
+- The saved cart data can no longer be changed to load other PHP classes (PHP object injection). Thanks to Patchstack for reporting this.
 - Fixed an issue where spaces in a variation name were removed when a price modifier (::) was used.
 
 = 5.3.3 =
