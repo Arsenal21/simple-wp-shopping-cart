@@ -23,10 +23,10 @@ $cookie_jar = null;
 
 //Known issues that aren't fixed (see "Known issues" in tests/TESTS.md). Their checks still run, but don't fail the tests:
 //the output shows "KNOWN ISSUE (still happens)" or "KNOWN ISSUE NOW PASSES". The commit that fixes one removes it from this list,
-//so its check becomes a normal check. "Suspected" means the code reads that way, but the check hasn't failed in a run yet.
+//so its check becomes a normal check.
 const KNOWN_ISSUES = array(
-	'paid-cart-reused'            => 'Suspected: the cart is loaded from the simple_cart_id cookie without checking that its order is already paid. When a buyer pays with PayPal Standard and doesn\'t come back to the return URL (which resets the cart), the next add to cart changes the items of the paid order, and a second payment notification for the cart overwrites the order.',
-	'manual-checkout-coupon-code' => 'Suspected: the manual checkout reads the applied coupon with the cart ID (get_applied_coupon_code( $cart_obj->get_cart_id() ) in manual-checkout.php) instead of the order post ID, so the coupon code is not saved on the order (or another post\'s value is read).',
+	'paid-cart-reused'            => 'Confirmed (2026-11-20 run): the cart is loaded from the simple_cart_id cookie without checking that its order is already paid. When a buyer pays with PayPal Standard and doesn\'t come back to the return URL (which resets the cart), the next add to cart changes the items of the paid order, and a second payment notification for the cart overwrites the order.',
+	'manual-checkout-coupon-code' => 'Confirmed (2026-11-20 run): the manual checkout reads the applied coupon with the cart ID (get_applied_coupon_code( $cart_obj->get_cart_id() ) in manual-checkout.php) instead of the order post ID, so the coupon code is not saved on the order (or another post\'s value is read).',
 );
 
 function check_known( $issue, $label, $condition, $details = '' ) {
@@ -386,6 +386,25 @@ function add_to_cart_succeeded( $response, $mode ) {
 	return 200 === $response['status'] && false === strpos( $response['body'], 'Error!' );
 }
 
+/**
+ * An item of the PayPal Standard form, found by its name (the cart sorts its items, so the order isn't the order they were added in).
+ *
+ * @return array|null amount, quantity and item number.
+ */
+function paypal_form_item( $paypal_form, $name ) {
+	$fields = $paypal_form['fields'];
+	for ( $i = 1; isset( $fields[ 'item_name_' . $i ] ); $i++ ) {
+		if ( $name === $fields[ 'item_name_' . $i ] ) {
+			return array(
+				'amount'      => $fields[ 'amount_' . $i ],
+				'quantity'    => $fields[ 'quantity_' . $i ],
+				'item_number' => $fields[ 'item_number_' . $i ],
+			);
+		}
+	}
+	return null;
+}
+
 /** The PayPal Standard checkout form on the cart page. */
 function get_paypal_form( $cart_page ) {
 	$forms = get_forms( $cart_page['body'], 'wpsc_checkout_form_standard' );
@@ -569,9 +588,10 @@ if ( $paypal_form ) {
 	check( 'The form goes to the PayPal sandbox', 0 === strpos( $paypal_form['action'], 'https://www.sandbox.paypal.com/' ), $paypal_form['action'] );
 	check( 'The form pays the PayPal email address in the settings, in USD', 'seller@example.com' === $f['business'] && 'USD' === $f['currency_code'] && '_cart' === $f['cmd'] );
 	check(
-		'The form has the items, their prices and quantities',
-		$shirt_large === $f['item_name_1'] && '25.00' === $f['amount_1'] && '1' === $f['quantity_1'] && 'SHIRT-1' === $f['item_number_1']
-			&& $ebook === $f['item_name_2'] && '9.99' === $f['amount_2'] && '1' === $f['quantity_2'],
+		'The form has the items, their prices, quantities and item numbers',
+		array( 'amount' => '25.00', 'quantity' => '1', 'item_number' => 'SHIRT-1' ) === paypal_form_item( $paypal_form, $shirt_large )
+			&& array( 'amount' => '9.99', 'quantity' => '1', 'item_number' => '' ) === paypal_form_item( $paypal_form, $ebook )
+			&& ! isset( $f['item_name_3'] ),
 		json_encode( $f )
 	);
 	check( 'The shipping is the shirt shipping (2) + the base shipping (1)', '3.00' === $f['shipping_1'], 'shipping_1: ' . $f['shipping_1'] );
@@ -610,7 +630,7 @@ section( 'PayPal payment notification' );
 $cart_page   = http_request( 'GET', $ids['cart_url'] );
 $paypal_form = get_paypal_form( $cart_page );
 $f           = $paypal_form['fields'];
-check( 'The PayPal form has the discounted price and the shipping for 3 shirts (3 x 2 + 1)', '22.50' === $f['amount_1'] && '3' === $f['quantity_1'] && '7.00' === $f['shipping_1'], json_encode( $f ) );
+check( 'The PayPal form has the discounted price and the shipping for 3 shirts (3 x 2 + 1)', array( 'amount' => '22.50', 'quantity' => '3', 'item_number' => 'SHIRT-1' ) === paypal_form_item( $paypal_form, $shirt_large ) && ! isset( $f['item_name_2'] ) && '7.00' === $f['shipping_1'], json_encode( $f ) );
 check( 'The custom field has the coupon code', false !== strpos( urldecode( $f['custom'] ), 'coupon_code=e2e10' ) || false !== strpos( urldecode( $f['custom'] ), 'coupon_code=E2E10' ), urldecode( $f['custom'] ) );
 
 reset_fakes();

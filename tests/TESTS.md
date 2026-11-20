@@ -149,10 +149,11 @@ A test for a known bug can be written before the fix and skipped, so the workflo
 remove the `markTestSkipped()` line (PHPUnit), or remove the issue from `KNOWN_ISSUES` in [e2e/run-endpoint-tests.php](e2e/run-endpoint-tests.php) (endpoint tests).
 Skipped tests show as skipped in the PHPUnit output, and known issue checks as `KNOWN ISSUE` lines in the endpoint tests output.
 
-Endpoint tests (in `KNOWN_ISSUES`; "suspected" until a run shows the check failing):
+Endpoint tests (in `KNOWN_ISSUES`, both confirmed by the 2026-11-20 run):
 - **paid-cart-reused**: the cart is loaded from the `simple_cart_id` cookie without checking that its order is already paid
   (the check in `WPSC_Cart::get_cart_cpt_id()` is commented out). When a buyer pays with PayPal Standard and doesn't come back to the
   return URL, the next add to cart changes the items of the paid order, and a second payment notification for that cart overwrites the order.
+  In the run, the ebook was added to the paid order (with the coupon discount).
 - **manual-checkout-coupon-code**: `WPSC_Manual_Checkout::process_payment_data()` reads the applied coupon with the cart ID instead of
   the order post ID, so the coupon code isn't saved on the order.
 
