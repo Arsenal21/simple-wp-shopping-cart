@@ -1,11 +1,11 @@
 # Plugin Tests: what is covered
 
-This file lists what the **Plugin Tests (Simple Cart Main)** GitHub Actions workflow checks, and what isn't covered yet.
+This file lists what the **Plugin Tests (WPSC Main)** GitHub Actions workflow checks, and what isn't covered yet.
 Update it in the same commit when you add or change a test.
 
 ## How to run
 
-GitHub > Actions > **Plugin Tests (Simple Cart Main)** > Run workflow. Choose the branch and tick the test groups to run (all are ticked by default).
+GitHub > Actions > **Plugin Tests (WPSC Main)** > Run workflow. Choose the branch and tick the test groups to run (all are ticked by default).
 The workflow file is [.github/workflows/plugin-tests-main.yml](../.github/workflows/plugin-tests-main.yml).
 Run it before a release and after bigger changes.
 
@@ -17,9 +17,12 @@ A separate, light workflow, [.github/workflows/php-compatibility-test.yml](../.g
 | Lint | PHP syntax check of the plugin and the test files (the Stripe PHP library in `lib/stripe-gateway` is skipped) | 7.4, 8.5 | (in the workflow) |
 | Standalone tests | The older test scripts: no database, WordPress and the payment requests are stubbed | 7.4, 8.4 (Node 20) | `tests/*.php`, `tests/*.js` |
 | PHPUnit | Tests with the WordPress test library and a real database | 7.4, 8.4 | [phpunit/](phpunit/) |
+| Endpoint tests | A real WordPress site with the plugin and a fake PayPal verification: sends a shopping session's requests over HTTP and checks the database | 7.4, 8.4 | [e2e/](e2e/) |
 
 Which group a new test belongs in:
 - Plugin functions and classes that need WordPress and the database: **PHPUnit**.
+- The code runs from an incoming request (add to cart, the cart page forms, the PayPal notification, the checkout AJAX calls),
+  sets cookies, or ends with `exit` or `wp_die()`: **Endpoint tests**.
 - The JavaScript in `assets/js` and the inline `ReadForm()` script: a **standalone** Node test (they run the real code in a fake DOM).
 
 PHPUnit converts PHP notices and warnings into test failures, so a notice in the plugin code fails the test that runs it.
@@ -27,6 +30,46 @@ The test files must stay PHP 7.4-compatible (the oldest PHP version in the workf
 
 The PHPUnit bootstrap sets the currency (USD, `$`) before the plugin loads, because the plugin reads the symbol into the
 `WP_CART_CURRENCY_SYMBOL` constant at load time. It then runs the plugin's activation on `init`.
+
+---
+
+## Endpoint tests ([e2e/run-endpoint-tests.php](e2e/run-endpoint-tests.php))
+
+The site is set up with WP-CLI; [e2e/setup-site.php](e2e/setup-site.php) saves the settings (PayPal sandbox, base shipping $1, coupons,
+manual checkout, the emails) and creates the coupon `E2E10` (10%), the shop page (a shirt for $20 + $2 shipping with the variations
+`Small` and `Large::5`, an ebook for $9.99 with a file URL) and the cart page.
+[e2e/mu-plugin-e2e-fakes.php](e2e/mu-plugin-e2e-fakes.php) answers the PayPal IPN verification (`VERIFIED` only for `verify_sign=e2e-verified`),
+keeps the emails instead of sending them, blocks other outgoing HTTP requests, and has a "gadget" class that records it if an object of it is ever created.
+[e2e/get-cart.php](e2e/get-cart.php) reads a saved cart with the plugin's code (`wp eval-file`).
+There is no browser: the runner adds the selected variation to the product name like the `ReadForm()` script does.
+
+**Add to cart** (twice: a normal form post, and with "AJAX add to cart" on; the two handlers are separate code)
+- The shirt (Large) is added with the variation in its name and price (20 + 5); the cart ID cookie is 32 hex characters; the order is "In Progress".
+- An item number with an apostrophe is saved without a backslash (fixed in 5.3.4).
+- Adding it again makes the quantity 2; the ebook is a second item, digital, with the file URL of the saved product.
+- Rejected, and the cart doesn't change: a wrong nonce, a lower price, a product that wasn't saved, a lower shipping cost, a variation with another price.
+- The PHP object injection payload from the Patchstack report (fixed in 5.3.4): no object of another class is created when the cart is loaded,
+  and the item number and stamp_pdf values stay plain text.
+
+**Cart page**
+- The PayPal Standard form: the sandbox URL, the PayPal email in the settings, USD, the items with their prices, quantities and item numbers,
+  the shipping (item shipping + base shipping), the notification URL, the return URL (it resets the cart) and the cart ID in the custom field.
+- Changing a quantity, removing an item, applying a coupon (not case-sensitive, 10% off); the PayPal form then has the discounted price and the coupon code.
+
+**PayPal payment notification (IPN)**
+- The notification built from the PayPal form: the plugin verifies it with the PayPal sandbox; the order is paid, with the transaction ID,
+  the total, the buyer, the shipping, the coupon, the gateway and the items; the buyer and the seller get their emails.
+- The same notification again sends no more emails and doesn't change the order.
+- The return URL removes the cart ID cookie; the next add to cart starts a new cart; the old cart keeps its items.
+- Not marking the order paid: not verified by PayPal, paid to another PayPal account, paid less than the items cost, another currency,
+  a payment that isn't completed. A notification for a cart that doesn't exist is ignored. The correct one then marks the order paid.
+
+**Manual checkout**
+- Rejected without an order: a wrong nonce, an invalid email, manual checkout turned off.
+- The order is placed: pending, with the buyer, the discounted total and the gateway; the buyer gets the payment instructions and the seller the notification;
+  the cart ID cookie is removed; the buyer is sent to the Thank You page, which shows the order.
+
+**PHP errors**: a PHP fatal error on the test site fails the tests; the plugin's PHP warnings and notices are listed in the output.
 
 ---
 
@@ -102,10 +145,18 @@ Each one can also be run by hand from the repository folder.
 
 ## Known issues (tests skipped until fixed)
 
-A test for a known bug can be written before the fix and skipped, so the workflow stays green. The commit that fixes the bug turns its test on
-by removing the `markTestSkipped()` line. Skipped tests show as skipped in the PHPUnit output.
+A test for a known bug can be written before the fix and skipped, so the workflow stays green. The commit that fixes the bug turns its test on:
+remove the `markTestSkipped()` line (PHPUnit), or remove the issue from `KNOWN_ISSUES` in [e2e/run-endpoint-tests.php](e2e/run-endpoint-tests.php) (endpoint tests).
+Skipped tests show as skipped in the PHPUnit output, and known issue checks as `KNOWN ISSUE` lines in the endpoint tests output.
 
-There are none at the moment. Fixed after 5.3.4: the Thank You page wasn't created on a new install.
+Endpoint tests (in `KNOWN_ISSUES`; "suspected" until a run shows the check failing):
+- **paid-cart-reused**: the cart is loaded from the `simple_cart_id` cookie without checking that its order is already paid
+  (the check in `WPSC_Cart::get_cart_cpt_id()` is commented out). When a buyer pays with PayPal Standard and doesn't come back to the
+  return URL, the next add to cart changes the items of the paid order, and a second payment notification for that cart overwrites the order.
+- **manual-checkout-coupon-code**: `WPSC_Manual_Checkout::process_payment_data()` reads the applied coupon with the cart ID instead of
+  the order post ID, so the coupon code isn't saved on the order.
+
+Fixed after 5.3.4: the Thank You page wasn't created on a new install.
 
 ## Decisions (behavior that is kept on purpose)
 
@@ -119,7 +170,8 @@ PHPUnit
 - The cart output with items (`print_wp_shopping_cart()`): the item rows, totals and the checkout forms.
 - The payment processing after checkout (PayPal, Stripe, manual checkout): the order, the emails, the email merge tags.
 
-Phase C (endpoint tests on a test site)
-- Add to cart requests (normal and AJAX): a wrong nonce, tampered price, shipping or variation.
-- PayPal payment notifications with a fake PayPal verification: the recipient email check, a wrong amount, a repeated notification.
-- Stripe checkout with a fake Stripe API.
+Endpoint tests
+- Stripe checkout (`wpsc_stripe_create_checkout_session` and the `simple_cart_stripe_ipn` return) with a fake Stripe API, and the PayPal PPCP checkout.
+- Shipping and tax by region, store pickup and the terms and conditions on the cart page.
+- HTML emails: in `WPSC_Email_Handler::send_manual_checkout_notification_emails()`, the HTML content type replaces the buyer email headers
+  (`$headers = ...` instead of `$headers[] = ...`), so the From header is lost.
