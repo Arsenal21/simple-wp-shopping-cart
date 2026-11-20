@@ -60,13 +60,15 @@ There is no browser: the runner adds the selected variation to the product name 
 - The notification built from the PayPal form: the plugin verifies it with the PayPal sandbox; the order is paid, with the transaction ID,
   the total, the buyer, the shipping, the coupon, the gateway and the items; the buyer and the seller get their emails.
 - The same notification again sends no more emails and doesn't change the order.
+- When the buyer doesn't come back to the return URL, the next add to cart starts a new cart (without the coupon), and the paid order
+  doesn't change (fixed after 5.3.4).
 - The return URL removes the cart ID cookie; the next add to cart starts a new cart; the old cart keeps its items.
 - Not marking the order paid: not verified by PayPal, paid to another PayPal account, paid less than the items cost, another currency,
   a payment that isn't completed. A notification for a cart that doesn't exist is ignored. The correct one then marks the order paid.
 
 **Manual checkout**
 - Rejected without an order: a wrong nonce, an invalid email, manual checkout turned off.
-- The order is placed: pending, with the buyer, the discounted total and the gateway; the buyer gets the payment instructions and the seller the notification;
+- The order is placed: pending, with the buyer, the discounted total, the coupon code (fixed after 5.3.4) and the gateway; the buyer gets the payment instructions and the seller the notification;
   the cart ID cookie is removed; the buyer is sent to the Thank You page, which shows the order.
 
 **PHP errors**: a PHP fatal error on the test site fails the tests; the plugin's PHP warnings and notices are listed in the output.
@@ -124,6 +126,8 @@ Each one can also be run by hand from the repository folder.
 - A cart saved by 5.3.3 (without `wp_slash()`) still loads.
 - The `simple_cart_id` cookie loads the visitor's cart (32 hex characters, and the older 13 character IDs);
   other values are ignored (SQL, a path, upper case, too long, an array, empty); an unknown ID gives an empty cart.
+- The cookie of a placed order (paid, or a pending manual checkout order) starts a new cart, and the order isn't changed or deleted
+  (fixed after 5.3.4); a cart order without a status (older data) still loads.
 - A cart whose saved data isn't a cart object is deleted, and the visitor gets an empty cart.
 
 **Cart totals** (test-cart-totals.php, `calculate_cart_totals_and_postage()`)
@@ -149,15 +153,13 @@ A test for a known bug can be written before the fix and skipped, so the workflo
 remove the `markTestSkipped()` line (PHPUnit), or remove the issue from `KNOWN_ISSUES` in [e2e/run-endpoint-tests.php](e2e/run-endpoint-tests.php) (endpoint tests).
 Skipped tests show as skipped in the PHPUnit output, and known issue checks as `KNOWN ISSUE` lines in the endpoint tests output.
 
-Endpoint tests (in `KNOWN_ISSUES`, both confirmed by the 2026-11-20 run):
-- **paid-cart-reused**: the cart is loaded from the `simple_cart_id` cookie without checking that its order is already paid
-  (the check in `WPSC_Cart::get_cart_cpt_id()` is commented out). When a buyer pays with PayPal Standard and doesn't come back to the
-  return URL, the next add to cart changes the items of the paid order, and a second payment notification for that cart overwrites the order.
-  In the run, the ebook was added to the paid order (with the coupon discount).
-- **manual-checkout-coupon-code**: `WPSC_Manual_Checkout::process_payment_data()` reads the applied coupon with the cart ID instead of
-  the order post ID, so the coupon code isn't saved on the order.
-
-Fixed after 5.3.4: the Thank You page wasn't created on a new install.
+There are none at the moment. Fixed after 5.3.4 (found by these tests):
+- The Thank You page wasn't created on a new install.
+- **paid-cart-reused**: the cart was loaded from the `simple_cart_id` cookie without checking that its order was already placed.
+  When a buyer paid with PayPal Standard and didn't come back to the return URL, the next add to cart changed the items of the paid order
+  (the 2026-11-20 run added the ebook to it). Now `WPSC_Cart::is_placed_order()` makes the cookie of a placed order start a new cart.
+- **manual-checkout-coupon-code**: the manual checkout read the applied coupon with the cart ID instead of the order post ID,
+  so the coupon code wasn't saved on the order.
 
 ## Decisions (behavior that is kept on purpose)
 

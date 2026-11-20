@@ -181,6 +181,56 @@ class Test_Cart_Storage extends WP_UnitTestCase {
 		$this->assertFalse( $loaded->get_items() );
 	}
 
+	/**
+	 * @return array order status
+	 */
+	public function placed_order_statuses() {
+		return array(
+			'paid'                           => array( 'Paid' ),
+			'pending (manual checkout)'      => array( 'Pending' ),
+		);
+	}
+
+	/**
+	 * Fixed after 5.3.4: a buyer who paid with PayPal Standard but didn't come back to the return URL still has the cookie of the
+	 * paid cart. The next page view must start a new cart, and the order must stay unchanged (not deleted).
+	 *
+	 * @dataProvider placed_order_statuses
+	 */
+	public function test_the_cookie_of_a_placed_order_starts_a_new_cart( $status ) {
+		$cart        = WPSC_Test_Helper::set_up_cart( array( WPSC_Test_Helper::make_item( 'Paid Item', '30', 1 ) ) );
+		$cart_id     = $cart->get_cart_id();
+		$cart_cpt_id = $cart->get_cart_cpt_id();
+		update_post_meta( $cart_cpt_id, 'wpsc_order_status', $status );
+		WPSC_Test_Helper::reset_cart();
+		$_COOKIE['simple_cart_id'] = $cart_id;
+
+		$loaded = WPSC_Test_Helper::load_cart_from_cookie();
+
+		$this->assertSame( 0, $loaded->get_cart_id(), 'The placed order was loaded as the cart.' );
+		$this->assertSame( 0, $loaded->get_cart_cpt_id() );
+		$this->assertFalse( $loaded->get_items() );
+		$this->assertNotNull( get_post( $cart_cpt_id ), 'The order was deleted.' );
+		$this->assertSame( $status, get_post_meta( $cart_cpt_id, 'wpsc_order_status', true ) );
+		$this->assertCount( 1, get_post_meta( $cart_cpt_id, 'wpsc_cart_items', true ), 'The order items changed.' );
+	}
+
+	/**
+	 * Carts are saved with the "In Progress" status. A cart order without a status (older data) still loads.
+	 */
+	public function test_a_cart_without_an_order_status_still_loads() {
+		$cart    = WPSC_Test_Helper::set_up_cart( array( WPSC_Test_Helper::make_item( 'Old Item', '5', 1 ) ) );
+		$cart_id = $cart->get_cart_id();
+		delete_post_meta( $cart->get_cart_cpt_id(), 'wpsc_order_status' );
+		WPSC_Test_Helper::reset_cart();
+		$_COOKIE['simple_cart_id'] = $cart_id;
+
+		$loaded = WPSC_Test_Helper::load_cart_from_cookie();
+
+		$this->assertSame( $cart_id, $loaded->get_cart_id() );
+		$this->assertSame( 1, $loaded->get_total_cart_qty() );
+	}
+
 	public function test_a_cookie_for_a_cart_that_does_not_exist_gives_an_empty_cart() {
 		$_COOKIE['simple_cart_id'] = bin2hex( random_bytes( 16 ) );
 

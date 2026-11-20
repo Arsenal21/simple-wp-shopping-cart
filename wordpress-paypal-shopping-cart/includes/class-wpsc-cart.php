@@ -50,6 +50,16 @@ class WPSC_Cart {
 		}
 
 		$cart_cpt_id = wpsc_get_cart_cpt_id_by_cart_id( $this->cart_id );
+		if ( ! empty( $cart_cpt_id ) && self::is_placed_order( $cart_cpt_id ) ) {
+			// The order of this cart was already placed (for example paid with PayPal Standard, but the buyer didn't come back
+			// to the return URL that resets the cart). Start a new cart, and keep the order unchanged (don't delete it).
+			$this->set_cart_id( 0 );
+			if ( ! headers_sent() ) {
+				setcookie( 'simple_cart_id', '', time() - 3600, '/' );
+			}
+			return;
+		}
+
 		if ( ! empty( $cart_cpt_id ) ) {
 			// Assign all previously saved properties of WPSC_Cart object.
 			$saved_wpsc_cart_object = $this->get_cart_from_postmeta( $cart_cpt_id );
@@ -68,6 +78,19 @@ class WPSC_Cart {
 
 		// The saved cart id or the saved cart class object is not valid. So delete that cart and other related values.
 		$this->delete_cart_and_related_data( $cart_cpt_id );
+	}
+
+	/**
+	 * Whether the cart order was already placed (paid, or a pending manual checkout order), so it can't be changed as a cart anymore.
+	 * A cart that is still being filled is "In Progress". An order without a status (older data) is treated as a cart.
+	 *
+	 * @param int $cart_cpt_id The cart order post ID.
+	 *
+	 * @return bool
+	 */
+	public static function is_placed_order( $cart_cpt_id ) {
+		$status = get_post_meta( $cart_cpt_id, 'wpsc_order_status', true );
+		return ! empty( $status ) && 0 !== strcasecmp( $status, 'In Progress' );
 	}
 
 	public static function get_instance() {

@@ -117,7 +117,7 @@ class WPSC_Manual_Checkout {
 		$this->data['phone'] = isset($post_data['phone']) ? sanitize_text_field($post_data['phone']) : '';
 
 		$coupon = WPSPSC_Coupons_Collection::get_instance();
-		$this->data['applied_coupon_code'] = $coupon->get_applied_coupon_code($cart_obj->get_cart_id());
+		$this->data['applied_coupon_code'] = $coupon->get_applied_coupon_code($post_id); // The coupon is saved on the cart order post.
 
 		$this->data['gateway'] = 'manual';
 

@@ -23,11 +23,9 @@ $cookie_jar = null;
 
 //Known issues that aren't fixed (see "Known issues" in tests/TESTS.md). Their checks still run, but don't fail the tests:
 //the output shows "KNOWN ISSUE (still happens)" or "KNOWN ISSUE NOW PASSES". The commit that fixes one removes it from this list,
-//so its check becomes a normal check.
-const KNOWN_ISSUES = array(
-	'paid-cart-reused'            => 'Confirmed (2026-11-20 run): the cart is loaded from the simple_cart_id cookie without checking that its order is already paid. When a buyer pays with PayPal Standard and doesn\'t come back to the return URL (which resets the cart), the next add to cart changes the items of the paid order, and a second payment notification for the cart overwrites the order.',
-	'manual-checkout-coupon-code' => 'Confirmed (2026-11-20 run): the manual checkout reads the applied coupon with the cart ID (get_applied_coupon_code( $cart_obj->get_cart_id() ) in manual-checkout.php) instead of the order post ID, so the coupon code is not saved on the order (or another post\'s value is read).',
-);
+//so its check becomes a normal check. Fixed after 5.3.4: 'paid-cart-reused' and 'manual-checkout-coupon-code'.
+//Example entry: 'issue-key' => 'What happens and where (confirmed or suspected).',
+const KNOWN_ISSUES = array();
 
 function check_known( $issue, $label, $condition, $details = '' ) {
 	global $known;
@@ -666,10 +664,13 @@ $new_cart_id = cookie_value( 'simple_cart_id' );
 $paid_cart   = get_cart( $cart_id );
 check_known(
 	'paid-cart-reused',
-	'Adding to the cart after a payment (without the return URL) starts a new cart and doesn\'t change the paid order',
+	'Adding to the cart after a payment (without the return URL) starts a new cart and doesn\'t change the paid order (fixed after 5.3.4)',
 	$new_cart_id !== $cart_id && array( $shirt_large => '3 x 22.5' ) === cart_summary( $paid_cart ),
 	'Cart ID: ' . ( $new_cart_id === $cart_id ? 'the same' : 'new' ) . '. Paid order items: ' . json_encode( cart_summary( $paid_cart ) )
 );
+check( 'The paid order stays paid', 'Paid' === $paid_cart['order_status'] && 'E2E-TXN-1' === post_meta( $order, 'wpsc_txn_id' ) );
+$new_cart = get_cart( (string) $new_cart_id );
+check( 'The new cart has only the new item, without the coupon of the paid order', array( $ebook => '1 x 9.99' ) === cart_summary( $new_cart ) && 'In Progress' === $new_cart['order_status'], json_encode( $new_cart ) );
 
 //The normal way: the buyer comes back to the return URL, which resets the cart.
 new_session();
@@ -752,7 +753,7 @@ $cart  = get_cart( $cart_id );
 $order = $cart['cart_cpt_id'];
 check( 'The order is pending (waiting for the payment) and published in the orders list', 'Pending' === $cart['order_status'] && 'publish' === $cart['post_status'], $cart['order_status'] . ' / ' . $cart['post_status'] );
 check( 'The order has the buyer, the discounted total (9.99 - 10% = 8.99) and the gateway', 'manual@example.com' === post_meta( $order, 'wpsc_email_address' ) && '8.99' === post_meta( $order, 'wpsc_total_amount' ) && 'manual' === post_meta( $order, 'wpsc_payment_gateway' ), post_meta( $order, 'wpsc_email_address' ) . ' / ' . post_meta( $order, 'wpsc_total_amount' ) );
-check_known( 'manual-checkout-coupon-code', 'The manual checkout order has the coupon code', 'E2E10' === post_meta( $order, 'wpsc_applied_coupon' ), 'wpsc_applied_coupon: ' . var_export( post_meta( $order, 'wpsc_applied_coupon' ), true ) );
+check_known( 'manual-checkout-coupon-code', 'The manual checkout order has the coupon code (fixed after 5.3.4)', 'E2E10' === post_meta( $order, 'wpsc_applied_coupon' ), 'wpsc_applied_coupon: ' . var_export( post_meta( $order, 'wpsc_applied_coupon' ), true ) );
 check( 'The buyer gets the payment instructions email', null !== find_email( 'manual@example.com', 'Payment instructions' ), json_encode( emails() ) );
 check( 'The seller gets the manual checkout notification', null !== find_email( 'notify@example.com', 'New manual checkout order' ), json_encode( emails() ) );
 check( 'The cart ID cookie is removed after the order', null === cookie_value( 'simple_cart_id' ) );

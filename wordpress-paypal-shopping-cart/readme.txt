@@ -243,6 +243,8 @@ None
 
 = WIP - 5.3.5 =
 - Fixed the Thank You page (with the order summary) not being created when the plugin is installed on a new site.
+- Fixed an issue where a buyer who paid with PayPal Standard, but didn't return to the site afterwards, could add items to the already paid order. A new cart is now started instead.
+- Fixed the applied coupon code not being saved on manual checkout orders.
 
 = 5.3.4 =
 - The saved cart data can no longer be changed to load other PHP classes (PHP object injection). Thanks to Patchstack for reporting this.
